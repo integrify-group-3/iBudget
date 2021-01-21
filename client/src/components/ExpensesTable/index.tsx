@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux"
 import moment from "moment";
 import axios from "axios";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -12,7 +13,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "../Title";
 // import EditExpense from "../../components/EditExpense";
-import { ExpensesTableProps } from '../../types'
+import { AppState, ExpensesTableProps, Expense } from '../../types'
+import { removeExpense } from '../../redux/actions/expenses'
 
 const useStyles = makeStyles((theme) => ({
   addExpense: {
@@ -24,30 +26,37 @@ const useStyles = makeStyles((theme) => ({
     color: "lightblue",
     cursor: "pointer",
   },
+  deleteExpense: {
+    color: "red",
+    cursor: "pointer",
+  },
 }));
 
 export default function ExpensesTable({
   day,
   dailyExp,
   showFormOnClick,
-  removeExpense,
-  updateExpenses
+  updateDailyExpenses
 }: ExpensesTableProps) {
-  const classes = useStyles();
+  const classes = useStyles()
+  const dispatch = useDispatch()
   const [editOpen, setEditOpen] = useState(false);
-  console.log('daily expenses', dailyExp)
+  // console.log('daily expenses', dailyExp)
+  const updatedExpenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
+  // console.log(updatedExpenses)
   const openEditOnClick = (id: any) => {
     setEditOpen(true);
-  };
+  }
   const closeEditOnClick = () => {
     setEditOpen(false);
-  };
-
-  const deleteExpenseOnClick = (id: any) => {
-    axios.delete(`/api/v1/expenses/${id}`).then((res) => {
-      removeExpense();
-    });
-  };
+  }
+  const deleteExpenseOnClick = (id: string, expense: Expense) => {
+    console.log(id, expense)
+    dispatch(removeExpense(id, expense))
+    setTimeout(() => {
+      updateDailyExpenses(updatedExpenses)
+    }, 3000);
+  }
   return (
     <React.Fragment>
       <Title>Expenses for {moment(day).format("LL")}</Title>
@@ -78,7 +87,8 @@ export default function ExpensesTable({
                         </TableCell>
                         <TableCell>
                           <DeleteIcon
-                            onClick={() => deleteExpenseOnClick(_id)}
+                            className={classes.deleteExpense}
+                            onClick={() => deleteExpenseOnClick(_id, expense)}
                           />
                         </TableCell>
                       </TableRow>

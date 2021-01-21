@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) =>
   }),
 );
 
-export default function AddIncome({ year, month, openForm, handleClose }: AddIncomeProps) {
+export default function AddIncome({ year, month, openForm, handleClose, updateMonthlyIncome }: AddIncomeProps) {
   const dispatch = useDispatch()
   const updatedIncome = useSelector((state: AppState) => state.income.income)
 
@@ -54,16 +54,19 @@ export default function AddIncome({ year, month, openForm, handleClose }: AddInc
       month: month
   })
   const {category, description, amount} = income
-  
+
   useEffect(() => {
     console.log(updatedIncome)
+    updateMonthlyIncome(updatedIncome)
   }, [])
+
   const handleSubmit = (e: any) => {
       e.preventDefault()
       dispatch(addIncome(income))
       handleClose()
       setTimeout(() => {
         console.log('income should update here', updatedIncome)
+        updateMonthlyIncome(updatedIncome)
       }, 3000);   
   }
 

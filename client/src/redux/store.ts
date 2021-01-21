@@ -26,6 +26,7 @@ const initState: AppState = {
   expenses: {
     calendar: {} as CalendarScheduler,
     dailyExpenses: {} as DailyExpense,
+    selectedMonth: {},
   },
   error: {
     msg: {},

@@ -15,7 +15,7 @@ import useIncome from '../../hooks/useIncome'
 import IncomeTable from '../../components/IncomeTable'
 import TotalIncome from '../../components/TotalIncome'
 import ProfileDashboard from '../../components/ProfileDashboard'
-import { months } from '../../utils/months'
+import { months, date, year, currentMonth } from '../../utils/dateValues'
 
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
@@ -68,7 +68,6 @@ export default function IncomePage(props: any) {
   const [month, setMonth] = useState('')
   const [monthIncome, setMonthIncome] = useState([] as Income[])
 
-  console.log(incomeData)
   const [loaded, setIsLoaded] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
@@ -80,16 +79,12 @@ export default function IncomePage(props: any) {
       props.history.push('/login')
     } else {
       setCalendar(calendarData)
-      
-      const date = new Date()
-      const year = date.getFullYear() 
-      const currentIndex = date.getMonth()
       //atm the below set state keeps running an infinite loop
-      // setDateView({year: year, month: months[currentIndex] })
+      // setDateView({year: year, month: currentMonth })
       console.log(dateView)
 
     }
-  })
+  }, [isAuthenticated, calendarData, dateView])
   // console.log('date view test', defaultDateView)
   const setMonthView = (
     currentYear: number,
@@ -109,12 +104,15 @@ export default function IncomePage(props: any) {
     }, 150)
   }
 
-  const updateIncome = (newIncome: any) => {
-    // console.log(newIncome)
-    // console.log(monthIncome)
-    // monthIncome.push(newIncome)
+  const updateMonthlyIncome = (updatedIncome: Income[]) => {
+    console.log('update income', updatedIncome)
+    setMonthIncome(updatedIncome)
   }
 
+  useEffect(() => {
+    setMonthIncome(incomeData as Income[])
+  }, [])
+ 
   const onChange = () => {
     setCalendarDate(calendarDate)
   }
@@ -134,7 +132,6 @@ export default function IncomePage(props: any) {
     const currentIndex = e.getMonth()
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
     setMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
-    // setChartLoaded(true)
   }
 
   return (
@@ -147,22 +144,7 @@ export default function IncomePage(props: any) {
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={10} md={6} lg={4}>
-              {/* <Paper className={classes.chartHeightPaper}>
-                {!chartData || chartData?.length < 1 ? (
-                  <h3>No Chart Data</h3>
-                ) : (
-                  <IncomeChart
-                    // monthlyIncome={monthIncome}
-                    chartData={chartData}
-                    year={dateView.year}
-                    month={dateView.month}
-                    valueField="amount"
-                    argumentField="category"
-                    name="category"
-                    chartLoaded={chartLoaded}
-                  />
-                )}
-              </Paper> */}
+              {/* Chart goes here */}
             </Grid>
             <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
@@ -186,7 +168,7 @@ export default function IncomePage(props: any) {
                     monthlyIncome={!isMonthClicking ? incomeData : monthIncome}
                     year={dateView.year}
                     month={dateView.month}
-                    updateIncome={updateIncome}
+                    updateMonthlyIncome={updateMonthlyIncome}
                   />
                 {/* )} */}
               </Paper>

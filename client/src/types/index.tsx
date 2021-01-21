@@ -18,6 +18,7 @@ export const ADD_INCOME = 'ADD_INCOME'
 //expenses action types
 export const GET_EXPENSES = 'GET_EXPENSES'
 export const ADD_EXPENSE = 'ADD_EXPENSE'
+export const DELETE_EXPENSE = 'DELETE_EXPENSE'
 
 // Enum
 export enum DialogType {
@@ -98,6 +99,7 @@ export type AddIncomeProps = {
   month: string
   openForm: boolean
   handleClose: Function
+  updateMonthlyIncome: Function
 }
 
 export type AddIncomeBtnProps = {
@@ -106,6 +108,7 @@ export type AddIncomeBtnProps = {
 
 export type CalendarScheduler = {
   years: any
+  year: number
   months: any
   month: object
   name: string
@@ -119,7 +122,7 @@ export type IncomeTableProps = {
   year: number 
   month: string 
   monthlyIncome: any 
-  updateIncome: any
+  updateMonthlyIncome: Function
 }
 
 export type TotalIncomeProps = {
@@ -143,8 +146,7 @@ export type ExpensesTableProps = {
   day: string | Date
   dailyExp: DailyExpense
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-  removeExpense: Function
-  updateExpenses: Function
+  updateDailyExpenses: Function
 }
 
 export type TotalExpensesProps = {
@@ -160,8 +162,9 @@ export type AddExpenseProps = {
   category: string
   description: string
   amount: number
-  addExpense: Function
-  hideFormOnClick: Function
+  hideFormOnClick: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
+  closeForm: Function
+  updateDailyExpenses: Function
 }
 
 export type RegisterFailAction = {
@@ -214,7 +217,7 @@ export type GetIncomeAction = {
 export type AddIncomeAction = {
   type: typeof ADD_INCOME
   payload: {
-    income: any
+    income: Income[]
   }
 }
 
@@ -223,13 +226,21 @@ export type GetExpensesAction = {
   payload: {
     calendar: CalendarScheduler
     dailyExpenses: DailyExpense
+    selectedMonth: any
   }
 }
 
 export type AddExpenseAction = {
   type: typeof ADD_EXPENSE
   payload: {
-    expense: Expense
+    expense: any
+  }
+}
+
+export type DeleteExpenseAction = {
+  type: typeof DELETE_EXPENSE
+  payload: {
+    expense: any
   }
 }
 
@@ -252,6 +263,7 @@ export type IncomeActions =
   export type ExpensesActions = 
   | GetExpensesAction
   | AddExpenseAction
+  | DeleteExpenseAction
 
 export type UserState = {
   user: User 
@@ -267,6 +279,7 @@ export type IncomeState = {
 export type ExpensesState = {
   calendar: CalendarScheduler
   dailyExpenses: DailyExpense
+  selectedMonth: any
 } 
 
 export type ErrorState = {

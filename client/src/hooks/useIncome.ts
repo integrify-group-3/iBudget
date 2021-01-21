@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { AppState, Income, CalendarScheduler, DateView } from '../types'
 import { fetchIncome } from '../redux/actions/income'
-import { months } from './../utils/months'
+import { months } from '../utils/dateValues'
 
 export default function useIncome() {
   const dispatch = useDispatch()

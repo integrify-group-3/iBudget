@@ -1,5 +1,5 @@
-import React from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux"
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import TextField from "@material-ui/core/TextField";
@@ -8,7 +8,8 @@ import Select from "@material-ui/core/Select";
 import moment from 'moment';
 import ClearIcon from '@material-ui/icons/Clear';
 
-import { AddExpenseProps } from '../../types'
+import { AppState, AddExpenseProps } from '../../types'
+import { addExpense } from '../../redux/actions/expenses'
 import SaveButton from '../SaveButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end'
   },
+  select: {
+    width: '11.5rem',
+  },
   save: {
     border: 'none',
     background: 'none'
@@ -41,30 +45,37 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddExpense({
   expense,
-  setExpense,
   day,
   category,
   description,
   amount,
-  addExpense,
-  hideFormOnClick
+  setExpense,
+  hideFormOnClick,
+  closeForm,
+  updateDailyExpenses
 }: AddExpenseProps) {
-  const classes = useStyles();
-  
+  const classes = useStyles()
+  const dispatch = useDispatch()
+  const updatedExpenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(expense);
-    axios.post("http://localhost:3000/api/v1/expenses", expense).then((res) => {
-      console.log(res.data);
-      addExpense(res.data)
-    });   
+    dispatch(addExpense(expense))
+    closeForm()
+    setTimeout(() => {
+      updateDailyExpenses(updatedExpenses)
+    }, 3000);
   };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setExpense({ ...expense, [name]: value });
-    console.log(expense);
   };
+
+  useEffect(() => {
+    console.log('calling back from here', updatedExpenses)
+  }, [])
 
   return (
     <div>
@@ -72,7 +83,7 @@ export default function AddExpense({
         <div className="form-container">
           <h3>{moment(day).format('LL')}</h3>
           <form onSubmit={handleSubmit} className={classes.root}>
-            {/* <div className={classes.header}><ClearIcon onClick={hideFormOnClick} /></div> */}
+            <div className={classes.header}><ClearIcon onClick={hideFormOnClick} /></div> 
             <h4>New Expense</h4>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
@@ -82,6 +93,7 @@ export default function AddExpense({
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 name="category"
+                className={classes.select}
                 // size="small"
                 value={category}
                 onChange={handleChange}
@@ -103,6 +115,7 @@ export default function AddExpense({
                 onChange={handleChange}
                 name="description"
                 value={description}
+                required={true}
               />
             </div>
 
@@ -115,6 +128,7 @@ export default function AddExpense({
                 onChange={handleChange}
                 name="amount"
                 value={amount}
+                required={true}
               />
             </div>
             <button className={classes.save}><SaveButton /></button>

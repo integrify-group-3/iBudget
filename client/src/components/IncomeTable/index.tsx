@@ -30,7 +30,7 @@ export default function IncomeTable({
   year,
   month,
   monthlyIncome,
-  updateIncome,
+  updateMonthlyIncome,
 }: IncomeTableProps) {
   // console.log('fromt props', monthlyIncome, year, month)
   const dispatch = useDispatch()
@@ -48,7 +48,7 @@ export default function IncomeTable({
     const url = `http://localhost:5000/api/v1/income/${id}`
     axios.delete(url).then((res) => {
       console.log(res)
-      updateIncome()
+      updateMonthlyIncome()
     })
   }
 
@@ -95,6 +95,7 @@ export default function IncomeTable({
             month={month}
             openForm={openForm}
             handleClose={handleClose}
+            updateMonthlyIncome={updateMonthlyIncome}
           />
         </div>
       )}

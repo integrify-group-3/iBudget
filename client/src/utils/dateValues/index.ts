@@ -12,3 +12,9 @@ export const months = [
     'November',
     'December',
   ]
+
+  export const date = new Date()
+  export const year = date.getFullYear() 
+  export const monthIndex = date.getMonth()
+  export const currentMonth = months[monthIndex]
+

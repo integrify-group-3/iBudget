@@ -15,7 +15,7 @@ import {
 
 import {
     months
-} from '../../utils/months'
+} from '../../utils/dateValues'
 
 export function getIncome(calendar: CalendarScheduler, income: Income[]): IncomeActions {
     return {
@@ -26,7 +26,7 @@ export function getIncome(calendar: CalendarScheduler, income: Income[]): Income
         }
     }
 }
-export function addNewIncome(income: any): IncomeActions {
+export function addNewIncome(income: Income[]): IncomeActions {
     return {
         type: ADD_INCOME,
         payload: {
