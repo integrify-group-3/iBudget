@@ -49,9 +49,10 @@ const [err, setErr] = useState(null)
     setIncomeData(income)
     const currentIndex = date.getMonth()
     setDateView({ year: year, month: months[currentIndex] })
+    console.log(dateView)
     // setMonthSchedule(dateView.year, dateView.month, foundYear, currentIndex)
   
-  }, [income])
+  }, [income, calendar, dateView])
 
   return [err, incomeData, dateView, calendar]
 }

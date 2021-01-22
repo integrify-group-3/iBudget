@@ -80,7 +80,7 @@ export default function IncomePage(props: any) {
     } else {
       setCalendar(calendarData)
       //atm the below set state keeps running an infinite loop
-      // setDateView({year: year, month: currentMonth })
+      setDateView(defaultDateView as DateView)
       console.log(dateView)
 
     }

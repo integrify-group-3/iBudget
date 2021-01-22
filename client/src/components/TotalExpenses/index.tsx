@@ -16,7 +16,7 @@ export default function TotalExpenses({
     year, 
     monthExpenses 
 }: TotalExpensesProps) {
-  console.log('from total exoenses', month, year, monthExpenses)
+  // console.log('from total exoenses', month, year, monthExpenses)
   const classes = useStyles()
   const date = new Date()
   const calculateTotalExpenses = () => {
@@ -24,7 +24,6 @@ export default function TotalExpenses({
     if(monthExpenses !== undefined) {
         for(const dayIndex in monthExpenses.days) {
             const { expenses } = monthExpenses.days[dayIndex]
-            console.log('expenses from total expenses', expenses)
             for(const expense of expenses) {
                 count += expense.amount
             }    
@@ -33,12 +32,9 @@ export default function TotalExpenses({
     }
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-        console.log('calling from here')
-        calculateTotalExpenses()
-    }, 1000);
-  });
+  useEffect(() => {   
+      calculateTotalExpenses()
+  })
   const totalExpenses = calculateTotalExpenses()
 
   return (

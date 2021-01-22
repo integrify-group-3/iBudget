@@ -142,9 +142,15 @@ export type DailyExpense = {
   expenses: Expense[]
 }
 
+export type TileContentProps = {
+  date: string
+  view: string
+  viewMonth: any
+
+}
 export type ExpensesTableProps = {
   day: string | Date
-  dailyExp: DailyExpense
+  dailyExpense: DailyExpense
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   updateDailyExpenses: Function
 }

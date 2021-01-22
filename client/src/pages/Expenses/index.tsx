@@ -63,13 +63,12 @@ export default function ExpensesPage(props: any) {
   )
   const [err, expensesData, calendarData, defaultDateView, selectedMonth] = useExpenses() 
   const [calendarDate, setCalendarDate] = useState(date);
-  const [calendar, setCalendar] = useState({} as CalendarScheduler);
   const [isFormShowing, setIsFormShowing] = useState(false);
   const [month, setMonth] = useState("");
-  const [dailyExp, setDailyExp] = useState({} as DailyExpense);
+  const [dailyExpense, setDailyExpense] = useState({} as DailyExpense);
   const [isDayClicking, setIsDayClicking] = useState(false)
-  const [viewMonth, setViewMonth] = useState();
-
+  const [viewMonth, setViewMonth] = useState({name: '', days: [{day: '', expenses: []}], income: []});
+  const [tileLoaded, setTileLoaded] = useState(false)
   const [tileContent, setTileContent] = useState();
   const [schedule, setSchedule] = useState({
     day: "",
@@ -95,8 +94,9 @@ export default function ExpensesPage(props: any) {
   const setDefaultCalendar = async () => {
     try {
       console.log('from hooks', selectedMonth)
-      setViewMonth(selectedMonth);
+      setViewMonth(selectedMonth)
       console.log(viewMonth)
+      setTileLoaded(true)
     }
     catch(err) {
       console.log(err)
@@ -106,13 +106,11 @@ export default function ExpensesPage(props: any) {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-        console.log('from hooks', calendarData)
         setDateView(defaultDateView as DateView)
-        console.log('from hooks', selectedMonth)
-        setViewMonth(selectedMonth)
+        console.log('from use effetc expenses', viewMonth)
         setDefaultCalendar()
     }
-  }, [dateView, calendarData, selectedMonth])
+  }, [dateView, viewMonth, calendarData, selectedMonth])
 
   const onChange = (e: any) => {
     //   console.log('clicked')
@@ -134,7 +132,7 @@ export default function ExpensesPage(props: any) {
 
   const updateDailyExpenses = (updatedExpenses: any) => {
     console.log('update expenses', updatedExpenses)
-    setDailyExp(updatedExpenses)
+    setDailyExpense(updatedExpenses)
   }
 
   const showDay = async (e: any) => {
@@ -167,9 +165,9 @@ export default function ExpensesPage(props: any) {
           (d: any) => moment(d.day).format("LL") === moment(e).format("LL")
         );
         if(selectedDay !== undefined) {
-          setDailyExp(selectedDay);
+          setDailyExpense(selectedDay);
         } else {
-          setDailyExp(schedule)
+          setDailyExpense(schedule)
         }
       }
         catch(err) {
@@ -233,7 +231,7 @@ export default function ExpensesPage(props: any) {
             ) : (
               <ExpensesTable
                 day={isDayClicking ? schedule.day :date}
-                dailyExp={isDayClicking ? dailyExp : expensesData as DailyExpense}
+                dailyExpense={isDayClicking ? dailyExpense : expensesData as DailyExpense}
                 updateDailyExpenses={updateDailyExpenses}
                 showFormOnClick={showFormOnClick}
               />
@@ -249,14 +247,13 @@ export default function ExpensesPage(props: any) {
                 //   onClickMonth={showMonth}
                 onClickDay={showDay}
                 showNeighboringMonth={true}
-                // tileContent={({ date, view }: any) => (
-                //    <TileContent
-                //      date={date}
-                //      view={view}
-                //      viewMonth={viewMonth}
-                //      tileContent={tileContent}
-                //    />
-                //  )}
+                tileContent={({ date, view }: any) => (
+                    <TileContent
+                      date={date}
+                      view={view}
+                      viewMonth={viewMonth}
+                    />
+                )}
               />
             </Grid>
           </Grid>

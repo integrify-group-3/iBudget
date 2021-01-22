@@ -34,14 +34,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ExpensesTable({
   day,
-  dailyExp,
+  dailyExpense,
   showFormOnClick,
   updateDailyExpenses
 }: ExpensesTableProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const [editOpen, setEditOpen] = useState(false);
-  // console.log('daily expenses', dailyExp)
+  // console.log('daily expenses', dailyExpense)
   const updatedExpenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
   // console.log(updatedExpenses)
   const openEditOnClick = (id: any) => {
@@ -61,7 +61,7 @@ export default function ExpensesTable({
     <React.Fragment>
       <Title>Expenses for {moment(day).format("LL")}</Title>
       <Table size="small">
-        {dailyExp.expenses !== undefined && dailyExp.expenses.length > 0 ? (
+        {dailyExpense.expenses !== undefined && dailyExpense.expenses.length > 0 ? (
           <>
             <TableHead>
               <TableRow>
@@ -71,7 +71,7 @@ export default function ExpensesTable({
               </TableRow>
             </TableHead>
             <TableBody>
-              {dailyExp.expenses.map((expense: any) => {
+              {dailyExpense.expenses.map((expense: any) => {
                 const { _id, category, description, amount } = expense;
                 return (
                   <>
