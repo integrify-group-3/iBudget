@@ -64,7 +64,7 @@ export default function AddExpense({
     dispatch(addExpense(expense))
     closeForm()
     setTimeout(() => {
-      updateDailyExpenses(updatedExpenses)
+      // updateDailyExpenses(updatedExpenses)
     }, 3000);
   };
 

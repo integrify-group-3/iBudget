@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import moment from "moment"
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
 import { TotalExpensesProps } from '../../types'
 import Title from "../Title";
+import { setInterval } from "timers";
 
 const useStyles = makeStyles({
   depositContext: {
@@ -14,9 +16,9 @@ const useStyles = makeStyles({
 export default function TotalExpenses({ 
     month, 
     year, 
-    monthExpenses 
+    monthExpenses, 
 }: TotalExpensesProps) {
-  // console.log('from total exoenses', month, year, monthExpenses)
+  console.log('from total exoenses', month, year, monthExpenses)
   const classes = useStyles()
   const date = new Date()
   const calculateTotalExpenses = () => {
@@ -35,6 +37,7 @@ export default function TotalExpenses({
   useEffect(() => {   
       calculateTotalExpenses()
   })
+
   const totalExpenses = calculateTotalExpenses()
 
   return (
@@ -46,7 +49,7 @@ export default function TotalExpenses({
         €{totalExpenses} 
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        {date.toString()}
+        Current date: {moment(date).format('LL')}
       </Typography>
     </React.Fragment>
   );

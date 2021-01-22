@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '10%',
     position: 'absolute',
     top: '56%',
-    left: '33%',
+    left: '35%',
     transform: 'translateY(-50%)',
   },
   HeaderStyle: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2rem',
   },
   descStyle: {
-    marginBottom: '20px',
+    marginBottom: '40px',
   },
   btnStyle: {
     borderRadius: 50,
@@ -47,7 +47,7 @@ export default function Home() {
     <div className="home-page-container">
       <Container className={classes.container}>
         <Typography variant="h3" className={classes.HeaderStyle}>
-          iMoney
+          iBudget
         </Typography>
         <Typography color="primary" variant="h6" className={classes.descStyle}>
           Cause your cash matters

@@ -30,7 +30,7 @@ export const mainListItems = (
   <div>
     <ListSubheader style={{ display: 'flex', justifyContent: 'flex-start' }}>
       <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
-      <span style={{ marginLeft: '1.65rem', color: 'white' }}>IMoney</span>
+      <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
     </ListSubheader>
     <NavLink to="/expenses">
       <ListItem button>
@@ -79,7 +79,7 @@ export const secondaryListItems = (
   <div>
     <ListSubheader style={{ display: 'flex', justifyContent: 'flex-start' }}>
       <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
-      <span style={{ marginLeft: '1.65rem', color: 'white' }}>IMoney</span>
+      <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
     </ListSubheader>
     <NavLink to="/register" style={linkStyle}>
       <ListItem button>

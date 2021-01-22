@@ -108,6 +108,7 @@ export function addExpense(expense: any) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.post(url, expense, tokenConfig(getState))
+      console.log(res.data)
       const foundDay = await getDailyExpenses(res.data, expense)
       dispatch(addNewExpense(foundDay))
     } catch (err) {

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import { useSelector } from 'react-redux'
 import moment from "moment"
 import Calendar from "react-calendar"
 
-import axios from "axios"
 import clsx from "clsx"
 import { makeStyles } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
@@ -11,7 +10,7 @@ import Box from "@material-ui/core/Box"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper"
-import { AppState, CalendarScheduler, DateView, DailyExpense } from '../../types'
+import { AppState, CalendarScheduler, DateView, DailyExpense, ViewMonth } from '../../types'
 
 import useExpenses from '../../hooks/useExpenses'
 import { months, date, year, currentMonth } from '../../utils/dateValues'
@@ -61,15 +60,13 @@ export default function ExpensesPage(props: any) {
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
-  const [err, expensesData, calendarData, defaultDateView, selectedMonth] = useExpenses() 
+  const [err, expensesData, calendarData, defaultDateView, defaultMonth] = useExpenses() 
   const [calendarDate, setCalendarDate] = useState(date);
   const [isFormShowing, setIsFormShowing] = useState(false);
   const [month, setMonth] = useState("");
   const [dailyExpense, setDailyExpense] = useState({} as DailyExpense);
   const [isDayClicking, setIsDayClicking] = useState(false)
-  const [viewMonth, setViewMonth] = useState({name: '', days: [{day: '', expenses: []}], income: []});
-  const [tileLoaded, setTileLoaded] = useState(false)
-  const [tileContent, setTileContent] = useState();
+  const [viewMonth, setViewMonth] = useState({name: '', days: [{day: '', expenses: []}], income: []} as ViewMonth);
   const [schedule, setSchedule] = useState({
     day: "",
     expenses: [],
@@ -93,24 +90,30 @@ export default function ExpensesPage(props: any) {
  
   const setDefaultCalendar = async () => {
     try {
-      console.log('from hooks', selectedMonth)
-      setViewMonth(selectedMonth)
-      console.log(viewMonth)
-      setTileLoaded(true)
+      // console.log('from hooks', selectedMonth)
+      setViewMonth(defaultMonth)
+      // console.log('from async set default', viewMonth)
     }
     catch(err) {
       console.log(err)
     }
   }
+
+  const setClickedCalendar = useCallback(
+    (foundMonth) => {
+      setViewMonth(foundMonth)
+      console.log('from use callback', viewMonth)
+    },
+    [viewMonth],
+  )
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
         setDateView(defaultDateView as DateView)
-        console.log('from use effetc expenses', viewMonth)
         setDefaultCalendar()
     }
-  }, [dateView, viewMonth, calendarData, selectedMonth])
+  }, [dateView, viewMonth, calendarData, defaultMonth])
 
   const onChange = (e: any) => {
     //   console.log('clicked')
@@ -136,36 +139,37 @@ export default function ExpensesPage(props: any) {
   }
 
   const showDay = async (e: any) => {
-      // console.log(e.toDateString())
       setIsFormShowing(false);
-      setIsDayClicking(true)
       setSchedule({ ...schedule, day: e });
       // console.log('schedule', schedule)
       const selectedYear = e.getFullYear();
       const currentIndex = e.getMonth();
       //this will set the day, year and month to the expense in case we will add a new new one for the day
       setDateView({year: selectedYear, month: months[currentIndex]})
-      // console.log('date view', dateView)
+      console.log('date view', dateView)
       setExpense({
         ...expense,
         date: e,
         year: year,
-        month: currentMonth,
+        month: months[currentIndex],
       });
-      // console.log('calendar', calendar)
+      console.log(schedule)
       try {
         const foundYear = await calendarData.years.find((y: any) => y.year === selectedYear)
+        // console.log(calendarData)
         // console.log(foundYear)
-        const selectedMonth = await foundYear.months.find(
-          (month: any) => month.name === currentMonth
-        );
-        setViewMonth(selectedMonth);
-        // console.log('view month from select day', viewMonth)
-        const selectedDay = await selectedMonth.days.find(
+        const foundMonth = await foundYear.months.find(
+          (month: any) => month.name === months[currentIndex]
+        )
+        setClickedCalendar(foundMonth);
+        console.log('view month from select day', viewMonth)
+        const selectedDay = await foundMonth.days.find(
           (d: any) => moment(d.day).format("LL") === moment(e).format("LL")
         );
+        setIsDayClicking(true)
         if(selectedDay !== undefined) {
           setDailyExpense(selectedDay);
+          console.log(dailyExpense)
         } else {
           setDailyExpense(schedule)
         }
@@ -197,6 +201,7 @@ export default function ExpensesPage(props: any) {
             <Grid item xs={5} md={6} lg={6}>
             <Paper className={fixedHeightPaper}>
                 {/*Expenses chart goes here */}
+                <h2>Chart</h2>
               </Paper>
             </Grid> 
             <Grid item xs={5} md={4} lg={3}>
@@ -211,6 +216,7 @@ export default function ExpensesPage(props: any) {
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {/* Total balance goes here */}
+                <h2>Total Balance</h2>
               </Paper>
             </Grid>
            
@@ -230,7 +236,7 @@ export default function ExpensesPage(props: any) {
               />
             ) : (
               <ExpensesTable
-                day={isDayClicking ? schedule.day :date}
+                day={isDayClicking ? schedule.day : date}
                 dailyExpense={isDayClicking ? dailyExpense : expensesData as DailyExpense}
                 updateDailyExpenses={updateDailyExpenses}
                 showFormOnClick={showFormOnClick}

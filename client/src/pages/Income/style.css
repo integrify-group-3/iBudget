@@ -56,5 +56,11 @@
     background: #865CFF;
     border-radius: 50px;
   }
+  .react-calendar__tile .react-calendar__month-view__days__day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
   
   

@@ -146,7 +146,12 @@ export type TileContentProps = {
   date: string
   view: string
   viewMonth: any
+}
 
+export type ViewMonth = {
+  name: string
+  days: Array<DailyExpense>
+  income: Array<Income>
 }
 export type ExpensesTableProps = {
   day: string | Date

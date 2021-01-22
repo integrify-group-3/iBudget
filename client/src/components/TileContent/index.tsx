@@ -25,7 +25,7 @@ export default function TileContent({
             const selectedDay = viewMonth.days.find(
               (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
             ) 
-            console.log(viewMonth)
+            // console.log(viewMonth)
             setDay(selectedDay)
             setLoadContent(true)
         }
@@ -33,7 +33,8 @@ export default function TileContent({
   }, [day])
    
     if (view === 'month' && day !== undefined && loadContent) {
-        day.expenses.length = 1
+        //we only want to display the first expense on the tile content
+        // day.expenses.length = 1
       return (
         <ul
           style={{

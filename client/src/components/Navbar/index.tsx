@@ -146,7 +146,7 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.header} noWrap>
-            <span>iMoney</span>
+            <span>iBudget</span>
             {
           isAuthenticated &&
           <Typography className={classes.headerUser}>
