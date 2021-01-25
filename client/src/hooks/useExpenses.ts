@@ -42,7 +42,7 @@ export default function useExpenses() {
     setDefaultMonth(selectedMonth)
     // console.log(defaultMonth)
     setDateView({ year: year, month: currentMonth })
-    // console.log('from user epenses', expensesData)
+    console.log('from user epenses', expensesData)
   }, [expenses, calendar, calendarData, selectedMonth, defaultMonth])
   
   return [

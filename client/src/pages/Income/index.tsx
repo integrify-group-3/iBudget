@@ -143,10 +143,13 @@ export default function IncomePage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={10} md={6} lg={4}>
-              {/* Chart goes here */}
+            <Grid item xs={5} md={6} lg={6}>
+              <Paper className={fixedHeightPaper}>
+                {/*Expenses chart goes here */}
+                <h2>Chart</h2>
+              </Paper>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <TotalIncome
                   year={dateView.year}
@@ -155,7 +158,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <ProfileDashboard />
               </Paper>
