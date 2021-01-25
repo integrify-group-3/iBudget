@@ -71,7 +71,7 @@ const getDailyExpenses = async (data: any, expense: Expense) => {
 }
 
 export function fetchExpenses() {
-  const url = 'http://localhost:3000/api/v1/expense'
+  const url = 'http://localhost:5000/api/v1/expense'
   return async (dispatch: Dispatch, getState: any) => {
     const res = await axios.get(url, tokenConfig(getState))
     const date = new Date()
@@ -109,7 +109,7 @@ export function fetchExpenses() {
 
 export function addExpense(expense: any) {
 //   console.log('from actions add expense', expense)
-  const url = 'http://localhost:3000/api/v1/expense'
+  const url = 'http://localhost:5000/api/v1/expense'
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.post(url, expense, tokenConfig(getState))
@@ -125,7 +125,7 @@ export function addExpense(expense: any) {
 
 export function removeExpense(id: string, expense: Expense) {
     console.log('from actions add expense', id, expense)
-    const url = `http://localhost:3000/api/v1/expense/${id}`
+    const url = `http://localhost:5000/api/v1/expense/${id}`
     return async (dispatch: Dispatch, getState: any) => {
         try {
             const res = await axios.delete(url, tokenConfig(getState))

@@ -121,6 +121,8 @@ export default function ExpensesPage(props: any) {
       props.history.push('/login')
     } else {
       setDateView(defaultDateView as DateView)
+      setViewMonth(defaultMonth)
+
       // console.log(dateView)
       // setDefaultCalendar()
     }

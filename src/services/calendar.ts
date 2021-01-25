@@ -25,15 +25,15 @@ function saveUpdatedCalendarExpense(calendar: CalendarDocument): Promise<Calenda
     return calendar.save()
 }
 
-function findCalendarByYear(calendar: CalendarDocument, newExpense: ExpenseDocument) {
-    return calendar.years.find((y: CalendarDocument) => y.year === newExpense.year)
+function findCalendarExpenseByYear(calendar: CalendarDocument, expense: ExpenseDocument) {
+    return calendar.years.find((y: CalendarDocument) => y.year === expense.year)
 }
 
-function findCalendarByMonth(foundYear: CalendarDocument, newExpense: ExpenseDocument) {
-    return foundYear.months.find((month: CalendarDocument) => month.name === newExpense.month)
+function findCalendarExpenseByMonth(foundYear: CalendarDocument, expense: ExpenseDocument) {
+    return foundYear.months.find((month: CalendarDocument) => month.name === expense.month)
 }
 
-function findCalendarByDay(foundMonth: CalendarDocument, date: string) {
+function findCalendarExpenseByDay(foundMonth: CalendarDocument, date: string) {
     return foundMonth.days.find((d: CalendarDocument) => d.day === date)
 }
 
@@ -41,7 +41,7 @@ export default {
     findCalendarByUserId,
     saveUpdatedCalendarIncome,
     saveUpdatedCalendarExpense,
-    findCalendarByYear,
-    findCalendarByMonth,
-    findCalendarByDay
+    findCalendarExpenseByYear,
+    findCalendarExpenseByMonth,
+    findCalendarExpenseByDay
 }

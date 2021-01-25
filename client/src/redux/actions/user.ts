@@ -54,7 +54,7 @@ export function loginUser({ email, password }: any) {
       }
       const body = JSON.stringify({ email, password})
       tokenConfig(getState)
-      const url = 'http://localhost:3000/api/v1/user/login'
+      const url = 'http://localhost:5000/api/v1/user/login'
       const res = await axios.post(url, body, config)
       dispatch(loginSuccess(res.data.user, res.data.token))
     } catch (err) {
@@ -66,7 +66,7 @@ export function loginUser({ email, password }: any) {
 
 export const registerUser = ({ firstName, lastName, email, password }: any) => {
   return (dispatch: Dispatch) => {
-    const url = 'http://localhost:3000/api/v1/user/register'
+    const url = 'http://localhost:5000/api/v1/user/register'
     axios
       .post(url, {
         firstName: firstName,
