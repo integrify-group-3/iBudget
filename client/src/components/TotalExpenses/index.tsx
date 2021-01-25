@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 
 import { TotalExpensesProps } from '../../types'
 import Title from "../Title";
-import { setInterval } from "timers";
+import { date } from '../../utils/dateValues';
 
 const useStyles = makeStyles({
   depositContext: {
@@ -18,9 +18,8 @@ export default function TotalExpenses({
     year, 
     monthExpenses, 
 }: TotalExpensesProps) {
-  console.log('from total exoenses', month, year, monthExpenses)
+  // console.log('from total expenses', month, year, monthExpenses)
   const classes = useStyles()
-  const date = new Date()
   const calculateTotalExpenses = () => {
     let count = 0
     if(monthExpenses !== undefined) {

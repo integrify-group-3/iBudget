@@ -6,7 +6,7 @@ import { AppState } from '../../types'
 export default function Dashboard(props: any) {
   const isAuthenticated = useSelector((state: AppState) => state.user.isAuthenticated)
   const user = useSelector((state: AppState) => state.user.user)
-  console.log('user here', user)
+  // console.log('user here', user)
   useEffect(() => {
     if(!isAuthenticated) {
       props.history.push('/login')

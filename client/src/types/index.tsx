@@ -176,6 +176,7 @@ export type AddExpenseProps = {
   hideFormOnClick: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
   closeForm: Function
   updateDailyExpenses: Function
+  calendarData: CalendarScheduler
 }
 
 export type RegisterFailAction = {

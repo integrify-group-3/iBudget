@@ -75,7 +75,7 @@ export default function Login(props: any) {
 
   useEffect(() => {
     if(isAuthenticated) {
-      console.log('user authenticated')
+      // console.log('user authenticated')
       dispatch(clearErrors())
       props.history.push('/dashboard')
     }

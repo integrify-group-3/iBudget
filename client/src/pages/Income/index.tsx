@@ -59,7 +59,6 @@ export default function IncomePage(props: any) {
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
-  const [showMonth, setShowMonth] = useState('')
   const [isMonthClicking, setIsMonthClicking] = useState(false)
   const [calendarDate, setCalendarDate] = useState(new Date())
   const [calendar, setCalendar] = useState({} as any)
@@ -80,7 +79,7 @@ export default function IncomePage(props: any) {
     } else {
       setCalendar(calendarData)
       //atm the below set state keeps running an infinite loop
-      setDateView(defaultDateView as DateView)
+      // setDateView(defaultDateView as DateView)
       console.log(dateView)
 
     }
@@ -106,6 +105,7 @@ export default function IncomePage(props: any) {
 
   const updateMonthlyIncome = (updatedIncome: Income[]) => {
     console.log('update income', updatedIncome)
+    console.log(monthIncome)
     setMonthIncome(updatedIncome)
   }
 

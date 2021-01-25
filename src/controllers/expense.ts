@@ -45,8 +45,29 @@ export const addExpense = async (
     const newExpense = new Expense(req.body)
     const savedExpense = await ExpenseService.createExpense(newExpense)
     const calendar = await CalendarService.findCalendarByUserId(id)
+    const foundYear = await CalendarService.findCalendarByYear(calendar, newExpense)
+    // console.log('found year', foundYear)
+    const foundMonth = await CalendarService.findCalendarByMonth(foundYear, savedExpense)
+    console.log('found month', foundMonth)
+    const foundDay =  await CalendarService.findCalendarByDay(foundMonth, req.body.date)
+    console.log('found day', foundDay)
+    if (!foundDay) {
+      //if the day is found add the epxense to the day array
+      const dayObj = {} as DayObj
+      dayObj.day = req.body.date
+      dayObj.expenses = []
+      dayObj.expenses.push(savedExpense)
+      foundMonth.days.push(dayObj)
+    } else {
+      //if the day exists we push to the expenses array of the day
+      foundDay.expenses.push(savedExpense)
+    }
+    const updatedCalendar = await CalendarService.saveUpdatedCalendarExpense(calendar)
+    res.json(updatedCalendar)
+    /*
     for (const year of calendar.years) {
       if (year.year === newExpense.year) {
+        console.log('year here', year.months)
         for (const month of year.months) {
           if (month.name === savedExpense.month) {
             //check if the day already exists
@@ -69,7 +90,7 @@ export const addExpense = async (
           }
         }
       }
-    }
+    }*/
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new BadRequestError('Invalid Request', error))

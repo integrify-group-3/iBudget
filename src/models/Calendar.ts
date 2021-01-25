@@ -6,12 +6,13 @@ import { ExpenseDocument } from './Expense'
 export type CalendarDocument = Document & {
     id: string;
     years: any;
-    months: string[];
-    month: object;
+    year: number;
+    months: any;
+    month: string;
     name: string;
     income: IncomeDocument[];
-    days: string[];
-    day: object;
+    days: any;
+    day: string;
     expenses: ExpenseDocument[];
     insertOne: Function;
     method: Function;

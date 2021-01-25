@@ -5,7 +5,7 @@ export type ExpenseDocument = Document & {
     category: string;
     description: string;
     amount: number;
-    date: Date;
+    date: string;
     month: string;
     year: number;
     delete: Function;

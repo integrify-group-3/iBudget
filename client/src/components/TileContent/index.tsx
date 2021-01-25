@@ -18,6 +18,7 @@ export default function TileContent({
   const classes = useStyles()
   const [day, setDay] = useState({} as DailyExpense)
   const [loadContent, setLoadContent] = useState(false)
+//   console.log('from tile content', viewMonth)
 //   console.log('tile loaded', tileLoaded)
   useEffect(() => {
     setTimeout(() => {
@@ -29,8 +30,8 @@ export default function TileContent({
             setDay(selectedDay)
             setLoadContent(true)
         }
-    }, 1000);  
-  }, [day])
+    }, 2000);  
+  }, [day, loadContent])
    
     if (view === 'month' && day !== undefined && loadContent) {
         //we only want to display the first expense on the tile content
@@ -49,7 +50,7 @@ export default function TileContent({
         >
           {day.expenses.map((e: any) => (
             <>
-              <li>{e.category}</li>
+              <li key={e._id}>{e.category}</li>
               <li>{e.amount}</li>
             </>
           ))}

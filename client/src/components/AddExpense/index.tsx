@@ -52,19 +52,21 @@ export default function AddExpense({
   setExpense,
   hideFormOnClick,
   closeForm,
-  updateDailyExpenses
+  updateDailyExpenses,
+  calendarData
 }: AddExpenseProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const updatedExpenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
-
+  console.log(day, calendarData.years)
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(expense);
+    console.log('from add expense', expense);
+    console.log(calendarData.years)
     dispatch(addExpense(expense))
     closeForm()
     setTimeout(() => {
-      // updateDailyExpenses(updatedExpenses)
+      updateDailyExpenses(updatedExpenses)
     }, 3000);
   };
 

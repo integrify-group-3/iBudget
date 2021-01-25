@@ -50,19 +50,24 @@ export function deleteExpense(expense: any): ExpensesActions {
   }
 
 const getDailyExpenses = async (data: any, expense: Expense) => {
-  console.log(data, expense)
   const { year, month, date } = expense
-  const foundYear = await data.years.find(
-    (y: CalendarScheduler) => y.year === year
-  )
-  const foundMonth = await foundYear.months.find(
-    (m: CalendarScheduler) => (m.name = month)
-  )
-  const selectedDay = await foundMonth.days.find(
-    (d: CalendarScheduler) =>
-      moment(d.day).format('LL') === moment(date).format('LL')
-  )
-  return selectedDay
+  try {
+    const foundYear = await data.years.find(
+        (y: CalendarScheduler) => y.year === year
+      )
+      const foundMonth = await foundYear.months.find(
+        (m: CalendarScheduler) => (m.name = month)
+      )
+      const selectedDay = await foundMonth.days.find(
+        (d: CalendarScheduler) => {
+           return moment(d.day).format('LL') === moment(date).format('LL')
+        }
+      )
+      return selectedDay
+  } catch(err) {
+      console.log(err)
+  }
+  
 }
 
 export function fetchExpenses() {
@@ -103,13 +108,14 @@ export function fetchExpenses() {
 }
 
 export function addExpense(expense: any) {
-  console.log('from actions add expense', expense)
+//   console.log('from actions add expense', expense)
   const url = 'http://localhost:3000/api/v1/expense'
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.post(url, expense, tokenConfig(getState))
       console.log(res.data)
       const foundDay = await getDailyExpenses(res.data, expense)
+      console.log('found day to pass to reducer', foundDay)
       dispatch(addNewExpense(foundDay))
     } catch (err) {
       console.log(err)
