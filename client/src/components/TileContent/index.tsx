@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
       width: '8rem',
       position: 'absolute',
       backgroundColor: 'white',
-      boxShadow: '0 2rem 2rem rgba(15, 15, 15, 0.4)',
+      boxShadow: '0 1rem 1rem rgba(15, 15, 15, 0.4)',
       listStyle: 'none',
       top: '-30%',
       border: '1px solid lightgrey',

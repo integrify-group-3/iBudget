@@ -102,10 +102,19 @@ export default function AddExpense({
                 required={true}
               >
                 <MenuItem value="housing">Housing</MenuItem>
-                <MenuItem value="transport">Transport</MenuItem>
+                <MenuItem value="transportation">Transportation</MenuItem>
+                <MenuItem value="food">Food</MenuItem>
+                <MenuItem value="utilities">Utilities</MenuItem>
+                <MenuItem value="clothing">Clothing</MenuItem>
                 <MenuItem value="sports">Sports</MenuItem>
                 <MenuItem value="entertainment">Entertainment</MenuItem>
-                <MenuItem value="travel">Travel</MenuItem>
+                <MenuItem value="healthcare">Healthcare</MenuItem>
+                <MenuItem value="insurance">Insurance</MenuItem>
+                <MenuItem value="supplies">Household/Supplies</MenuItem>
+                <MenuItem value="education">Education</MenuItem>
+                <MenuItem value="debt">Debt/Loans</MenuItem>
+                <MenuItem value="savings">Savings</MenuItem>
+                <MenuItem value="holiday">Holiday</MenuItem>
               </Select>
             </div>
 
