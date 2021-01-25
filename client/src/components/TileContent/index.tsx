@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   previewExpenses: {
       minHeight: '5.6rem',
-      width: '7.7rem',
+      width: '8rem',
       position: 'absolute',
       backgroundColor: 'white',
       boxShadow: '0 2rem 2rem rgba(15, 15, 15, 0.4)',
@@ -31,10 +31,17 @@ const useStyles = makeStyles((theme) => ({
       border: '1px solid lightgrey',
       display: 'flex',
       justifyContent: 'space-evenly',
-      alignItems: 'center',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
       padding: '2.3rem 2rem',
       fontSize: '13px',
       borderRadius: '3px'
+  },
+  previewExpensesItem: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      flexDirection: 'column',
+      alignItems: 'center',
 
   }
 }))
@@ -94,8 +101,7 @@ export default function TileContent({
             <ul className={classes.previewExpenses}>
                  {day.expenses.map((e: any) => (
             <>
-              <li key={e._id}>{e.category}</li>
-              <li>{e.amount}</li>
+              <li key={e._id} className={classes.previewExpensesItem}>{e.category} {e.amount}</li>
             </>
           ))}
             </ul>

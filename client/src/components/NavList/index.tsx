@@ -48,7 +48,7 @@ export const mainListItems = (
         <ListItemText primary="Income" />
       </ListItem>
     </NavLink>
-    <NavLink to="/expenses">
+    <NavLink to="/expenses" style={linkStyle}>
       <ListItem button>
         <ListItemIcon>
           <MoneyOffIcon style={navIconStyle} />
@@ -56,7 +56,7 @@ export const mainListItems = (
         <ListItemText primary="Expenses" />
       </ListItem>
     </NavLink>
-    <NavLink to="/analytics">
+    <NavLink to="/analytics" style={linkStyle}>
       <ListItem button>
         <ListItemIcon>
           <TrendingUpIcon style={navIconStyle} />
@@ -64,7 +64,7 @@ export const mainListItems = (
         <ListItemText primary="Analytics" />
       </ListItem>
     </NavLink>
-    <NavLink to="/profile">
+    <NavLink to="/profile" style={linkStyle}>
       <ListItem button>
         <ListItemIcon>
           <PersonIcon style={navIconStyle} />
