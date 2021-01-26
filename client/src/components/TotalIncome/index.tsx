@@ -35,7 +35,7 @@ export default function TotalIncome({ month, year, monthlyIncome }: TotalIncomeP
   return (
     <React.Fragment>
       <Title>
-        Total {month} {year}
+        Total Income {month} {year}
       </Title>
       <Typography component="p" variant="h4">
         {income}

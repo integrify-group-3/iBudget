@@ -42,7 +42,7 @@ export default function TotalExpenses({
   return (
     <React.Fragment>
       <Title>
-        Total {month} {year}
+        Total Expenses {month} {year}
       </Title>
       <Typography component="p" variant="h4">
         €{totalExpenses} 
