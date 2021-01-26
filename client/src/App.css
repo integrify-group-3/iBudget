@@ -4,13 +4,10 @@
   overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 :root {
   --primary: #865CFF;
+  position: relative;
+
 }
 
 @media (prefers-reduced-motion: no-preference) {

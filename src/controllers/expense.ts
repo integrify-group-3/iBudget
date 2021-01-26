@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
+import moment from 'moment'
 
 import { RequestUser } from '../middlewares/authorized'
 import { ExpenseDocument } from '../models/Expense'
@@ -6,7 +7,6 @@ import Expense from '../models/Expense'
 import ExpenseService from '../services/expense'
 import CalendarService from '../services/calendar'
 import { DayObj } from '../models/Calendar'
-import moment from 'moment'
 
 import {
   NotFoundError,

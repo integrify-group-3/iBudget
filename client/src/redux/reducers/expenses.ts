@@ -2,6 +2,7 @@ import {
     ExpensesState,
     GET_EXPENSES,
     ADD_EXPENSE,
+    EDIT_EXPENSE,
     DELETE_EXPENSE,
     ExpensesActions,
     Expense,
@@ -14,6 +15,7 @@ import {
       calendar: {} as CalendarScheduler,
       selectedMonth: {},
       dailyExpenses: {} as DailyExpense,
+      expenses: [] as Expense[]
     },
     action: ExpensesActions
   ): ExpensesState {
@@ -35,6 +37,13 @@ import {
             ...state,
             dailyExpenses: expense
           }
+          case EDIT_EXPENSE:
+            console.log('from reducer', action.payload)
+            return {
+              ...state,
+              dailyExpenses: action.payload.expense
+              
+            }
       default:
         return state
     }

@@ -15,11 +15,12 @@ import {
   CalendarScheduler,
   DateView,
   DailyExpense,
+  Expense,
   ViewMonth,
 } from '../../types'
 
 import useExpenses from '../../hooks/useExpenses'
-import { months, date, year } from '../../utils/dateValues'
+import { months, date, year, currentMonth } from '../../utils/dateValues'
 import TotalExpenses from '../../components/TotalExpenses'
 import ExpensesTable from '../../components/ExpensesTable'
 import TileContent from '../../components/TileContent'
@@ -58,6 +59,23 @@ const useStyles = makeStyles((theme) => ({
   chartHeightPaper: {
     height: 550,
   },
+  addExpenseContainer: {
+    backgroundColor: 'rgba(75, 50, 50, 0.6)',
+    position: 'absolute',
+    height: '100vh',
+    width: '100vw',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    top: '0',
+    left: '0'
+  },
+  addExpenseFormContainer: {
+    position: 'fixed'
+
+  }
+
 }))
 
 export default function ExpensesPage(props: any) {
@@ -66,6 +84,8 @@ export default function ExpensesPage(props: any) {
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
+  const expenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
+  console.log('calling from app state Expenses', expenses)
   const [selected, setSelected] = useState()
   const [
     err,
@@ -84,7 +104,7 @@ export default function ExpensesPage(props: any) {
     income: [],
     days: [{ day: '', expenses: [] }],
   } as ViewMonth)
- 
+  const switchMonth = {} as ViewMonth
   const [schedule, setSchedule] = useState({
     day: '',
     expenses: [],
@@ -94,46 +114,38 @@ export default function ExpensesPage(props: any) {
     year: 0,
     month: '',
   } as DateView)
-
+  
   const [expense, setExpense] = useState({
     category: '',
     description: '',
     amount: 0,
     date: '',
-    month: month,
-    year: year,
-  })
+    month: '',
+    year: 0,
+  } as Expense)
+  
   const { category, description, amount } = expense
-
-  const setDefaultCalendar = async () => {
-    try {
-      // console.log('from hooks', selectedMonth)
-      setViewMonth(defaultMonth)
-
-      // console.log('from async set default', viewMonth)
-    } catch (err) {
-      console.log(err)
-    }
-  }
 
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-      setDateView(defaultDateView as DateView)
-      setViewMonth(defaultMonth)
-
-      // console.log(dateView)
-      // setDefaultCalendar()
+        console.log('calling from useEffect Expense from default view')
+        setDateView(defaultDateView as DateView)
+        setViewMonth(defaultMonth)
+        setExpense({
+          ...expense,
+          date: date,
+          year: year,
+          month: currentMonth,
+        })
+        
     }
   }, [dateView, viewMonth, calendarData, defaultMonth])
-
 
   const onChange = (e: any) => {
     console.log('calling from onchange')
     setCalendarDate(calendarDate)
-    console.log(calendarData.years)
-    console.log(calendarDate)
   }
 
   const showFormOnClick = () => {
@@ -148,36 +160,10 @@ export default function ExpensesPage(props: any) {
     setIsFormShowing(false)
   }
 
-  const updateDailyExpenses = (updatedExpenses: any) => {
-    console.log('update expenses', updatedExpenses)
-    setDailyExpense(updatedExpenses)
-  }
-
-  const switchCalendarView = async (date: string, selectedYear: any, clickedMonth: any) => {
-    try {
-      console.log(calendarData)
-      console.log(date, selectedYear, clickedMonth)
-      setIsFormShowing(false)
-      //this will set the day, year and month to the expense in case we will add a new new one for the day
-      dateView.year = selectedYear
-      dateView.month = clickedMonth
-      // setDateView({year: selectedYear, month: months[currentIndex]})
-      // console.log('date view', dateSwitch)
-      
-      const foundYear = await calendarData.years.find(
-        (y: any) => y.year === selectedYear
-      )
-      console.log(foundYear)
-      const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === clickedMonth
-      )
-      viewMonth.name = foundMonth.name
-      viewMonth.income = foundMonth.income
-      viewMonth.days = foundMonth.days
-    
-    } catch (err) {
-      console.log(err)
-    }
+  const updateDailyExpenses = () => {
+    console.log('update expenses', expense)
+    setDailyExpense(expense as unknown as DailyExpense)
+    console.log(dailyExpense)
   }
 
   const findYearOnExpenses = (selectedYear: number) => {
@@ -208,7 +194,7 @@ export default function ExpensesPage(props: any) {
       setExpense({
         ...expense,
         date: e,
-        year: year,
+        year: selectedYear,
         month: clickedMonth,
       })
       // console.log('expense', expense)
@@ -219,9 +205,9 @@ export default function ExpensesPage(props: any) {
       console.log(foundMonth)
       
       //we should not modify the state directly but now it's to make it work
-      viewMonth.name = foundMonth.name
-      viewMonth.income = foundMonth.income
-      viewMonth.days = foundMonth.days
+      switchMonth.name = foundMonth.name
+      switchMonth.income = foundMonth.income
+      switchMonth.days = foundMonth.days
       //this is the proper way
       // setViewMonth(foundMonth);
       // console.log('view month from select day', viewMonth)
@@ -249,7 +235,6 @@ export default function ExpensesPage(props: any) {
   }
 
   const switchMonthOnClick = async (e: any) => {
-    console.log(calendarData.years)
     console.log(e.activeStartDate.getFullYear())
     const selectedYear = e.activeStartDate.getFullYear()
     const currentIndex = e.activeStartDate.getMonth()
@@ -271,9 +256,6 @@ export default function ExpensesPage(props: any) {
       console.log(err)
     }
     // switchCalendarView(e.activeStartDate, selectedYear, clickedMonth)
-  }
-  const removeExpense = () => {
-    setTimeout(() => {}, 1000)
   }
  
   return (
@@ -309,7 +291,22 @@ export default function ExpensesPage(props: any) {
 
             <Grid item xs={12} md={6}>
               <Paper className={fixedHeightPaper}>
-                {isFormShowing ? (
+                  <ExpensesTable
+                    day={isDayClicking ? schedule.day : date}
+                    dailyExpense={
+                      isDayClicking
+                        ? dailyExpense
+                        : (expensesData as DailyExpense)
+                    }
+                    updateDailyExpenses={updateDailyExpenses}
+                    updateEditedExpenses={updateDailyExpenses}
+                    showFormOnClick={showFormOnClick}
+                  />
+              </Paper>
+            </Grid>
+            {isFormShowing &&
+            <Grid item xs={12} md={12} lg={12} className={classes.addExpenseContainer}>
+              <Paper className={classes.addExpenseFormContainer}>
                   <AddExpense
                     expense={expense}
                     day={isDayClicking ? schedule.day : date}
@@ -322,20 +319,9 @@ export default function ExpensesPage(props: any) {
                     updateDailyExpenses={updateDailyExpenses}
                     calendarData={calendarData}
                   />
-                ) : (
-                  <ExpensesTable
-                    day={isDayClicking ? schedule.day : date}
-                    dailyExpense={
-                      isDayClicking
-                        ? dailyExpense
-                        : (expensesData as DailyExpense)
-                    }
-                    updateDailyExpenses={updateDailyExpenses}
-                    showFormOnClick={showFormOnClick}
-                  />
-                )}
               </Paper>
-            </Grid>
+              </Grid>
+            }
 
             <Grid item xs={10} md={6}>
               <Calendar
@@ -350,7 +336,7 @@ export default function ExpensesPage(props: any) {
                   <TileContent
                     date={date}
                     view={view}
-                    viewMonth={viewMonth}
+                    viewMonth={isDayClicking ? switchMonth : viewMonth}
                   />
                 )}
               />

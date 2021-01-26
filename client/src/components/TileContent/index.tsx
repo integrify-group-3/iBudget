@@ -72,7 +72,7 @@ export default function TileContent({
                 setTileLoaded(true)
             }
         }
-    }, 2000);  
+    }, 1500);  
   }, [day, loadContent, tileLoaded])
 
   useEffect(() => {

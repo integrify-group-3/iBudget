@@ -1,88 +1,97 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux"
-import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import moment from 'moment';
-import ClearIcon from '@material-ui/icons/Clear';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
+import InputLabel from '@material-ui/core/InputLabel'
+import TextField from '@material-ui/core/TextField'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import moment from 'moment'
+import ClearIcon from '@material-ui/icons/Clear'
 
-import { AppState, AddExpenseProps, Expense } from '../../types'
-import { addExpense } from '../../redux/actions/expenses'
+import { AppState, Expense, EditExpenseProps, DailyExpense } from '../../types'
+import { updateExpense } from '../../redux/actions/expenses'
 import SaveButton from '../SaveButton'
-import CancelButton from '../CancelButton'
+import { setTimeout } from 'timers'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
+    '& > *': {
       margin: theme.spacing(1),
-      width: "25ch",
+      width: '25ch',
     },
   },
   modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '1px solid rgba(184, 173, 173, 0.6)',
+    border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    borderRadius: '5px'
   },
   header: {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
-  input: {
-    width: '22rem'
-  },
-  select: {
-    width: '20.5rem',
+  clear: {
+    cursor: 'pointer',
   },
   save: {
     border: 'none',
-    background: 'none'
-  }
-}));
+    background: 'none',
+  },
+}))
 
-export default function AddExpense({
-  expense,
+export default function EditExpense({
+  expenseId,
   day,
-  category,
-  description,
-  amount,
-  setExpense,
   hideFormOnClick,
-  closeForm,
-  updateDailyExpenses,
-  calendarData
-}: AddExpenseProps) {
+  dailyExpense,
+  updateEditedExpenses,
+}: EditExpenseProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const updatedExpenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
-  console.log(day, calendarData.years)
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log('from add expense', expense);
-    console.log(calendarData.years)
-    dispatch(addExpense(expense as Expense))
-    closeForm()
-    setTimeout(() => {
-      updateDailyExpenses()
-    }, 3000);
-  };
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setExpense({ ...expense, [name]: value });
-  };
+  const updatedExpenses = useSelector(
+    (state: AppState) => state.expenses.dailyExpenses
+  )
+  const [expense, setExpense] = useState({
+    category: '',
+    description: '',
+    amount: 0,
+    date: '',
+    month: '',
+    year: 0,
+  })
+  const { category, description, amount } = expense
 
   useEffect(() => {
-    console.log('calling back from here', updatedExpenses)
-  }, [])
+    const foundExpense = dailyExpense.expenses.find(
+      (exp: any) => exp._id === expenseId
+    )
+    setExpense(foundExpense as Expense)
+  }, [updatedExpenses])
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    dispatch(updateExpense(expense, expenseId))
+    hideFormOnClick(e)
+    setTimeout(() => {
+        console.log('updating expense', updatedExpenses)
+        // updateEditedExpenses(updatedExpenses)
+    }, 2000);
+    // updateExpenses()
+  }
+  useEffect(() => {
+    console.log(updatedExpenses)
+  }, [updatedExpenses])
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target
+    setExpense({ ...expense, [name]: value })
+  }
 
   return (
     <div>
@@ -90,16 +99,18 @@ export default function AddExpense({
         <div className="form-container">
           <h3>{moment(day).format('LL')}</h3>
           <form onSubmit={handleSubmit} className={classes.root}>
-            <h4>New Expense</h4>
+            <div className={classes.header}>
+              <ClearIcon className={classes.clear} onClick={hideFormOnClick} />
+            </div>
+            <h4>Edit Expense</h4>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
-                  Select category
-                  </InputLabel>
+                Select category
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 name="category"
-                className={classes.select}
                 // size="small"
                 value={category}
                 onChange={handleChange}
@@ -128,10 +139,8 @@ export default function AddExpense({
                 variant="outlined"
                 label="description (rent, car)"
                 onChange={handleChange}
-                className={classes.input}
                 name="description"
                 value={description}
-                required={true}
               />
             </div>
 
@@ -142,19 +151,16 @@ export default function AddExpense({
                 variant="outlined"
                 label="amount"
                 onChange={handleChange}
-                className={classes.input}
                 name="amount"
                 value={amount}
-                required={true}
               />
             </div>
-            <button className={classes.save}><SaveButton /></button>
-            <button className={classes.save} onClick={hideFormOnClick}><CancelButton /></button>
+            <button className={classes.save}>
+              <SaveButton />
+            </button>
           </form>
         </div>
       </div>
-      {/* </Fade> */}
-      {/* </Modal>  */}
     </div>
-  );
+  )
 }

@@ -9,6 +9,7 @@ import {
 } from '../types'
 import { fetchExpenses } from '../redux/actions/expenses'
 import { year, currentMonth } from '../utils/dateValues'
+import { setTimeout } from 'timers'
 
 export default function useExpenses() {
   const dispatch = useDispatch()
@@ -37,12 +38,13 @@ export default function useExpenses() {
     if (err) {
       setErr(errMessage as any)
     }
+    console.log('from app state useExpenses', expenses)
     setExpensesData(expenses)
+    console.log('from user expenses', expensesData)
     setCalendarData(calendar)
     setDefaultMonth(selectedMonth)
     // console.log(defaultMonth)
     setDateView({ year: year, month: currentMonth })
-    console.log('from user epenses', expensesData)
   }, [expenses, calendar, calendarData, selectedMonth, defaultMonth])
   
   return [
