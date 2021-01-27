@@ -18,6 +18,7 @@ export const ADD_INCOME = 'ADD_INCOME'
 //expenses action types
 export const GET_EXPENSES = 'GET_EXPENSES'
 export const ADD_EXPENSE = 'ADD_EXPENSE'
+export const EDIT_EXPENSE = 'EDIT_EXPENSE'
 export const DELETE_EXPENSE = 'DELETE_EXPENSE'
 
 // Enum
@@ -89,7 +90,9 @@ export type Expense = {
   category: string
   description: string
   amount: number
-  date: Date
+  //change this later
+  date: any
+  // date: string | Date
   year: number
   month: string
 }
@@ -103,7 +106,7 @@ export type AddIncomeProps = {
 }
 
 export type AddIncomeBtnProps = {
-  handleOpen: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export type CalendarScheduler = {
@@ -136,7 +139,6 @@ export type DateView = {
   year: number
 }
 
-
 export type DailyExpense = {
   day: string
   expenses: Expense[]
@@ -155,9 +157,11 @@ export type ViewMonth = {
 }
 export type ExpensesTableProps = {
   day: string | Date
+  // day: any
   dailyExpense: DailyExpense
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   updateDailyExpenses: Function
+  updateEditedExpenses: Function
 }
 
 export type TotalExpensesProps = {
@@ -166,6 +170,9 @@ export type TotalExpensesProps = {
   monthExpenses: any
 }
 
+export type AddExpenseBtnProps = {
+  showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+}
 export type AddExpenseProps = {
   expense: object
   setExpense: any
@@ -173,10 +180,18 @@ export type AddExpenseProps = {
   category: string
   description: string
   amount: number
-  hideFormOnClick: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
+  hideFormOnClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   closeForm: Function
   updateDailyExpenses: Function
   calendarData: CalendarScheduler
+}
+
+export type EditExpenseProps = {
+  expenseId: string
+  day: string | Date
+  hideFormOnClick: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
+  dailyExpense: DailyExpense
+  updateEditedExpenses: Function
 }
 
 export type RegisterFailAction = {
@@ -245,14 +260,21 @@ export type GetExpensesAction = {
 export type AddExpenseAction = {
   type: typeof ADD_EXPENSE
   payload: {
-    expense: any
+    expense: DailyExpense
+  }
+}
+
+export type EditExpenseAction = {
+  type: typeof EDIT_EXPENSE
+  payload: {
+    expense: DailyExpense
   }
 }
 
 export type DeleteExpenseAction = {
   type: typeof DELETE_EXPENSE
   payload: {
-    expense: any
+    expense: DailyExpense
   }
 }
 
@@ -275,6 +297,7 @@ export type IncomeActions =
   export type ExpensesActions = 
   | GetExpensesAction
   | AddExpenseAction
+  | EditExpenseAction
   | DeleteExpenseAction
 
 export type UserState = {

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import Fade from '@material-ui/core/Fade'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -13,7 +9,6 @@ import Select from '@material-ui/core/Select'
 import { AppState, AddIncomeProps } from '../../types'
 import { addIncome } from '../../redux/actions/income'
 import SaveButton from '../SaveButton'
-import { fetchIncome } from '../../redux/actions/income'
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -59,22 +54,25 @@ export default function AddIncome({
     year: year,
     month: month,
   })
+  console.log('from add income', income)
   const { category, description, amount } = income
-
+/*
   useEffect(() => {
     updateMonthlyIncome(updatedIncome)
     console.log(updatedIncome)
   }, [])
   console.log(updatedIncome)
-
+*/
   const handleSubmit = (e: any) => {
     e.preventDefault()
     dispatch(addIncome(income))
+    
     handleClose()
+    /*
     setTimeout(() => {
       console.log('income should update here', updatedIncome)
       updateMonthlyIncome(updatedIncome)
-    }, 3000)
+    }, 3000)*/
   }
 
   const handleChange = (e: any) => {
@@ -83,6 +81,7 @@ export default function AddIncome({
       ...income,
       [name]: value,
     })
+    console.log(income)
   }
   return (
     <div>

@@ -19,7 +19,7 @@ export default function useExpenses() {
   const selectedMonth = useSelector(
     (state: AppState) => state.expenses.selectedMonth
   )
-  const [expensesData, setExpensesData] = useState({} as DailyExpense)
+  const [expensesData, setExpensesData] = useState({day: '', expenses: []} as DailyExpense)
   const [calendarData, setCalendarData] = useState({} as CalendarScheduler)
   const [defaultMonth, setDefaultMonth] = useState()
   const [err, setErr] = useState(null)
@@ -38,11 +38,10 @@ export default function useExpenses() {
       setErr(errMessage as any)
     }
     setExpensesData(expenses)
+    // console.log('from user expenses', expensesData)
     setCalendarData(calendar)
     setDefaultMonth(selectedMonth)
-    // console.log(defaultMonth)
     setDateView({ year: year, month: currentMonth })
-    console.log('from user epenses', expensesData)
   }, [expenses, calendar, calendarData, selectedMonth, defaultMonth])
   
   return [

@@ -13,7 +13,7 @@ export default function useIncome() {
   const [calendarData, setCalendarData] = useState({} as CalendarScheduler)
 
   const [err, setErr] = useState(null)
-  const [dateView, setDateView] = useState({
+  const [defaultDateView, setDefaultDateView] = useState({
     year: 0,
     month: '',
   } as DateView)
@@ -29,9 +29,9 @@ export default function useIncome() {
     }
     setIncomeData(income)
     setCalendarData(calendar)
-    setDateView({ year: year, month: currentMonth })
-    console.log(incomeData)
+    setDefaultDateView({ year: year, month: currentMonth })
+    console.log(defaultDateView)
   }, [income, calendar, calendarData])
 
-  return [err, incomeData, dateView, calendar]
+  return [err, incomeData, defaultDateView, calendar]
 }

@@ -16,12 +16,12 @@ export const isAuthorized = async (
 
   try {
     //verify token
-    console.log(token, req.header)
+    // console.log(token, req.header)
     const decoded = jwt.verify(token, JWT_SECRET)
     //Add user from payload
     req.user = decoded
 
-    console.log('this is req.user from middleware', req.user)
+    // console.log('this is req.user from middleware', req.user)
 
     next()
   } catch (e) {

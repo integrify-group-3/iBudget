@@ -2,9 +2,9 @@ import {
     ExpensesState,
     GET_EXPENSES,
     ADD_EXPENSE,
+    EDIT_EXPENSE,
     DELETE_EXPENSE,
     ExpensesActions,
-    Expense,
     CalendarScheduler,
     DailyExpense,
   } from '../../types'
@@ -35,6 +35,13 @@ import {
             ...state,
             dailyExpenses: expense
           }
+          case EDIT_EXPENSE:
+            console.log('from reducer', action.payload)
+            return {
+              ...state,
+              dailyExpenses: action.payload.expense
+              
+            }
       default:
         return state
     }

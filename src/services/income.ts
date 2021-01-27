@@ -29,6 +29,7 @@ function updateIncome(incomeId: string, update: Partial<IncomeDocument>): Promis
         if(update.amount) {
             income.amount = update.amount
         }
+        //these cannot be edited in frontend, are just to test backend API
         if(update.month) {
             income.month = update.month
         }

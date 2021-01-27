@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
+import moment from 'moment'
 
 import { RequestUser } from '../middlewares/authorized'
 import { ExpenseDocument } from '../models/Expense'
@@ -6,7 +7,6 @@ import Expense from '../models/Expense'
 import ExpenseService from '../services/expense'
 import CalendarService from '../services/calendar'
 import { DayObj } from '../models/Calendar'
-import moment from 'moment'
 
 import {
   NotFoundError,
@@ -52,12 +52,10 @@ export const addExpense = async (
       foundYear,
       savedExpense
     )
-    console.log('found month', foundMonth)
     const foundDay = await CalendarService.findCalendarExpenseByDay(
       foundMonth,
       req.body.date
     )
-    console.log('found day', foundDay)
     if (!foundDay) {
       //if the day is found add the epxense to the day array
       const dayObj = {} as DayObj
@@ -108,13 +106,7 @@ export const updateExpense = async (
       foundMonth,
       updatedExpense.date
     )
-
-    const foundExpense = foundDay.expenses.find((e: ExpenseDocument) => {
-      return e._id.equals(expenseId)
-    })
-    foundExpense.category = updatedExpense.category
-    foundExpense.description = updatedExpense.description
-    foundExpense.amount = updatedExpense.amount
+    CalendarService.updateCalendarExpense(expenseId, foundDay, updatedExpense)
     const updatedCalendar = await CalendarService.saveUpdatedCalendarExpense(
       calendar
     )
@@ -155,7 +147,6 @@ export const deleteExpense = async (
       return e._id.equals(expenseId)
     })
     foundDay.expenses.splice(expenseIndex, 1)
-
     expense.delete()
     const updatedCalendar = await CalendarService.saveUpdatedCalendarExpense(
       calendar

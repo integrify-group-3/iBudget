@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -13,13 +13,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddIncomeBtn({ handleOpen }: AddIncomeBtnProps) {
+export default function AddIncomeBtn({ showFormOnClick }: AddIncomeBtnProps) {
   const classes = useStyles();
   return (
-        // <Button variant="contained" size="small" color="primary" className={classes.margin} onClick={handleOpen}>
-        //   Add Income
-        // </Button>
-        <div></div>
+        <Button variant="contained" size="small" color="primary" className={classes.margin} onClick={showFormOnClick}>
+           Add Income
+        </Button>
    
   );
 }
