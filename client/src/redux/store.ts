@@ -45,9 +45,12 @@ export default function makeStore(initialState = initState) {
     }
   }
 
+  const temp = localStorage.getItem('reduxState')
+  const persistedState = temp ? JSON.parse(temp) : {}
+
   const store = createStore(
     createRootReducer(),
-    initialState,
+    persistedState,
     composeEnhancers(applyMiddleware(...middlewares))
   )
 
@@ -60,5 +63,8 @@ export default function makeStore(initialState = initState) {
     })
   }
 
+  store.subscribe(() => {
+    localStorage.setItem('reduxState', JSON.stringify(store.getState()))
+  })
   return store
 }
