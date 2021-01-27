@@ -315,7 +315,6 @@ export type ExpensesState = {
   calendar: CalendarScheduler
   dailyExpenses: DailyExpense
   selectedMonth: any
-  expenses: Expense[]
 } 
 
 export type ErrorState = {

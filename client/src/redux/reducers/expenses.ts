@@ -5,7 +5,6 @@ import {
     EDIT_EXPENSE,
     DELETE_EXPENSE,
     ExpensesActions,
-    Expense,
     CalendarScheduler,
     DailyExpense,
   } from '../../types'
@@ -15,7 +14,6 @@ import {
       calendar: {} as CalendarScheduler,
       selectedMonth: {},
       dailyExpenses: {} as DailyExpense,
-      expenses: [] as Expense[]
     },
     action: ExpensesActions
   ): ExpensesState {
