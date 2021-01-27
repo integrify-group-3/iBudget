@@ -91,7 +91,7 @@ export const registerUser = ({ firstName, lastName, email, password }: any) => {
 export const tokenConfig = (getState: any) => {
   //gets the token from localstorage
   const token = getState().user.token
-  console.log(token)
+  // console.log(token)
   const config = {
     headers: {
       'Content-type': 'application/json',

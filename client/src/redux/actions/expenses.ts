@@ -112,12 +112,12 @@ export function fetchExpenses() {
 }
 
 export function addExpense(expense: Expense) {
-  //   console.log('from actions add expense', expense)
+  console.log('from actions add expense', expense)
   const url = 'http://localhost:5000/api/v1/expense'
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.post(url, expense, tokenConfig(getState))
-      console.log(res.data)
+      console.log(res)
       const foundDay = await getDailyExpenses(res.data, expense)
       console.log('found day to pass to reducer', foundDay)
       dispatch(addNewExpense(foundDay))
@@ -128,7 +128,7 @@ export function addExpense(expense: Expense) {
 }
 
 export function updateExpense(expense: Expense, expenseId: string) {
-  console.log('from actions edit expense', expense)
+  // console.log('from actions edit expense', expense)
   const url = `http://localhost:5000/api/v1/expense/${expenseId}`
   return async (dispatch: Dispatch, getState: any) => {
     try {

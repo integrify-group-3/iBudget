@@ -77,18 +77,16 @@ export default function Dashboard(props: any) {
     days: [{ day: '', expenses: [] }],
   } as ViewMonth)
 
-  console.log('user here', user)
+  // console.log('user here', user)
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
       setDateView(defaultDateViewExpenses as DateView)
-      setViewMonth(defaultDateViewExpenses)
-      console.log(viewMonth)
+      setViewMonth(defaultMonth)
     }
   }, [dateView, viewMonth, calendarExpensesData, defaultMonth])
   
-  console.log(isAuthenticated)
   return (
     <div className={classes.root}>
       <CssBaseline />

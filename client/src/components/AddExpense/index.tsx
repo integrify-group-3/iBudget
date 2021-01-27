@@ -6,10 +6,9 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import moment from 'moment';
-import ClearIcon from '@material-ui/icons/Clear';
 
 import { AppState, AddExpenseProps, Expense } from '../../types'
-import { addExpense } from '../../redux/actions/expenses'
+import { addExpense, fetchExpenses } from '../../redux/actions/expenses'
 import SaveButton from '../SaveButton'
 import CancelButton from '../CancelButton'
 
@@ -63,11 +62,10 @@ export default function AddExpense({
   const classes = useStyles()
   const dispatch = useDispatch()
   const updatedExpenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
-  console.log(day, calendarData.years)
+  console.log(expense)
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log('from add expense', expense);
-    console.log(calendarData.years)
+    // console.log('from add expense', expense);
     dispatch(addExpense(expense as Expense))
     closeForm()
     setTimeout(() => {
@@ -78,11 +76,12 @@ export default function AddExpense({
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setExpense({ ...expense, [name]: value });
+    console.log(expense)
   };
 
   useEffect(() => {
-    console.log('calling back from here', updatedExpenses)
-  }, [])
+    // console.log('calling back from here', updatedExpenses)
+  }, [updatedExpenses])
 
   return (
     <div>

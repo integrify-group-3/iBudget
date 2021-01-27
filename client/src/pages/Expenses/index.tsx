@@ -85,7 +85,6 @@ export default function ExpensesPage(props: any) {
     (state: AppState) => state.user.isAuthenticated
   )
   const expenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
-  console.log('calling from app state Expenses', expenses)
   const [selected, setSelected] = useState()
   const [
     err,
@@ -96,7 +95,6 @@ export default function ExpensesPage(props: any) {
   ] = useExpenses()
   const [calendarDate, setCalendarDate] = useState(date)
   const [isFormShowing, setIsFormShowing] = useState(false)
-  const [month, setMonth] = useState('')
   const [dailyExpense, setDailyExpense] = useState({} as DailyExpense)
   const [isDayClicking, setIsDayClicking] = useState(false)
   const [viewMonth, setViewMonth] = useState({
@@ -130,15 +128,18 @@ export default function ExpensesPage(props: any) {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-        console.log('calling from useEffect Expense from default view')
         setDateView(defaultDateView as DateView)
         setViewMonth(defaultMonth)
         setExpense({
-          ...expense,
-          date: date,
+          category: '',
+          description: '',
+          amount: 0,
+          date: moment(date).format('LL'),
           year: year,
           month: currentMonth,
         })
+        // console.log(calendarData.years, defaultDateView, defaultMonth)
+        console.log('expense from useEffect', expense)
         
     }
   }, [dateView, viewMonth, calendarData, defaultMonth])
@@ -146,6 +147,10 @@ export default function ExpensesPage(props: any) {
   const onChange = (e: any) => {
     console.log('calling from onchange')
     setCalendarDate(calendarDate)
+    console.log(calendarDate)
+    console.log(calendarData)
+    console.log(e)
+    console.log(e.getFullYear())
   }
 
   const showFormOnClick = () => {
@@ -161,9 +166,11 @@ export default function ExpensesPage(props: any) {
   }
 
   const updateDailyExpenses = () => {
-    console.log('update expenses', expense)
-    setDailyExpense(expense as unknown as DailyExpense)
-    console.log(dailyExpense)
+    console.log('update expenses', expenses)
+    setIsDayClicking(false)
+    console.log('update expenses', expensesData)
+    setDailyExpense(expenses)
+    // console.log(dailyExpense)
   }
 
   const findYearOnExpenses = (selectedYear: number) => {
@@ -192,17 +199,27 @@ export default function ExpensesPage(props: any) {
       // setDateView({year: selectedYear, month: months[currentIndex]})
       // console.log('date view', dateView)
       setExpense({
-        ...expense,
-        date: e,
+        category: '',
+        description: '',
+        amount: 0,
+        date: moment(e).format('LL'),
         year: selectedYear,
         month: clickedMonth,
       })
-      // console.log('expense', expense)
-      console.log('after setting date view', calendarData.years)
+      console.log('expense from selectDay', expense)
+      // console.log('after setting date view', calendarData.years)
     
-      const foundYear = await findYearOnExpenses(selectedYear)
-      const foundMonth = await findMonthOnExpenses(foundYear, clickedMonth)
-      console.log(foundMonth)
+      // const foundYear = await findYearOnExpenses(selectedYear)
+      // const foundMonth = await findMonthOnExpenses(foundYear, clickedMonth)
+      const foundYear = await calendarData.years.find(
+          (y: CalendarScheduler) => y.year === selectedYear
+        )
+      
+      const foundMonth = await foundYear.months.find(
+          (month: any) => month.name === clickedMonth
+        )
+  
+      // console.log(foundMonth)
       
       //we should not modify the state directly but now it's to make it work
       switchMonth.name = foundMonth.name
@@ -218,7 +235,7 @@ export default function ExpensesPage(props: any) {
       setIsDayClicking(true)
       if (selectedDay !== undefined) {
         setDailyExpense(selectedDay)
-        console.log(calendarData.years)
+        // console.log(calendarData.years)
       } else {
         setDailyExpense(schedule)
       }
@@ -233,8 +250,9 @@ export default function ExpensesPage(props: any) {
     // const currentIndex = e.getMonth()
     // console.log(selectedYear, months[currentIndex])
   }
-
+  
   const switchMonthOnClick = async (e: any) => {
+    console.log(calendarData.years)
     console.log(e.activeStartDate.getFullYear())
     const selectedYear = e.activeStartDate.getFullYear()
     const currentIndex = e.activeStartDate.getMonth()
@@ -243,11 +261,23 @@ export default function ExpensesPage(props: any) {
     dateView.year = selectedYear
     dateView.month = months[currentIndex]
     try {
-      const foundYear = await findYearOnExpenses(selectedYear)
-      const foundMonth = await findMonthOnExpenses(foundYear, clickedMonth)
-  
+      // const foundYear = await findYearOnExpenses(selectedYear)
+      // const foundMonth = await findMonthOnExpenses(foundYear, clickedMonth)
+      const foundYear = await calendarData.years.find(
+        (y: CalendarScheduler) => y.year === selectedYear
+      )
+      console.log(foundYear)
+    foundYear.months.forEach((month: any) => {
+      console.log(month)
+    });
+    const foundMonth = await foundYear.months.find(
+        (month: any) => month.name === clickedMonth
+      )
       //we should not modify the state directly but now it's to make it work
+      // console.log(foundMonth)
+      // console.log(viewMonth)
       viewMonth.name = foundMonth.name
+      // console.log(viewMonth)
       viewMonth.income = foundMonth.income
       viewMonth.days = foundMonth.days
       console.log(calendarData.years)
@@ -255,7 +285,6 @@ export default function ExpensesPage(props: any) {
     catch(err) {
       console.log(err)
     }
-    // switchCalendarView(e.activeStartDate, selectedYear, clickedMonth)
   }
  
   return (
@@ -325,18 +354,18 @@ export default function ExpensesPage(props: any) {
 
             <Grid item xs={10} md={6}>
               <Calendar
-                onChange={onChange}
+                // onChange={onChange}
                 value={calendarDate}
                 //   onClickYear={showYear}
                 // onClickMonth={showMonth}
-                onClickDay={showDayOnClick}
-                onActiveStartDateChange={switchMonthOnClick}
+                onChange={showDayOnClick}
+                // onActiveStartDateChange={switchMonthOnClick}
                 showNeighboringMonth={true}
                 tileContent={({ date, view }: any) => (
                   <TileContent
                     date={date}
                     view={view}
-                    viewMonth={isDayClicking ? switchMonth : viewMonth}
+                    viewMonth={viewMonth}
                   />
                 )}
               />

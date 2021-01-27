@@ -9,9 +9,9 @@ import Dashboard from '../pages/Dashboard'
 import Income from '../pages/Income'
 import Expenses from '../pages/Expenses'
 
-
-const Routes = () => (
-  <>
+const Routes = () => {
+  return (
+    <>
     <Navbar />
     <Switch>
       <Route exact path="/" component={Home} />
@@ -22,6 +22,8 @@ const Routes = () => (
       <Route exact path="/expenses" component={(props: any) => <Expenses {...props}/>} />
     </Switch>
   </>
-)
+  )
+ 
+}
 
 export default Routes
