@@ -102,7 +102,6 @@ export default function EditExpense({
             <div className={classes.header}>
               <ClearIcon className={classes.clear} onClick={hideFormOnClick} />
             </div>
-            <h4>Edit Expense</h4>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
                 Select category

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Title from '../Title'
@@ -36,7 +35,7 @@ export default function IncomeTable({
   const dispatch = useDispatch()
   const classes = useStyles()
   const [openForm, setOpenForm] = React.useState(false)
-  const handleOpen = () => {
+  const showFormOnClick = () => {
     setOpenForm(true)
   }
 
@@ -60,7 +59,7 @@ export default function IncomeTable({
             {month} {year}
           </Title>
           {monthlyIncome.length < 1 ? (
-            <Typography component="p" variant="h4">
+            <Typography component="p" variant="h5">
               No income registered
             </Typography>
           ) : (
@@ -85,8 +84,7 @@ export default function IncomeTable({
               </div>
             ))
           )}
-          {/* <AddIncomeBtn handleOpen={handleOpen} /> */}
-          <button onClick={handleOpen}>Add Income</button>
+          <AddIncomeBtn showFormOnClick={showFormOnClick} /> 
         </>
       ) : (
         <div>

@@ -52,10 +52,6 @@ function update(movieId: string, update: Partial<Movie>): Promise<Movie> {
 function deleteMovie(movieId: string): Promise<DeleteResult> {
   const MovieRepository = getRepository(Movie)
   return MovieRepository.delete(movieId)
-  /*  .createQueryBuilder()
-    .delete()
-    .where('id=:id', { id: movieId })
-    .execute() */
 }
 
 export default {

@@ -89,7 +89,6 @@ export default function AddExpense({
         <div className="form-container">
           <h3>{moment(day).format('LL')}</h3>
           <form onSubmit={handleSubmit} className={classes.root}>
-            <h4>New Expense</h4>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
                   Select category

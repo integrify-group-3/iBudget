@@ -42,10 +42,7 @@ export const addExpense = async (
   try {
     const { id } = req.user as RequestUser
     const newExpense = new Expense(req.body)
-    const { date } = req.body
-    console.log('date here', date)
     const savedExpense = await ExpenseService.createExpense(newExpense)
-    console.log('saved expense here', savedExpense)
     const calendar = await CalendarService.findCalendarByUserId(id)
     const foundYear = await CalendarService.findCalendarExpenseByYear(
       calendar,
@@ -59,19 +56,16 @@ export const addExpense = async (
       foundMonth,
       req.body.date
     )
-    console.log('found day', foundDay)
     if (!foundDay) {
       //if the day is found add the epxense to the day array
       const dayObj = {} as DayObj
       dayObj.day = req.body.date
       dayObj.expenses = []
       dayObj.expenses.push(savedExpense)
-      console.log('day obj', dayObj)
       foundMonth.days.push(dayObj)
     } else {
       //if the day exists we push to the expenses array of the day
       foundDay.expenses.push(savedExpense)
-      console.log('found day after pushing', foundDay)
     }
     const updatedCalendar = await CalendarService.saveUpdatedCalendarExpense(
       calendar
@@ -112,13 +106,7 @@ export const updateExpense = async (
       foundMonth,
       updatedExpense.date
     )
-
-    const foundExpense = foundDay.expenses.find((e: ExpenseDocument) => {
-      return e._id.equals(expenseId)
-    })
-    foundExpense.category = updatedExpense.category
-    foundExpense.description = updatedExpense.description
-    foundExpense.amount = updatedExpense.amount
+    CalendarService.updateCalendarExpense(expenseId, foundDay, updatedExpense)
     const updatedCalendar = await CalendarService.saveUpdatedCalendarExpense(
       calendar
     )
@@ -139,25 +127,19 @@ export const deleteExpense = async (
   try {
     const expenseId = req.params.id
     const expense = await ExpenseService.findExpenseById(expenseId)
-    console.log('expense id', expenseId)
-    console.log('expense id', expense)
-
     const { id } = req.user as RequestUser
     const calendar = await CalendarService.findCalendarByUserId(id)
     const foundYear = await CalendarService.findCalendarExpenseByYear(
       calendar,
       expense
     )
-    console.log('found year', foundYear)
     const foundMonth = await CalendarService.findCalendarExpenseByMonth(
       foundYear,
       expense
     )
-    console.log('found month', foundMonth)
     const foundDay = foundMonth.days.find((d: DayObj) => {
       return moment(d.day).format('LL') === moment(expense.date).format('LL')
     })
-    console.log('found day', foundDay)
     if (!foundDay) {
       res.status(404).json({ msg: 'Not Found' })
     }
@@ -165,7 +147,6 @@ export const deleteExpense = async (
       return e._id.equals(expenseId)
     })
     foundDay.expenses.splice(expenseIndex, 1)
-
     expense.delete()
     const updatedCalendar = await CalendarService.saveUpdatedCalendarExpense(
       calendar

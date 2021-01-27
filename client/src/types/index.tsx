@@ -106,7 +106,7 @@ export type AddIncomeProps = {
 }
 
 export type AddIncomeBtnProps = {
-  handleOpen: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export type CalendarScheduler = {
