@@ -25,23 +25,17 @@ import {
           ...state,
           calendar,
           dailyExpenses,
-          selectedMonth
+          selectedMonth,
         }
         case ADD_EXPENSE:
         case DELETE_EXPENSE:
+        case EDIT_EXPENSE:
           console.log('from reducer', action.payload)
           const { expense } = action.payload
           return {
             ...state,
-            dailyExpenses: expense
+            dailyExpenses: expense,
           }
-          case EDIT_EXPENSE:
-            console.log('from reducer', action.payload)
-            return {
-              ...state,
-              dailyExpenses: action.payload.expense
-              
-            }
       default:
         return state
     }

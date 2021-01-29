@@ -1,27 +1,31 @@
-import React, { useEffect } from "react";
-import Link from "@material-ui/core/Link";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import React, { useEffect } from 'react'
+import Link from '@material-ui/core/Link'
+import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 
 import { TotalIncomeProps } from '../../types'
-import Title from "../Title";
+import Title from '../Title'
 
 function preventDefault(event: any) {
-  event.preventDefault();
+  event.preventDefault()
 }
 
 const useStyles = makeStyles({
   depositContext: {
     flex: 1,
-  }
-});
+  },
+})
 
-export default function TotalIncome({ month, year, monthlyIncome }: TotalIncomeProps) {
-  const classes = useStyles();
+export default function TotalIncome({
+  month,
+  year,
+  monthlyIncome,
+}: TotalIncomeProps) {
+  const classes = useStyles()
 
   const calculateTotalIncome = () => {
     let count = 0
-    for(const income of monthlyIncome) {
+    for (const income of monthlyIncome) {
       const { amount } = income
       count += amount
     }
@@ -29,8 +33,8 @@ export default function TotalIncome({ month, year, monthlyIncome }: TotalIncomeP
   }
 
   useEffect(() => {
-    calculateTotalIncome()   
-  }, []);
+    calculateTotalIncome()
+  }, [])
   const income = calculateTotalIncome()
   return (
     <React.Fragment>
@@ -49,5 +53,5 @@ export default function TotalIncome({ month, year, monthlyIncome }: TotalIncomeP
         </Link>
       </div>
     </React.Fragment>
-  );
+  )
 }

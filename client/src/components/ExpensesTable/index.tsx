@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
-
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 
 import Title from '../Title'
 import AddExpenseBtn from '../../components/AddExpenseBtn'
@@ -31,6 +32,21 @@ const useStyles = makeStyles((theme) => ({
     color: 'red',
     cursor: 'pointer',
   },
+  addExpenseContainer: {
+    backgroundColor: 'rgba(75, 50, 50, 0.6)',
+    position: 'absolute',
+    height: '100vh',
+    width: '100vw',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    top: '0',
+    left: '17px'
+  },
+  addExpenseFormContainer: {
+    position: 'fixed'
+  }
 }))
 
 export default function ExpensesTable({
@@ -67,7 +83,7 @@ export default function ExpensesTable({
       <Title>Expenses for {moment(day).format('LL')}</Title>
       <Table size="small">
         {dailyExpense.expenses !== undefined &&
-        dailyExpense.expenses.length > 0 ? (
+        dailyExpense.expenses.length > 0 ? 
           <>
             <TableHead>
               <TableRow>
@@ -76,8 +92,9 @@ export default function ExpensesTable({
                 <TableCell>Amount</TableCell>
               </TableRow>
             </TableHead>
-            {editOpen ? (
-              <TableBody>
+            {editOpen &&
+               <Grid item xs={12} md={12} lg={12} className={classes.addExpenseContainer}>
+               <Paper className={classes.addExpenseFormContainer}>
                 <EditExpense
                   key={expenseId}
                   expenseId={expenseId}
@@ -86,8 +103,9 @@ export default function ExpensesTable({
                   hideFormOnClick={hideFormOnClick}
                   updateEditedExpenses={updateEditedExpenses}
                 />
-              </TableBody>
-            ) : (
+              </Paper>
+              </Grid>
+              }
               <TableBody>
                 {dailyExpense.expenses.map((expense: any) => {
                   const { _id, category, description, amount } = expense
@@ -112,19 +130,18 @@ export default function ExpensesTable({
                       </TableRow>
                     </>
                   )
-                })}
+                  })}
                 <div className={classes.addExpense}>
                   <AddExpenseBtn showFormOnClick={showFormOnClick} />
                 </div>
               </TableBody>
-            )}
           </>
-        ) : (
+         : 
           <>
             <p>No expenses recorded</p>
             <AddExpenseBtn showFormOnClick={showFormOnClick} />
           </>
-        )}
+        }
       </Table>
     </React.Fragment>
   )

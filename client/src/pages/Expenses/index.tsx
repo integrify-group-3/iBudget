@@ -20,7 +20,9 @@ import {
 } from '../../types'
 
 import useExpenses from '../../hooks/useExpenses'
+import useExpensesChart from '../../hooks/useExpensesChart'
 import { months, date, year, currentMonth } from '../../utils/dateValues'
+import ExpensesChart from '../../components/ExpensesChart'
 import TotalExpenses from '../../components/TotalExpenses'
 import ExpensesTable from '../../components/ExpensesTable'
 import TileContent from '../../components/TileContent'
@@ -69,11 +71,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     top: '0',
-    left: '0'
+    left: '17px'
   },
   addExpenseFormContainer: {
     position: 'fixed'
-
   }
 
 }))
@@ -85,6 +86,8 @@ export default function ExpensesPage(props: any) {
     (state: AppState) => state.user.isAuthenticated
   )
   const expenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
+  const [monthlyChart, setMonthlyChart] = useState([] as DailyExpense[])
+  const [expensesChartData] = useExpensesChart(monthlyChart)
   const [selected, setSelected] = useState()
   const [
     err,
@@ -107,7 +110,7 @@ export default function ExpensesPage(props: any) {
     day: '',
     expenses: [],
   })
-
+  // console.log('back from chart data useChartExpenses', expensesChartData)
   const [dateView, setDateView] = useState({
     year: 0,
     month: '',
@@ -122,9 +125,21 @@ export default function ExpensesPage(props: any) {
     year: 0,
   } as Expense)
   
-  const { category, description, amount } = expense
+  type ChartData = {
+    category: string
+    amount: number
+  }
 
-  useEffect(() => {
+  const { category, description, amount } = expense
+  const [loadTiles, setLoadTiles] = useState(false)
+
+  console.log('back from use charts hooks', expensesChartData)
+
+  
+  const loadChart = () => {
+    setMonthlyChart(defaultMonth?.days)
+  }
+   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
@@ -138,21 +153,14 @@ export default function ExpensesPage(props: any) {
           year: year,
           month: currentMonth,
         })
+        loadChart()
+        
         // console.log(calendarData.years, defaultDateView, defaultMonth)
-        console.log('expense from useEffect', expense)
+        // console.log('expense from useEffect', expense)
         
     }
   }, [dateView, viewMonth, calendarData, defaultMonth])
-
-  const onChange = (e: any) => {
-    console.log('calling from onchange')
-    setCalendarDate(calendarDate)
-    console.log(calendarDate)
-    console.log(calendarData)
-    console.log(e)
-    console.log(e.getFullYear())
-  }
-
+  
   const showFormOnClick = () => {
     setIsFormShowing(true)
   }
@@ -166,18 +174,20 @@ export default function ExpensesPage(props: any) {
   }
 
   const updateDailyExpenses = () => {
-    console.log('update expenses', expenses)
+    // console.log('update expenses', expenses)
     setIsDayClicking(false)
-    console.log('update expenses', expensesData)
+    // console.log('update expenses', expensesData)
     setDailyExpense(expenses)
     // console.log(dailyExpense)
   }
 
+  //this function was called from onchange event but the component won't find the year. will be deleted later
   const findYearOnExpenses = (selectedYear: number) => {
     return calendarData.years.find(
       (y: CalendarScheduler) => y.year === selectedYear
     )
   }
+    //this function was called from onchange event but the component won't find the month. will be deleted later
   const findMonthOnExpenses = (foundYear: CalendarScheduler, clickedMonth: string) => {
     return foundYear.months.find(
       (month: any) => month.name === clickedMonth
@@ -206,7 +216,7 @@ export default function ExpensesPage(props: any) {
         year: selectedYear,
         month: clickedMonth,
       })
-      console.log('expense from selectDay', expense)
+      // console.log('expense from selectDay', expense)
       // console.log('after setting date view', calendarData.years)
     
       // const foundYear = await findYearOnExpenses(selectedYear)
@@ -218,8 +228,9 @@ export default function ExpensesPage(props: any) {
       const foundMonth = await foundYear.months.find(
           (month: any) => month.name === clickedMonth
         )
-  
-      // console.log(foundMonth)
+      //again this is not working!!! :(((
+      setMonthlyChart(foundMonth.days)
+      console.log('monthly chart should update', monthlyChart)
       
       //we should not modify the state directly but now it's to make it work
       switchMonth.name = foundMonth.name
@@ -250,6 +261,7 @@ export default function ExpensesPage(props: any) {
     // const currentIndex = e.getMonth()
     // console.log(selectedYear, months[currentIndex])
   }
+
   
   const switchMonthOnClick = async (e: any) => {
     console.log(calendarData.years)
@@ -298,8 +310,16 @@ export default function ExpensesPage(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-                {/*Expenses chart goes here */}
-                <h2>Chart</h2>
+                <ExpensesChart  
+                  // monthlyIncome={monthIncome}
+                  chartData={expensesChartData}
+                  year={dateView.year}
+                  month={dateView.month}
+                  valueField="amount"
+                  argumentField="category"
+                  name="category"
+                  // chartLoaded={chartLoaded}
+                  />
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
@@ -346,7 +366,6 @@ export default function ExpensesPage(props: any) {
                     hideFormOnClick={hideFormOnClick}
                     closeForm={closeForm}
                     updateDailyExpenses={updateDailyExpenses}
-                    calendarData={calendarData}
                   />
               </Paper>
               </Grid>

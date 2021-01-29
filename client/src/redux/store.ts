@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import thunk from 'redux-thunk'
 
-import { AppState, User, CalendarScheduler, Income, DailyExpense } from '../types'
+import { AppState, User, CalendarScheduler, DailyExpense } from '../types'
 import createRootReducer from './reducers'
 import rootSaga from './sagas'
 
