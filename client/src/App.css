@@ -7,7 +7,6 @@
 :root {
   --primary: #865CFF;
   position: relative;
-
 }
 
 @media (prefers-reduced-motion: no-preference) {

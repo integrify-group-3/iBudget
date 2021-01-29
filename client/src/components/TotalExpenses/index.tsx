@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 export default function TotalExpenses({ 
     month, 
     year, 
-    monthExpenses, 
+    monthExpenses
 }: TotalExpensesProps) {
   // console.log('from total expenses', month, year, monthExpenses)
   const classes = useStyles()
@@ -32,7 +32,6 @@ export default function TotalExpenses({
         return count
     }
   }
-
   useEffect(() => {   
       calculateTotalExpenses()
   })

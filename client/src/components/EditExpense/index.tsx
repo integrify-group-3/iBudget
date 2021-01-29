@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import moment from 'moment'
 import ClearIcon from '@material-ui/icons/Clear'
+import CancelButton from '../CancelButton'
 
 import { AppState, Expense, EditExpenseProps, DailyExpense } from '../../types'
 import { updateExpense } from '../../redux/actions/expenses'
@@ -28,9 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: '1px solid rgba(184, 173, 173, 0.6)',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    borderRadius: '5px'
   },
   header: {
     display: 'flex',
@@ -38,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
   },
   clear: {
     cursor: 'pointer',
+  },
+  input: {
+    width: '22rem'
+  },
+  select: {
+    width: '20.5rem',
   },
   save: {
     border: 'none',
@@ -99,9 +107,6 @@ export default function EditExpense({
         <div className="form-container">
           <h3>{moment(day).format('LL')}</h3>
           <form onSubmit={handleSubmit} className={classes.root}>
-            <div className={classes.header}>
-              <ClearIcon className={classes.clear} onClick={hideFormOnClick} />
-            </div>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
                 Select category
@@ -113,6 +118,7 @@ export default function EditExpense({
                 // size="small"
                 value={category}
                 onChange={handleChange}
+                className={classes.select}
                 required={true}
               >
                 <MenuItem value="housing">Housing</MenuItem>
@@ -137,6 +143,7 @@ export default function EditExpense({
                 id="outlined-basic"
                 variant="outlined"
                 label="description (rent, car)"
+                className={classes.input}
                 onChange={handleChange}
                 name="description"
                 value={description}
@@ -149,6 +156,7 @@ export default function EditExpense({
                 id="outlined-basic"
                 variant="outlined"
                 label="amount"
+                className={classes.input}
                 onChange={handleChange}
                 name="amount"
                 value={amount}
@@ -157,6 +165,7 @@ export default function EditExpense({
             <button className={classes.save}>
               <SaveButton />
             </button>
+            <button className={classes.save} onClick={hideFormOnClick}><CancelButton /></button>
           </form>
         </div>
       </div>

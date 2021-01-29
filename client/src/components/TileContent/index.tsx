@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { useSelector } from 'react-redux'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { DailyExpense, TileContentProps } from '../../types'
+import { AppState, DailyExpense, TileContentProps } from '../../types'
 
 const useStyles = makeStyles((theme) => ({
   tileList: {
@@ -51,27 +52,39 @@ export default function TileContent({
   viewMonth,
 }: TileContentProps) {
   const classes = useStyles()
+  
   const [day, setDay] = useState({} as DailyExpense)
-  const [loadContent, setLoadContent] = useState(false)
+  const [loadTileContent, setLoadTileContent] = useState(false)
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (viewMonth !== undefined) {
-        const selectedDay = viewMonth.days.find(
-          (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
-        )
-        setDay(selectedDay)
-        setLoadContent(true)
-        if (view === 'month' && day !== undefined && loadContent) {
-          if (day.expenses.length > 0) {
-            setTileLoaded(true)
+  const loadTiles = useCallback(
+    () => {
+       // if(loadTile) {
+        if (viewMonth !== undefined) {
+          const selectedDay = viewMonth.days.find(
+            (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
+          )
+          setDay(selectedDay)
+          setLoadTileContent(true)
+          if (view === 'month' && day !== undefined && loadTileContent) {
+            if (day.expenses.length > 0) {
+              setTileLoaded(true)
+            }
           }
         }
-      }
+      // }
+    },
+    [day, loadTileContent, tileLoaded],
+  )
+  
+  useEffect(() => {
+    setTimeout(() => {
+      // console.log('tile is loading')
+      loadTiles()
+      
     }, 1100)
-  }, [day, loadContent, tileLoaded])
+  }, [loadTiles])
 
   const showExpensesPreview = () => {
     setIsShowing(true)

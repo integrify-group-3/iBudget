@@ -183,13 +183,12 @@ export type AddExpenseProps = {
   hideFormOnClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   closeForm: Function
   updateDailyExpenses: Function
-  calendarData: CalendarScheduler
 }
 
 export type EditExpenseProps = {
   expenseId: string
   day: string | Date
-  hideFormOnClick: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
+  hideFormOnClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   dailyExpense: DailyExpense
   updateEditedExpenses: Function
 }
