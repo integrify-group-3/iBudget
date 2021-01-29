@@ -262,7 +262,7 @@ export default function ExpensesPage(props: any) {
     // console.log(selectedYear, months[currentIndex])
   }
 
-  
+  //this function is not working properly, fixing it
   const switchMonthOnClick = async (e: any) => {
     console.log(calendarData.years)
     console.log(e.activeStartDate.getFullYear())
@@ -311,14 +311,12 @@ export default function ExpensesPage(props: any) {
             <Grid item xs={5} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 <ExpensesChart  
-                  // monthlyIncome={monthIncome}
                   chartData={expensesChartData}
                   year={dateView.year}
                   month={dateView.month}
                   valueField="amount"
                   argumentField="category"
                   name="category"
-                  // chartLoaded={chartLoaded}
                   />
               </Paper>
             </Grid>
