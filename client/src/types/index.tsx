@@ -14,6 +14,7 @@ export const LOGOUT = 'LOGOUT'
 //income action types
 export const GET_INCOME = 'GET_INCOME'
 export const ADD_INCOME = 'ADD_INCOME'
+export const UPDATE_INCOME = 'UPDATE_INCOME'
 
 //expenses action types
 export const GET_EXPENSES = 'GET_EXPENSES'
@@ -122,15 +123,15 @@ export type CalendarScheduler = {
 }
 
 export type IncomeTableProps = {
-  year: number 
-  month: string 
-  monthlyIncome: any 
+  year: number
+  month: string
+  monthlyIncome: any
   updateMonthlyIncome: Function
 }
 
 export type TotalIncomeProps = {
-  month: string 
-  year: number 
+  month: string
+  year: number
   monthlyIncome: any
 }
 
@@ -165,8 +166,8 @@ export type ExpensesTableProps = {
 }
 
 export type TotalExpensesProps = {
-  month: string 
-  year: number 
+  month: string
+  year: number
   monthExpenses: any
 }
 
@@ -180,7 +181,9 @@ export type AddExpenseProps = {
   category: string
   description: string
   amount: number
-  hideFormOnClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  hideFormOnClick: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void
   closeForm: Function
   updateDailyExpenses: Function
 }
@@ -188,7 +191,9 @@ export type AddExpenseProps = {
 export type EditExpenseProps = {
   expenseId: string
   day: string | Date
-  hideFormOnClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  hideFormOnClick: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void
   dailyExpense: DailyExpense
   updateEditedExpenses: Function
 }
@@ -210,7 +215,7 @@ export type RegisterUserSuccessAction = {
 export type LoginUserSuccessAction = {
   type: typeof LOGIN_SUCCESS
   payload: {
-    user: User,
+    user: User
     token: string
   }
 }
@@ -218,7 +223,6 @@ export type LoginUserSuccessAction = {
 export type LogoutAction = {
   type: typeof LOGOUT
 }
-
 
 export type ShowErrorAction = {
   type: typeof SHOW_ERRORS
@@ -242,6 +246,13 @@ export type GetIncomeAction = {
 
 export type AddIncomeAction = {
   type: typeof ADD_INCOME
+  payload: {
+    income: Income[]
+  }
+}
+
+export type UpdateIncomeAction = {
+  type: typeof UPDATE_INCOME
   payload: {
     income: Income[]
   }
@@ -283,24 +294,23 @@ export type UserActions =
   | LoginUserSuccessAction
   | LogoutAction
 
-
 export type ErrorActions = ShowErrorAction | ClearErrorAction
 
-export type CalendarActions = 
-  | GetIncomeAction
+export type CalendarActions = GetIncomeAction
 
-export type IncomeActions = 
+export type IncomeActions =
   | GetIncomeAction
   | AddIncomeAction
+  | UpdateIncomeAction
 
-  export type ExpensesActions = 
+export type ExpensesActions =
   | GetExpensesAction
   | AddExpenseAction
   | EditExpenseAction
   | DeleteExpenseAction
 
 export type UserState = {
-  user: User 
+  user: User
   token: string
   isAuthenticated?: boolean
   error: string
@@ -314,7 +324,7 @@ export type ExpensesState = {
   calendar: CalendarScheduler
   dailyExpenses: DailyExpense
   selectedMonth: any
-} 
+}
 
 export type ErrorState = {
   msg: any
