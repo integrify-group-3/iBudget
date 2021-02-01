@@ -56,6 +56,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard(props: any) {
   const isAuthenticated = useSelector((state: AppState) => state.user.isAuthenticated)
   const user = useSelector((state: AppState) => state.user.user)
+  const total = useSelector((state: AppState) => state.expenses.total)
+
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const [
@@ -101,8 +103,8 @@ export default function Dashboard(props: any) {
                 <TotalExpenses
                   year={dateView.year}
                   month={dateView.month}
-                  monthExpenses={viewMonth}
-                />
+                  totalAmount={total}
+                /> 
               </Paper>
             </Grid>
              <Grid item xs={5} md={4} lg={3}>

@@ -7,6 +7,7 @@ import {
   ADD_EXPENSE,
   EDIT_EXPENSE,
   DELETE_EXPENSE,
+  CALCULATE_TOTALEXPENSES,
   ExpensesActions,
   CalendarScheduler,
   DailyExpense,
@@ -55,6 +56,15 @@ export function deleteExpense(expense: DailyExpense): ExpensesActions {
     type: DELETE_EXPENSE,
     payload: {
       expense,
+    },
+  }
+}
+
+export function calculateTotalExpenses(total: number): ExpensesActions {
+  return {
+    type: CALCULATE_TOTALEXPENSES,
+    payload: {
+      total,
     },
   }
 }
@@ -150,6 +160,26 @@ export function removeExpense(id: string, expense: Expense) {
       const foundDay = await getDailyExpenses(res.data, expense)
       dispatch(deleteExpense(foundDay))
     } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export function getTotalExpenses(monthExpenses: any) {
+  return async (dispatch: Dispatch) => {
+    try {
+      let count = 0
+        if(monthExpenses !== undefined) {
+            for(const dayIndex in monthExpenses.days) {
+                const { expenses } = monthExpenses.days[dayIndex]
+                for(const expense of expenses) {
+                    count += expense.amount
+                }    
+            }
+            dispatch(calculateTotalExpenses(count)) 
+        }
+    }
+    catch(err) {
       console.log(err)
     }
   }

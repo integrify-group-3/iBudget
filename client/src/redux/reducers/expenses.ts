@@ -4,6 +4,7 @@ import {
     ADD_EXPENSE,
     EDIT_EXPENSE,
     DELETE_EXPENSE,
+    CALCULATE_TOTALEXPENSES,
     ExpensesActions,
     CalendarScheduler,
     DailyExpense,
@@ -14,6 +15,7 @@ import {
       calendar: {} as CalendarScheduler,
       selectedMonth: {},
       dailyExpenses: {} as DailyExpense,
+      total: 0
     },
     action: ExpensesActions
   ): ExpensesState {
@@ -35,6 +37,13 @@ import {
           return {
             ...state,
             dailyExpenses: expense,
+          }
+        case CALCULATE_TOTALEXPENSES:
+          console.log(action.payload)
+          const { total } = action.payload
+          return {
+            ...state,
+            total
           }
       default:
         return state
