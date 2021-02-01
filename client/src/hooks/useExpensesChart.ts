@@ -25,7 +25,6 @@ export default function useExpensesChart(monthlyChart: any) {
 
   const loadChartData = useCallback(
     (monthlyChart) => {
-      //console.log('from use expenses chart useCallback', monthlyChart)
       let housingTotal = 0
       let transportationTotal = 0
       let foodTotal = 0
@@ -41,144 +40,144 @@ export default function useExpensesChart(monthlyChart: any) {
       let savingsTotal = 0
       let holidayTotal = 0
       console.log(monthlyChart.length)
-      if(monthlyChart.length < 1) {
-        console.log('no expenes on the data')
-        setChartData(chartExpenses)
+      if (monthlyChart.length < 1) {
+        setChartData([])
+      } else {
+        for (const day of monthlyChart) {
+          for (const expense of day.expenses) {
+            if (expense.category.includes('housing')) {
+              housingTotal += expense.amount
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = housingTotal
+                }
+              }
+            }
+            if (expense.category.includes('transportation')) {
+              transportationTotal += expense.amount
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = transportationTotal
+                }
+              }
+            }
+            if (expense.category.includes('food')) {
+              foodTotal += expense.amount
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = foodTotal
+                }
+              }
+            }
+            if (expense.category.includes('utilities')) {
+              utilitiesTotal += expense.amount
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = utilitiesTotal
+                }
+              }
+            }
+            if (expense.category.includes('clothing')) {
+              clothingTotal += expense.amount
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = clothingTotal
+                }
+              }
+            }
+            if (expense.category.includes('sports')) {
+              sportsTotal += expense.amount
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = sportsTotal
+                }
+              }
+              // return clothingCount
+            }
+            if (expense.category.includes('entertainment')) {
+              entertainmentTotal += expense.amount
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = entertainmentTotal
+                }
+              }
+            }
+            if (expense.category.includes('healthcare')) {
+              healthcareTotal += expense.amount
 
-      }
-      // setChartData(monthlyChart)
-      for (const day of monthlyChart) {
-        for (const expense of day.expenses) {
-          if (expense.category.includes('housing')) {
-            housingTotal += expense.amount
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = housingTotal
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = healthcareTotal
+                }
               }
             }
-          }
-          if (expense.category.includes('transportation')) {
-            transportationTotal += expense.amount
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = transportationTotal
-              }
-            }
-          }
-          if (expense.category.includes('food')) {
-            foodTotal += expense.amount
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = foodTotal
-              }
-            }
-          }
-          if (expense.category.includes('utilities')) {
-            utilitiesTotal += expense.amount
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = utilitiesTotal
-              }
-            }
-          }
-          if (expense.category.includes('clothing')) {
-            clothingTotal += expense.amount
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = clothingTotal
-              }
-            }
-          }
-          if (expense.category.includes('sports')) {
-            sportsTotal += expense.amount
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = sportsTotal
-              }
-            }
-            // return clothingCount
-          }
-          if (expense.category.includes('entertainment')) {
-            entertainmentTotal += expense.amount
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = entertainmentTotal
-              }
-            }
-          }
-          if (expense.category.includes('healthcare')) {
-            healthcareTotal += expense.amount
+            if (expense.category.includes('insurance')) {
+              insuranceTotal += expense.amount
 
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = healthcareTotal
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = insuranceTotal
+                }
+              }
+            }
+            if (expense.category.includes('supplies')) {
+              suppliesTotal += expense.amount
+
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = suppliesTotal
+                }
+              }
+            }
+            if (expense.category.includes('education')) {
+              educationTotal += expense.amount
+
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = educationTotal
+                }
+              }
+            }
+            if (expense.category.includes('debt')) {
+              debtTotal += expense.amount
+
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = debtTotal
+                }
+              }
+            }
+            if (expense.category.includes('savings')) {
+              savingsTotal += expense.amount
+
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = savingsTotal
+                }
+              }
+            }
+            if (expense.category.includes('holiday')) {
+              holidayTotal += expense.amount
+
+              for (const data of chartExpenses) {
+                if (data.category === expense.category) {
+                  data.amount = holidayTotal
+                }
               }
             }
           }
-          if (expense.category.includes('insurance')) {
-            insuranceTotal += expense.amount
-
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = insuranceTotal
-              }
+          setChartData(chartExpenses)
+          console.log(chartData)
+          const filteredChartData = chartExpenses.filter((data) => {
+            if (data.amount > 0) {
+              return data
             }
-          }
-          if (expense.category.includes('supplies')) {
-            suppliesTotal += expense.amount
-
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = suppliesTotal
-              }
-            }
-          }
-          if (expense.category.includes('education')) {
-            educationTotal += expense.amount
-
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = educationTotal
-              }
-            }
-          }
-          if (expense.category.includes('debt')) {
-            debtTotal += expense.amount
-
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = debtTotal
-              }
-            }
-          }
-          if (expense.category.includes('savings')) {
-            savingsTotal += expense.amount
-
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = savingsTotal
-              }
-            }
-          }
-          if (expense.category.includes('holiday')) {
-            holidayTotal += expense.amount
-
-            for (const data of chartExpenses) {
-              if (data.category === expense.category) {
-                data.amount = holidayTotal
-              }
-            }
-          }
-          //console.log('chart expenses for testing expenses', chartExpenses)
-          // setChartData(chartExpenses)
-          //console.log(chartData)
-
-          // return clothingCount
+          })
+          setChartData(filteredChartData)
         }
-        setChartData(chartExpenses)
       }
     },
-    [monthlyChart]
+    [monthlyChart, chartData]
   )
 
   return [chartData]

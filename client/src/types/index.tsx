@@ -156,6 +156,12 @@ export type ViewMonth = {
   days: Array<DailyExpense>
   income: Array<Income>
 }
+
+export type EmptyChartContainerProps = {
+  month: string
+  year: number
+}
+
 export type ExpensesTableProps = {
   day: string | Date
   // day: any
@@ -174,6 +180,7 @@ export type TotalExpensesProps = {
 export type AddExpenseBtnProps = {
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
+
 export type AddExpenseProps = {
   expense: object
   setExpense: any
