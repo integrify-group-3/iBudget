@@ -32,21 +32,23 @@ const useStyles = makeStyles((theme) => ({
     color: 'red',
     cursor: 'pointer',
   },
-  addExpenseContainer: {
-    backgroundColor: 'rgba(75, 50, 50, 0.6)',
+  editExpenseContainer: {
+    backgroundColor: 'rgba(25, 20, 20, 0.6)',
     position: 'absolute',
-    height: '100vh',
+    height: '200vh',
     width: '100vw',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     top: '0',
-    left: '17px'
+    left: '17px',
+    zIndex: 2 
   },
-  addExpenseFormContainer: {
-    position: 'fixed'
-  }
+  editExpenseFormContainer: {
+    position: 'fixed',
+    top: '27%'
+  },
 }))
 
 export default function ExpensesTable({
@@ -93,8 +95,8 @@ export default function ExpensesTable({
               </TableRow>
             </TableHead>
             {editOpen &&
-               <Grid item xs={12} md={12} lg={12} className={classes.addExpenseContainer}>
-               <Paper className={classes.addExpenseFormContainer}>
+               <Grid item xs={12} md={12} lg={12} className={classes.editExpenseContainer}>
+               <Paper className={classes.editExpenseFormContainer}>
                 <EditExpense
                   key={expenseId}
                   expenseId={expenseId}

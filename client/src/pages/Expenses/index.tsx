@@ -65,9 +65,9 @@ const useStyles = makeStyles((theme) => ({
     height: 550,
   },
   addExpenseContainer: {
-    backgroundColor: 'rgba(75, 50, 50, 0.6)',
+    backgroundColor: 'rgba(25, 20, 20, 0.6)',
     position: 'absolute',
-    height: '100vh',
+    height: '200vh',
     width: '100vw',
     display: 'flex',
     justifyContent: 'center',
@@ -75,9 +75,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     top: '0',
     left: '17px',
+    zIndex: 2 
   },
   addExpenseFormContainer: {
     position: 'fixed',
+    top: '27%'
   },
 }))
 
