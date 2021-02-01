@@ -21,6 +21,7 @@ export const GET_EXPENSES = 'GET_EXPENSES'
 export const ADD_EXPENSE = 'ADD_EXPENSE'
 export const EDIT_EXPENSE = 'EDIT_EXPENSE'
 export const DELETE_EXPENSE = 'DELETE_EXPENSE'
+export const CALCULATE_TOTALEXPENSES = 'CALCULATE_TOTALEXPENSES'
 
 // Enum
 export enum DialogType {
@@ -174,7 +175,13 @@ export type ExpensesTableProps = {
 export type TotalExpensesProps = {
   month: string
   year: number
-  monthExpenses: any
+  totalAmount: number
+}
+
+export type MonthlyBudgetProps = {
+  month: string
+  year: number
+  totalExpenses: number
 }
 
 export type AddExpenseBtnProps = {
@@ -295,6 +302,13 @@ export type DeleteExpenseAction = {
   }
 }
 
+export type TotalExpenseAction = {
+  type: typeof CALCULATE_TOTALEXPENSES
+  payload: {
+    total: number
+  }
+}
+
 export type UserActions =
   | RegisterUserSuccessAction
   | RegisterFailAction
@@ -315,6 +329,7 @@ export type ExpensesActions =
   | AddExpenseAction
   | EditExpenseAction
   | DeleteExpenseAction
+  | TotalExpenseAction
 
 export type UserState = {
   user: User
@@ -327,10 +342,12 @@ export type IncomeState = {
   calendar: CalendarScheduler
   income: Income[]
 }
+
 export type ExpensesState = {
   calendar: CalendarScheduler
   dailyExpenses: DailyExpense
   selectedMonth: any
+  total: number
 }
 
 export type ErrorState = {

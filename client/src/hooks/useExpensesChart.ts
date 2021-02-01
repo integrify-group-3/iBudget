@@ -39,7 +39,6 @@ export default function useExpensesChart(monthlyChart: any) {
       let debtTotal = 0
       let savingsTotal = 0
       let holidayTotal = 0
-      console.log(monthlyChart.length)
       if (monthlyChart.length < 1) {
         setChartData([])
       } else {
@@ -167,7 +166,6 @@ export default function useExpensesChart(monthlyChart: any) {
             }
           }
           setChartData(chartExpenses)
-          console.log(chartData)
           const filteredChartData = chartExpenses.filter((data) => {
             if (data.amount > 0) {
               return data
