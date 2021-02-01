@@ -22,6 +22,7 @@ import {
 import useExpenses from '../../hooks/useExpenses'
 import useExpensesChart from '../../hooks/useExpensesChart'
 import { months, date, year, currentMonth } from '../../utils/dateValues'
+import EmptyChartContainer from '../../components/EmptyChartContainer'
 import ExpensesChart from '../../components/ExpensesChart'
 import TotalExpenses from '../../components/TotalExpenses'
 import ExpensesTable from '../../components/ExpensesTable'
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height: 340,
   },
   chartHeightPaper: {
     height: 550,
@@ -125,20 +126,15 @@ export default function ExpensesPage(props: any) {
     year: 0,
   } as Expense)
   
-  type ChartData = {
-    category: string
-    amount: number
-  }
-
   const { category, description, amount } = expense
   const [loadTiles, setLoadTiles] = useState(false)
 
-  console.log('back from use charts hooks', expensesChartData)
-
+  // console.log('back from use charts hooks', expensesChartData)
   
   const loadChart = () => {
     setMonthlyChart(defaultMonth?.days)
   }
+
    useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
@@ -298,7 +294,7 @@ export default function ExpensesPage(props: any) {
       console.log(err)
     }
   }
- 
+  console.log('chart data here', expensesChartData)
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -310,14 +306,19 @@ export default function ExpensesPage(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-                <ExpensesChart  
+                {
+                  expensesChartData.length > 0 ?
+                  <ExpensesChart  
                   chartData={expensesChartData}
                   year={dateView.year}
                   month={dateView.month}
                   valueField="amount"
                   argumentField="category"
                   name="category"
-                  />
+                  /> : 
+                  <EmptyChartContainer month={dateView.month} year={dateView.year} />
+                }
+               
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
