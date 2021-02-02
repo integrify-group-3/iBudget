@@ -20,15 +20,17 @@ import { date, year, months, currentMonth } from '../../utils/dateValues'
 
 export function getExpenses(
   calendar: CalendarScheduler,
+  selectedYear: any,
+  selectedMonth: any,
   dailyExpenses: DailyExpense,
-  selectedMonth: any
 ): ExpensesActions {
   return {
     type: GET_EXPENSES,
     payload: {
       calendar,
-      dailyExpenses,
+      selectedYear,
       selectedMonth,
+      dailyExpenses,
     },
   }
 }
@@ -110,9 +112,9 @@ export function fetchExpenses() {
             day,
             expenses: [],
           }
-          dispatch(getExpenses(res.data, dailyExp, selectedMonth))
+          dispatch(getExpenses(res.data, foundYear, selectedMonth, dailyExp))
         } else {
-          dispatch(getExpenses(res.data, selectedDay, selectedMonth))
+          dispatch(getExpenses(res.data, foundYear, selectedMonth, selectedDay))
         }
       } else {
         console.log('no year on database')

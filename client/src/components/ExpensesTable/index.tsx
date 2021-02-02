@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -76,10 +76,15 @@ export default function ExpensesTable({
   }
   const deleteExpenseOnClick = (id: string, expense: Expense) => {
     dispatch(removeExpense(id, expense))
-    setTimeout(() => {
+    /*setTimeout(() => {
       updateDailyExpenses(updatedExpenses)
-    }, 3000)
+    }, 3000)*/
   }
+
+  useEffect(() => {
+    updateDailyExpenses(updatedExpenses)
+  }, [updatedExpenses])
+
   return (
     <React.Fragment>
       <Title>Expenses for {moment(day).format('LL')}</Title>

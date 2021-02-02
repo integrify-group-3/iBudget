@@ -25,8 +25,9 @@ const initState: AppState = {
   },
   expenses: {
     calendar: {} as CalendarScheduler,
-    dailyExpenses: {} as DailyExpense,
+    selectedYear: {},
     selectedMonth: {},
+    dailyExpenses: {} as DailyExpense,
     total: 0
   },
   error: {

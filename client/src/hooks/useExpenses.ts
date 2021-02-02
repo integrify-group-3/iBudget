@@ -5,7 +5,8 @@ import {
   AppState,
   CalendarScheduler,
   DateView,
-  DailyExpense
+  DailyExpense,
+  ViewMonth
 } from '../types'
 import { fetchExpenses } from '../redux/actions/expenses'
 import { year, currentMonth } from '../utils/dateValues'
@@ -27,10 +28,23 @@ export default function useExpenses() {
     year: 0,
     month: '',
   } as DateView)
+  //trying to move these from Expense to hook
+
+  const [viewMonth, setViewMonth] = useState({
+    name: '',
+    income: [],
+    days: [{ day: '', expenses: [] }],
+  } as ViewMonth)
+  const switchMonth = {} as ViewMonth
+
+  const [dailyExpense, setDailyExpense] = useState({} as DailyExpense)
+
 
   useEffect(() => {
     dispatch(fetchExpenses())
   }, [dispatch])
+
+
 
   useEffect(() => {
     const errMessage = 'There was a problem loading the data. Refresh the page.'
