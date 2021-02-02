@@ -186,6 +186,10 @@ export type MonthlyBudgetProps = {
   totalExpenses: number
 }
 
+export type TotalExpensesYearProps = {
+  year: number
+  totalAmount: number
+}
 export type AddExpenseBtnProps = {
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
@@ -285,8 +289,9 @@ export type GetExpensesAction = {
   type: typeof GET_EXPENSES
   payload: {
     calendar: CalendarScheduler
-    dailyExpenses: DailyExpense
+    selectedYear: any
     selectedMonth: any
+    dailyExpenses: DailyExpense
   }
 }
 
@@ -355,8 +360,9 @@ export type IncomeState = {
 
 export type ExpensesState = {
   calendar: CalendarScheduler
-  dailyExpenses: DailyExpense
+  selectedYear: any
   selectedMonth: any
+  dailyExpenses: DailyExpense
   total: number
 }
 

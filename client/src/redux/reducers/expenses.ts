@@ -1,52 +1,58 @@
 import {
-    ExpensesState,
-    GET_EXPENSES,
-    ADD_EXPENSE,
-    EDIT_EXPENSE,
-    DELETE_EXPENSE,
-    CALCULATE_TOTALEXPENSES,
-    ExpensesActions,
-    CalendarScheduler,
-    DailyExpense,
-  } from '../../types'
-  
-  export default function expenses(
-    state: ExpensesState = {
-      calendar: {} as CalendarScheduler,
-      selectedMonth: {},
-      dailyExpenses: {} as DailyExpense,
-      total: 0
-    },
-    action: ExpensesActions
-  ): ExpensesState {
-    switch (action.type) {
-      case GET_EXPENSES:
-        const { calendar, dailyExpenses, selectedMonth} = action.payload
-        // console.log('from reducer', action.payload)
-        return {
-          ...state,
-          calendar,
-          dailyExpenses,
-          selectedMonth,
-        }
-        case ADD_EXPENSE:
-        case DELETE_EXPENSE:
-        case EDIT_EXPENSE:
-          console.log('from reducer', action.payload)
-          const { expense } = action.payload
-          return {
-            ...state,
-            dailyExpenses: expense,
-          }
-        case CALCULATE_TOTALEXPENSES:
-          console.log(action.payload)
-          const { total } = action.payload
-          return {
-            ...state,
-            total
-          }
-      default:
-        return state
-    }
+  ExpensesState,
+  GET_EXPENSES,
+  ADD_EXPENSE,
+  EDIT_EXPENSE,
+  DELETE_EXPENSE,
+  CALCULATE_TOTALEXPENSES,
+  ExpensesActions,
+  CalendarScheduler,
+  DailyExpense,
+} from '../../types'
+
+export default function expenses(
+  state: ExpensesState = {
+    calendar: {} as CalendarScheduler,
+    selectedYear: {},
+    selectedMonth: {},
+    dailyExpenses: {} as DailyExpense,
+    total: 0,
+  },
+  action: ExpensesActions
+): ExpensesState {
+  switch (action.type) {
+    case GET_EXPENSES:
+      const {
+        calendar,
+        selectedYear,
+        selectedMonth,
+        dailyExpenses,
+      } = action.payload
+      // console.log('from reducer', action.payload)
+      return {
+        ...state,
+        calendar,
+        selectedYear,
+        selectedMonth,
+        dailyExpenses,
+      }
+    case ADD_EXPENSE:
+    case DELETE_EXPENSE:
+    case EDIT_EXPENSE:
+      console.log('from reducer', action.payload)
+      const { expense } = action.payload
+      return {
+        ...state,
+        dailyExpenses: expense,
+      }
+    case CALCULATE_TOTALEXPENSES:
+      // console.log(action.payload)
+      const { total } = action.payload
+      return {
+        ...state,
+        total,
+      }
+    default:
+      return state
   }
-  
+}

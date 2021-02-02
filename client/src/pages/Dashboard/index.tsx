@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-
+import Calendar from 'react-calendar'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -10,10 +10,9 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
 import { AppState, DateView, ViewMonth } from '../../types'
-import useExpenses from '../../hooks/useExpenses'
-import useIncome from '../../hooks/useIncome'
-import TotalExpenses from '../../components/TotalExpenses'
-import TotalIncome from '../../components/TotalIncome'
+import { months, date, year, currentMonth } from '../../utils/dateValues'
+import useYearExpenses from '../../hooks/useYearExpenses'
+import IncomeExpensesChart from '../../components/ExpensesIncomeChart'
 
 const drawerWidth = 240
 
@@ -43,52 +42,70 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  fixedHeightCalendar: {
+    height: 260,
+  },
   content: {
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
   },
   chartHeightPaper: {
-    height: 550,
+    height: 498,
   },
 }))
 
 export default function Dashboard(props: any) {
-  const isAuthenticated = useSelector((state: AppState) => state.user.isAuthenticated)
-  const user = useSelector((state: AppState) => state.user.user)
-  const total = useSelector((state: AppState) => state.expenses.total)
-
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const isAuthenticated = useSelector((state: AppState) => state.user.isAuthenticated)
+  const user = useSelector((state: AppState) => state.user.user)
+  const [calendarDate, setCalendarDate] = useState(date)
+  const [selectedYear, setSelectedYear] = useState(0)
+  console.log('selected year', selectedYear)
   const [
-    errExpenses,
+    err,
     expensesData,
-    calendarExpensesData,
-    defaultDateViewExpenses,
-    defaultMonth,
-  ] = useExpenses()
-  const [errIncome, incomeData, defaultDateViewIncome, calendarIncomeData] = useIncome()
-  const [dateView, setDateView] = useState({
-    year: 0,
-    month: '',
-  } as DateView)
+    yearViewExpenses,
+    yearTotalExpenses,
+    avgYExpenses
+  ] = useYearExpenses(selectedYear)
+ console.log('year expenses', expensesData)
 
-  const [viewMonth, setViewMonth] = useState({
-    name: '',
-    income: [],
-    days: [{ day: '', expenses: [] }],
-  } as ViewMonth)
+ const data = [
+  {month: 'January', income: 4000, expenses: 3400},
+  {month: 'February', income: 3900, expenses: 3900},
+  {month: 'March', income: 3700, expenses: 3700},
+  {month: 'April', income: 3800, expenses: 3500},
+  {month: 'May', income: 3900, expenses: 3600},
+  {month: 'June', income: 3700, expenses: 4300},
+  {month: 'July', income: 3600, expenses: 3900},
+  {month: 'August', income: 3800, expenses: 4000},
+  {month: 'September', income: 3900, expenses: 3590},
+  {month: 'October', income: 3950, expenses: 3393},
+  {month: 'November', income: 3850, expenses: 3490},
+  {month: 'December', income: 3800, expenses: 3530},
+]
 
-  // console.log('user here', user)
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-      setDateView(defaultDateViewExpenses as DateView)
-      setViewMonth(defaultMonth)
+      console.log('I am calling first')
+     
     }
-  }, [dateView, viewMonth, calendarExpensesData, defaultMonth])
+  }, [])
   
+  const onChange = async (e: any) => {
+    try {
+      const clickedYear = await e.getFullYear()
+      console.log(clickedYear)
+      setSelectedYear(clickedYear)
+    } catch(err) {
+
+    } 
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -100,42 +117,45 @@ export default function Dashboard(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <TotalExpenses
-                  year={dateView.year}
-                  month={dateView.month}
-                  totalAmount={total}
-                /> 
+              {/* Total year expenses go hear */}
+              <h2>Expenses {yearViewExpenses.year}</h2>
+              <h4>Total {yearTotalExpenses}</h4>
+              <h4>Average {avgYExpenses} </h4>
               </Paper>
             </Grid>
              <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <TotalIncome
-                  year={dateView.year}
-                  month={dateView.month}
-                  monthlyIncome={incomeData}
-                />
+              <h2>Income </h2>
+                {/* total year income goes here */}
+                <h4>Total</h4>
+                <h4>Average</h4>
               </Paper>
             </Grid>
             <Grid item xs={5} md={6} lg={5}>
               <Paper className={fixedHeightPaper}>
                 <h2>Dashboard {user.firstName} {user.lastName}</h2>
                 <p>{user.email}</p>
+                {/* year balance goes here */}
                 <h3>Total Balance</h3>
               </Paper>
             </Grid>
 
-             <Grid item xs={5} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                {/*Expenses chart goes here */}
-                <h2>Chart</h2>
+             <Grid item xs={5} md={8} lg={8}>
+              <Paper className={classes.chartHeightPaper}>
+                {/*Expenses chart goes here, a series chart for expenses and income for the year */}
+                <IncomeExpensesChart data={data}/>
               </Paper>
             </Grid>
 
-             <Grid item xs={5} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                {/*Expenses chart goes here */}
-                <h2>Calendar?</h2>
-              </Paper>
+             <Grid item xs={10} md={4}>
+                {/*Calendar for decade can goe here */}
+                <Calendar
+                onChange={onChange}
+                value={calendarDate}
+                defaultView="decade"
+                maxDetail="decade"
+                // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}
+              />
             </Grid>
           </Grid>
           <Box pt={4}></Box>
