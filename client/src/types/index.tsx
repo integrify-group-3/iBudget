@@ -15,6 +15,7 @@ export const LOGOUT = 'LOGOUT'
 export const GET_INCOME = 'GET_INCOME'
 export const ADD_INCOME = 'ADD_INCOME'
 export const UPDATE_INCOME = 'UPDATE_INCOME'
+export const DELETE_INCOME = 'DELETE_INCOME'
 
 //expenses action types
 export const GET_EXPENSES = 'GET_EXPENSES'
@@ -86,6 +87,7 @@ export type Income = {
   amount: number
   year: number
   month: string
+  date: any
 }
 
 export type Expense = {
@@ -272,6 +274,13 @@ export type UpdateIncomeAction = {
   }
 }
 
+export type DeleteIncomeAction = {
+  type: typeof DELETE_INCOME
+  payload: {
+    income: Income[]
+  }
+}
+
 export type GetExpensesAction = {
   type: typeof GET_EXPENSES
   payload: {
@@ -323,6 +332,7 @@ export type IncomeActions =
   | GetIncomeAction
   | AddIncomeAction
   | UpdateIncomeAction
+  | DeleteIncomeAction
 
 export type ExpensesActions =
   | GetExpensesAction

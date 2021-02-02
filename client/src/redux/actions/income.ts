@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux'
 import axios from 'axios'
+import moment from 'moment'
 
 import {
   GET_INCOME,
@@ -8,6 +9,7 @@ import {
   IncomeActions,
   CalendarScheduler,
   UPDATE_INCOME,
+  DELETE_INCOME,
 } from '../../types'
 
 import { tokenConfig } from './user'
@@ -38,6 +40,15 @@ export function addNewIncome(income: Income[]): IncomeActions {
 export function editIncome(income: Income[]): IncomeActions {
   return {
     type: UPDATE_INCOME,
+    payload: {
+      income,
+    },
+  }
+}
+
+export function deleteIncome(income: Income[]): IncomeActions {
+  return {
+    type: DELETE_INCOME,
     payload: {
       income,
     },
@@ -77,12 +88,42 @@ export function addIncome(newIncome: any) {
   }
 }
 
+const getMonthlyIncome = async (data: any, income: Income) => {
+  const { year, month, date } = income
+  try {
+    const foundYear = await data.years.find(
+      (y: CalendarScheduler) => y.year === year
+    )
+    const selectedMonth = await foundYear.months.find(
+      (m: CalendarScheduler) => m.name === month
+    )
+    console.log('selected month', selectedMonth)
+
+    return selectedMonth
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export function updateIncome(income: Income, incomeId: string) {
   const url = `http://localhost:5000/api/v1/income/${incomeId}`
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.put(url, income, tokenConfig(getState))
       dispatch(editIncome(res.data))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export function removeIncome(id: string, income: Income) {
+  const url = `http://localhost:5000/api/v1/income/${id}`
+  return async (dispatch: Dispatch, getState: any) => {
+    try {
+      const res = await axios.delete(url, tokenConfig(getState))
+/*       const foundMonth = await getMonthlyIncome(res.data, income)
+ */      dispatch(deleteIncome(res.data))
     } catch (err) {
       console.log(err)
     }
