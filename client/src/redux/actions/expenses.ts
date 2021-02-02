@@ -83,6 +83,7 @@ const getDailyExpenses = async (data: any, expense: Expense) => {
     const selectedDay = await foundMonth.days.find((d: CalendarScheduler) => {
       return moment(d.day).format('LL') === moment(date).format('LL')
     })
+    console.log('selected day', selectedDay)
     return selectedDay
   } catch (err) {
     console.log(err)

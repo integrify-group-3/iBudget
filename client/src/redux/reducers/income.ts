@@ -5,6 +5,7 @@ import {
   IncomeActions,
   CalendarScheduler,
   UPDATE_INCOME,
+  DELETE_INCOME
 } from '../../types'
 
 export default function income(
@@ -26,6 +27,7 @@ export default function income(
       ...state,
       income: action.payload.income,
     }
+    case DELETE_INCOME:
   case UPDATE_INCOME:
     const { income } = action.payload
     return {
