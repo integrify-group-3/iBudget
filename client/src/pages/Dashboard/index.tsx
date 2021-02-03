@@ -9,12 +9,11 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
-import { AppState, DateView, ViewMonth } from '../../types'
-import { months, date, year, currentMonth } from '../../utils/dateValues'
+import { AppState } from '../../types'
+import { date } from '../../utils/dateValues'
 import useYearExpenses from '../../hooks/useYearExpenses'
 import IncomeExpensesChart from '../../components/ExpensesIncomeChart'
 
-const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,11 +59,11 @@ export default function Dashboard(props: any) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const isAuthenticated = useSelector((state: AppState) => state.user.isAuthenticated)
   const user = useSelector((state: AppState) => state.user.user)
-  const [calendarDate, setCalendarDate] = useState(date)
+  const [calendarDate] = useState(date)
   const [selectedYear, setSelectedYear] = useState(0)
   console.log('selected year', selectedYear)
   const [
-    err,
+,
     expensesData,
     yearViewExpenses,
     yearTotalExpenses,

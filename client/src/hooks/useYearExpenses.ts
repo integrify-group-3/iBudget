@@ -74,17 +74,20 @@ export default function useYearExpenses(selectedYear: number) {
     [yearExpenses]
   )
 
-  
+
   useEffect(() => {
     const errMessage = 'There was a problem loading the data. Refresh the page.'
     if (err) {
       setErr(errMessage as any)
     }
-    const totalExpenses = calculateYearExpenses(yearExpenses)
-    const avgYearExpenses = calculateYearExpenses(yearExpenses) / 12
-    setYearTotalExpenses(totalExpenses)
-    setAvgYearExpenses(avgYearExpenses)
-    setDateView({ year: year })
+    if(yearExpenses !== undefined) {
+        const totalExpenses = calculateYearExpenses(yearExpenses)
+        const avgYearExpenses = calculateYearExpenses(yearExpenses) / 12
+        setYearTotalExpenses(totalExpenses)
+        setAvgYearExpenses(avgYearExpenses)
+        setDateView({ year: year })
+    }
+    
   }, [yearExpenses])
 
   return [err, yearExpenses, dateView, yearTotalExpenses, avgYearExpenses]

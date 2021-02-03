@@ -64,13 +64,8 @@ export default function AddExpense({
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // console.log('from add expense', expense);
     dispatch(addExpense(expense as Expense))
     closeForm()
-    // setTimeout(() => {
-      updateDailyExpenses()
-      // console.log('updated expenses', updatedExpenses)
-    // }, 3000);
   };
 
   const handleChange = (e: any) => {

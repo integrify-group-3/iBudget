@@ -22,7 +22,7 @@ export function getExpenses(
   calendar: CalendarScheduler,
   selectedYear: any,
   selectedMonth: any,
-  dailyExpenses: DailyExpense,
+  dailyExpenses: DailyExpense
 ): ExpensesActions {
   return {
     type: GET_EXPENSES,
@@ -35,30 +35,47 @@ export function getExpenses(
   }
 }
 
-export function addNewExpense(expense: DailyExpense, monthlyExpense: any): ExpensesActions {
+export function addNewExpense(
+  calendar: CalendarScheduler,
+  expense: DailyExpense,
+  monthlyExpense: any
+): ExpensesActions {
   return {
     type: ADD_EXPENSE,
     payload: {
+      calendar,
       expense,
-      monthlyExpense
+      monthlyExpense,
     },
   }
 }
 
-export function editExpense(expense: DailyExpense): ExpensesActions {
+export function editExpense(
+  calendar: CalendarScheduler,
+  expense: DailyExpense,
+  monthlyExpense: any
+): ExpensesActions {
   return {
     type: EDIT_EXPENSE,
     payload: {
+      calendar,
       expense,
+      monthlyExpense,
     },
   }
 }
 
-export function deleteExpense(expense: DailyExpense): ExpensesActions {
+export function deleteExpense(
+  calendar: CalendarScheduler,
+  expense: DailyExpense,
+  monthlyExpense: any
+): ExpensesActions {
   return {
     type: DELETE_EXPENSE,
     payload: {
+      calendar,
       expense,
+      monthlyExpense,
     },
   }
 }
@@ -72,32 +89,12 @@ export function calculateTotalExpenses(total: number): ExpensesActions {
   }
 }
 
-const getDailyExpenses = async (data: any, expense: Expense) => {
-  const { year, month, date } = expense
-  try {
-    const foundYear = await data.years.find(
-      (y: CalendarScheduler) => y.year === year
-    )
-    const foundMonth = await foundYear.months.find(
-      (m: CalendarScheduler) => (m.name === month)
-    )
-    const selectedDay = await foundMonth.days.find((d: CalendarScheduler) => {
-      return moment(d.day).format('LL') === moment(date).format('LL')
-    })
-    // console.log('selected day', selectedDay)
-    return selectedDay
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 const getYearlyExpenses = async (data: any, expense: Expense) => {
   const { year } = expense
   try {
     const foundYear = await data.years.find(
       (y: CalendarScheduler) => y.year === year
     )
-    // console.log('selected day', selectedDay)
     return foundYear
   } catch (err) {
     console.log(err)
@@ -108,10 +105,21 @@ const getMonthlyExpenses = async (data: any, expense: Expense) => {
   const { month } = expense
   try {
     const foundMonth = await data.months.find(
-      (m: CalendarScheduler) => (m.name === month)
+      (m: CalendarScheduler) => m.name === month
     )
-    // console.log('selected day', selectedDay)
     return foundMonth
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const getDailyExpenses = async (data: any, expense: Expense) => {
+  const { date } = expense
+  try {
+    const selectedDay = await data.days.find((d: CalendarScheduler) => {
+      return moment(d.day).format('LL') === moment(date).format('LL')
+    })
+    return selectedDay
   } catch (err) {
     console.log(err)
   }
@@ -126,6 +134,7 @@ export function fetchExpenses() {
     const foundYear = res.data.years.find((y: any) => y.year === year)
     for (const year of data.years) {
       if (year.year === foundYear.year) {
+        //this will set the expenses to the current date when fetching data
         const selectedMonth = await year.months.find(
           (month: any) => month.name === currentMonth
         )
@@ -160,10 +169,9 @@ export function addExpense(expense: Expense) {
       // console.log(res)
       const foundYear = await getYearlyExpenses(res.data, expense)
       const foundMonth = await getMonthlyExpenses(foundYear, expense)
-      console.log('found month', foundMonth)
-      const foundDay = await getDailyExpenses(res.data, expense)
+      const foundDay = await getDailyExpenses(foundMonth, expense)
       // console.log('found day to pass to reducer', foundDay)
-      dispatch(addNewExpense(foundDay, foundMonth))
+      dispatch(addNewExpense(res.data, foundDay, foundMonth))
     } catch (err) {
       console.log(err)
     }
@@ -176,8 +184,10 @@ export function updateExpense(expense: Expense, expenseId: string) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.put(url, expense, tokenConfig(getState))
-      const foundDay = await getDailyExpenses(res.data, expense)
-      dispatch(editExpense(foundDay))
+      const foundYear = await getYearlyExpenses(res.data, expense)
+      const foundMonth = await getMonthlyExpenses(foundYear, expense)
+      const foundDay = await getDailyExpenses(foundMonth, expense)
+      dispatch(editExpense(res.data, foundDay, foundMonth))
     } catch (err) {
       console.log(err)
     }
@@ -190,8 +200,10 @@ export function removeExpense(id: string, expense: Expense) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.delete(url, tokenConfig(getState))
-      const foundDay = await getDailyExpenses(res.data, expense)
-      dispatch(deleteExpense(foundDay))
+      const foundYear = await getYearlyExpenses(res.data, expense)
+      const foundMonth = await getMonthlyExpenses(foundYear, expense)
+      const foundDay = await getDailyExpenses(foundMonth, expense)
+      dispatch(deleteExpense(res.data, foundDay, foundMonth))
     } catch (err) {
       console.log(err)
     }
@@ -202,17 +214,16 @@ export function getTotalExpenses(monthExpenses: any) {
   return async (dispatch: Dispatch) => {
     try {
       let count = 0
-        if(monthExpenses !== undefined) {
-            for(const dayIndex in monthExpenses.days) {
-                const { expenses } = monthExpenses.days[dayIndex]
-                for(const expense of expenses) {
-                    count += expense.amount
-                }    
-            }
-            dispatch(calculateTotalExpenses(count)) 
+      if (monthExpenses !== undefined) {
+        for (const dayIndex in monthExpenses.days) {
+          const { expenses } = monthExpenses.days[dayIndex]
+          for (const expense of expenses) {
+            count += expense.amount
+          }
         }
-    }
-    catch(err) {
+        dispatch(calculateTotalExpenses(count))
+      }
+    } catch (err) {
       console.log(err)
     }
   }

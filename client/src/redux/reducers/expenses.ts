@@ -37,19 +37,15 @@ export default function expenses(
         dailyExpenses,
       }
     case ADD_EXPENSE:
+    case DELETE_EXPENSE:
+    case EDIT_EXPENSE:
       console.log('from reducer', action.payload.expense)
       const { expense, monthlyExpense } = action.payload
       return {
         ...state,
+        calendar: action.payload.calendar,
         dailyExpenses: expense,
         selectedMonth: monthlyExpense
-      }
-    case DELETE_EXPENSE:
-    case EDIT_EXPENSE:
-      console.log('from reducer', action.payload.expense)
-      return {
-        ...state,
-        dailyExpenses: action.payload.expense,
       }
     case CALCULATE_TOTALEXPENSES:
       // console.log(action.payload)

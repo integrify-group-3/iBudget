@@ -55,8 +55,7 @@ export default function ExpensesTable({
   day,
   dailyExpense,
   showFormOnClick,
-  updateDailyExpenses,
-  updateEditedExpenses
+  updateDailyExpenses
 }: ExpensesTableProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
@@ -64,24 +63,21 @@ export default function ExpensesTable({
     (state: AppState) => state.expenses.dailyExpenses
   )
   const [editOpen, setEditOpen] = useState(false)
-  // console.log('daily expenses', dailyExpense)
   const [expenseId, setExpenseId] = useState('')
-  // console.log(updatedExpenses)
-  const openEditOnClick = (id: string, expense: Expense) => {
+
+  const openEditOnClick = (id: string) => {
     setExpenseId(id)
     setEditOpen(true)
   }
-  const hideFormOnClick = (e: any) => {
+  const hideFormOnClick = () => {
     setEditOpen(false)
   }
   const deleteExpenseOnClick = (id: string, expense: Expense) => {
     dispatch(removeExpense(id, expense))
-    /*setTimeout(() => {
-      updateDailyExpenses(updatedExpenses)
-    }, 3000)*/
   }
-
+  
   useEffect(() => {
+    // console.log('I am running from expense table')
     updateDailyExpenses(updatedExpenses)
   }, [updatedExpenses])
 
@@ -108,7 +104,6 @@ export default function ExpensesTable({
                   day={day}
                   dailyExpense={dailyExpense}
                   hideFormOnClick={hideFormOnClick}
-                  updateEditedExpenses={updateEditedExpenses}
                 />
               </Paper>
               </Grid>
@@ -125,7 +120,7 @@ export default function ExpensesTable({
                         <TableCell>
                           <EditIcon
                             className={classes.editExpense}
-                            onClick={() => openEditOnClick(_id, expense)}
+                            onClick={() => openEditOnClick(_id)}
                           />
                         </TableCell>
                         <TableCell>

@@ -151,7 +151,7 @@ const Navbar = () => {
             {
           isAuthenticated &&
           <Typography className={classes.headerUser}>
-            <p>Hello {user.firstName} {user.lastName}</p>
+            <span>Hello {user.firstName} {user.lastName}</span>
             <NavLink to="/" onClick={logoutOnClick}>Logout</NavLink>
           </Typography>
         }
