@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 
 import { TotalIncomeProps } from '../../types'
 import Title from '../Title'
+import { setTimeout } from 'timers'
 
 function preventDefault(event: any) {
   event.preventDefault()
@@ -22,6 +23,7 @@ export default function TotalIncome({
   monthlyIncome,
 }: TotalIncomeProps) {
   const classes = useStyles()
+  console.log('from total income', monthlyIncome)
 
   const calculateTotalIncome = () => {
     let count = 0
@@ -33,8 +35,12 @@ export default function TotalIncome({
   }
 
   useEffect(() => {
-    calculateTotalIncome()
+    console.log('from total income', monthlyIncome)
+    if(monthlyIncome !== undefined) {
+      calculateTotalIncome()
+    }
   }, [])
+
   const income = calculateTotalIncome()
   return (
     <React.Fragment>
@@ -42,7 +48,7 @@ export default function TotalIncome({
         Total Income {month} {year}
       </Title>
       <Typography component="p" variant="h4">
-        {income}
+        {income} 
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         on 15 March, 2019

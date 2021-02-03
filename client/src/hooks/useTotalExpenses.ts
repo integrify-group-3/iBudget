@@ -12,11 +12,14 @@ export default function useTotalExpenses(monthExpenses: any) {
  
   useEffect(() => {
     dispatch(getTotalExpenses(monthExpenses))
-    // console.log('total here', total)
+  }, [monthExpenses])
+
+  useEffect(() => {
     if(total !== undefined) {
         setTotalExpenses(total)
+        // console.log('total here', total)
     } 
-  }, [monthExpenses])
+  }, [total])
 
   return [totalExpenses]
 }

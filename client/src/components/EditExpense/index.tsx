@@ -58,7 +58,6 @@ export default function EditExpense({
   day,
   hideFormOnClick,
   dailyExpense,
-  updateEditedExpenses,
 }: EditExpenseProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
@@ -86,16 +85,8 @@ export default function EditExpense({
     e.preventDefault()
     dispatch(updateExpense(expense, expenseId))
     hideFormOnClick(e)
-    setTimeout(() => {
-        console.log('updating expense', updatedExpenses)
-        // updateEditedExpenses(updatedExpenses)
-    }, 2000);
-    // updateExpenses()
   }
-  useEffect(() => {
-    console.log(updatedExpenses)
-  }, [updatedExpenses])
-
+  
   const handleChange = (e: any) => {
     const { name, value } = e.target
     setExpense({ ...expense, [name]: value })

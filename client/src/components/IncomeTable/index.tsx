@@ -52,7 +52,8 @@ export default function IncomeTable({
   const deleteOnClick = (id: string, income: Income) => {
     dispatch(removeIncome(id, income))
   }
-
+  
+  console.log('from income table', monthlyIncome)
   return (
     <React.Fragment>
       {!openForm ? (
