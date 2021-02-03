@@ -35,11 +35,12 @@ export function getExpenses(
   }
 }
 
-export function addNewExpense(expense: DailyExpense): ExpensesActions {
+export function addNewExpense(expense: DailyExpense, monthlyExpense: any): ExpensesActions {
   return {
     type: ADD_EXPENSE,
     payload: {
       expense,
+      monthlyExpense
     },
   }
 }
@@ -83,8 +84,34 @@ const getDailyExpenses = async (data: any, expense: Expense) => {
     const selectedDay = await foundMonth.days.find((d: CalendarScheduler) => {
       return moment(d.day).format('LL') === moment(date).format('LL')
     })
-    console.log('selected day', selectedDay)
+    // console.log('selected day', selectedDay)
     return selectedDay
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const getYearlyExpenses = async (data: any, expense: Expense) => {
+  const { year } = expense
+  try {
+    const foundYear = await data.years.find(
+      (y: CalendarScheduler) => y.year === year
+    )
+    // console.log('selected day', selectedDay)
+    return foundYear
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const getMonthlyExpenses = async (data: any, expense: Expense) => {
+  const { month } = expense
+  try {
+    const foundMonth = await data.months.find(
+      (m: CalendarScheduler) => (m.name === month)
+    )
+    // console.log('selected day', selectedDay)
+    return foundMonth
   } catch (err) {
     console.log(err)
   }
@@ -130,10 +157,13 @@ export function addExpense(expense: Expense) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.post(url, expense, tokenConfig(getState))
-      console.log(res)
+      // console.log(res)
+      const foundYear = await getYearlyExpenses(res.data, expense)
+      const foundMonth = await getMonthlyExpenses(foundYear, expense)
+      console.log('found month', foundMonth)
       const foundDay = await getDailyExpenses(res.data, expense)
-      console.log('found day to pass to reducer', foundDay)
-      dispatch(addNewExpense(foundDay))
+      // console.log('found day to pass to reducer', foundDay)
+      dispatch(addNewExpense(foundDay, foundMonth))
     } catch (err) {
       console.log(err)
     }

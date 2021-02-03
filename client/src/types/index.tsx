@@ -298,7 +298,8 @@ export type GetExpensesAction = {
 export type AddExpenseAction = {
   type: typeof ADD_EXPENSE
   payload: {
-    expense: DailyExpense
+    expense: DailyExpense,
+    monthlyExpense: any
   }
 }
 

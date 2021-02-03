@@ -67,20 +67,16 @@ export default function AddExpense({
     // console.log('from add expense', expense);
     dispatch(addExpense(expense as Expense))
     closeForm()
-    setTimeout(() => {
+    // setTimeout(() => {
       updateDailyExpenses()
-      console.log('updated expenses', updatedExpenses)
-    }, 3000);
+      // console.log('updated expenses', updatedExpenses)
+    // }, 3000);
   };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setExpense({ ...expense, [name]: value });
   };
-
-  useEffect(() => {
-    console.log('calling back from here', updatedExpenses)
-  }, [updatedExpenses])
 
   return (
     <div>

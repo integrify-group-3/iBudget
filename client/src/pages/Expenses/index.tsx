@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import Calendar from 'react-calendar'
@@ -92,6 +92,9 @@ export default function ExpensesPage(props: any) {
   const expenses = useSelector(
     (state: AppState) => state.expenses.dailyExpenses
   )
+  const selectedMonth = useSelector(
+    (state: AppState) => state.expenses.selectedMonth
+  )
   const total = useSelector((state: AppState) => state.expenses.total)
   const [monthlyChart, setMonthlyChart] = useState([] as DailyExpense[])
   const [monthlyTotalExpenses, setMonthlyTotalExpenses] = useState(
@@ -141,7 +144,7 @@ export default function ExpensesPage(props: any) {
     month: '',
     year: 0,
   } as Expense)
-
+  // console.log(date, schedule)
   const { category, description, amount } = expense
   const [loadTiles, setLoadTiles] = useState(false)
 
@@ -154,6 +157,7 @@ export default function ExpensesPage(props: any) {
       props.history.push('/login')
     } else {
       setDateView(defaultDateView as DateView)
+      // console.log(dateView)
       setViewMonth(defaultMonth)
       setExpense({
         category: '',
@@ -165,7 +169,6 @@ export default function ExpensesPage(props: any) {
       })
       loadChart()
       setMonthlyTotalExpenses(defaultMonth)
-      console.log(calendarData.years)
     }
   }, [dateView, viewMonth, calendarData, defaultMonth])
 
@@ -180,17 +183,37 @@ export default function ExpensesPage(props: any) {
   const closeForm = () => {
     setIsFormShowing(false)
   }
-
+/*
   const updateDailyExpenses = () => {
-    // console.log('update expenses', expenses)
-    setIsDayClicking(false)
+    // console.log('calling from here update expenses', expenses)
     // console.log('update expenses', expensesData)
+    // console.log(dailyExpense)
+    setViewMonth(selectedMonth)
+    setMonthlyChart(selectedMonth.days)
+    console.log(viewMonth)
     setDailyExpense(expenses)
     // console.log(dailyExpense)
-  }
+  }*/
+
+  const updateDailyExpenses = useCallback(
+    async () => {
+      try {
+        setViewMonth(selectedMonth)
+        setMonthlyChart(selectedMonth.days)
+        console.log(viewMonth)
+        setDailyExpense(expenses)
+        setMonthlyTotalExpenses(selectedMonth)
+      }
+      catch(err) {
+
+      }
+     
+    },
+    [viewMonth, selectedMonth, expenses, dailyExpense],
+  )
 
   const showDayOnClick = async (e: any) => {
-    console.log(calendarData.years)
+    // console.log(calendarData.years)
     setIsFormShowing(false)
     setIsDayClicking(true)
     setSchedule({ ...schedule, day: e })
@@ -223,8 +246,6 @@ export default function ExpensesPage(props: any) {
         (month: any) => month.name === clickedMonth
       )
       setMonthlyChart(foundMonth.days)
-      console.log('monthly chart should update', monthlyChart)
-
       //we should not modify the state directly but now it's to make it work
       switchMonth.name = foundMonth.name
       switchMonth.income = foundMonth.income
@@ -233,7 +254,6 @@ export default function ExpensesPage(props: any) {
 
       //this is the proper way
       // setViewMonth(foundMonth);
-      // console.log('view month from select day', viewMonth)
       const selectedDay = await foundMonth.days.find(
         (d: any) => moment(d.day).format('LL') === moment(e).format('LL')
       )
@@ -289,21 +309,6 @@ export default function ExpensesPage(props: any) {
 
           }
       }
-      /*
-      console.log(calendarData.years)
-      const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === dateView.month
-      )
-      setMonthlyChart(foundMonth.days)
-      console.log('monthly chart should update', monthlyChart)
-      //we should not modify the state directly but now it's to make it work
-      // console.log(foundMonth)
-      // console.log(viewMonth)
-      viewMonth.name = foundMonth.name
-      // console.log(viewMonth)
-      viewMonth.income = foundMonth.income
-      viewMonth.days = foundMonth.days*/
-      // console.log(calendarData.years)
     } catch (err) {
       console.log(err)
     }

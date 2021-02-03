@@ -122,8 +122,9 @@ export function removeIncome(id: string, income: Income) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.delete(url, tokenConfig(getState))
-/*       const foundMonth = await getMonthlyIncome(res.data, income)
- */      dispatch(deleteIncome(res.data))
+      console.log(res)
+       const foundMonth = await getMonthlyIncome(res.data, income)
+       dispatch(deleteIncome(foundMonth.income))
     } catch (err) {
       console.log(err)
     }
