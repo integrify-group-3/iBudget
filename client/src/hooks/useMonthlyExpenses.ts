@@ -13,7 +13,9 @@ import {
 import { fetchExpenses } from '../redux/actions/expenses'
 import { year, months, currentMonth } from '../utils/dateValues'
 
-export default function useExpenses(e: any) {
+export default function useMonthlyExpenses(
+  // e: any
+  ) {
   const dispatch = useDispatch()
   const expenses = useSelector(
     (state: AppState) => state.expenses.dailyExpenses
@@ -58,7 +60,7 @@ export default function useExpenses(e: any) {
   }, [dispatch])
 
   //this function is the equivalent of showdayonclick on expenses but keeps throwing an infinite loop
-  const showCalendarDay = useCallback(
+  /*const showCalendarDay = useCallback(
     async(e) => {
       try {
         const selectedYear = await e.getFullYear()
@@ -97,12 +99,13 @@ export default function useExpenses(e: any) {
      
     },
     [expense, dateView, calendarData],
-  )
+  )*/
 
   //this function is throwing an infinite loop
+  /*
   useEffect(() => {
-    // showCalendarDay(e)
-  }, [showCalendarDay, e])
+    showCalendarDay(e)
+  }, [showCalendarDay, e])*/
 
  
   useEffect(() => {

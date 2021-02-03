@@ -32,7 +32,7 @@ export const mainListItems = (
       <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
       <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
     </ListSubheader>
-    <NavLink to="/dashboard">
+    <NavLink to="/dashboard" style={linkStyle}>
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon style={navIconStyle} />

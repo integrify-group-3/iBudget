@@ -152,6 +152,7 @@ export type TileContentProps = {
   date: string
   view: string
   contentData: any
+  activeStartDate: any
 }
 
 export type ViewMonth = {
