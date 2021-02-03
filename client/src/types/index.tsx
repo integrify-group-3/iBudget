@@ -151,7 +151,7 @@ export type DailyExpense = {
 export type TileContentProps = {
   date: string
   view: string
-  viewMonth: any
+  contentData: any
 }
 
 export type ViewMonth = {
@@ -171,7 +171,6 @@ export type ExpensesTableProps = {
   dailyExpense: DailyExpense
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   updateDailyExpenses: Function
-  updateEditedExpenses: Function
 }
 
 export type TotalExpensesProps = {
@@ -215,7 +214,6 @@ export type EditExpenseProps = {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void
   dailyExpense: DailyExpense
-  updateEditedExpenses: Function
 }
 
 export type RegisterFailAction = {
@@ -298,21 +296,27 @@ export type GetExpensesAction = {
 export type AddExpenseAction = {
   type: typeof ADD_EXPENSE
   payload: {
+    calendar: CalendarScheduler
     expense: DailyExpense
+    monthlyExpense: any
   }
 }
 
 export type EditExpenseAction = {
   type: typeof EDIT_EXPENSE
   payload: {
+    calendar: CalendarScheduler
     expense: DailyExpense
+    monthlyExpense: any
   }
 }
 
 export type DeleteExpenseAction = {
   type: typeof DELETE_EXPENSE
   payload: {
+    calendar: CalendarScheduler
     expense: DailyExpense
+    monthlyExpense: any
   }
 }
 

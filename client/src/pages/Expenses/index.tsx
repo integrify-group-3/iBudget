@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import Calendar from 'react-calendar'
@@ -75,11 +75,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     top: '0',
     left: '17px',
-    zIndex: 2 
+    zIndex: 2,
   },
   addExpenseFormContainer: {
     position: 'fixed',
-    top: '27%'
+    top: '27%',
   },
 }))
 
@@ -92,11 +92,15 @@ export default function ExpensesPage(props: any) {
   const expenses = useSelector(
     (state: AppState) => state.expenses.dailyExpenses
   )
-  const total = useSelector((state: AppState) => state.expenses.total)
+  const selectedMonth = useSelector(
+    (state: AppState) => state.expenses.selectedMonth
+  )
   const [monthlyChart, setMonthlyChart] = useState([] as DailyExpense[])
   const [monthlyTotalExpenses, setMonthlyTotalExpenses] = useState(
     ([] as unknown) as ViewMonth
   )
+  //to be deleted
+  const [query, setQuery] = useState('')
   const [expensesChartData] = useExpensesChart(monthlyChart)
   const [
     err,
@@ -104,7 +108,7 @@ export default function ExpensesPage(props: any) {
     calendarData,
     defaultDateView,
     defaultMonth,
-  ] = useExpenses()
+  ] = useExpenses(query)
   const [calendarDate, setCalendarDate] = useState(date)
   const [isFormShowing, setIsFormShowing] = useState(false)
   //moving this to hook
@@ -116,7 +120,6 @@ export default function ExpensesPage(props: any) {
     income: [],
     days: [{ day: '', expenses: [] }],
   } as ViewMonth)
-  const switchDateView = {} as DateView
   const switchMonth = {} as ViewMonth
 
   const [totalExpenses] = useTotalExpenses(monthlyTotalExpenses)
@@ -126,13 +129,14 @@ export default function ExpensesPage(props: any) {
     expenses: [],
   })
   // console.log('total', total)
-  // console.log('view month', viewMonth)
   //moving this to hook
   const [dateView, setDateView] = useState({
     year: 0,
     month: '',
   } as DateView)
-
+  const [tileContentData, setTileContentData] = useState({name: '',
+  income: [],
+  days: [{ day: '', expenses: [] }],} as ViewMonth)
   const [expense, setExpense] = useState({
     category: '',
     description: '',
@@ -141,9 +145,8 @@ export default function ExpensesPage(props: any) {
     month: '',
     year: 0,
   } as Expense)
-
+  // console.log(date, schedule)
   const { category, description, amount } = expense
-  const [loadTiles, setLoadTiles] = useState(false)
 
   const loadChart = () => {
     setMonthlyChart(defaultMonth?.days)
@@ -153,7 +156,9 @@ export default function ExpensesPage(props: any) {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
+      // console.log('I am calling from useEffect Expenses')
       setDateView(defaultDateView as DateView)
+      // console.log(dateView)
       setViewMonth(defaultMonth)
       setExpense({
         category: '',
@@ -165,9 +170,9 @@ export default function ExpensesPage(props: any) {
       })
       loadChart()
       setMonthlyTotalExpenses(defaultMonth)
-      console.log(calendarData.years)
+      setTileContentData(defaultMonth)
     }
-  }, [dateView, viewMonth, calendarData, defaultMonth])
+  }, [dateView, calendarData, tileContentData, defaultMonth])
 
   const showFormOnClick = () => {
     setIsFormShowing(true)
@@ -181,23 +186,16 @@ export default function ExpensesPage(props: any) {
     setIsFormShowing(false)
   }
 
-  const updateDailyExpenses = () => {
-    // console.log('update expenses', expenses)
-    setIsDayClicking(false)
-    // console.log('update expenses', expensesData)
-    setDailyExpense(expenses)
-    // console.log(dailyExpense)
-  }
-
+  //this function is moving to usexpenses hook but keeps throwing an infinite loop
   const showDayOnClick = async (e: any) => {
-    console.log(calendarData.years)
-    setIsFormShowing(false)
-    setIsDayClicking(true)
-    setSchedule({ ...schedule, day: e })
+      setIsFormShowing(false)
+      setIsDayClicking(true)
+      setSchedule({ ...schedule, day: e })
+      setQuery(e)
     try {
       const selectedYear = await e.getFullYear()
       const currentIndex = await e.getMonth()
-      const clickedMonth = months[currentIndex]
+      // const clickedMonth = months[currentIndex]
       //this will set the day, year and month to the expense in case we will add a new new one for the day
       //we should not modify the state directly but now it's to make it work
       dateView.year = selectedYear
@@ -211,7 +209,7 @@ export default function ExpensesPage(props: any) {
         amount: 0,
         date: moment(e).format('LL'),
         year: selectedYear,
-        month: clickedMonth,
+        month: months[currentIndex],
       })
       // console.log('expense from selectDay', expense)
       // console.log('after setting date view', calendarData.years)
@@ -220,20 +218,16 @@ export default function ExpensesPage(props: any) {
       )
 
       const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === clickedMonth
+        (month: any) => month.name === months[currentIndex]
       )
       setMonthlyChart(foundMonth.days)
-      console.log('monthly chart should update', monthlyChart)
-
       //we should not modify the state directly but now it's to make it work
       switchMonth.name = foundMonth.name
       switchMonth.income = foundMonth.income
       switchMonth.days = foundMonth.days
       setMonthlyTotalExpenses(switchMonth)
-
       //this is the proper way
       // setViewMonth(foundMonth);
-      // console.log('view month from select day', viewMonth)
       const selectedDay = await foundMonth.days.find(
         (d: any) => moment(d.day).format('LL') === moment(e).format('LL')
       )
@@ -246,70 +240,65 @@ export default function ExpensesPage(props: any) {
       console.log(err)
     }
   }
- 
- //this function is not working properly, fixing it
+
+  //this function is not working properly, fixing it
   const switchMonthOnClick = async (e: any) => {
     console.log(calendarData.years)
     console.log(e)
     console.log(e.value.getFullYear())
     try {
-    const selectedYear = await e.value.getFullYear()
-    const currentIndex = await e.value.getMonth()
-    console.log('one', selectedYear, months[currentIndex])
+      const selectedYear = await e.value.getFullYear()
+      const currentIndex = await e.value.getMonth()
+      // console.log('one', selectedYear, months[currentIndex])
 
-    const selectedYearTwo = await e.activeStartDate.getFullYear()
-    const currentIndexTwo = await e.activeStartDate.getMonth()
-    console.log('two', selectedYearTwo, months[currentIndexTwo], months)
-    const clickedMonth = months[currentIndex]
-    // console.log(e.activeStartDate, selectedYear, clickedMonth)
-    dateView.year = selectedYearTwo
-    dateView.month = months[currentIndexTwo]
-    console.log(dateView)
+      const selectedYearTwo = await e.activeStartDate.getFullYear()
+      const currentIndexTwo = await e.activeStartDate.getMonth()
+      console.log('two', selectedYearTwo, months[currentIndexTwo], months)
+      const clickedMonth = months[currentIndex]
+      // console.log(e.activeStartDate, selectedYear, clickedMonth)
+      dateView.year = selectedYearTwo
+      dateView.month = months[currentIndexTwo]
+      console.log(dateView)
       const foundYear = await calendarData.years.find(
         (y: CalendarScheduler) => y.year === dateView.year
       )
       console.log(foundYear)
-      for(const month of foundYear.months) {
-          // console.log(month)
-          
-          if(month.name === dateView.month) {
-            console.log('month here', month)
-            setMonthlyChart(month.days)
-            console.log('monthly chart should update', monthlyChart)
-            //we should not modify the state directly but now it's to make it work
-            // console.log(foundMonth)
-            // console.log(viewMonth)
-            // setViewMonth({name: month.name, income: month.income, days: month.days})
-            console.log(viewMonth)
-            /*viewMonth.name = month.name
-            // console.log(viewMonth)
-            viewMonth.income = month.income
-            viewMonth.days = month.days*/
-              } else {
+      for (const month of foundYear.months) {
+        // console.log(month)
+        if (month.name === dateView.month) {
+          console.log('month here', month)
+          //sets the chart to selected month
+          setMonthlyChart(month.days)
+          console.log('monthly chart should update', monthlyChart)
+          //sets the month expenses and budget to selected month
+          setMonthlyTotalExpenses(month)
+         
+          console.log(tileContentData)
 
-          }
+          console.log(viewMonth)
+          console.log(calendarData.years)
+        } else {
+        }
       }
-      /*
-      console.log(calendarData.years)
-      const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === dateView.month
-      )
-      setMonthlyChart(foundMonth.days)
-      console.log('monthly chart should update', monthlyChart)
-      //we should not modify the state directly but now it's to make it work
-      // console.log(foundMonth)
-      // console.log(viewMonth)
-      viewMonth.name = foundMonth.name
-      // console.log(viewMonth)
-      viewMonth.income = foundMonth.income
-      viewMonth.days = foundMonth.days*/
-      // console.log(calendarData.years)
     } catch (err) {
       console.log(err)
     }
   }
-  // console.log('total expenses', totalExpenses)
-  // console.log('chart data here', expensesChartData)
+
+  const updateDailyExpenses = useCallback(async () => {
+    try {
+      // console.log('calling from updateDailyExpenses')
+      // console.log(defaultMonth)
+      //this is not updating
+      setViewMonth(defaultMonth)
+      // console.log(viewMonth)
+      // setMonthlyChart(selectedMonth.days)
+      //when clicking on the calendar again, the calendar reset the charts to the previous state cuz is still taking the calendar before the state update
+      setDailyExpense(expenses)
+      setMonthlyTotalExpenses(selectedMonth)
+    } catch (err) {}
+  }, [viewMonth, selectedMonth, expenses, dailyExpense])
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -354,7 +343,7 @@ export default function ExpensesPage(props: any) {
                   year={dateView.year}
                   month={dateView.month}
                   //total month income will be added here
-                  totalExpenses={total}
+                  totalExpenses={totalExpenses}
                 />
               </Paper>
             </Grid>
@@ -368,7 +357,6 @@ export default function ExpensesPage(props: any) {
                       : (expensesData as DailyExpense)
                   }
                   updateDailyExpenses={updateDailyExpenses}
-                  updateEditedExpenses={updateDailyExpenses}
                   showFormOnClick={showFormOnClick}
                 />
               </Paper>
@@ -400,12 +388,16 @@ export default function ExpensesPage(props: any) {
             <Grid item xs={10} md={6}>
               <Calendar
                 value={calendarDate}
-                // onClickMonth={switchMonthOnClick}
                 onChange={showDayOnClick}
                 onActiveStartDateChange={switchMonthOnClick}
                 showNeighboringMonth={true}
                 tileContent={({ date, view }: any) => (
-                  <TileContent date={date} view={view} viewMonth={viewMonth} />
+                  <TileContent
+                    date={date}
+                    view={view}
+                    // contentData={isDayClicking ? tileContentData : defaultMonth}
+                    contentData={tileContentData}
+                  />
                 )}
               />
             </Grid>

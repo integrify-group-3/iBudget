@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   previewExpenses: {
     minHeight: '5.6rem',
-    width: '8rem',
+    width: '12rem',
     position: 'absolute',
     backgroundColor: 'white',
     boxShadow: '0 1rem 1rem rgba(15, 15, 15, 0.4)',
@@ -36,23 +36,29 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     padding: '2.3rem 2rem',
     fontSize: '13px',
-    borderRadius: '3px',
+    borderRadius: '5px',
+    zIndex: 2,
+    lineHeight: '1.8'
+  },
+  previewExpensesDate: {
+    fontWeight: 700
   },
   previewExpensesItem: {
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'column',
     alignItems: 'center',
+    borderBottom: '1px solid lightgrey',
+
   },
 }))
 
 export default function TileContent({
   date,
   view,
-  viewMonth,
+  contentData,
 }: TileContentProps) {
   const classes = useStyles()
-  
   const [day, setDay] = useState({} as DailyExpense)
   const [loadTileContent, setLoadTileContent] = useState(false)
   const [tileLoaded, setTileLoaded] = useState(false)
@@ -60,9 +66,8 @@ export default function TileContent({
 
   const loadTiles = useCallback(
     () => {
-       // if(loadTile) {
-        if (viewMonth !== undefined) {
-          const selectedDay = viewMonth.days.find(
+        if (contentData !== undefined) {
+          const selectedDay = contentData.days.find(
             (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
           )
           setDay(selectedDay)
@@ -73,17 +78,13 @@ export default function TileContent({
             }
           }
         }
-      // }
     },
     [day, loadTileContent, tileLoaded],
   )
-  
   useEffect(() => {
     setTimeout(() => {
-      // console.log('tile is loading')
-      loadTiles()
-      
-    }, 1100)
+      loadTiles()      
+    }, 1000)
   }, [loadTiles])
 
   const showExpensesPreview = () => {
@@ -101,6 +102,7 @@ export default function TileContent({
       >
         {isShowing && (
           <ul className={classes.previewExpenses}>
+            <li className={classes.previewExpensesDate}>{day.day}</li>
             {day.expenses.map((e: any) => (
               <>
                 <li key={e._id} className={classes.previewExpensesItem}>

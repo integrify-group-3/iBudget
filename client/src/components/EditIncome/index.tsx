@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import {  useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import moment from 'moment'
-import ClearIcon from '@material-ui/icons/Clear'
 
 import SaveButton from '../SaveButton'
 import CancelButton from '../CancelButton'
@@ -51,10 +50,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function EditIncome({ incomeId, hideFormOnClick, monthlyIncome }: any) {
+function EditIncome({ incomeId, hideFormOnClick, monthlyIncome, month }: any) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const updatedIncome = useSelector((state: AppState) => state.income.income)
 
   const [income, setIncome] = useState({
     category: '',
@@ -88,7 +86,8 @@ function EditIncome({ incomeId, hideFormOnClick, monthlyIncome }: any) {
     <div>
       <div className={classes.paper}>
         <div className="form-container">
-          <form className={classes.root} onSubmit={handleSubmit}>
+{/*           <h3>{moment(month).format('LL')}</h3>
+ */}          <form className={classes.root} onSubmit={handleSubmit}>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
                 Select category

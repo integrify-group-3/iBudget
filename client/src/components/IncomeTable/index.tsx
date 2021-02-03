@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Title from '../Title'
@@ -8,7 +8,6 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
@@ -84,7 +83,7 @@ export default function IncomeTable({
   const deleteOnClick = (id: string, income: Income) => {
     dispatch(removeIncome(id, income))
   }
-
+  
   return (
     <React.Fragment>
       {!openForm ? (
@@ -126,6 +125,7 @@ export default function IncomeTable({
                               incomeId={IncomeId}
                               hideFormOnClick={hideFormOnClick}
                               monthlyIncome={monthlyIncome}
+                              month = {month}
                             />
                           </Paper>
                         </Grid>

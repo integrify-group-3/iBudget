@@ -28,6 +28,7 @@ export default function useIncome() {
       setErr(errMessage as any)
     }
     setIncomeData(income)
+    console.log(incomeData)
     setCalendarData(calendar)
     setDefaultDateView({ year: year, month: currentMonth })
     console.log(defaultDateView)
