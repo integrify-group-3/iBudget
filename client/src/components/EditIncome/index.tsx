@@ -1,7 +1,7 @@
 import React from 'react'
 
 function EditIncome() {
-  return <div>EditIncome</div>
+  return <div>EditIncome component</div>
 }
 
 export default EditIncome
