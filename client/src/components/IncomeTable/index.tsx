@@ -35,6 +35,23 @@ const useStyles = makeStyles((theme) => ({
     color: 'lightblue',
     cursor: 'pointer',
   },
+  editExpenseContainer: {
+    backgroundColor: 'rgba(25, 20, 20, 0.6)',
+    position: 'absolute',
+    height: '200vh',
+    width: '100vw',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    top: '0',
+    left: '17px',
+    zIndex: 2,
+  },
+  editExpenseFormContainer: {
+    position: 'fixed',
+    top: '27%',
+  },
 }))
 
 export default function IncomeTable({
@@ -43,10 +60,8 @@ export default function IncomeTable({
   monthlyIncome,
   updateMonthlyIncome,
 }: IncomeTableProps) {
-  // console.log('fromt props', monthlyIncome, year, month)
-  console.log('me', monthlyIncome)
-
   const [editOpen, setEditOpen] = useState(false)
+  const [IncomeId, setIncomeId] = useState('')
   const dispatch = useDispatch()
   const classes = useStyles()
   const [openForm, setOpenForm] = React.useState(false)
@@ -54,6 +69,7 @@ export default function IncomeTable({
     setOpenForm(true)
   }
   const openEditOnClick = (id: string) => {
+    setIncomeId(id)
     setEditOpen(true)
   }
 
@@ -96,7 +112,25 @@ export default function IncomeTable({
                     <TableCell>{category}</TableCell>
                     <TableCell>{description}</TableCell>
                     <TableCell>{amount}</TableCell>
-                    <TableCell>{editOpen && <EditIncome />}</TableCell>
+                    <TableCell>
+                      {editOpen && (
+                        <Grid
+                          item
+                          xs={12}
+                          md={12}
+                          lg={12}
+                          className={classes.editExpenseContainer}
+                        >
+                          <Paper className={classes.editExpenseFormContainer}>
+                            <EditIncome
+                              incomeId={IncomeId}
+                              hideFormOnClick={hideFormOnClick}
+                              monthlyIncome={monthlyIncome}
+                            />
+                          </Paper>
+                        </Grid>
+                      )}
+                    </TableCell>
                     <TableCell>
                       <EditIcon
                         className={classes.editIncome}

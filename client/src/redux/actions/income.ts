@@ -92,7 +92,13 @@ export function updateIncome(income: Income, incomeId: string) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.put(url, income, tokenConfig(getState))
-      dispatch(editIncome(res.data))
+      const foundYear = await res.data.years.find(
+        (y: any) => y.year === income.year
+      )
+      const foundMonth = await foundYear.months.find(
+        (month: any) => month.name === income.month
+      )
+      dispatch(editIncome(foundMonth.income))
     } catch (err) {
       console.log(err)
     }
