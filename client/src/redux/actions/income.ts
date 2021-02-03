@@ -88,23 +88,6 @@ export function addIncome(newIncome: any) {
   }
 }
 
-const getMonthlyIncome = async (data: any, income: Income) => {
-  const { year, month, date } = income
-  try {
-    const foundYear = await data.years.find(
-      (y: CalendarScheduler) => y.year === year
-    )
-    const selectedMonth = await foundYear.months.find(
-      (m: CalendarScheduler) => m.name === month
-    )
-    console.log('selected month', selectedMonth)
-
-    return selectedMonth
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 export function updateIncome(income: Income, incomeId: string) {
   const url = `http://localhost:5000/api/v1/income/${incomeId}`
   return async (dispatch: Dispatch, getState: any) => {
@@ -122,8 +105,13 @@ export function removeIncome(id: string, income: Income) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.delete(url, tokenConfig(getState))
-/*       const foundMonth = await getMonthlyIncome(res.data, income)
- */      dispatch(deleteIncome(res.data))
+      const foundYear = await res.data.years.find(
+        (y: any) => y.year === income.year
+      )
+      const foundMonth = await foundYear.months.find(
+        (month: any) => month.name === income.month
+      )
+      dispatch(deleteIncome(foundMonth.income))
     } catch (err) {
       console.log(err)
     }
