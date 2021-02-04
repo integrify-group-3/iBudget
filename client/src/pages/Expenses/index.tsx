@@ -341,7 +341,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
@@ -379,7 +379,7 @@ export default function ExpensesPage(props: any) {
               </Grid>
             )}
 
-            <Grid item xs={10} md={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <Calendar
                 value={calendarDate}
                 onChange={showDayOnClick}

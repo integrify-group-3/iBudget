@@ -63,7 +63,6 @@ export default function Analytics(props: any) {
   const [calendarDate] = useState(date)
   const [selectedYear, setSelectedYear] = useState(0)
   const [yearChart, setYearChart] = useState({} as CalendarScheduler)
-  console.log('selected year', selectedYear)
   const [
     expensesErr,
     expensesData,
@@ -76,7 +75,7 @@ export default function Analytics(props: any) {
 
  console.log('year expenses', expensesData)
 
- //this is dummy data, and how the chart should look like
+ //this is dummy data, and how the chart data should look like
  const data = [
   {month: 'January', income: 4000, expenses: 3400},
   {month: 'February', income: 3900, expenses: 3900},
@@ -104,7 +103,6 @@ export default function Analytics(props: any) {
   const onChange = async (e: any) => {
     try {
       const clickedYear = await e.getFullYear()
-      console.log(clickedYear)
       setSelectedYear(clickedYear)
     } catch(err) {
 
@@ -147,6 +145,7 @@ export default function Analytics(props: any) {
 
              <Grid item xs={5} md={8} lg={8}>
               <Paper className={classes.chartHeightPaper}>
+                <h1>Expenses for {expensesData.year}</h1>
                 {/*Expenses chart goes here, a series or bar chart for expenses and income for the year */}
                 <IncomeExpensesChart data={data}/> 
               </Paper>

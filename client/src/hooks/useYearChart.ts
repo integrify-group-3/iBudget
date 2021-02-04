@@ -8,6 +8,7 @@ export default function useYearChart(yearChart: any) {
   }
   const [err, setErr] = useState(null)
   const [chartData, setChartData] = useState([] as YearChart[])
+  // this chart will show a comparison between expenses and income per year
    //this is dummy data, and how the chart should look like
  const data = [
     {month: 'January', income: 0, expenses: 0},
@@ -30,8 +31,7 @@ export default function useYearChart(yearChart: any) {
 
   const loadChartData = useCallback(
     (yearChart) => {
-     console.log('year calendar', yearChart)
-      
+     console.log('year calendar from year chart', yearChart)
     },
     [yearChart, chartData]
   )
