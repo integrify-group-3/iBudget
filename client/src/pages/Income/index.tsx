@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Calendar from 'react-calendar'
-import axios from 'axios'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -15,7 +14,7 @@ import useIncome from '../../hooks/useIncome'
 import IncomeTable from '../../components/IncomeTable'
 import TotalIncome from '../../components/TotalIncome'
 import ProfileDashboard from '../../components/ProfileDashboard'
-import { months, date, year, currentMonth } from '../../utils/dateValues'
+import { months } from '../../utils/dateValues'
 
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
@@ -80,12 +79,10 @@ export default function IncomePage(props: any) {
       if(!isMonthClicking) {
           //atm the below set state keeps running an infinite loop
           setDateView(defaultDateView as DateView)
-          console.log(dateView)
       }
 
     }
   }, [isAuthenticated, calendarData, dateView, defaultDateView])
-  // console.log('date view test', defaultDateView)
   const setMonthView = (
     currentYear: number,
     currentMonth: string,

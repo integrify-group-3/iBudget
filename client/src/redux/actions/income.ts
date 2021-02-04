@@ -83,7 +83,6 @@ export function addIncome(newIncome: any) {
     const foundMonth = await foundYear.months.find(
       (month: any) => month.name === newIncome.month
     )
-    console.log('from add income', foundMonth)
     dispatch(addNewIncome(foundMonth.income))
   }
 }
@@ -93,7 +92,13 @@ export function updateIncome(income: Income, incomeId: string) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.put(url, income, tokenConfig(getState))
-      dispatch(editIncome(res.data))
+      const foundYear = await res.data.years.find(
+        (y: any) => y.year === income.year
+      )
+      const foundMonth = await foundYear.months.find(
+        (month: any) => month.name === income.month
+      )
+      dispatch(editIncome(foundMonth.income))
     } catch (err) {
       console.log(err)
     }
@@ -111,6 +116,7 @@ export function removeIncome(id: string, income: Income) {
       const foundMonth = await foundYear.months.find(
         (month: any) => month.name === income.month
       )
+
       dispatch(deleteIncome(foundMonth.income))
     } catch (err) {
       console.log(err)
