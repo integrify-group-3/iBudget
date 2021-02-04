@@ -20,14 +20,14 @@ export default function useYearExpenses(selectedYear: number) {
   const [avgYearExpenses, setAvgYearExpenses] = useState(0)
 
   useEffect(() => {
-    console.log('I am calling second')
     dispatch(fetchExpenses())
   }, [dispatch])
 
   useEffect(() => {
-    console.log('I am calling third', selectedYear)
     changeYearView(selectedYear)
   }, [selectedYear])
+
+  
 
   const changeYearView = useCallback(async (selectedYear: number) => {
     console.log(selectedYear)

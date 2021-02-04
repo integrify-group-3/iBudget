@@ -9,9 +9,10 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
-import { AppState } from '../../types'
+import { AppState, CalendarScheduler } from '../../types'
 import { date } from '../../utils/dateValues'
 import useYearExpenses from '../../hooks/useYearExpenses'
+import useYearChart from '../../hooks/useYearChart'
 import IncomeExpensesChart from '../../components/ExpensesIncomeChart'
 
 
@@ -61,16 +62,21 @@ export default function Analytics(props: any) {
   const user = useSelector((state: AppState) => state.user.user)
   const [calendarDate] = useState(date)
   const [selectedYear, setSelectedYear] = useState(0)
+  const [yearChart, setYearChart] = useState({} as CalendarScheduler)
   console.log('selected year', selectedYear)
   const [
+    expensesErr,
     expensesData,
     yearViewExpenses,
     yearTotalExpenses,
     avgYExpenses
   ] = useYearExpenses(selectedYear)
 
+ const [chartErr, chartData] = useYearChart(yearChart)
+
  console.log('year expenses', expensesData)
 
+ //this is dummy data, and how the chart should look like
  const data = [
   {month: 'January', income: 4000, expenses: 3400},
   {month: 'February', income: 3900, expenses: 3900},
@@ -90,7 +96,8 @@ export default function Analytics(props: any) {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-        setSelectedYear(date.getFullYear)
+        setSelectedYear(date.getFullYear())
+        setYearChart(expensesData)
     }
   }, [isAuthenticated, props.history])
   
@@ -116,9 +123,9 @@ export default function Analytics(props: any) {
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
               {/* Total year expenses go hear */}
-              {/* <h2>Expenses {yearViewExpenses.year}</h2>
+              <h2>Expenses {yearViewExpenses.year}</h2>
               <h4>Total {yearTotalExpenses}</h4>
-              <h4>Average {avgYExpenses} </h4> */}
+              <h4>Average {avgYExpenses} </h4> 
               </Paper>
             </Grid>
              <Grid item xs={5} md={4} lg={3}>
