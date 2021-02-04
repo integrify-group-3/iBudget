@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid rgba(184, 173, 173, 0.6)',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    borderRadius: '5px'
+    borderRadius: '5px',
   },
   header: {
     display: 'flex',
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   input: {
-    width: '22rem'
+    width: '22rem',
   },
   select: {
     width: '20.5rem',
@@ -156,7 +156,9 @@ export default function EditExpense({
             <button className={classes.save}>
               <SaveButton />
             </button>
-            <button className={classes.save} onClick={hideFormOnClick}><CancelButton /></button>
+            <button className={classes.save} onClick={hideFormOnClick}>
+              <CancelButton />
+            </button>
           </form>
         </div>
       </div>
