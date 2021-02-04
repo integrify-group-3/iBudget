@@ -64,7 +64,7 @@ export const mainListItems = (
         <ListItemText primary="Analytics" />
       </ListItem>
     </NavLink>
-    <NavLink to="/profile" style={linkStyle}>
+    <NavLink to="/user" style={linkStyle}>
       <ListItem button>
         <ListItemIcon>
           <PersonIcon style={navIconStyle} />

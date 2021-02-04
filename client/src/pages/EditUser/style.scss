@@ -1,0 +1,15 @@
+.login-page-container {
+    background-image: linear-gradient(
+      to right,
+      rgba(243, 239, 234, 0.2),
+      rgba(225, 219, 236, 0.2)
+    ),
+    url('../../imgs/Background.png');
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}

@@ -88,6 +88,12 @@ export const registerUser = ({ firstName, lastName, email, password }: any) => {
   }
 }
 
+export const updateUser = (user: any) => {
+  return (dispatch: Dispatch) => {
+    console.log('from user actions', user)
+  }
+}
+
 export const tokenConfig = (getState: any) => {
   //gets the token from localstorage
   const token = getState().user.token
