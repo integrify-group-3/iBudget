@@ -83,13 +83,13 @@ export default function IncomeTable({
   const deleteOnClick = (id: string, income: Income) => {
     dispatch(removeIncome(id, income))
   }
-  
+
   return (
     <React.Fragment>
       {!openForm ? (
         <>
           <Title>
-            {month} {year}
+            Income for {month} {year}
           </Title>
           {monthlyIncome.length < 1 ? (
             <Typography component="p" variant="h5">
@@ -125,7 +125,8 @@ export default function IncomeTable({
                               incomeId={IncomeId}
                               hideFormOnClick={hideFormOnClick}
                               monthlyIncome={monthlyIncome}
-                              month = {month}
+                              month={month}
+                              year={year}
                             />
                           </Paper>
                         </Grid>

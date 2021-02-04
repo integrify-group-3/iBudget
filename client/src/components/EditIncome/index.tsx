@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {  useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
@@ -50,7 +50,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function EditIncome({ incomeId, hideFormOnClick, monthlyIncome, month }: any) {
+function EditIncome({
+  incomeId,
+  hideFormOnClick,
+  monthlyIncome,
+  month,
+  year,
+}: any) {
   const classes = useStyles()
   const dispatch = useDispatch()
 
@@ -86,8 +92,8 @@ function EditIncome({ incomeId, hideFormOnClick, monthlyIncome, month }: any) {
     <div>
       <div className={classes.paper}>
         <div className="form-container">
-{/*           <h3>{moment(month).format('LL')}</h3>
- */}          <form className={classes.root} onSubmit={handleSubmit}>
+          {month} {year}
+          <form className={classes.root} onSubmit={handleSubmit}>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
                 Select category
@@ -101,20 +107,14 @@ function EditIncome({ incomeId, hideFormOnClick, monthlyIncome, month }: any) {
                 className={classes.select}
                 required={true}
               >
-                <MenuItem value="housing">Housing</MenuItem>
-                <MenuItem value="transportation">Transportation</MenuItem>
-                <MenuItem value="food">Food</MenuItem>
-                <MenuItem value="utilities">Utilities</MenuItem>
-                <MenuItem value="clothing">Clothing</MenuItem>
-                <MenuItem value="sports">Sports</MenuItem>
-                <MenuItem value="entertainment">Entertainment</MenuItem>
-                <MenuItem value="healthcare">Healthcare</MenuItem>
-                <MenuItem value="insurance">Insurance</MenuItem>
-                <MenuItem value="supplies">Household/Supplies</MenuItem>
-                <MenuItem value="education">Education</MenuItem>
-                <MenuItem value="debt">Debt/Loans</MenuItem>
-                <MenuItem value="savings">Savings</MenuItem>
-                <MenuItem value="holiday">Holiday</MenuItem>
+                <MenuItem value="salary">Salary</MenuItem>
+                <MenuItem value="investment">Investment</MenuItem>
+                <MenuItem value="real estate">Real Estate</MenuItem>
+                <MenuItem value="unemployment benefits">
+                  Unemployment Benefits
+                </MenuItem>
+                <MenuItem value="tax return">Tax Return</MenuItem>
+                <MenuItem value="child allowance">Child Allowance</MenuItem>
               </Select>
             </div>
 
