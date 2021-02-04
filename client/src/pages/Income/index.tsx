@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height: 340,
   },
   chartHeightPaper: {
     height: 640,
@@ -76,11 +76,10 @@ export default function IncomePage(props: any) {
       props.history.push('/login')
     } else {
       setCalendar(calendarData)
-      if(!isMonthClicking) {
-          //atm the below set state keeps running an infinite loop
-          setDateView(defaultDateView as DateView)
+      if (!isMonthClicking) {
+        //atm the below set state keeps running an infinite loop
+        setDateView(defaultDateView as DateView)
       }
-
     }
   }, [isAuthenticated, calendarData, dateView, defaultDateView])
   const setMonthView = (
@@ -126,8 +125,8 @@ export default function IncomePage(props: any) {
     const year = e.getFullYear()
     const yearIncome = calendar.years.find((i: any) => i.year === year)
     const currentIndex = e.getMonth()
-    setDateView({ ...dateView, year: year, month: months[currentIndex]})
-    console.log(dateView)
+    setDateView({ ...dateView, year: year, month: months[currentIndex] })
+    console.log('dateView', dateView)
     setMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
 
