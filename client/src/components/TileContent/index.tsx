@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { useSelector } from 'react-redux'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { AppState, DailyExpense, TileContentProps } from '../../types'
+import { DailyExpense, TileContentProps } from '../../types'
 
 const useStyles = makeStyles((theme) => ({
   tileList: {
@@ -54,27 +53,30 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function TileContent({
-  date,
-  view,
-  contentData,
+    date,
+    view,
+    contentData,
+    activeStartDate
 }: TileContentProps) {
   const classes = useStyles()
   const [day, setDay] = useState({} as DailyExpense)
   const [loadTileContent, setLoadTileContent] = useState(false)
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
-
+  // console.log('content data for month', contentData)
   const loadTiles = useCallback(
     () => {
         if (contentData !== undefined) {
           const selectedDay = contentData.days.find(
             (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
           )
+          // console.log(selectedDay)
           setDay(selectedDay)
           setLoadTileContent(true)
           if (view === 'month' && day !== undefined && loadTileContent) {
             if (day.expenses.length > 0) {
               setTileLoaded(true)
+              // setLoadTileContent(false)
             }
           }
         }
@@ -93,7 +95,12 @@ export default function TileContent({
   const hideExpensesPreview = () => {
     setIsShowing(false)
   }
-  if (tileLoaded) {
+
+  if(!tileLoaded)
+  return (
+    <div></div>
+  )
+  
     return (
       <div
         className={classes.tileContent}
@@ -114,7 +121,4 @@ export default function TileContent({
         )}
       </div>
     )
-  } else {
-    return null
-  }
-}
+  } 

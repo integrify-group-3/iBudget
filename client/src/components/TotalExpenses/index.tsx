@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import moment from "moment"
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -19,7 +19,6 @@ export default function TotalExpenses({
     totalAmount
 }: TotalExpensesProps) {
   const classes = useStyles()
-  
   return (
     <React.Fragment>
       <Title>

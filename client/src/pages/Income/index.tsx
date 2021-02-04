@@ -160,7 +160,7 @@ export default function IncomePage(props: any) {
                 <ProfileDashboard />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={5}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 <IncomeTable
                   // key={calendar?._id}
@@ -171,7 +171,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={10} md={6}>
+            <Grid item xs={10} md={6} lg={6}>
               <Calendar
                 onChange={onChange}
                 value={calendarDate}

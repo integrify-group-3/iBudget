@@ -8,6 +8,7 @@ import Login from '../pages/Login'
 import Dashboard from '../pages/Dashboard'
 import Income from '../pages/Income'
 import Expenses from '../pages/Expenses'
+import Analytics from '../pages/Analytics'
 
 const Routes = () => {
   return (
@@ -20,6 +21,7 @@ const Routes = () => {
       <Route exact path="/dashboard" component={(props: any) => <Dashboard {...props} />} />
       <Route exact path="/income" component={(props: any) => <Income {...props}/>} />
       <Route exact path="/expenses" component={(props: any) => <Expenses {...props}/>} />
+      <Route exact path="/analytics" component={(props: any) => <Analytics {...props}/>} />
     </Switch>
   </>
   )

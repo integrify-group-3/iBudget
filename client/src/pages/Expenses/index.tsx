@@ -19,7 +19,7 @@ import {
   ViewMonth,
 } from '../../types'
 
-import useExpenses from '../../hooks/useExpenses'
+import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useExpensesChart from '../../hooks/useExpensesChart'
 import useTotalExpenses from '../../hooks/useTotalExpenses'
 import { months, date, year, currentMonth } from '../../utils/dateValues'
@@ -108,18 +108,14 @@ export default function ExpensesPage(props: any) {
     calendarData,
     defaultDateView,
     defaultMonth,
-  ] = useExpenses(query)
+  ] = useMonthlyExpenses()
   const [calendarDate, setCalendarDate] = useState(date)
   const [isFormShowing, setIsFormShowing] = useState(false)
   //moving this to hook
   const [dailyExpense, setDailyExpense] = useState({} as DailyExpense)
   const [isDayClicking, setIsDayClicking] = useState(false)
   //moving this to hook
-  const [viewMonth, setViewMonth] = useState({
-    name: '',
-    income: [],
-    days: [{ day: '', expenses: [] }],
-  } as ViewMonth)
+  
   const switchMonth = {} as ViewMonth
 
   const [totalExpenses] = useTotalExpenses(monthlyTotalExpenses)
@@ -128,15 +124,17 @@ export default function ExpensesPage(props: any) {
     day: '',
     expenses: [],
   })
-  // console.log('total', total)
   //moving this to hook
   const [dateView, setDateView] = useState({
     year: 0,
     month: '',
   } as DateView)
-  const [tileContentData, setTileContentData] = useState({name: '',
+
+  const [tileContentData, setTileContentData] = useState(
+  {name: '',
   income: [],
-  days: [{ day: '', expenses: [] }],} as ViewMonth)
+  days: [{ day: '', expenses: [] }]} as ViewMonth)
+
   const [expense, setExpense] = useState({
     category: '',
     description: '',
@@ -159,7 +157,6 @@ export default function ExpensesPage(props: any) {
       // console.log('I am calling from useEffect Expenses')
       setDateView(defaultDateView as DateView)
       // console.log(dateView)
-      setViewMonth(defaultMonth)
       setExpense({
         category: '',
         description: '',
@@ -191,7 +188,7 @@ export default function ExpensesPage(props: any) {
       setIsFormShowing(false)
       setIsDayClicking(true)
       setSchedule({ ...schedule, day: e })
-      setQuery(e)
+      // setQuery(e)
     try {
       const selectedYear = await e.getFullYear()
       const currentIndex = await e.getMonth()
@@ -227,7 +224,6 @@ export default function ExpensesPage(props: any) {
       switchMonth.days = foundMonth.days
       setMonthlyTotalExpenses(switchMonth)
       //this is the proper way
-      // setViewMonth(foundMonth);
       const selectedDay = await foundMonth.days.find(
         (d: any) => moment(d.day).format('LL') === moment(e).format('LL')
       )
@@ -243,42 +239,38 @@ export default function ExpensesPage(props: any) {
 
   //this function is not working properly, fixing it
   const switchMonthOnClick = async (e: any) => {
-    console.log(calendarData.years)
-    console.log(e)
-    console.log(e.value.getFullYear())
+    // console.log(calendarData.years)
+    // console.log(e)
+    // console.log(e.value.getFullYear())
     try {
       const selectedYear = await e.value.getFullYear()
       const currentIndex = await e.value.getMonth()
       // console.log('one', selectedYear, months[currentIndex])
-
+      console.log(e.activeStartDate)
       const selectedYearTwo = await e.activeStartDate.getFullYear()
       const currentIndexTwo = await e.activeStartDate.getMonth()
-      console.log('two', selectedYearTwo, months[currentIndexTwo], months)
+      // console.log('two', selectedYearTwo, months[currentIndexTwo], months)
       const clickedMonth = months[currentIndex]
       // console.log(e.activeStartDate, selectedYear, clickedMonth)
       dateView.year = selectedYearTwo
       dateView.month = months[currentIndexTwo]
-      console.log(dateView)
+      console.log('date view here', dateView)
       const foundYear = await calendarData.years.find(
         (y: CalendarScheduler) => y.year === dateView.year
       )
-      console.log(foundYear)
       for (const month of foundYear.months) {
-        // console.log(month)
+        console.log(month)
         if (month.name === dateView.month) {
           console.log('month here', month)
           //sets the chart to selected month
           setMonthlyChart(month.days)
-          console.log('monthly chart should update', monthlyChart)
+          // console.log('monthly chart should update', monthlyChart)
           //sets the month expenses and budget to selected month
           setMonthlyTotalExpenses(month)
-         
-          console.log(tileContentData)
-
-          console.log(viewMonth)
-          console.log(calendarData.years)
-        } else {
-        }
+          // console.log(calendarData.years)
+          // setTileContentData(month)
+          console.log('tile content here', tileContentData)
+        } 
       }
     } catch (err) {
       console.log(err)
@@ -290,15 +282,17 @@ export default function ExpensesPage(props: any) {
       // console.log('calling from updateDailyExpenses')
       // console.log(defaultMonth)
       //this is not updating
-      setViewMonth(defaultMonth)
-      // console.log(viewMonth)
       // setMonthlyChart(selectedMonth.days)
       //when clicking on the calendar again, the calendar reset the charts to the previous state cuz is still taking the calendar before the state update
       setDailyExpense(expenses)
       setMonthlyTotalExpenses(selectedMonth)
+      setTileContentData(defaultMonth)
     } catch (err) {}
-  }, [viewMonth, selectedMonth, expenses, dailyExpense])
+  }, [selectedMonth, expenses, dailyExpense])
 
+  const loadTiles = () => {
+    
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -347,7 +341,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
@@ -385,20 +379,22 @@ export default function ExpensesPage(props: any) {
               </Grid>
             )}
 
-            <Grid item xs={10} md={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <Calendar
                 value={calendarDate}
                 onChange={showDayOnClick}
                 onActiveStartDateChange={switchMonthOnClick}
                 showNeighboringMonth={true}
-                tileContent={({ date, view }: any) => (
+                tileContent={({ activeStartDate, date, view }: any) => (
                   <TileContent
                     date={date}
                     view={view}
+                    activeStartDate={activeStartDate}
                     // contentData={isDayClicking ? tileContentData : defaultMonth}
                     contentData={tileContentData}
                   />
                 )}
+               
               />
             </Grid>
           </Grid>
