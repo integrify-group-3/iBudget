@@ -4,6 +4,7 @@ import product from './product'
 import ui from './ui'
 import user from './user'
 import error from './error'
+import validation from './validation'
 import income from './income'
 import expenses from './expenses'
 
@@ -13,6 +14,7 @@ const createRootReducer = () =>
     ui,
     user,
     error,
+    validation,
     income,
     expenses
   })

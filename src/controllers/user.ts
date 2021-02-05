@@ -48,6 +48,7 @@ export const registerUser = async (
         bcrypt.hash(newUser.password, salt, async (err: unknown, hash: string) => {
           if (err) throw err
           newUser.password = hash
+          //one calendar is associated to a single user, we set the calendar id to user id to retrieve it for CRUD operations
           const calendar = new Calendar({
             _id: newUser._id,
             years: dbCalendar.years
@@ -140,7 +141,7 @@ export const loginUser = async (
 }
 
 //@ROUTE GET /v1/user/:id
-//@DESC Finds one users
+//@DESC Finds one user
 //@ACCESS: Private
 export const findOneUser = async (
   req: Request,
@@ -161,6 +162,68 @@ export const findOneUser = async (
     // await res.json(UserService.findUserByReq(userId))
   } catch (err) {
     next(res.json({ msg: 'User not found' }))
+  }
+}
+
+//@ROUTE PUT /v1/user/:id
+//@DESC Updates one user
+//@ACCESS: Private
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.user as RequestUser
+    console.log(id)
+    console.log('req body here', req.body)
+    User.findById(id)
+    .then((user) => {
+      if(!user) return res.status(404).json({msg: 'user not found'})
+      console.log('found user', user)
+      const { firstName, lastName, email, newPassword } = req.body
+      console.log(firstName, lastName, email, newPassword)
+      user.firstName = firstName
+      user.lastName = lastName
+      user.email = email
+      if (!newPassword) {
+        console.log('user updated', user)
+         user.save()
+         .then((user) => res.json({
+          user: {
+            id: user._id,
+            email: user.email,
+            password: user.password,
+            firstName: user.firstName,
+            lastName: user.lastName
+          }}))      } else {
+        let { newPassword } = req.body
+        console.log('not empty', newPassword) 
+        bcrypt.genSalt(10, (err: unknown, salt: string) => {
+          bcrypt.hash(newPassword, salt, async(err: unknown, hash: string) => {
+            if (err) throw err
+            newPassword = hash
+            console.log('mew password hashed', newPassword)
+            user.password = newPassword
+            console.log('update user', user)
+            user.save()
+            .then((user) => res.json({
+              user: {
+                id: user._id,
+                email: user.email,
+                password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName
+              }}))
+          })
+        })
+        
+      } 
+      
+    }) 
+  }
+  catch(err) {
+    next(new NotFoundError('User not found', err))
   }
 }
 

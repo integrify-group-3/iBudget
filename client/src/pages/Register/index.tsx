@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  registerHeader: {
+    marginTop: '1.5rem'
+  },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
@@ -68,7 +71,7 @@ export default function Register() {
       <Container component="main" maxWidth="xs" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" className={classes.registerHeader}>
             Sign up
           </Typography>
           <Formik
@@ -123,7 +126,7 @@ export default function Register() {
                   id="firstName"
                   name="firstName"
                   autoComplete="firstName"
-                  label="firstNames"
+                  label="first name"
                   className={`${classes.inputField} ${classes.inputAlign}`}
                   as={TextField}
                 />
@@ -136,7 +139,7 @@ export default function Register() {
                   id="lastName"
                   name="lastName"
                   autoComplete="lastName"
-                  label="lastName"
+                  label="last name"
                   className={`${classes.inputField} ${classes.inputAlign}`}
                   as={TextField}
                 />

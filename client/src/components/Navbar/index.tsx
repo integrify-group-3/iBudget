@@ -9,7 +9,7 @@ import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
-import Typography from '@material-ui/core/Typography'
+import { Button, Typography } from '@material-ui/core'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -18,7 +18,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
 import { AppState } from '../../types'
 import { logout } from '../../redux/actions/user'
-import {mainListItems, secondaryListItems} from '../NavList'
+import { mainListItems, secondaryListItems } from '../NavList'
 
 
 const drawerWidth = 240;
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '37rem'
+    width: '61rem'
   },
   headerUser: {
     display: 'flex',
@@ -104,6 +104,15 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     flexGrow: 1,
     padding: theme.spacing(3),
     overflow: 'auto',
+  },
+  btnStyle: {
+    borderRadius: 50,
+    width: '35%',
+    textAlign: 'center',
+    margin: 'auto',
+    padding: '.3rem',
+    height: '1.7rem',
+    // backgroundColor: '#4F416B'
   },
 }),
 );
@@ -152,7 +161,16 @@ const Navbar = () => {
           isAuthenticated &&
           <Typography className={classes.headerUser}>
             <span>Hello {user.firstName} {user.lastName}</span>
-            <NavLink to="/" onClick={logoutOnClick}>Logout</NavLink>
+            {/* <NavLink to="/" onClick={logoutOnClick}>Logout</NavLink> */}
+            <Button
+          component={NavLink}
+          to={'/'}
+          color="secondary"
+          variant="contained"
+          className={classes.btnStyle}
+          onClick={logoutOnClick}>
+            Logout
+         </Button>
           </Typography>
         }
           </Typography>

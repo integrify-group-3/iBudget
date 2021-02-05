@@ -5,17 +5,19 @@ import {
   LOGIN_SUCCESS,
   UserActions,
   User,
+  EditUser,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  LOGOUT
+  LOGOUT,
+  UPDATE_USER,
 } from '../../types'
 
-import { showErrors } from './error'
+import { showErrors, clearErrors } from './error'
+import { showValidation, clearValidation } from './validation'
 
-export function registerFail(error: UserActions) {
+export function registerFail(): UserActions {
   return {
     type: REGISTER_FAIL,
-    payload: error,
   }
 }
 
@@ -23,8 +25,8 @@ export function registerSuccess(user: User): UserActions {
   return {
     type: REGISTER_SUCCESS,
     payload: {
-      user
-    }
+      user,
+    },
   }
 }
 
@@ -33,8 +35,8 @@ export function loginSuccess(user: User, token: string): UserActions {
     type: LOGIN_SUCCESS,
     payload: {
       user,
-      token
-    } 
+      token,
+    },
   }
 }
 
@@ -44,23 +46,13 @@ export function logout(): UserActions {
   }
 }
 
-export function loginUser({ email, password }: any) {
-  return async (dispatch: Dispatch, getState: any) => {
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }
-      const body = JSON.stringify({ email, password})
-      tokenConfig(getState)
-      const url = 'http://localhost:5000/api/v1/user/login'
-      const res = await axios.post(url, body, config)
-      dispatch(loginSuccess(res.data.user, res.data.token))
-    } catch (err) {
-      // no json or flash msg is returned from the backend so this can be added later 
-      dispatch(showErrors(err.response.data, err.response.status))
-    }
+export function update(user: User): UserActions {
+  console.log('calling from here', user)
+  return {
+    type: UPDATE_USER,
+    payload: {
+      user,
+    },
   }
 }
 
@@ -80,11 +72,49 @@ export const registerUser = ({ firstName, lastName, email, password }: any) => {
         window.location.href = '/login'
       })
       .catch((error) => {
-        dispatch(registerFail(error.message))
-        // no json or flash msg is returned from the backend so this can be added later 
+        dispatch(registerFail())
         dispatch(showErrors(error.response.data, error.response.status))
-
+        setTimeout(() => {
+          dispatch(clearErrors())
+        }, 4000);
       })
+  }
+}
+
+export function loginUser({ email, password }: any) {
+  return async (dispatch: Dispatch, getState: any) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+      const body = JSON.stringify({ email, password })
+      tokenConfig(getState)
+      const url = 'http://localhost:5000/api/v1/user/login'
+      const res = await axios.post(url, body, config)
+      dispatch(loginSuccess(res.data.user, res.data.token))
+    } catch (err) {
+      dispatch(showErrors(err.response.data, err.response.status))
+      setTimeout(() => {
+        dispatch(clearErrors())
+      }, 4000);
+    }
+  }
+}
+
+export const updateUser = (id: string, user: any) => {
+  return async (dispatch: Dispatch, getState: any) => {
+    console.log('from user actions', id, user)
+    const url = `http://localhost:5000/api/v1/user/${id}`
+    try {
+      const res = await axios.put(url, user, tokenConfig(getState))
+      console.log(res.data)
+      dispatch(update(res.data.user))
+      dispatch(showValidation())
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
