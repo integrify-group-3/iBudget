@@ -8,8 +8,11 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const SHOW_ERRORS = 'SHOW_ERRORS'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
+export const SHOW_VALIDATIONS = 'SHOW_VALIDATIONS'
+export const CLEAR_VALIDATIONS = 'CLEAR_VALIDATIONS'
 export const REGISTER_FAIL = 'REGISTER_FAIL'
 export const LOGOUT = 'LOGOUT'
+export const UPDATE_USER = 'UPDATE_USER'
 
 //income action types
 export const GET_INCOME = 'GET_INCOME'
@@ -80,6 +83,14 @@ export type User = {
   lastName: string
   email: string
   password: string
+}
+
+export type EditUser = {
+  firstName: string
+  lastName: string
+  email: string
+  newPassword: string
+  repeatNewPassword: string
 }
 
 export type Income = {
@@ -169,7 +180,6 @@ export type EmptyChartContainerProps = {
 
 export type ExpensesTableProps = {
   day: string | Date
-  // day: any
   dailyExpense: DailyExpense
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   updateDailyExpenses: Function
@@ -220,9 +230,6 @@ export type EditExpenseProps = {
 
 export type RegisterFailAction = {
   type: typeof REGISTER_FAIL
-  payload: {
-    user: User
-  }
 }
 
 export type RegisterUserSuccessAction = {
@@ -244,6 +251,12 @@ export type LogoutAction = {
   type: typeof LOGOUT
 }
 
+export type UpdateUserAction = {
+  type: typeof UPDATE_USER
+  payload: {
+    user: User
+  }
+}
 export type ShowErrorAction = {
   type: typeof SHOW_ERRORS
   payload: {
@@ -254,6 +267,14 @@ export type ShowErrorAction = {
 
 export type ClearErrorAction = {
   type: typeof CLEAR_ERRORS
+}
+
+export type ShowValidationAction = {
+  type: typeof SHOW_VALIDATIONS
+}
+
+export type ClearValidationAction = {
+  type: typeof CLEAR_VALIDATIONS
 }
 
 export type GetIncomeAction = {
@@ -334,8 +355,10 @@ export type UserActions =
   | RegisterFailAction
   | LoginUserSuccessAction
   | LogoutAction
+  | UpdateUserAction
 
 export type ErrorActions = ShowErrorAction | ClearErrorAction
+export type ValidationActions = ShowValidationAction | ClearValidationAction 
 
 export type CalendarActions = GetIncomeAction
 
@@ -356,7 +379,6 @@ export type UserState = {
   user: User
   token: string
   isAuthenticated?: boolean
-  error: string
 }
 
 export type IncomeState = {
@@ -377,11 +399,16 @@ export type ErrorState = {
   status?: any
 }
 
+export type ValidationState = {
+  validated: boolean
+}
+
 export type AppState = {
   product: ProductState
   ui: UiState
   user: UserState
   error: ErrorState
+  validation: ValidationState
   income: IncomeState
   expenses: ExpensesState
 }

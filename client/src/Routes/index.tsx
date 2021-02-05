@@ -10,7 +10,7 @@ import Income from '../pages/Income'
 import Expenses from '../pages/Expenses'
 import Analytics from '../pages/Analytics'
 import User from '../pages/User'
-import EditUser from '../pages/EditUser'
+import UpdateUser from '../pages/UpdateUser'
 
 const Routes = () => {
   return (
@@ -25,7 +25,7 @@ const Routes = () => {
       <Route exact path="/expenses" component={(props: any) => <Expenses {...props}/>} />
       <Route exact path="/analytics" component={(props: any) => <Analytics {...props}/>} />
       <Route exact path="/user" component={(props: any) => <User {...props}/>} />
-      <Route exact path="/user/:id" component={(props: any) => <EditUser {...props}/>} />
+      <Route exact path="/user/:id" component={(props: any) => <UpdateUser {...props}/>} />
     </Switch>
   </>
   )

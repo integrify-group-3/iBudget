@@ -17,7 +17,6 @@ const initState: AppState = {
     user: {} as User,
     token: '',
     isAuthenticated: false,
-    error: '',
   },
   income: {
     calendar: {} as CalendarScheduler,
@@ -33,6 +32,9 @@ const initState: AppState = {
   error: {
     msg: {},
     status: null
+  },
+  validation: {
+    validated: false
   }
 }
 

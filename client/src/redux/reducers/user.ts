@@ -4,15 +4,16 @@ import {
   LOGIN_SUCCESS,
   UserActions,
   REGISTER_SUCCESS,
-  LOGOUT
+  REGISTER_FAIL,
+  LOGOUT,
+  UPDATE_USER
 } from '../../types'
 
 export default function auth(
   state: UserState = {
     user: {} as User,
     token: '',
-    isAuthenticated: false,
-    error: '',
+    isAuthenticated: false
   },
   action: UserActions
 ): UserState {
@@ -30,7 +31,10 @@ export default function auth(
     return {
       ...state,
       ...action.payload,
-      error: '',
+    }
+  case REGISTER_FAIL:
+    return {
+        ...state,
     }
   case LOGOUT:
     localStorage.removeItem('token')
@@ -40,6 +44,12 @@ export default function auth(
       isAuthenticated: false,
       user: {} as User
     }
+  case UPDATE_USER:
+    console.log('from user reducer', action.payload)
+  return {
+      ...state,
+      ...action.payload    
+  }
   default:
     return state
   }

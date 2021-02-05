@@ -48,6 +48,7 @@ export const registerUser = async (
         bcrypt.hash(newUser.password, salt, async (err: unknown, hash: string) => {
           if (err) throw err
           newUser.password = hash
+          //one calendar is associated to a single user, we set the calendar id to user id to retrieve it for CRUD operations
           const calendar = new Calendar({
             _id: newUser._id,
             years: dbCalendar.years
@@ -188,8 +189,14 @@ export const updateUser = async (
       if (!newPassword) {
         console.log('user updated', user)
          user.save()
-        .then((user) => res.json(user))
-      } else {
+         .then((user) => res.json({
+          user: {
+            id: user._id,
+            email: user.email,
+            password: user.password,
+            firstName: user.firstName,
+            lastName: user.lastName
+          }}))      } else {
         let { newPassword } = req.body
         console.log('not empty', newPassword) 
         bcrypt.genSalt(10, (err: unknown, salt: string) => {
@@ -198,8 +205,16 @@ export const updateUser = async (
             newPassword = hash
             console.log('mew password hashed', newPassword)
             user.password = newPassword
+            console.log('update user', user)
             user.save()
-            .then((user) => res.json(user))
+            .then((user) => res.json({
+              user: {
+                id: user._id,
+                email: user.email,
+                password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName
+              }}))
           })
         })
         

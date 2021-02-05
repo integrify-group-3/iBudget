@@ -14,8 +14,9 @@ import {
   Container,
 } from '@material-ui/core'
 
-import { AppState } from '../../types'
+import { AppState, EditUser } from '../../types'
 import { updateUser } from '../../redux/actions/user'
+import { clearValidation } from '../../redux/actions/validation'
 
 import './style.scss'
 
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   showPasswordChange: {
     cursor: 'pointer',
     color: '#865CFF',
+    width: '8rem',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -65,19 +67,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function EditUser(props: any) {
+export default function UpdateUser(props: any) {
   const dispatch = useDispatch()
   const classes = useStyles()
+  const id = props.match.params.id
   const errorMsg = useSelector((state: AppState) => state.error.msg.msg)
   const foundUser = useSelector((state: AppState) => state.user)
-  console.log(foundUser.user)
-  type EditUser = {
-    firstName: string
-    lastName: string
-    email: string
-    newPassword: string
-    repeatNewPassword: string
-  }
+  const isValidated = useSelector((state: AppState) => state.validation)
+
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
@@ -87,6 +84,7 @@ export default function EditUser(props: any) {
   } as EditUser)
   const [showUpdatePassword, setShowUpdatePassword] = useState(false)
   const { isAuthenticated } = foundUser
+
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
@@ -100,17 +98,11 @@ export default function EditUser(props: any) {
     }
   }, [isAuthenticated, props.history])
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target
-    setUser({
-      ...user,
-      [name]: value,
-    })
-  }
   const openChangePassword = () => {
     setShowUpdatePassword(!showUpdatePassword)
   }
-  const { firstName, lastName, email, newPassword, repeatNewPassword } = user
+
+  const { firstName, lastName, email } = user
 
   if (!user) {
     return <h2>User not found</h2>
@@ -136,39 +128,60 @@ export default function EditUser(props: any) {
               repeatNewPassword: '',
             }}
             enableReinitialize
-            validationSchema={yup.object({
-              firstName: yup
-                .string()
-                .min(3, 'must be at least 3 character')
-                .max(20, 'firstname must between 3 and 20 characters')
-                .required('required field'),
-              lastName: yup
-                .string()
-                .min(3, 'must be at least 3 character')
-                .max(20, 'firstname must between 3 and 20 characters')
-                .required('required field'),
-              email: yup
-                .string()
-                .email('invalid email address')
-                .required('required field'),
-              newPassword: yup
-                .string()
-                .min(3, 'must be at least 3 character')
-                .max(25, 'password must between 3 and 25 characters')
-                .required('Password is required'),
-              repeatNewPassword: yup
-                .string()
-                .test(
-                  'passwords-match',
-                  'Passwords do not match',
-                  function (value) {
-                    return this.parent.newPassword === value
-                  }
-                ),
-            })}
-            onSubmit={(values, { resetForm }) => {
-              dispatch(updateUser(values))
-              console.log(values)
+            validationSchema={
+              !showUpdatePassword
+                ? yup.object({
+                    firstName: yup
+                      .string()
+                      .min(3, 'must be at least 3 character')
+                      .max(20, 'firstname must between 3 and 20 characters')
+                      .required('required field'),
+                    lastName: yup
+                      .string()
+                      .min(3, 'must be at least 3 character')
+                      .max(20, 'firstname must between 3 and 20 characters')
+                      .required('required field'),
+                    email: yup
+                      .string()
+                      .email('invalid email address')
+                      .required('required field'),
+                  })
+                : yup.object({
+                    firstName: yup
+                      .string()
+                      .min(3, 'must be at least 3 character')
+                      .max(20, 'firstname must between 3 and 20 characters')
+                      .required('required field'),
+                    lastName: yup
+                      .string()
+                      .min(3, 'must be at least 3 character')
+                      .max(20, 'firstname must between 3 and 20 characters')
+                      .required('required field'),
+                    email: yup
+                      .string()
+                      .email('invalid email address')
+                      .required('required field'),
+                    newPassword: yup
+                      .string()
+                      .min(3, 'must be at least 3 character')
+                      .max(25, 'password must between 3 and 25 characters')
+                      .required('Password is required'),
+                    repeatNewPassword: yup
+                      .string()
+                      .test(
+                        'passwords-match',
+                        'Passwords do not match',
+                        function (value) {
+                          return this.parent.newPassword === value
+                        }
+                      ),
+                  })
+            }
+            onSubmit={(user, { resetForm }) => {
+              dispatch(updateUser(id, user))
+              if (isValidated) {
+                props.history.push('/user')
+              }
               resetForm()
             }}
           >
@@ -182,9 +195,7 @@ export default function EditUser(props: any) {
                   error={touched.firstName && Boolean(errors.firstName)}
                   id="firstName"
                   name="firstName"
-                  autoComplete={firstName}
-                  value={firstName}
-                  onChange={handleChange}
+                  autoComplete="firstName"
                   label="firstName"
                   className={`${classes.inputField} ${classes.inputAlign}`}
                   as={TextField}
@@ -197,9 +208,7 @@ export default function EditUser(props: any) {
                   required
                   id="lastName"
                   name="lastName"
-                  autoComplete={lastName}
-                  value={lastName}
-                  onChange={handleChange}
+                  autoComplete="lastName"
                   label="lastName"
                   className={`${classes.inputField} ${classes.inputAlign}`}
                   as={TextField}
@@ -215,8 +224,6 @@ export default function EditUser(props: any) {
                   id="email"
                   name="email"
                   autoComplete="email"
-                  value={email}
-                  onChange={handleChange}
                   label="email"
                   className={classes.inputField}
                   as={TextField}
@@ -224,8 +231,8 @@ export default function EditUser(props: any) {
                 {showUpdatePassword && (
                   <>
                     <Field
-                      helperText={showUpdatePassword && touched.newPassword ? errors.newPassword : ''}
-                      error={showUpdatePassword && touched.newPassword && Boolean(errors.newPassword)}
+                      helperText={touched.newPassword ? errors.newPassword : ''}
+                      error={touched.newPassword && Boolean(errors.newPassword)}
                       variant="outlined"
                       margin="normal"
                       required
@@ -233,21 +240,18 @@ export default function EditUser(props: any) {
                       name="newPassword"
                       type="password"
                       id="newPassword"
-                      value={newPassword}
-                      onChange={handleChange}
+                      autoComplete="new password"
                       label="new password"
                       className={classes.inputField}
                       as={TextField}
                     />
                     <Field
                       helperText={
-                        showUpdatePassword &&  
                         touched.repeatNewPassword
                           ? errors.repeatNewPassword
                           : ''
                       }
                       error={
-                        showUpdatePassword &&
                         touched.repeatNewPassword &&
                         Boolean(errors.repeatNewPassword)
                       }
@@ -258,15 +262,14 @@ export default function EditUser(props: any) {
                       name="repeatNewPassword"
                       type="password"
                       id="repeatNewPassword"
-                      value={repeatNewPassword}
-                      onChange={handleChange}
+                      autoComplete="repeat new password"
                       label="repeat new password"
                       className={classes.inputField}
                       as={TextField}
                     />
                   </>
                 )}
-                { showUpdatePassword ? (
+                {showUpdatePassword ? (
                   <p
                     onClick={openChangePassword}
                     className={classes.showPasswordChange}
@@ -287,15 +290,13 @@ export default function EditUser(props: any) {
                   fullWidth
                   variant="contained"
                   className={classes.submit}
-                  //   disabled={!isValid}
+                  disabled={!isValid}
                 >
                   Save
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <NavLink to="/user">
-                      {'Already have an account? Login'}
-                    </NavLink>
+                    <NavLink to="/user">{'Go Back'}</NavLink>
                   </Grid>
                 </Grid>
                 <Grid container>

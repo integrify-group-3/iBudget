@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux'
 import { Button, Typography, Container } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
+import EditIcon from '@material-ui/icons/Edit'
+import PersonIcon from '@material-ui/icons/Person'
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail'
 
 import { AppState } from '../../types'
 
@@ -39,17 +42,30 @@ const useStyles = makeStyles((theme) => ({
   descStyle: {
     marginBottom: '40px',
   },
+  userDetails: {
+    fontSize: '16px',
+    marginTop: '1.5rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   btnStyle: {
     borderRadius: 50,
-    display: 'block',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '50%',
     textAlign: 'center',
-    marginTop: '20px',
+    marginTop: '30px',
     margin: 'auto',
   },
-  userDetails: {
-      fontSize: '18px',
-      marginTop: '1rem'
+  editIcon: {
+    color: 'white',
+    marginRight: '.4rem'
+  },
+  userIcon: {
+    color: '#4F416B',
+    marginRight: '.4rem'
   }
 }))
 
@@ -58,7 +74,7 @@ export default function User(props: any) {
   const user = useSelector(
     (state: AppState) => state.user
   )
-  console.log(user)
+  console.log(user) 
  
   const { isAuthenticated } = user
   const { id, firstName, lastName, email } = user.user
@@ -73,16 +89,16 @@ export default function User(props: any) {
     <div className="home-page-container">
       <Container className={classes.container}>
         <Typography variant="h4" className={classes.HeaderStyle}>
-          User
+          User Profile
         </Typography>
         <Typography variant="h4" className={classes.userDetails}>
-          First Name {firstName}
+          <PersonIcon className={classes.userIcon}/> <span>First Name: {firstName}</span>
         </Typography>
         <Typography variant="h4" className={classes.userDetails}>
-          Last Name {lastName}
+          <PersonIcon className={classes.userIcon}/> <span>Last Name: {lastName}</span>
         </Typography>
         <Typography variant="h4" className={classes.userDetails}>
-          email {email} 
+          <AlternateEmailIcon className={classes.userIcon}/> <span>email: {email} </span>
         </Typography>
         <Button
           component={Link}
@@ -90,7 +106,9 @@ export default function User(props: any) {
           color="primary"
           variant="contained"
           className={classes.btnStyle}
-        > Update User
+        >
+          <EditIcon className={classes.editIcon} /> 
+          <span>Update User</span>
         </Button>
       </Container>
     </div>
