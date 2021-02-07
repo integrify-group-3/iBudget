@@ -18,6 +18,7 @@ export default function TotalExpenses({
     year, 
     totalAmount
 }: TotalExpensesProps) {
+  console.log(totalAmount)
   const classes = useStyles()
   return (
     <React.Fragment>

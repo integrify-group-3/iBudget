@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography'
 
 import { TotalIncomeProps } from '../../types'
 import Title from '../Title'
-import { setTimeout } from 'timers'
 
 function preventDefault(event: any) {
   event.preventDefault()
@@ -39,7 +38,7 @@ export default function TotalIncome({
     if(monthlyIncome !== undefined) {
       calculateTotalIncome()
     }
-  }, [])
+  }, [monthlyIncome, calculateTotalIncome])
 
   const income = calculateTotalIncome()
   return (

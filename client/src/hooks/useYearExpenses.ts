@@ -33,13 +33,9 @@ export default function useYearExpenses(selectedYear: number) {
     changeYearView(selectedYear)
   }, [selectedYear])
 
-  useEffect(() => {
-    console.log('the update', yearExpenses)
-  }, [])
-
   const changeYearView = useCallback(
     async (selectedYear: number) => {
-      console.log(calendarData.years)
+      console.log(selectedYear)
       try {
         const foundYear = await calendarData.years.find(
           (y: CalendarScheduler) => y.year === selectedYear
@@ -47,9 +43,9 @@ export default function useYearExpenses(selectedYear: number) {
         console.log('found year', foundYear)
         //this does not update, same as in the Expense page with tileContent
         setYearExpenses(foundYear)
-        console.log('year different', foundYear.year, yearExpenses.year)
+        // console.log('year different', foundYear.year, yearExpenses.year)
 
-        console.log('after update', yearExpenses)
+        // console.log('after update', yearExpenses)
 
         const totalExpenses = calculateYearExpenses(foundYear)
         const avgYearExpenses = calculateYearExpenses(foundYear) / 12
@@ -103,14 +99,14 @@ export default function useYearExpenses(selectedYear: number) {
       setErr(errMessage as any)
     }
     setYearExpenses(expenses)
-    console.log(yearExpenses)
+    // console.log(yearExpenses)
     if (expenses !== undefined) {
       const totalExpenses = calculateYearExpenses(expenses)
       const avgYearExpenses = calculateYearExpenses(expenses) / 12
       setYearTotalExpenses(totalExpenses)
       setAvgYearExpenses(avgYearExpenses)
       setDateView({ year: year })
-      console.log(expenses)
+      // console.log(expenses)
     }
   }, [expenses])
 

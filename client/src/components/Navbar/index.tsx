@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '61rem'
+    width: '100vw'
   },
   headerUser: {
     display: 'flex',
