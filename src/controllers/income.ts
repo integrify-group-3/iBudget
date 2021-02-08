@@ -4,7 +4,6 @@ import { RequestUser } from '../middlewares/authorized'
 import Income from '../models/Income'
 import IncomeService from '../services/income'
 import CalendarService from '../services/calendar'
-import { CalendarDocument } from '../models/Calendar'
 import { IncomeDocument } from '../models/Income'
 
 import {

@@ -16,7 +16,6 @@ import {
 
 import { AppState, EditUser } from '../../types'
 import { updateUser } from '../../redux/actions/user'
-import { clearValidation } from '../../redux/actions/validation'
 
 import './style.scss'
 

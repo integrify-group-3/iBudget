@@ -13,7 +13,7 @@ import { AppState, CalendarScheduler } from '../../types'
 import { date } from '../../utils/dateValues'
 import useYearExpenses from '../../hooks/useYearExpenses'
 import useYearChart from '../../hooks/useYearChart'
-import IncomeExpensesChart from '../../components/ExpensesIncomeChart'
+import IncomeExpensesYearChart from '../../components/IncomeExpensesYearChart'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,24 +72,8 @@ export default function Analytics(props: any) {
   ] = useYearExpenses(selectedYear)
 
  const [chartErr, chartData] = useYearChart(yearChart)
-
- console.log('year expenses', expensesData)
-
- //this is dummy data, and how the chart data should look like
- const data = [
-  {month: 'January', income: 4000, expenses: 3400},
-  {month: 'February', income: 3900, expenses: 3900},
-  {month: 'March', income: 3700, expenses: 3700},
-  {month: 'April', income: 3800, expenses: 3500},
-  {month: 'May', income: 3900, expenses: 3600},
-  {month: 'June', income: 3700, expenses: 3700},
-  {month: 'July', income: 3600, expenses: 3900},
-  {month: 'August', income: 3800, expenses: 4000},
-  {month: 'September', income: 3900, expenses: 3590},
-  {month: 'October', income: 3950, expenses: 3393},
-  {month: 'November', income: 3850, expenses: 3490},
-  {month: 'December', income: 3800, expenses: 3530},
-]
+ console.log(chartData)
+//  console.log('year expenses', expensesData)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -104,11 +88,12 @@ export default function Analytics(props: any) {
     try {
       const clickedYear = await e.getFullYear()
       setSelectedYear(clickedYear)
+      console.log(clickedYear)
     } catch(err) {
 
     } 
   }
-
+  //at the moment this data and chart works only with the default month (current month), not with onChange
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -142,12 +127,10 @@ export default function Analytics(props: any) {
                 <h3>Year {selectedYear}</h3>
               </Paper>
             </Grid>
-
              <Grid item xs={5} md={8} lg={8}>
+              {/*Expenses chart goes here, a series or bar chart for expenses and income for the year */}
               <Paper className={classes.chartHeightPaper}>
-                <h1>Expenses for {expensesData.year}</h1>
-                {/*Expenses chart goes here, a series or bar chart for expenses and income for the year */}
-                <IncomeExpensesChart data={data}/> 
+                <IncomeExpensesYearChart data={chartData} year={selectedYear}/> 
               </Paper>
             </Grid>
 
