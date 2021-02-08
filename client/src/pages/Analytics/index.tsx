@@ -15,7 +15,6 @@ import useYearExpenses from '../../hooks/useYearExpenses'
 import useYearChart from '../../hooks/useYearChart'
 import IncomeExpensesYearChart from '../../components/IncomeExpensesYearChart'
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -58,8 +57,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Analytics(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-  const isAuthenticated = useSelector((state: AppState) => state.user.isAuthenticated)
+  const isAuthenticated = useSelector(
+    (state: AppState) => state.user.isAuthenticated
+  )
   const user = useSelector((state: AppState) => state.user.user)
+  const calendarData = useSelector((state: AppState) => state.expenses.calendar)
   const [calendarDate] = useState(date)
   const [selectedYear, setSelectedYear] = useState(0)
   const [yearChart, setYearChart] = useState({} as CalendarScheduler)
@@ -68,32 +70,36 @@ export default function Analytics(props: any) {
     expensesData,
     yearViewExpenses,
     yearTotalExpenses,
-    avgYExpenses
+    avgYExpenses,
   ] = useYearExpenses(selectedYear)
 
- const [chartErr, chartData] = useYearChart(yearChart)
- console.log(chartData)
-//  console.log('year expenses', expensesData)
+  const [chartErr, chartData] = useYearChart(yearChart)
+  console.log(chartData)
+
+  console.log('year expenses', expensesData)
 
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-        setSelectedYear(date.getFullYear())
-        setYearChart(expensesData)
+      setSelectedYear(date.getFullYear())
+      setYearChart(expensesData)
     }
   }, [isAuthenticated, props.history])
-  
+
   const onChange = async (e: any) => {
     try {
       const clickedYear = await e.getFullYear()
       setSelectedYear(clickedYear)
-      console.log(clickedYear)
-    } catch(err) {
-
-    } 
+      //at the moment this data and chart works only with changing the monthView from current month from here (current month), not with useExpense hook where we also set the total expenses. same code is present also in changeView function in hooks but it doesn't work
+      const foundYear = await calendarData.years.find(
+        (y: CalendarScheduler) => y.year === clickedYear
+      )
+      setYearChart(foundYear)
+    } catch (err) {
+      console.log(err)
+    }
   }
-  //at the moment this data and chart works only with the default month (current month), not with onChange
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -105,15 +111,15 @@ export default function Analytics(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-              {/* Total year expenses go hear */}
-              <h2>Expenses {yearViewExpenses.year}</h2>
-              <h4>Total {yearTotalExpenses}</h4>
-              <h4>Average {avgYExpenses} </h4> 
+                {/* Total year expenses go hear */}
+                <h2>Expenses {yearViewExpenses.year}</h2>
+                <h4>Total {yearTotalExpenses}</h4>
+                <h4>Average {avgYExpenses} </h4>
               </Paper>
             </Grid>
-             <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-              <h2>Income </h2>
+                <h2>Income </h2>
                 {/* total year income goes here */}
                 <h4>Total</h4>
                 <h4>Average</h4>
@@ -121,22 +127,24 @@ export default function Analytics(props: any) {
             </Grid>
             <Grid item xs={5} md={6} lg={5}>
               <Paper className={fixedHeightPaper}>
-                <h3>{user.firstName} {user.lastName}</h3>
+                <h3>
+                  {user.firstName} {user.lastName}
+                </h3>
                 {/* year balance goes here */}
                 <h3>Total Balance</h3>
                 <h3>Year {selectedYear}</h3>
               </Paper>
             </Grid>
-             <Grid item xs={5} md={8} lg={8}>
+            <Grid item xs={5} md={8} lg={8}>
               {/*Expenses chart goes here, a series or bar chart for expenses and income for the year */}
               <Paper className={classes.chartHeightPaper}>
-                <IncomeExpensesYearChart data={chartData} year={selectedYear}/> 
+                <IncomeExpensesYearChart data={chartData} year={selectedYear} />
               </Paper>
             </Grid>
 
-             <Grid item xs={10} md={4}>
-                {/*Calendar for decade can goe here */}
-                <Calendar
+            <Grid item xs={10} md={4}>
+              {/*Calendar for decade can goe here */}
+              <Calendar
                 onChange={onChange}
                 value={calendarDate}
                 defaultView="decade"
@@ -151,4 +159,3 @@ export default function Analytics(props: any) {
     </div>
   )
 }
-

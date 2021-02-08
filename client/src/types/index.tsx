@@ -125,6 +125,11 @@ export type AddIncomeBtnProps = {
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
+export type SwitchChartBtnProps = {
+  switchChartView: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  btnText: string
+}
+
 export type CalendarScheduler = {
   years: any
   year: number
@@ -201,6 +206,39 @@ export type TotalExpensesYearProps = {
   year: number
   totalAmount: number
 }
+
+export type ExpensesChartData = {
+  category: string
+  amount: number
+}
+
+export type YearChartData = {
+  month: string
+  income: number
+  expenses: number
+}
+
+export type ExpensesChartProps = {
+  chartData: ExpensesChartData[]
+  year: number
+  month: string
+  valueField: string
+  argumentField: string
+  name: string
+}
+
+export type IncomeExpensesMonthChartProps = {
+  data: any
+  year: number
+  month: string 
+}
+
+export type IncomeExpensesYearChartProps = {
+  // data: YearChartData[] 
+  data: any
+  year: number
+} 
+
 export type AddExpenseBtnProps = {
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
