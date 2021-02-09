@@ -116,9 +116,9 @@ export type Expense = {
 export type AddIncomeProps = {
   year: number
   month: string
-  openForm: boolean
   handleClose: Function
-  updateMonthlyIncome: Function
+  hideFormOnClick: any
+
 }
 
 export type AddIncomeBtnProps = {
