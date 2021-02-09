@@ -19,11 +19,6 @@ const useStyles = makeStyles((theme) => ({
       width: '25ch',
     },
   },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: '1px solid rgba(184, 173, 173, 0.6)',
@@ -117,7 +112,6 @@ function EditIncome({
                 <MenuItem value="child allowance">Child Allowance</MenuItem>
               </Select>
             </div>
-
             <div className="input-topics">
               <TextField
                 id="outlined-basic"
@@ -129,7 +123,6 @@ function EditIncome({
                 value={description}
               />
             </div>
-
             <div className="input-topics">
               <TextField
                 type="number"
