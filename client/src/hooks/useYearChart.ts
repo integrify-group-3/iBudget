@@ -1,15 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 
+import { YearChartData } from '../types'
 import { defaultYearChartData } from '../utils/defaultChartValues'
 
 export default function useYearChart(yearData: any) {
-  type YearChart = {
-    month: string
-    income: number
-    expenses: number
-  }
+ 
   const [err, setErr] = useState(null)
-  let [chartData, setChartData] = useState([] as YearChart[])
+  let [chartData, setChartData] = useState([] as YearChartData[])
   // this chart will show a comparison between expenses and income per year
   
   const loadChartData = 

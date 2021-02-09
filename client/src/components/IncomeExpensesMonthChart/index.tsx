@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Paper } from '@material-ui/core'
 import {
   ArgumentAxis,
@@ -12,15 +12,18 @@ import {
 import { EventTracker, Animation } from '@devexpress/dx-react-chart'
 import { scaleBand } from '@devexpress/dx-chart-core'
 import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
-import { makeStyles } from '@material-ui/core/styles'
 
+import { IncomeExpensesMonthChartProps } from '../../types'
 
-export default function IncomeExpensesMonthChart(props: any) {
-  console.log(props)
+export default function IncomeExpensesMonthChart({
+    data,
+    year,
+    month
+}: IncomeExpensesMonthChartProps) {
   
   return (
     <Paper className="chart-container">
-        <Chart data={props.data}>
+        <Chart data={data}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
@@ -34,7 +37,7 @@ export default function IncomeExpensesMonthChart(props: any) {
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses/Income for ${props.month} ${props.year}`} />
+          <Title text={`Expenses/Income for ${month} ${year}`} />
           <Animation /> 
         </Chart>
      
