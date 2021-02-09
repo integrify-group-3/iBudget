@@ -35,14 +35,13 @@ export default function useYearExpenses(selectedYear: number) {
 
   const changeYearView = useCallback(
     async (selectedYear: number) => {
-      console.log(selectedYear)
       try {
         const foundYear = await calendarData.years.find(
           (y: CalendarScheduler) => y.year === selectedYear
         )
-        console.log('found year', foundYear)
+        // console.log('found year', foundYear)
         //this does not update, same as in the Expense page with tileContent
-        setYearExpenses(foundYear)
+        // setYearExpenses(foundYear)
         // console.log('year different', foundYear.year, yearExpenses.year)
 
         // console.log('after update', yearExpenses)

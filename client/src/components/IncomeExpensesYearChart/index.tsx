@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Paper } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
 import {
   ArgumentAxis,
   ValueAxis,
@@ -14,28 +13,26 @@ import {
 import { EventTracker, Animation } from '@devexpress/dx-react-chart'
 import { scaleBand } from '@devexpress/dx-chart-core'
 import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
-import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles((theme) => ({
-  switchChartBtn: {
-    padding: '.4rem',
-    cursor: 'pointer',
-    backgroundColor: 'blue',
-    color: 'white',
-  },
-}))
-export default function IncomeExpensesYearChart(props: any) {
-  console.log(props.data)
-  const classes = useStyles()
+import { IncomeExpensesYearChartProps } from '../../types'
+import SwitchChartBtn from '../../components/SwitchChartBtn'
+
+export default function IncomeExpensesYearChart({
+  data,
+  year,
+}: IncomeExpensesYearChartProps) {
+
   const [switchChart, setSwitchChart] = useState(false)
   const switchChartView = () => {
     setSwitchChart(!switchChart)
   }
+  const lineChartText = 'Line Chart'
+  const barChartText = 'Bar Chart'
 
   return (
     <Paper className="chart-container">
       {!switchChart ? (
-        <Chart data={props.data}>
+        <Chart data={data}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
@@ -49,14 +46,16 @@ export default function IncomeExpensesYearChart(props: any) {
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses/Income for ${props.year}`} />
-          <Button variant="outlined" color="primary" onClick={switchChartView}>
-            Line Chart
-          </Button>
+          <Title text={`Expenses/Income for ${year}`} />
+          <SwitchChartBtn
+            switchChartView={switchChartView}
+            btnText={lineChartText}
+          />
+
           {/* <Animation /> */}
         </Chart>
       ) : (
-        <Chart data={props.data}>
+        <Chart data={data}>
           <ArgumentAxis />
           <ValueAxis />
           <SplineSeries
@@ -72,10 +71,12 @@ export default function IncomeExpensesYearChart(props: any) {
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses/Income for ${props.year}`} />
-          <Button variant="outlined" color="primary" onClick={switchChartView}>
-            Bar Chart
-          </Button>
+          <Title text={`Expenses/Income for ${year}`} />
+          <SwitchChartBtn
+            switchChartView={switchChartView}
+            btnText={barChartText}
+          />
+
           {/* <Animation /> */}
         </Chart>
       )}
