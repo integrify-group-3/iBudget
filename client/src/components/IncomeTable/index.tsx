@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'lightblue',
     cursor: 'pointer',
   },
-  editExpenseContainer: {
+  incomeContainer: {
     backgroundColor: 'rgba(25, 20, 20, 0.6)',
     position: 'absolute',
     height: '200vh',
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     left: '17px',
     zIndex: 2,
   },
-  editExpenseFormContainer: {
+  incomeFormContainer: {
     position: 'fixed',
     top: '27%',
   },
@@ -92,7 +92,7 @@ export default function IncomeTable({
             Income for {month} {year}
           </Title>
           {monthlyIncome.length < 1 ? (
-            <Typography component="p" variant="h5">
+            <Typography component="p" variant="h6">
               No income registered
             </Typography>
           ) : (
@@ -118,9 +118,9 @@ export default function IncomeTable({
                           xs={12}
                           md={12}
                           lg={12}
-                          className={classes.editExpenseContainer}
+                          className={classes.incomeContainer}
                         >
-                          <Paper className={classes.editExpenseFormContainer}>
+                          <Paper className={classes.incomeFormContainer}>
                             <EditIncome
                               incomeId={IncomeId}
                               hideFormOnClick={hideFormOnClick}
@@ -155,15 +155,16 @@ export default function IncomeTable({
           <AddIncomeBtn showFormOnClick={showFormOnClick} />
         </>
       ) : (
-        <div>
-          <AddIncome
-            year={year}
-            month={month}
-            openForm={openForm}
-            handleClose={handleClose}
-            updateMonthlyIncome={updateMonthlyIncome}
-          />
-        </div>
+        <Grid item xs={12} md={12} lg={12} className={classes.incomeContainer}>
+          <Paper className={classes.incomeFormContainer}>
+            <AddIncome
+              year={year}
+              month={month}
+              handleClose={handleClose}
+              hideFormOnClick={hideFormOnClick}
+            />
+          </Paper>
+        </Grid>
       )}
     </React.Fragment>
   )
