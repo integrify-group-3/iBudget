@@ -5,6 +5,7 @@ import { AppState, CalendarScheduler } from '../types'
 import { fetchExpenses } from '../redux/actions/expenses'
 import { months, year } from '../utils/dateValues'
 
+//
 export default function useYearExpenses(selectedYear: number) {
   const dispatch = useDispatch()
   const calendarData = useSelector((state: AppState) => state.expenses.calendar)
@@ -42,6 +43,7 @@ export default function useYearExpenses(selectedYear: number) {
         // console.log('found year', foundYear)
         //this does not update, same as in the Expense page with tileContent
         // setYearExpenses(foundYear)
+        //as we will need useYearIncome as well for total income, we could just leave the switch chart view on the component as it will just update the chart for both once, since income and expenses are on the same json data. total income will be calcualted on income action and have their own useYearIncome
         // console.log('year different', foundYear.year, yearExpenses.year)
 
         // console.log('after update', yearExpenses)

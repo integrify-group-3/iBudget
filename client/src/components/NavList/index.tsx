@@ -14,6 +14,7 @@ import MoneyOffIcon from '@material-ui/icons/MoneyOff'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import PersonIcon from '@material-ui/icons/Person'
 
+import { NavbarSecondaryListItemsProps } from '../../types'
 import logo from '../../imgs/logo.svg'
 
 const linkStyle = {
@@ -26,13 +27,14 @@ const navIconStyle = {
   opacity: '0.9',
 }
 
-export const mainListItems = (
+export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
+  return (
   <div>
     <ListSubheader style={{ display: 'flex', justifyContent: 'flex-start' }}>
       <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
       <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
     </ListSubheader>
-    <NavLink to="/dashboard" style={linkStyle}>
+    <NavLink to="/dashboard" style={linkStyle} title="Dashboard">
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon style={navIconStyle} />
@@ -40,7 +42,7 @@ export const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </NavLink>
-    <NavLink to="/income" style={linkStyle}>
+    <NavLink to="/income" style={linkStyle} title="Income">
       <ListItem button>
         <ListItemIcon>
           <AccountBalanceWalletIcon style={navIconStyle} />
@@ -48,7 +50,7 @@ export const mainListItems = (
         <ListItemText primary="Income" />
       </ListItem>
     </NavLink>
-    <NavLink to="/expenses" style={linkStyle}>
+    <NavLink to="/expenses" style={linkStyle} title="Expenses">
       <ListItem button>
         <ListItemIcon>
           <MoneyOffIcon style={navIconStyle} />
@@ -56,7 +58,7 @@ export const mainListItems = (
         <ListItemText primary="Expenses" />
       </ListItem>
     </NavLink>
-    <NavLink to="/analytics" style={linkStyle}>
+    <NavLink to="/analytics" style={linkStyle} title="Analytics">
       <ListItem button>
         <ListItemIcon>
           <TrendingUpIcon style={navIconStyle} />
@@ -64,7 +66,7 @@ export const mainListItems = (
         <ListItemText primary="Analytics" />
       </ListItem>
     </NavLink>
-    <NavLink to="/user" style={linkStyle}>
+    <NavLink to={`/user/${user.id}`} style={linkStyle} title="User Profile">
       <ListItem button>
         <ListItemIcon>
           <PersonIcon style={navIconStyle} />
@@ -73,7 +75,8 @@ export const mainListItems = (
       </ListItem>
     </NavLink>
   </div>
-)
+  )
+}
 
 export const secondaryListItems = (
   <div>
@@ -81,28 +84,28 @@ export const secondaryListItems = (
       <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
       <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
     </ListSubheader>
-    <NavLink to="/register" style={linkStyle}>
+    <NavLink to="/register" style={linkStyle} title="Sign up">
       <ListItem button>
         <ListItemIcon>
           <PersonAddIcon style={navIconStyle} />
         </ListItemIcon>
-        <ListItemText primary="Sign up" />
+        <ListItemText primary="Sign up"/>
       </ListItem>
     </NavLink>
-    <NavLink to="/login" style={linkStyle}>
+    <NavLink to="/login" style={linkStyle} title="Sign in">
       <ListItem button>
         <ListItemIcon>
           <ExitToAppIcon style={navIconStyle} />
         </ListItemIcon>
-        <ListItemText primary="Sign in" />
+        <ListItemText primary="Sign in"/>
       </ListItem>
     </NavLink>
-    <NavLink to="/" style={linkStyle}>
+    <NavLink to="/" style={linkStyle} title="Home" >
       <ListItem button>
         <ListItemIcon>
-          <HomeIcon style={navIconStyle} />
+          <HomeIcon style={navIconStyle}/>
         </ListItemIcon>
-        <ListItemText primary="Home" />
+        <ListItemText primary="Home"/>
       </ListItem>
     </NavLink>
   </div>

@@ -59,9 +59,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
+    height: 240,
+  },
+  fixedHeightTable: {
     height: 340,
   },
-  chartHeightPaper: {
+  fixedHeightChart: {
     height: 550,
   },
   addExpenseContainer: {
@@ -86,6 +89,9 @@ const useStyles = makeStyles((theme) => ({
 export default function ExpensesPage(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+    const fixedHeightPaperChart = clsx(classes.paper, classes.fixedHeightChart)
+  const fixedHeightPaperTable = clsx(classes.paper, classes.fixedHeightTable)
+
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
@@ -290,9 +296,6 @@ export default function ExpensesPage(props: any) {
     } catch (err) {}
   }, [selectedMonth, expenses, dailyExpense])
 
-  const loadTiles = () => {
-    
-  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -342,7 +345,7 @@ export default function ExpensesPage(props: any) {
               </Paper>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
                   dailyExpense={

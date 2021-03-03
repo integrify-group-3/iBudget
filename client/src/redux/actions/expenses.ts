@@ -16,7 +16,7 @@ import {
 
 import { tokenConfig } from './user'
 
-import { date, year, months, currentMonth } from '../../utils/dateValues'
+import { date, year, currentMonth } from '../../utils/dateValues'
 
 export function getExpenses(
   calendar: CalendarScheduler,
@@ -126,7 +126,7 @@ const getDailyExpenses = async (data: any, expense: Expense) => {
 }
 
 export function fetchExpenses() {
-  const url = 'http://localhost:5000/api/v1/expense'
+  const url = '/api/v1/expense'
   return async (dispatch: Dispatch, getState: any) => {
     const res = await axios.get(url, tokenConfig(getState))
     const data = await res.data
@@ -162,7 +162,7 @@ export function fetchExpenses() {
 
 export function addExpense(expense: Expense) {
   console.log('from actions add expense', expense)
-  const url = 'http://localhost:5000/api/v1/expense'
+  const url = '/api/v1/expense'
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.post(url, expense, tokenConfig(getState))
@@ -180,7 +180,7 @@ export function addExpense(expense: Expense) {
 
 export function updateExpense(expense: Expense, expenseId: string) {
   // console.log('from actions edit expense', expense)
-  const url = `http://localhost:5000/api/v1/expense/${expenseId}`
+  const url = `/api/v1/expense/${expenseId}`
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.put(url, expense, tokenConfig(getState))
@@ -196,7 +196,7 @@ export function updateExpense(expense: Expense, expenseId: string) {
 
 export function removeExpense(id: string, expense: Expense) {
   console.log('from actions add expense', id, expense)
-  const url = `http://localhost:5000/api/v1/expense/${id}`
+  const url = `/api/v1/expense/${id}`
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.delete(url, tokenConfig(getState))

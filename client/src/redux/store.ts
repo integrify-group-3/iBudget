@@ -17,6 +17,8 @@ const initState: AppState = {
     user: {} as User,
     token: '',
     isAuthenticated: false,
+    forgotPasswordEmailMsg: '',
+    resetPasswordMsg: ''
   },
   income: {
     calendar: {} as CalendarScheduler,
@@ -49,12 +51,17 @@ export default function makeStore(initialState = initState) {
     }
   }
 
-  const temp = localStorage.getItem('reduxState')
-  const persistedState = temp ? JSON.parse(temp) : {}
+  // const temp = localStorage.getItem('reduxState')
+  // const persistedState = temp ? JSON.parse(temp) : {}
+  
+  //using saga as the above localstorage throws an error after a while and requires oftern to clear the local storage
+  const localState = localStorage.getItem('app-state')
+  localState && (initialState = JSON.parse(localState))
 
   const store = createStore(
     createRootReducer(),
-    persistedState,
+    initialState,
+    // persistedState,
     composeEnhancers(applyMiddleware(...middlewares))
   )
 

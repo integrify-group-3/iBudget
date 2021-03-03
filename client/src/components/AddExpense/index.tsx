@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid rgba(184, 173, 173, 0.6)',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    borderRadius: '5px'
+    borderRadius: '5px',
+    width: '27rem'
   },
   header: {
     display: 'flex',
@@ -40,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
   },
   select: {
     width: '20.5rem',
+  },
+  btnSaveWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%'
   },
   save: {
     border: 'none',
@@ -136,8 +142,10 @@ export default function AddExpense({
                 required={true}
               />
             </div>
+            <div className={classes.btnSaveWrapper}>
             <button className={classes.save}><SaveButton /></button>
             <button className={classes.save} onClick={hideFormOnClick}><CancelButton /></button>
+            </div>
           </form>
         </div>
       </div>

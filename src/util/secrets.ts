@@ -14,6 +14,9 @@ export const ENVIRONMENT = process.env.NODE_ENV
 const prod = ENVIRONMENT === 'production' // Anything else is treated as 'dev'
 export const SESSION_SECRET = process.env['SESSION_SECRET'] as string
 export const JWT_SECRET = process.env['SESSION_SECRET'] as string
+export const RESET_PASSWORD_KEY = process.env['RESET_PASSWORD_KEY'] as string
+export const CLIENT_URL = process.env['CLIENT_URL'] as string
+export const MAILGUN_API_KEY = process.env['MAILGUN_API_KEY'] as string
 export const MONGODB_URI = process.env['MONGODB_URI'] as string
 
 if (!SESSION_SECRET || !JWT_SECRET) {
