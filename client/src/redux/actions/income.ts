@@ -56,7 +56,7 @@ export function deleteIncome(income: Income[]): IncomeActions {
 }
 
 export function fetchIncome() {
-  const url = 'http://localhost:5000/api/v1/income'
+  const url = '/api/v1/income'
   return async (dispatch: Dispatch, getState: any) => {
     const res = await axios.get(url, tokenConfig(getState))
     const date = new Date()
@@ -74,7 +74,7 @@ export function fetchIncome() {
 export function addIncome(newIncome: any) {
   console.log(newIncome)
   return async (dispatch: Dispatch, getState: any) => {
-    const url = 'http://localhost:5000/api/v1/income'
+    const url = '/api/v1/income'
     const res = await axios.post(url, newIncome, tokenConfig(getState))
     console.log('from add income', res)
     const foundYear = await res.data.years.find(
@@ -88,7 +88,7 @@ export function addIncome(newIncome: any) {
 }
 
 export function updateIncome(income: Income, incomeId: string) {
-  const url = `http://localhost:5000/api/v1/income/${incomeId}`
+  const url = `/api/v1/income/${incomeId}`
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.put(url, income, tokenConfig(getState))
@@ -106,7 +106,7 @@ export function updateIncome(income: Income, incomeId: string) {
 }
 
 export function removeIncome(id: string, income: Income) {
-  const url = `http://localhost:5000/api/v1/income/${id}`
+  const url = `/api/v1/income/${id}`
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.delete(url, tokenConfig(getState))

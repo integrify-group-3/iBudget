@@ -17,6 +17,7 @@ import Container from '@material-ui/core/Container'
 import { AppState } from '../../types'
 import { loginUser } from '../../redux/actions/user'
 import { clearErrors } from '../../redux/actions/error'
+import ForgotPassword from '../ForgotPassword'
 
 import './style.scss'
 
@@ -54,28 +55,42 @@ const useStyles = makeStyles((theme) => ({
   errorMsg: {
     color: 'red',
     textAlign: 'center',
-    marginTop: '1rem' 
-  }
+    marginTop: '1rem',
+  },
+  forgotPasswordLink: {
+    color: '#865CFF',
+    cursor: 'pointer',
+  },
 }))
 
 export default function Login(props: any) {
   const dispatch = useDispatch()
-  const isAuthenticated = useSelector((state: AppState) => state.user.isAuthenticated)
+  const isAuthenticated = useSelector(
+    (state: AppState) => state.user.isAuthenticated
+  )
   const errorMsg = useSelector((state: AppState) => state.error.msg.msg)
   const classes = useStyles()
   const [user, setUser] = useState({
     email: '',
     password: '',
   })
-  
+  const [openForgotPassword, setOpenForgotPassword] = useState(false)
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
     dispatch(loginUser(user))
   }
 
+  const openForgotPasswordOnClick = () => {
+    setOpenForgotPassword(true)
+  }
+
+  const closeForgotPasswordOnClick = () => {
+    setOpenForgotPassword(false)
+  }
+
   useEffect(() => {
-    if(isAuthenticated) {
-      // console.log('user authenticated')
+    if (isAuthenticated) {
       dispatch(clearErrors())
       props.history.push('/dashboard')
     }
@@ -134,9 +149,10 @@ export default function Login(props: any) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <NavLink to="/forgot-password"
+                >
                   Forgot password?
-                </Link>
+                </NavLink>
               </Grid>
               <Grid item>
                 <NavLink to="/register">
@@ -145,7 +161,9 @@ export default function Login(props: any) {
               </Grid>
             </Grid>
             <Grid container>
-              <Grid item className={classes.errorMsg}>{errorMsg}</Grid>
+              <Grid item className={classes.errorMsg}>
+                {errorMsg}
+              </Grid>
             </Grid>
           </form>
         </div>

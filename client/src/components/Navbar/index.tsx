@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 
 import clsx from 'clsx'
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles'
+import {
+  makeStyles,
+  useTheme,
+  Theme,
+  createStyles,
+} from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
@@ -15,121 +19,129 @@ import IconButton from '@material-ui/core/IconButton'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import { NavLink } from 'react-router-dom'
 
 import { AppState } from '../../types'
 import { logout } from '../../redux/actions/user'
-import { mainListItems, secondaryListItems } from '../NavList'
+import { MainListItems } from '../NavList'
+import { secondaryListItems } from '../NavList'
 
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    backgroundColor: '#865CFF',
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  arrowIcon: {
-    color: 'white'
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    backgroundColor: '#865CFF'
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    backgroundColor: '#865CFF',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    backgroundColor: '#865CFF',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
     },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    backgroundColor: '#865CFF'
-
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100vw'
-  },
-  headerUser: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '20rem'
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    overflow: 'auto',
-  },
-  btnStyle: {
-    borderRadius: 50,
-    width: '35%',
-    textAlign: 'center',
-    margin: 'auto',
-    padding: '.3rem',
-    height: '1.7rem',
-    // backgroundColor: '#4F416B'
-  },
-}),
-);
+    appBar: {
+      backgroundColor: '#865CFF',
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    menuButton: {
+      marginRight: 36,
+    },
+    arrowIcon: {
+      color: 'white',
+    },
+    hide: {
+      display: 'none',
+    },
+    drawer: {
+      width: drawerWidth,
+      flexShrink: 0,
+      whiteSpace: 'nowrap',
+      backgroundColor: '#865CFF',
+    },
+    drawerOpen: {
+      width: drawerWidth,
+      backgroundColor: '#865CFF',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    drawerClose: {
+      backgroundColor: '#865CFF',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      overflowX: 'hidden',
+      width: theme.spacing(7) + 1,
+      [theme.breakpoints.up('sm')]: {
+        width: theme.spacing(9) + 1,
+      },
+    },
+    toolbar: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      padding: theme.spacing(0, 1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+      backgroundColor: '#865CFF',
+    },
+    header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100vw',
+    },
+    headerUser: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '20rem',
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      overflow: 'auto',
+    },
+    btnStyle: {
+      borderRadius: 50,
+      width: '35%',
+      textAlign: 'center',
+      margin: 'auto',
+      padding: '.3rem',
+      height: '1.7rem',
+      // backgroundColor: '#4F416B'
+    },
+    userLink: {
+      textDecoration: 'none',
+      color: 'white'
+    }
+  })
+)
 
 const Navbar = () => {
   const dispatch = useDispatch()
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = useState(true);
-  const isAuthenticated = useSelector((state: AppState) => state.user.isAuthenticated)
+  const classes = useStyles()
+  const theme = useTheme()
+  const [open, setOpen] = useState(true)
+  const isAuthenticated = useSelector(
+    (state: AppState) => state.user.isAuthenticated
+  )
   const user = useSelector((state: AppState) => state.user.user)
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen(true)
   }
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen(false)
   }
   const logoutOnClick = () => {
     dispatch(logout())
@@ -157,26 +169,28 @@ const Navbar = () => {
           </IconButton>
           <Typography variant="h6" className={classes.header} noWrap>
             <span>iBudget</span>
-            {
-          isAuthenticated &&
-          <Typography className={classes.headerUser}>
-            <span>Hello {user.firstName} {user.lastName}</span>
-            {/* <NavLink to="/" onClick={logoutOnClick}>Logout</NavLink> */}
-            <Button
-          component={NavLink}
-          to={'/'}
-          color="secondary"
-          variant="contained"
-          className={classes.btnStyle}
-          onClick={logoutOnClick}>
-            Logout
-         </Button>
-          </Typography>
-        }
+            {isAuthenticated && (
+              <Typography className={classes.headerUser}>
+                <span>
+                  Hello{' '}
+                  <NavLink to={`/user/${user.id}`} className={classes.userLink}>
+                    {user.firstName} {user.lastName}
+                  </NavLink>
+                </span>
+                <Button
+                  component={NavLink}
+                  to={'/'}
+                  color="secondary"
+                  variant="contained"
+                  className={classes.btnStyle}
+                  onClick={logoutOnClick}
+                >
+                  Logout
+                </Button>
+              </Typography>
+            )}
           </Typography>
         </Toolbar>
-      
-        
       </AppBar>
       <Drawer
         variant="permanent"
@@ -193,24 +207,24 @@ const Navbar = () => {
       >
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon className={classes.arrowIcon}/> : <ChevronLeftIcon className={classes.arrowIcon}/>}
+            {theme.direction === 'rtl' ? (
+              <ChevronRightIcon className={classes.arrowIcon} />
+            ) : (
+              <ChevronLeftIcon className={classes.arrowIcon} />
+            )}
           </IconButton>
         </div>
-        { isAuthenticated ? 
+        {isAuthenticated ? (
           <>
             <Divider />
-            <List>
-              {mainListItems}
-            </List>
+            <List><MainListItems user={user}/></List>
           </>
-          :
+        ) : (
           <>
             <Divider />
-            <List>
-              {secondaryListItems}
-            </List>
+            <List>{secondaryListItems}</List>
           </>
-        }
+        )}
       </Drawer>
     </div>
   )

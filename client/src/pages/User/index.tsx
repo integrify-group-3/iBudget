@@ -102,7 +102,7 @@ export default function User(props: any) {
         </Typography>
         <Button
           component={Link}
-          to={`user/${id}`}
+          to={`/user/${id}/edit`}
           color="primary"
           variant="contained"
           className={classes.btnStyle}

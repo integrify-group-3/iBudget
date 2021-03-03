@@ -5,11 +5,14 @@ import {
   LOGIN_SUCCESS,
   UserActions,
   User,
-  EditUser,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGOUT,
   UPDATE_USER,
+  FORGOT_PASSWORD,
+  RESET_PASSWORD,
+  CLEAR_EMAIL_CONFIRMATION,
+  CLEAR_RESET_CONFIRMATION
 } from '../../types'
 
 import { showErrors, clearErrors } from './error'
@@ -46,8 +49,37 @@ export function logout(): UserActions {
   }
 }
 
+export function forgotPasswordEmail(emailMsg: string): UserActions {
+  return {
+    type: FORGOT_PASSWORD,
+    payload: {
+      emailMsg,
+    },
+  }
+}
+
+export function resetPasswordConfirm(resetMsg: string): UserActions {
+  return {
+    type: RESET_PASSWORD,
+    payload: {
+      resetMsg,
+    },
+  }
+}
+
+export function clearEmailConfirmation(): UserActions {
+  return {
+    type: CLEAR_EMAIL_CONFIRMATION
+  }
+}
+
+export function clearResetPasswordConfirmation(): UserActions {
+  return {
+    type: CLEAR_RESET_CONFIRMATION
+  }
+}
+
 export function update(user: User): UserActions {
-  console.log('calling from here', user)
   return {
     type: UPDATE_USER,
     payload: {
@@ -58,7 +90,7 @@ export function update(user: User): UserActions {
 
 export const registerUser = ({ firstName, lastName, email, password }: any) => {
   return (dispatch: Dispatch) => {
-    const url = 'http://localhost:5000/api/v1/user/register'
+    const url = '/api/v1/user/register'
     axios
       .post(url, {
         firstName: firstName,
@@ -76,7 +108,7 @@ export const registerUser = ({ firstName, lastName, email, password }: any) => {
         dispatch(showErrors(error.response.data, error.response.status))
         setTimeout(() => {
           dispatch(clearErrors())
-        }, 4000);
+        }, 4000)
       })
   }
 }
@@ -91,29 +123,69 @@ export function loginUser({ email, password }: any) {
       }
       const body = JSON.stringify({ email, password })
       tokenConfig(getState)
-      const url = 'http://localhost:5000/api/v1/user/login'
+      const url = '/api/v1/user/login'
       const res = await axios.post(url, body, config)
       dispatch(loginSuccess(res.data.user, res.data.token))
     } catch (err) {
       dispatch(showErrors(err.response.data, err.response.status))
       setTimeout(() => {
         dispatch(clearErrors())
-      }, 4000);
+      }, 4000)
     }
   }
 }
 
 export const updateUser = (id: string, user: any) => {
   return async (dispatch: Dispatch, getState: any) => {
-    console.log('from user actions', id, user)
-    const url = `http://localhost:5000/api/v1/user/${id}`
+    const url = `/api/v1/user/${id}`
     try {
       const res = await axios.put(url, user, tokenConfig(getState))
-      console.log(res.data)
       dispatch(update(res.data.user))
       dispatch(showValidation())
     } catch (err) {
       console.log(err)
+    }
+  }
+}
+
+export const forgotPassword = (email: any) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const url = `/api/v1/user/forgot-password`
+      const res = await axios.put(url, email)
+      dispatch(forgotPasswordEmail(res.data.msg))
+    } catch (err) {
+      dispatch(showErrors(err.response.data, err.response.status))
+    }
+  }
+}
+
+export const clearEmailReq = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(clearEmailConfirmation())
+  }
+}
+
+export const clearResetConfirmation = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(clearResetPasswordConfirmation())
+  }
+}
+
+export const resetPassword = (
+ { newPassword,
+  repeatNewPassword,
+  resetLink} : any
+) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const body = { newPassword, repeatNewPassword, resetLink }
+      const url = `http://localhost:5000/api/v1/user/reset-password`
+      const res = await axios.put(url, body)
+      console.log(res)
+      dispatch(resetPasswordConfirm(res.data.msg))
+    } catch (err) {
+      dispatch(showErrors(err.response.data, err.response.status))
     }
   }
 }

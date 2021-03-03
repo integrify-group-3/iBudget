@@ -28,9 +28,6 @@ export default function TotalExpenses({
       <Typography component="p" variant="h4">
         €{totalAmount} 
       </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        Current date: {moment(date).format('LL')}
-      </Typography>
     </React.Fragment>
   );
 }
