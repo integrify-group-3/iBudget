@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Paper from '@material-ui/core/Paper'
 
 import {
@@ -29,11 +29,13 @@ import {
   schemeSet1,
   schemeSet2,
   schemeSet3,
+  
+
 } from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
-import { ExpensesChartProps } from '../../types'
+import { ExpensesChartProps, ExpensesChartData } from '../../types'
 
 const schemeCollection = [
   schemeCategory10,
@@ -45,6 +47,7 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
+ 
 ]
 
 const useStyles = makeStyles((theme: any) => ({
@@ -67,14 +70,14 @@ const useStyles = makeStyles((theme: any) => ({
     width: '40px',
     height: '40px',
   },
-  schemeConteiner: {
+  schemeContainer: {
     display: 'flex',
     justifyContent: 'center',
     marginTop: theme.spacing(1),
   },
   pieChart: {
-    height: '5rem,',
-  },
+    width: '80%,',
+  }
 }))
 
 export default function ExpensesChart({
@@ -83,7 +86,7 @@ export default function ExpensesChart({
   month,
   valueField,
   argumentField,
-  name
+  name,
 }: ExpensesChartProps) {
   const [scheme, setScheme] = useState(schemeCollection[7])
 
@@ -92,7 +95,7 @@ export default function ExpensesChart({
   }
   const classes = useStyles()
   const [switchChart, setSwitchChart] = useState(false)
- 
+
   const switchChartView = () => {
     setSwitchChart(!switchChart)
   }
@@ -100,9 +103,6 @@ export default function ExpensesChart({
   const pieChartText = 'Pie Chart'
   const barChartText = 'Bar Chart'
 
-  console.log('chart data', chartData)
-  console.log(name)
-  // console.log('values', props.valueField, 'arguments', props.argumentField)
   return (
     <Paper>
       {switchChart ? (
@@ -111,13 +111,7 @@ export default function ExpensesChart({
           <ArgumentAxis />
           <ValueAxis />
 
-          {/* <BarSeries
-         valueField={props.valueField}
-         argumentField={props.argumentField}
-        name={props.name}
-       /> */}
-
-          { chartData.map((data: any) => (
+          {chartData.map((data: ExpensesChartData) => (
             <BarSeries
               valueField={valueField}
               argumentField={argumentField}
@@ -158,7 +152,7 @@ export default function ExpensesChart({
             <Tooltip />
             <Animation />
           </Chart>
-          <div className={classes.schemeConteiner}>
+          <div className={classes.schemeContainer}>
             {scheme.map((color) => (
               <div
                 key={color}

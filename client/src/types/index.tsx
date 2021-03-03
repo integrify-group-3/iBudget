@@ -13,6 +13,10 @@ export const CLEAR_VALIDATIONS = 'CLEAR_VALIDATIONS'
 export const REGISTER_FAIL = 'REGISTER_FAIL'
 export const LOGOUT = 'LOGOUT'
 export const UPDATE_USER = 'UPDATE_USER'
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD'
+export const CLEAR_EMAIL_CONFIRMATION = 'CLEAR_EMAIL_CONFIRMATION'
+export const RESET_PASSWORD = 'RESET_PASSWORD'
+export const CLEAR_RESET_CONFIRMATION = 'CLEAR_RESET_CONFIRMATION'
 
 //income action types
 export const GET_INCOME = 'GET_INCOME'
@@ -111,6 +115,10 @@ export type Expense = {
   // date: string | Date
   year: number
   month: string
+}
+
+export type NavbarSecondaryListItemsProps = {
+  user: User
 }
 
 export type AddIncomeProps = {
@@ -225,6 +233,7 @@ export type ExpensesChartProps = {
   valueField: string
   argumentField: string
   name: string
+  className?: string
 }
 
 export type IncomeExpensesMonthChartProps = {
@@ -295,6 +304,29 @@ export type UpdateUserAction = {
     user: User
   }
 }
+
+export type ForgotPasswordAction = {
+  type: typeof FORGOT_PASSWORD
+  payload: {
+    emailMsg: string
+  }
+}
+
+export type ClearEmailConfirmationAction = {
+  type: typeof CLEAR_EMAIL_CONFIRMATION
+}
+
+export type ClearResetPasswordConfirmationAction = {
+  type: typeof CLEAR_RESET_CONFIRMATION
+}
+
+export type ResetPasswordAction = {
+  type: typeof RESET_PASSWORD
+  payload: {
+    resetMsg: string
+  }
+}
+
 export type ShowErrorAction = {
   type: typeof SHOW_ERRORS
   payload: {
@@ -394,6 +426,10 @@ export type UserActions =
   | LoginUserSuccessAction
   | LogoutAction
   | UpdateUserAction
+  | ForgotPasswordAction
+  | ResetPasswordAction
+  | ClearEmailConfirmationAction
+  | ClearResetPasswordConfirmationAction
 
 export type ErrorActions = ShowErrorAction | ClearErrorAction
 export type ValidationActions = ShowValidationAction | ClearValidationAction 
@@ -417,6 +453,8 @@ export type UserState = {
   user: User
   token: string
   isAuthenticated?: boolean
+  forgotPasswordEmailMsg: string
+  resetPasswordMsg: string
 }
 
 export type IncomeState = {

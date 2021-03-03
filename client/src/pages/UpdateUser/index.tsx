@@ -179,7 +179,7 @@ export default function UpdateUser(props: any) {
             onSubmit={(user, { resetForm }) => {
               dispatch(updateUser(id, user))
               if (isValidated) {
-                props.history.push('/user')
+                props.history.push(`/user/${id}`)
               }
               resetForm()
             }}
@@ -295,7 +295,7 @@ export default function UpdateUser(props: any) {
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <NavLink to="/user">{'Go Back'}</NavLink>
+                    <NavLink to={`/user/${id}`}>{'Back'}</NavLink>
                   </Grid>
                 </Grid>
                 <Grid container>

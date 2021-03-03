@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Button, Typography, Container } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
+
+import { AppState } from '../../types'
 
 import './style.scss'
 
@@ -40,9 +43,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Home() {
+export default function Home(props: any) {
   const classes = useStyles()
-
+  const isAuthenticated = useSelector(
+    (state: AppState) => state.user.isAuthenticated
+  )
+  useEffect(() => {
+    if(isAuthenticated) {
+      props.history.push('/dashboard')
+    }
+  }, [isAuthenticated])
+  
   return (
     <div className="home-page-container">
       <Container className={classes.container}>
