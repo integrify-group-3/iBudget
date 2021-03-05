@@ -22,6 +22,7 @@ coverage
 # API keys and secrets
 .env
 .env.example
+sendgrid.env
 
 # Dependency directory
 node_modules
