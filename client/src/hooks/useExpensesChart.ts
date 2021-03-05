@@ -4,7 +4,7 @@ import { defaultMonthlyChartExpensesData } from '../utils/defaultChartValues'
 
 export default function useExpensesChart(monthlyChart: any) {
   const [chartData, setChartData] = useState([{ category: '', amount: 0 }])
-  
+  console.log('monthlychart', monthlyChart)
   useEffect(() => {
     loadChartData(monthlyChart)
   }, [monthlyChart])

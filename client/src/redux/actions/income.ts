@@ -18,13 +18,15 @@ import { months } from '../../utils/dateValues'
 
 export function getIncome(
   calendar: CalendarScheduler,
-  income: Income[]
+  income: Income[],
+  selectedMonth: any
 ): IncomeActions {
   return {
     type: GET_INCOME,
     payload: {
       calendar,
       income,
+      selectedMonth
     },
   }
 }
@@ -67,7 +69,7 @@ export function fetchIncome() {
     const foundMonth = await foundYear.months.find(
       (month: any) => month.name === months[currentIndex]
     )
-    dispatch(getIncome(data, foundMonth.income))
+    dispatch(getIncome(data, foundMonth.income, foundMonth))
   }
 }
 

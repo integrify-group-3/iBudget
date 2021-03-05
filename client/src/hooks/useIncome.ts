@@ -9,14 +9,18 @@ export default function useIncome() {
   const dispatch = useDispatch()
   const income = useSelector((state: AppState) => state.income.income)
   const calendar = useSelector((state: AppState) => state.income.calendar)
+  const selectedMonth = useSelector(
+    (state: AppState) => state.income.selectedMonth
+  )
   const [incomeData, setIncomeData] = useState([] as Income[])
   const [calendarData, setCalendarData] = useState({} as CalendarScheduler)
-
   const [err, setErr] = useState(null)
+  const [defaultMonth, setDefaultMonth] = useState()
   const [defaultDateView, setDefaultDateView] = useState({
     year: 0,
     month: '',
   } as DateView)
+
 
   useEffect(() => {
     dispatch(fetchIncome())
@@ -31,7 +35,9 @@ export default function useIncome() {
     console.log(incomeData)
     setCalendarData(calendar)
     setDefaultDateView({ year: year, month: currentMonth })
-  }, [income, calendar, calendarData])
+    setDefaultMonth(selectedMonth)
+  }, [income, calendar, calendarData, defaultMonth])
+  console.log(defaultMonth)
 
-  return [err, incomeData, defaultDateView, calendar]
+  return [err, incomeData, defaultDateView, calendar, defaultMonth]
 }
