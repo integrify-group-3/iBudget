@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@devexpress/dx-react-chart-material-ui": "^2.7.4",
+    "@sendgrid/mail": "^7.4.2",
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.9",
     "@types/jsonwebtoken": "^8.3.7",
