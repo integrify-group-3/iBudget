@@ -352,6 +352,7 @@ export type GetIncomeAction = {
   payload: {
     calendar: CalendarScheduler
     income: Income[]
+    selectedMonth: any
   }
 }
 
@@ -460,6 +461,7 @@ export type UserState = {
 export type IncomeState = {
   calendar: CalendarScheduler
   income: Income[]
+  selectedMonth: any,
 }
 
 export type ExpensesState = {

@@ -62,14 +62,14 @@ export default function IncomePage(props: any) {
   const [calendarDate, setCalendarDate] = useState(new Date())
   const [calendar, setCalendar] = useState({} as any)
   const [isFormShowing, setIsFormShowing] = useState(false)
-  const [err, incomeData, defaultDateView, calendarData] = useIncome()
+  const [err, incomeData, defaultDateView, calendarData, defaultMonth] = useIncome()
   const [monthIncome, setMonthIncome] = useState([] as Income[])
-
   const [loaded, setIsLoaded] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
     month: '',
   } as DateView)
+  console.log('month view', defaultMonth)
 
   useEffect(() => {
     if (!isAuthenticated) {
