@@ -1,17 +1,20 @@
 import { Request, Response, NextFunction } from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import mailgun from 'mailgun-js'
+// import mailgun from 'mailgun-js'
+import sgMail from '@sendgrid/mail'
 import _ from 'lodash'
 import {
   JWT_SECRET,
   RESET_PASSWORD_KEY,
   CLIENT_URL,
-  MAILGUN_API_KEY,
+  // MAILGUN_API_KEY,
+  SENDGRID_API_KEY
 } from '../util/secrets'
 
-const DOMAIN = 'sandbox002f25d103de422bb365d88e97eea950.mailgun.org'
-const mg = mailgun({ apiKey: MAILGUN_API_KEY, domain: DOMAIN })
+// const DOMAIN = 'sandboxc48a258dd8d74f2a9c08ef2ce3a5c1f5.mailgun.org'
+// const mg = mailgun({ apiKey: MAILGUN_API_KEY, domain: DOMAIN })
+sgMail.setApiKey(SENDGRID_API_KEY)
 
 import User from '../models/User'
 import Calendar from '../models/Calendar'
@@ -171,7 +174,7 @@ export const forgotPassword = async (
           expiresIn: 3700,
         })
         const emailData = {
-          from: 'noreply@iBudget.com',
+          from: 'michele.zucca@integrify.io',
           to: email,
           subject: 'Password Reset Request',
           html: `
@@ -184,10 +187,13 @@ export const forgotPassword = async (
         }
         //the token will be stored here on the reset link
         return user.updateOne({ resetLink: token }, (err) => {
+          console.log('user after updating', user)
           if (err) {
             return res.status(404).json({ msg: 'User not found' })
-          } else {
-            mg.messages().send(emailData, (err) => {
+          } 
+          else /*{
+              mg.messages().send(emailData, (err) => {
+              console.log('email here', emailData)
               if (err) {
                 return res.json({ msg: err.message })
               }
@@ -195,6 +201,18 @@ export const forgotPassword = async (
                 msg: `An email has been sent to ${email} with instructions to reset your password`,
               })
             })
+          }*/{
+            sgMail.send(emailData)
+            .then(() => {
+              console.log('email here', emailData)
+              return res.json({
+                msg: `An email has been sent to ${email} with instructions to reset your password`,
+              })
+            })
+            .catch((err) => {
+              console.log('error here', err)
+              return res.json({ msg: err.message })
+            })  
           }
         })
       }
