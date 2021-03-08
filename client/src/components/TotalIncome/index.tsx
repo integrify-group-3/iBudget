@@ -3,7 +3,7 @@ import Link from '@material-ui/core/Link'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-import { TotalIncomeProps } from '../../types'
+import { TotalIncomeProps } from '../../types/income'
 import Title from '../Title'
 
 function preventDefault(event: any) {
@@ -22,7 +22,6 @@ export default function TotalIncome({
   monthlyIncome,
 }: TotalIncomeProps) {
   const classes = useStyles()
-  console.log('from total income', monthlyIncome)
 
   const calculateTotalIncome = () => {
     let count = 0
@@ -34,7 +33,6 @@ export default function TotalIncome({
   }
 
   useEffect(() => {
-    console.log('from total income', monthlyIncome)
     if(monthlyIncome !== undefined) {
       calculateTotalIncome()
     }

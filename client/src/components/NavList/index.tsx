@@ -14,7 +14,7 @@ import MoneyOffIcon from '@material-ui/icons/MoneyOff'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import PersonIcon from '@material-ui/icons/Person'
 
-import { NavbarSecondaryListItemsProps } from '../../types'
+import { NavbarSecondaryListItemsProps } from '../../types/ui'
 import logo from '../../imgs/logo.svg'
 
 const linkStyle = {

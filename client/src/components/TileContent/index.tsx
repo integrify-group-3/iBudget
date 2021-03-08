@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { DailyExpense, TileContentProps } from '../../types'
+import { DailyExpense } from '../../types/expenses'
+import { TileContentProps } from '../../types/ui'
 
 const useStyles = makeStyles((theme) => ({
   tileList: {

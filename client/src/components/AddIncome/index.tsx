@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -7,7 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import CancelButton from '../CancelButton'
 
-import { AppState, AddIncomeProps } from '../../types'
+import { AppState } from '../../types'
+import { AddIncomeProps } from '../../types/income'
 import { addIncome } from '../../redux/actions/income'
 import SaveButton from '../SaveButton'
 
@@ -26,10 +27,15 @@ const useStyles = makeStyles((theme) =>
       padding: theme.spacing(1, 22, 1, 2),
       borderRadius: '5px',
     },
-    save: {
+    btnSaveWrapper: {
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+      margin: '0 auto'
+    },
+    buttons: {
       border: 'none',
       background: 'none',
-      display: 'inline-block',
     },
     select: {
       width: '20.5rem',
@@ -139,12 +145,14 @@ export default function AddIncome({
                   className={classes.input}
                 />
               </div>
-              <button className={classes.save}>
-                <SaveButton />
-              </button>
-              <button className={classes.save} onClick={hideFormOnClick}>
-                <CancelButton />
-              </button>
+              <div className={classes.btnSaveWrapper}>
+                <button className={classes.buttons}>
+                  <SaveButton />
+                </button>
+                <button className={classes.buttons} onClick={hideFormOnClick}>
+                  <CancelButton />
+                </button>
+              </div>
             </div>
           </form>
         </div>

@@ -9,13 +9,16 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
-import { AppState, CalendarScheduler, Income, DateView } from '../../types'
+import EmptyChartContainer from '../../components/EmptyChartContainer'
+import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
+import { AppState, CalendarScheduler, DateView } from '../../types'
+import { Income } from '../../types/income'
 import useIncome from '../../hooks/useIncome'
 import IncomeTable from '../../components/IncomeTable'
 import TotalIncome from '../../components/TotalIncome'
 import ProfileDashboard from '../../components/ProfileDashboard'
 import { months } from '../../utils/dateValues'
-
+import IncomeMonthlyChart from '../../components/IncomeMonthlyChart'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
@@ -62,14 +65,21 @@ export default function IncomePage(props: any) {
   const [calendarDate, setCalendarDate] = useState(new Date())
   const [calendar, setCalendar] = useState({} as any)
   const [isFormShowing, setIsFormShowing] = useState(false)
-  const [err, incomeData, defaultDateView, calendarData, defaultMonth] = useIncome()
+  const [monthlyChart, setMonthlyChart] = useState([])
   const [monthIncome, setMonthIncome] = useState([] as Income[])
+  const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
+  const [
+    err,
+    incomeData,
+    defaultDateView,
+    calendarData,
+    defaultMonth,
+  ] = useIncome()
   const [loaded, setIsLoaded] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
     month: '',
   } as DateView)
-  console.log('month view', defaultMonth)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -79,28 +89,27 @@ export default function IncomePage(props: any) {
       if (!isMonthClicking) {
         //atm the below set state keeps running an infinite loop
         setDateView(defaultDateView as DateView)
+        setMonthlyChart(defaultMonth?.income as any)
       }
     }
   }, [isAuthenticated, calendarData, dateView, defaultDateView])
-  const setMonthView = (
+  const changeMonthView = (
     currentYear: number,
     currentMonth: string,
     foundYear: CalendarScheduler | undefined,
     currentIndex: number
   ) => {
-    setTimeout(() => {
-      const foundMonth = foundYear?.months.find(
-        (month: any) => month.name === months[currentIndex]
-      )
-      setMonthIncome(foundMonth?.income)
-      console.log(monthIncome)
-      setIsLoaded(true)
-    }, 150)
+    //setTimeout(() => {
+    const foundMonth = foundYear?.months.find(
+      (month: any) => month.name === months[currentIndex]
+    )
+    setMonthIncome(foundMonth?.income)
+    setMonthlyChart(foundMonth.income)
+    setIsLoaded(true)
+    // }, 150)
   }
 
   const updateMonthlyIncome = (updatedIncome: Income[]) => {
-    console.log('update income', updatedIncome)
-    console.log(monthIncome)
     setMonthIncome(updatedIncome)
   }
 
@@ -126,8 +135,7 @@ export default function IncomePage(props: any) {
     const yearIncome = calendar.years.find((i: any) => i.year === year)
     const currentIndex = e.getMonth()
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
-    console.log('dateView', dateView)
-    setMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
+    changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
 
   return (
@@ -141,8 +149,21 @@ export default function IncomePage(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-                {/*Income chart goes here */}
-                <h2>Chart</h2>
+                {incomeChartData.length > 0 ? (
+                  <IncomeMonthlyChart
+                    chartData={incomeChartData}
+                    month={dateView.month}
+                    year={dateView.year}
+                    valueField="amount"
+                    argumentField="category"
+                    name="category"
+                  />
+                ) : (
+                  <EmptyChartContainer
+                    month={dateView.month}
+                    year={dateView.year}
+                  />
+                )}
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>

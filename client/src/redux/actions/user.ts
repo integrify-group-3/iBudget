@@ -13,7 +13,7 @@ import {
   RESET_PASSWORD,
   CLEAR_EMAIL_CONFIRMATION,
   CLEAR_RESET_CONFIRMATION
-} from '../../types'
+} from '../../types/user'
 
 import { showErrors, clearErrors } from './error'
 import { showValidation, clearValidation } from './validation'

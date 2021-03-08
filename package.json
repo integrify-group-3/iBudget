@@ -65,6 +65,7 @@
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
+    "sendgrid-mail": "0.0.3",
     "typeorm": "^0.2.29",
     "winston": "^3.2.1"
   },

@@ -29,14 +29,11 @@ import {
   schemeSet1,
   schemeSet2,
   schemeSet3,
-  
-
 } from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
-import { ExpensesChartData } from '../../types/expenses'
-import { ExpensesChartProps } from '../../types/ui'
+import { IncomeChartDataProps } from '../../types'
 
 const schemeCollection = [
   schemeCategory10,
@@ -48,7 +45,6 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
- 
 ]
 
 const useStyles = makeStyles((theme: any) => ({
@@ -78,17 +74,17 @@ const useStyles = makeStyles((theme: any) => ({
   },
   pieChart: {
     width: '80%,',
-  }
+  },
 }))
 
-export default function ExpensesChart({
+export default function IncomeMonthlyChart({
   chartData,
-  year,
   month,
+  year,
   valueField,
   argumentField,
   name,
-}: ExpensesChartProps) {
+}: IncomeChartDataProps) {
   const [scheme, setScheme] = useState(schemeCollection[7])
 
   const changeScheme = (e: any) => {
@@ -112,7 +108,7 @@ export default function ExpensesChart({
           <ArgumentAxis />
           <ValueAxis />
 
-          {chartData.map((data: ExpensesChartData) => (
+          {chartData.map((data: any) => (
             <BarSeries
               valueField={valueField}
               argumentField={argumentField}
@@ -124,7 +120,7 @@ export default function ExpensesChart({
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses Chart ${month} ${year}`} />
+          <Title text={`Income Chart ${month} ${year}`} />
           <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={pieChartText}
@@ -144,7 +140,7 @@ export default function ExpensesChart({
               name={name}
             />
             <Legend />
-            <Title text={`Expenses Chart ${month} ${year}`} />
+            <Title text={`Income Chart ${month} ${year}`} />
             <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
