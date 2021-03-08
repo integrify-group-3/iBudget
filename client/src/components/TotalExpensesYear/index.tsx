@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import moment from "moment"
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import { TotalExpensesYearProps } from '../../types'
+import { TotalExpensesYearProps } from '../../types/expenses'
 import Title from "../Title";
 import { date } from '../../utils/dateValues';
 

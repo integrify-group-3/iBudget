@@ -14,10 +14,12 @@ import {
   AppState,
   CalendarScheduler,
   DateView,
-  DailyExpense,
-  Expense,
   ViewMonth,
 } from '../../types'
+import {   DailyExpense,
+} from '../../types/expenses'
+
+import { Expense } from '../../types/expenses'
 
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useExpensesChart from '../../hooks/useExpensesChart'

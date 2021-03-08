@@ -1,17 +1,17 @@
 import {
   User,
   UserState,
-  LOGIN_SUCCESS,
   UserActions,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOGIN_SUCCESS,
   LOGOUT,
   UPDATE_USER,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
   CLEAR_EMAIL_CONFIRMATION,
   CLEAR_RESET_CONFIRMATION,
-} from '../../types'
+} from '../../types/user'
 
 export default function auth(
   state: UserState = {

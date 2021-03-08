@@ -6,10 +6,12 @@ import {
   AppState,
   CalendarScheduler,
   DateView,
-  DailyExpense,
-  Expense,
   ViewMonth
 } from '../types'
+import {
+  DailyExpense,
+  Expense,
+} from '../types/expenses'
 import { fetchExpenses } from '../redux/actions/expenses'
 import { year, months, currentMonth } from '../utils/dateValues'
 

@@ -1,4 +1,4 @@
-import { SHOW_VALIDATIONS, CLEAR_VALIDATIONS, ValidationActions } from '../../types'
+import { SHOW_VALIDATIONS, CLEAR_VALIDATIONS, ValidationActions } from '../../types/validation'
 
 export function showValidation(): ValidationActions {
     return {

@@ -1,4 +1,4 @@
-import { SHOW_ERRORS, CLEAR_ERRORS, ErrorActions } from '../../types'
+import { SHOW_ERRORS, CLEAR_ERRORS, ErrorActions } from '../../types/error'
 
 export function showErrors(msg: any, status: number): ErrorActions {
   return {

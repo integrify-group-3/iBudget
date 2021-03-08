@@ -9,7 +9,8 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
-import { AppState, CalendarScheduler, Income, DateView } from '../../types'
+import { AppState, CalendarScheduler, DateView } from '../../types'
+import { Income } from '../../types/income'
 import useIncome from '../../hooks/useIncome'
 import IncomeTable from '../../components/IncomeTable'
 import TotalIncome from '../../components/TotalIncome'
@@ -69,7 +70,6 @@ export default function IncomePage(props: any) {
     year: 0,
     month: '',
   } as DateView)
-  console.log('month view', defaultMonth)
 
   useEffect(() => {
     if (!isAuthenticated) {

@@ -6,8 +6,10 @@ import {
   DELETE_EXPENSE,
   CALCULATE_TOTALEXPENSES,
   ExpensesActions,
-  CalendarScheduler,
   DailyExpense,
+} from '../../types/expenses'
+import {
+  CalendarScheduler
 } from '../../types'
 
 export default function expenses(

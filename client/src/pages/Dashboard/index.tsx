@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import Typography from "@material-ui/core/Typography";
 
 import { AppState, CalendarScheduler, ViewMonth } from '../../types'
 import { date } from '../../utils/dateValues'
@@ -88,7 +89,8 @@ export default function Dashboard(props: any) {
   }, [isAuthenticated, props.history, setMonthChartData, totalExpenses])
 
   console.log('should update', monthChartData)
-
+  const { year, month } = defaultDateView
+  const { firstName, lastName, email } = user
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -103,8 +105,8 @@ export default function Dashboard(props: any) {
                 {/* Current month total expenses go here */}
                 <Paper className={fixedHeightPaper}>
                   <TotalExpenses
-                    year={defaultDateView.year}
-                    month={defaultDateView.month}
+                    year={year}
+                    month={month}
                     totalAmount={totalExpenses}
                   />
                 </Paper>
@@ -113,7 +115,7 @@ export default function Dashboard(props: any) {
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {/* Current month total income goes here */}
-                <h2>Income for </h2>
+                <h2>Income for {month} {year}</h2>
                 <h4>Total</h4>
                 <h4>Average</h4>
               </Paper>
@@ -121,11 +123,13 @@ export default function Dashboard(props: any) {
             <Grid item xs={5} md={6} lg={5}>
               <Paper className={fixedHeightPaper}>
                 <h2>
-                  Dashboard {user.firstName} {user.lastName}
+                  Dashboard {firstName} {lastName}
                 </h2>
-                <p>{user.email}</p>
                 {/* Current month balance goes here */}
-                <h3>Total Balance</h3>
+                <h3>Total Balance {month} {year}</h3>
+                <Typography component="p" variant="h4">
+                  €{totalExpenses}
+                  </Typography>
               </Paper>
             </Grid>
 
@@ -134,8 +138,8 @@ export default function Dashboard(props: any) {
                 {/*Income/Expenses chart for the current month goes here */}
                 <IncomeExpensesMonthChart
                   data={monthChartData}
-                  year={defaultDateView.year}
-                  month={defaultDateView.month}                
+                  year={year}
+                  month={month}                
                   /> 
               </Paper>
             </Grid>
