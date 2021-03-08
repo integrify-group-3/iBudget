@@ -3,7 +3,7 @@ import {
     ValidationActions,
     SHOW_VALIDATIONS,
     CLEAR_VALIDATIONS,
-  } from '../../types'
+  } from '../../types/validation'
     
   export default function error(
     state: ValidationState = {

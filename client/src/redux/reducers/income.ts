@@ -3,10 +3,13 @@ import {
   GET_INCOME,
   ADD_INCOME,
   IncomeActions,
-  CalendarScheduler,
   UPDATE_INCOME,
   DELETE_INCOME
-} from '../../types'
+} from '../../types/income'
+
+import {
+  CalendarScheduler
+} from '../../types/index'
 
 export default function income(
   state: IncomeState = {

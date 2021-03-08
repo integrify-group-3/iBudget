@@ -9,10 +9,13 @@ import {
   DELETE_EXPENSE,
   CALCULATE_TOTALEXPENSES,
   ExpensesActions,
-  CalendarScheduler,
   DailyExpense,
   Expense,
-} from '../../types'
+} from '../../types/expenses'
+
+import { 
+  CalendarScheduler
+} from '../../types/index'
 
 import { tokenConfig } from './user'
 
@@ -149,7 +152,6 @@ export function fetchExpenses() {
 }
 
 export function addExpense(expense: Expense) {
-  console.log('from actions add expense', expense)
   const url = '/api/v1/expense'
   return async (dispatch: Dispatch, getState: any) => {
     try {

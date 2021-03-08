@@ -14,7 +14,8 @@ import {
   Container,
 } from '@material-ui/core'
 
-import { AppState, EditUser } from '../../types'
+import { AppState } from '../../types'
+import { EditUser } from '../../types/user'
 import { updateUser } from '../../redux/actions/user'
 
 import './style.scss'

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import EventNoteIcon from '@material-ui/icons/EventNote';
 
-import { EmptyChartContainerProps } from '../../types'
+import { EmptyChartContainerProps } from '../../types/ui'
 import Title from "../Title";
 
 const useStyles = makeStyles({

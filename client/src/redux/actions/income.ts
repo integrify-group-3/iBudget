@@ -1,20 +1,22 @@
 import { Dispatch } from 'redux'
 import axios from 'axios'
-import moment from 'moment'
 
 import {
   GET_INCOME,
   ADD_INCOME,
   Income,
   IncomeActions,
-  CalendarScheduler,
   UPDATE_INCOME,
   DELETE_INCOME,
-} from '../../types'
+} from '../../types/income'
+
+import {
+  CalendarScheduler
+} from '../../types/index'
 
 import { tokenConfig } from './user'
 
-import { months } from '../../utils/dateValues'
+import { year, currentMonth } from '../../utils/dateValues'
 
 export function getIncome(
   calendar: CalendarScheduler,
@@ -61,31 +63,43 @@ export function fetchIncome() {
   const url = '/api/v1/income'
   return async (dispatch: Dispatch, getState: any) => {
     const res = await axios.get(url, tokenConfig(getState))
-    const date = new Date()
-    const year = date.getFullYear()
-    const currentIndex = date.getMonth()
     const data = await res.data
     const foundYear = await res.data.years.find((y: any) => y.year === year)
     const foundMonth = await foundYear.months.find(
-      (month: any) => month.name === months[currentIndex]
+      (month: any) => month.name === currentMonth
     )
     dispatch(getIncome(data, foundMonth.income, foundMonth))
   }
 }
 
+const getYearIncome = async (data: any, income: Income) => {
+  const { year } = income
+    const foundYear = await data.years.find(
+      (y: CalendarScheduler) => y.year === year
+    )
+    return foundYear
+}
+
+const getMonthIncome = async (data: any, income: Income) => {
+  const { month } = income
+    const foundYear = await data.months.find(
+      (m: CalendarScheduler) => m.name === month
+    )
+    return foundYear
+}
+
 export function addIncome(newIncome: any) {
-  console.log(newIncome)
   return async (dispatch: Dispatch, getState: any) => {
-    const url = '/api/v1/income'
-    const res = await axios.post(url, newIncome, tokenConfig(getState))
-    console.log('from add income', res)
-    const foundYear = await res.data.years.find(
-      (y: any) => y.year === newIncome.year
-    )
-    const foundMonth = await foundYear.months.find(
-      (month: any) => month.name === newIncome.month
-    )
-    dispatch(addNewIncome(foundMonth.income))
+    try {
+      const url = '/api/v1/income'
+      const res = await axios.post(url, newIncome, tokenConfig(getState))
+      const foundYear = await getYearIncome(res.data, newIncome)
+      const foundMonth = await getMonthIncome(foundYear, newIncome)
+      dispatch(addNewIncome(foundMonth.income))
+    }
+   catch(err) {
+    console.log(err)
+   }
   }
 }
 
@@ -94,12 +108,8 @@ export function updateIncome(income: Income, incomeId: string) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.put(url, income, tokenConfig(getState))
-      const foundYear = await res.data.years.find(
-        (y: any) => y.year === income.year
-      )
-      const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === income.month
-      )
+      const foundYear = await getYearIncome(res.data, income)
+      const foundMonth = await getMonthIncome(foundYear, income)
       dispatch(editIncome(foundMonth.income))
     } catch (err) {
       console.log(err)
@@ -112,13 +122,8 @@ export function removeIncome(id: string, income: Income) {
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.delete(url, tokenConfig(getState))
-      const foundYear = await res.data.years.find(
-        (y: any) => y.year === income.year
-      )
-      const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === income.month
-      )
-
+      const foundYear = await getYearIncome(res.data, income)
+      const foundMonth = await getMonthIncome(foundYear, income)
       dispatch(deleteIncome(foundMonth.income))
     } catch (err) {
       console.log(err)
