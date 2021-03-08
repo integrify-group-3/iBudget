@@ -9,13 +9,20 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
-import { AppState, CalendarScheduler, Income, DateView } from '../../types'
+import {
+  AppState,
+  CalendarScheduler,
+  Income,
+  DateView,
+  IncomeChartDataProps,
+} from '../../types'
+import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import useIncome from '../../hooks/useIncome'
 import IncomeTable from '../../components/IncomeTable'
 import TotalIncome from '../../components/TotalIncome'
 import ProfileDashboard from '../../components/ProfileDashboard'
 import { months } from '../../utils/dateValues'
-
+import IncomeMonthlyChart from '../../components/IncomeMonthlyChart'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
@@ -63,8 +70,9 @@ export default function IncomePage(props: any) {
   const [calendar, setCalendar] = useState({} as any)
   const [isFormShowing, setIsFormShowing] = useState(false)
   const [err, incomeData, defaultDateView, calendarData] = useIncome()
+  const [monthlyChart, setMonthlyChart] = useState([])
   const [monthIncome, setMonthIncome] = useState([] as Income[])
-
+  const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
   const [loaded, setIsLoaded] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
@@ -79,6 +87,7 @@ export default function IncomePage(props: any) {
       if (!isMonthClicking) {
         //atm the below set state keeps running an infinite loop
         setDateView(defaultDateView as DateView)
+        setMonthlyChart(defaultDateView as any)
       }
     }
   }, [isAuthenticated, calendarData, dateView, defaultDateView])
@@ -141,7 +150,7 @@ export default function IncomePage(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-                {/*Income chart goes here */}
+                <IncomeMonthlyChart chartData={incomeChartData} />
                 <h2>Chart</h2>
               </Paper>
             </Grid>
