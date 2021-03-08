@@ -37,4 +37,5 @@ export const defaultMonthlyChartIncomesData = [
   { category: 'unemployment benefits', amount: 0 },
   { category: 'tax return', amount: 0 },
   { category: 'child allowance', amount: 0 },
+  
 ]

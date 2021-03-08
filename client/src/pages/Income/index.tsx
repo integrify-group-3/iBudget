@@ -9,6 +9,7 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
+import EmptyChartContainer from '../../components/EmptyChartContainer'
 import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import { AppState, CalendarScheduler, DateView } from '../../types'
 import { Income } from '../../types/income'
@@ -134,11 +135,8 @@ export default function IncomePage(props: any) {
     const yearIncome = calendar.years.find((i: any) => i.year === year)
     const currentIndex = e.getMonth()
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
-    console.log('dateView from Income', dateView)
     changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
-
-  console.log('incomeChartData', incomeChartData)
 
   return (
     <div className={classes.root}>
@@ -151,8 +149,21 @@ export default function IncomePage(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-                <IncomeMonthlyChart chartData={incomeChartData} />
-                <h2>Chart</h2>
+                {incomeChartData.length > 0 ? (
+                  <IncomeMonthlyChart
+                    chartData={incomeChartData}
+                    month={dateView.month}
+                    year={dateView.year}
+                    valueField="amount"
+                    argumentField="category"
+                    name="category"
+                  />
+                ) : (
+                  <EmptyChartContainer
+                    month={dateView.month}
+                    year={dateView.year}
+                  />
+                )}
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
