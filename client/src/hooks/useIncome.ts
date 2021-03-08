@@ -16,12 +16,11 @@ export default function useIncome() {
   const [incomeData, setIncomeData] = useState([] as Income[])
   const [calendarData, setCalendarData] = useState({} as CalendarScheduler)
   const [err, setErr] = useState(null)
-  const [defaultMonth, setDefaultMonth] = useState()
+  const [defaultMonth, setDefaultMonth] = useState<any>()
   const [defaultDateView, setDefaultDateView] = useState({
     year: 0,
     month: '',
   } as DateView)
-
 
   useEffect(() => {
     dispatch(fetchIncome())

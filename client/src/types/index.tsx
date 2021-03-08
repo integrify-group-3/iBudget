@@ -112,6 +112,11 @@ export type IncomeExpensesYearChartProps = {
 
 // export type CalendarActions = GetIncomeAction
 
+
+export type IncomeChartDataProps = {
+  chartData: any
+}
+
 export type AppState = {
   product: ProductState
   ui: UiState
