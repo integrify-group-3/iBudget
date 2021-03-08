@@ -79,11 +79,11 @@ const useStyles = makeStyles((theme: any) => ({
 
 export default function IncomeMonthlyChart({
   chartData,
-  year,
   month,
+  year,
   valueField,
   argumentField,
-  name
+  name,
 }: IncomeChartDataProps) {
   const [scheme, setScheme] = useState(schemeCollection[7])
 
@@ -110,9 +110,9 @@ export default function IncomeMonthlyChart({
 
           {chartData.map((data: any) => (
             <BarSeries
-              valueField="amount"
-              argumentField="category"
-              name="category"
+              valueField={valueField}
+              argumentField={argumentField}
+              name={data.category}
             />
           ))}
 
@@ -135,9 +135,9 @@ export default function IncomeMonthlyChart({
               // name="category"
             />
             <PieSeries
-              valueField="amount"
-              argumentField="category"
-              name="category"
+              valueField={valueField}
+              argumentField={argumentField}
+              name={name}
             />
             <Legend />
             <Title text={`Income Chart ${month} ${year}`} />

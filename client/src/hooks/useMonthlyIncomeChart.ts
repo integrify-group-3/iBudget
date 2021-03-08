@@ -23,7 +23,6 @@ export default function useMonthlyIncomeChart(monthlyIncomeData: any) {
         console.log('this is empty, chartData')
         setChartData([])
       } else {
-        console.log('monthlyData from hooks', monthlyIncomeData)
         for (const income of monthlyIncomeData) {
           const { category, amount } = income
           if (category.includes('salary')) {

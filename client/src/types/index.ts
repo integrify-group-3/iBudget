@@ -9,9 +9,7 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 export const TOGGLE_DIALOG = 'TOGGLE_DIALOG'
 
-
 //expenses action types
-
 
 // Enum
 export enum DialogType {
@@ -101,20 +99,24 @@ export type YearChartData = {
 export type IncomeExpensesMonthChartProps = {
   data: any
   year: number
-  month: string 
+  month: string
 }
 
 export type IncomeExpensesYearChartProps = {
-  // data: YearChartData[] 
+  // data: YearChartData[]
   data: any
   year: number
-} 
+}
 
 // export type CalendarActions = GetIncomeAction
 
+export type IncomeChartData = {
+  category: string
+  amount: number
+}
 
 export type IncomeChartDataProps = {
-  chartData: any
+  chartData: IncomeChartData[]
   year: number
   month: string
   valueField: string
