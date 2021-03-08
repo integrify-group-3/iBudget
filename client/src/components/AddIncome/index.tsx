@@ -27,10 +27,15 @@ const useStyles = makeStyles((theme) =>
       padding: theme.spacing(1, 22, 1, 2),
       borderRadius: '5px',
     },
-    save: {
+    btnSaveWrapper: {
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+      margin: '0 auto'
+    },
+    buttons: {
       border: 'none',
       background: 'none',
-      display: 'inline-block',
     },
     select: {
       width: '20.5rem',
@@ -140,12 +145,14 @@ export default function AddIncome({
                   className={classes.input}
                 />
               </div>
-              <button className={classes.save}>
-                <SaveButton />
-              </button>
-              <button className={classes.save} onClick={hideFormOnClick}>
-                <CancelButton />
-              </button>
+              <div className={classes.btnSaveWrapper}>
+                <button className={classes.buttons}>
+                  <SaveButton />
+                </button>
+                <button className={classes.buttons} onClick={hideFormOnClick}>
+                  <CancelButton />
+                </button>
+              </div>
             </div>
           </form>
         </div>

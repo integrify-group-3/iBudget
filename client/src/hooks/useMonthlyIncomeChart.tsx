@@ -18,11 +18,9 @@ export default function useMonthlyIncomeChart(monthlyIncomeData: any) {
       let benefitsTotal = 0
       let taxReturnTotal = 0
       let childAllowanceTotal = 0
-      //console.log('monthlyData', monthlyData)
       if (!monthlyData) {
         setChartData([])
       } else {
-        console.log('monthlyData from hooks', monthlyIncomeData)
         for (const income of monthlyIncomeData) {
           const { category, amount } = income
           if (category.includes('salary')) {

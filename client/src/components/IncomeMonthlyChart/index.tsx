@@ -79,6 +79,11 @@ const useStyles = makeStyles((theme: any) => ({
 
 export default function IncomeMonthlyChart({
   chartData,
+  month,
+  year,
+  valueField,
+  argumentField,
+  name,
 }: IncomeChartDataProps) {
   const [scheme, setScheme] = useState(schemeCollection[7])
 
@@ -105,9 +110,9 @@ export default function IncomeMonthlyChart({
 
           {chartData.map((data: any) => (
             <BarSeries
-              valueField="amount"
-              argumentField="category"
-              name="category"
+              valueField={valueField}
+              argumentField={argumentField}
+              name={data.category}
             />
           ))}
 
@@ -115,7 +120,7 @@ export default function IncomeMonthlyChart({
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses Chart March 2021`} />
+          <Title text={`Income Chart ${month} ${year}`} />
           <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={pieChartText}
@@ -130,12 +135,12 @@ export default function IncomeMonthlyChart({
               // name="category"
             />
             <PieSeries
-              valueField="amount"
-              argumentField="category"
-              name="category"
+              valueField={valueField}
+              argumentField={argumentField}
+              name={name}
             />
             <Legend />
-            <Title text={`Expenses Chart March 2021`} />
+            <Title text={`Income Chart ${month} ${year}`} />
             <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
