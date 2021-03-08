@@ -59,3 +59,4 @@ export type ExpensesChartProps = {
   name: string
   className?: string
 }
+
