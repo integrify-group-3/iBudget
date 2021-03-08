@@ -4,7 +4,7 @@ import { defaultMonthlyChartExpensesData } from '../utils/defaultChartValues'
 
 export default function useExpensesChart(monthlyChart: any) {
   const [chartData, setChartData] = useState([{ category: '', amount: 0 }])
-  
+  console.log('monthlychart', monthlyChart)
   useEffect(() => {
     loadChartData(monthlyChart)
   }, [monthlyChart])
@@ -88,7 +88,6 @@ export default function useExpensesChart(monthlyChart: any) {
             }
             if (expense.category.includes('healthcare')) {
               healthcareTotal += expense.amount
-
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = healthcareTotal
@@ -97,7 +96,6 @@ export default function useExpensesChart(monthlyChart: any) {
             }
             if (expense.category.includes('insurance')) {
               insuranceTotal += expense.amount
-
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = insuranceTotal
@@ -106,7 +104,6 @@ export default function useExpensesChart(monthlyChart: any) {
             }
             if (expense.category.includes('supplies')) {
               suppliesTotal += expense.amount
-
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = suppliesTotal
@@ -115,7 +112,6 @@ export default function useExpensesChart(monthlyChart: any) {
             }
             if (expense.category.includes('education')) {
               educationTotal += expense.amount
-
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = educationTotal
@@ -124,7 +120,6 @@ export default function useExpensesChart(monthlyChart: any) {
             }
             if (expense.category.includes('debt')) {
               debtTotal += expense.amount
-
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = debtTotal
@@ -133,7 +128,6 @@ export default function useExpensesChart(monthlyChart: any) {
             }
             if (expense.category.includes('savings')) {
               savingsTotal += expense.amount
-
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = savingsTotal
@@ -142,7 +136,6 @@ export default function useExpensesChart(monthlyChart: any) {
             }
             if (expense.category.includes('holiday')) {
               holidayTotal += expense.amount
-
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = holidayTotal

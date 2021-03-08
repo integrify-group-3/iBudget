@@ -12,15 +12,18 @@ export default function income(
   state: IncomeState = {
     calendar: {} as CalendarScheduler,
     income: [],
+    selectedMonth: {},
   },
   action: IncomeActions
 ): IncomeState {
   switch (action.type) {
   case GET_INCOME:
+    console.log(action.payload.selectedMonth)
     return {
       ...state,
       calendar: action.payload.calendar,
       income: action.payload.income,
+      selectedMonth: action.payload.selectedMonth
     }
   case ADD_INCOME:
     return {

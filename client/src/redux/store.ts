@@ -23,6 +23,7 @@ const initState: AppState = {
   income: {
     calendar: {} as CalendarScheduler,
     income: [],
+    selectedMonth: {},
   },
   expenses: {
     calendar: {} as CalendarScheduler,
