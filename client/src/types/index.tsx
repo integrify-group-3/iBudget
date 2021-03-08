@@ -115,6 +115,11 @@ export type IncomeExpensesYearChartProps = {
 
 export type IncomeChartDataProps = {
   chartData: any
+  year: number
+  month: string
+  valueField: string
+  argumentField: string
+  name: string
 }
 
 export type AppState = {

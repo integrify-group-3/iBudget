@@ -4,7 +4,7 @@ import { defaultMonthlyChartExpensesData } from '../utils/defaultChartValues'
 
 export default function useExpensesChart(monthlyChart: any) {
   const [chartData, setChartData] = useState([{ category: '', amount: 0 }])
-  console.log('monthlychart', monthlyChart)
+
   useEffect(() => {
     loadChartData(monthlyChart)
   }, [monthlyChart])
@@ -30,79 +30,80 @@ export default function useExpensesChart(monthlyChart: any) {
       } else {
         for (const day of monthlyChart) {
           for (const expense of day.expenses) {
-            if (expense.category.includes('housing')) {
-              housingTotal += expense.amount
+            const { category, amount} = expense
+            if (category.includes('housing')) {
+              housingTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
-                if (data.category === expense.category) {
+                if (data.category === category) {
                   data.amount = housingTotal
                 }
               }
             }
-            if (expense.category.includes('transportation')) {
-              transportationTotal += expense.amount
+            if (category.includes('transportation')) {
+              transportationTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
-                if (data.category === expense.category) {
+                if (data.category === category) {
                   data.amount = transportationTotal
                 }
               }
             }
-            if (expense.category.includes('food')) {
-              foodTotal += expense.amount
+            if (category.includes('food')) {
+              foodTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = foodTotal
                 }
               }
             }
-            if (expense.category.includes('utilities')) {
-              utilitiesTotal += expense.amount
+            if (category.includes('utilities')) {
+              utilitiesTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = utilitiesTotal
                 }
               }
             }
-            if (expense.category.includes('clothing')) {
-              clothingTotal += expense.amount
+            if (category.includes('clothing')) {
+              clothingTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = clothingTotal
                 }
               }
             }
-            if (expense.category.includes('sports')) {
-              sportsTotal += expense.amount
+            if (category.includes('sports')) {
+              sportsTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = sportsTotal
                 }
               }
             }
-            if (expense.category.includes('entertainment')) {
-              entertainmentTotal += expense.amount
+            if (category.includes('entertainment')) {
+              entertainmentTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = entertainmentTotal
                 }
               }
             }
-            if (expense.category.includes('healthcare')) {
-              healthcareTotal += expense.amount
+            if (category.includes('healthcare')) {
+              healthcareTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = healthcareTotal
                 }
               }
             }
-            if (expense.category.includes('insurance')) {
-              insuranceTotal += expense.amount
+            if (category.includes('insurance')) {
+              insuranceTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = insuranceTotal
                 }
               }
             }
-            if (expense.category.includes('supplies')) {
+            if (category.includes('supplies')) {
               suppliesTotal += expense.amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
@@ -110,32 +111,32 @@ export default function useExpensesChart(monthlyChart: any) {
                 }
               }
             }
-            if (expense.category.includes('education')) {
-              educationTotal += expense.amount
+            if (category.includes('education')) {
+              educationTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = educationTotal
                 }
               }
             }
-            if (expense.category.includes('debt')) {
-              debtTotal += expense.amount
+            if (category.includes('debt')) {
+              debtTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = debtTotal
                 }
               }
             }
-            if (expense.category.includes('savings')) {
-              savingsTotal += expense.amount
+            if (category.includes('savings')) {
+              savingsTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = savingsTotal
                 }
               }
             }
-            if (expense.category.includes('holiday')) {
-              holidayTotal += expense.amount
+            if (category.includes('holiday')) {
+              holidayTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = holidayTotal
@@ -143,13 +144,14 @@ export default function useExpensesChart(monthlyChart: any) {
               }
             }
           }
-          setChartData(defaultMonthlyChartExpensesData)
+          // setChartData(defaultMonthlyChartExpensesData)
           const filteredChartData = defaultMonthlyChartExpensesData.filter((data) => {
             if (data.amount > 0) {
               return data
             }
           })
           setChartData(filteredChartData)
+          // console.log('this should update', chartData)
         }
       }
     },

@@ -134,11 +134,11 @@ export default function IncomePage(props: any) {
     const yearIncome = calendar.years.find((i: any) => i.year === year)
     const currentIndex = e.getMonth()
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
-    console.log('dateView from Income', dateView)
+    // console.log('dateView from Income', dateView)
     changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
 
-  console.log('incomeChartData', incomeChartData)
+  // console.log('incomeChartData', incomeChartData)
 
   return (
     <div className={classes.root}>
@@ -151,7 +151,13 @@ export default function IncomePage(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-                <IncomeMonthlyChart chartData={incomeChartData} />
+                <IncomeMonthlyChart 
+                  chartData={incomeChartData}
+                  year={dateView.year}
+                  month={dateView.month}
+                  valueField="amount"
+                  argumentField="category"
+                  name="category" />
                 <h2>Chart</h2>
               </Paper>
             </Grid>

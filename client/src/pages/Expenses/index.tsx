@@ -92,7 +92,6 @@ export default function ExpensesPage(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const fixedHeightPaperTable = clsx(classes.paper, classes.fixedHeightTable)
-
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
@@ -109,6 +108,7 @@ export default function ExpensesPage(props: any) {
   //to be deleted
   const [query, setQuery] = useState('')
   const [expensesChartData] = useExpensesChart(monthlyChart)
+  const [totalExpenses] = useTotalExpenses(monthlyTotalExpenses)
   const [
     err,
     expensesData,
@@ -116,17 +116,13 @@ export default function ExpensesPage(props: any) {
     defaultDateView,
     defaultMonth,
   ] = useMonthlyExpenses()
-  console.log('expense', defaultMonth)
   const [calendarDate, setCalendarDate] = useState(date)
   const [isFormShowing, setIsFormShowing] = useState(false)
   //moving this to hook
   const [dailyExpense, setDailyExpense] = useState({} as DailyExpense)
   const [isDayClicking, setIsDayClicking] = useState(false)
   //moving this to hook
-  
   const switchMonth = {} as ViewMonth
-
-  const [totalExpenses] = useTotalExpenses(monthlyTotalExpenses)
   //moving this to hook
   const [schedule, setSchedule] = useState({
     day: '',
@@ -151,20 +147,18 @@ export default function ExpensesPage(props: any) {
     month: '',
     year: 0,
   } as Expense)
-  // console.log(date, schedule)
   const { category, description, amount } = expense
 
   const loadChart = () => {
     setMonthlyChart(defaultMonth?.days)
   }
 
+  console.log('expenses monthly chart data', expensesChartData)
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-      // console.log('I am calling from useEffect Expenses')
       setDateView(defaultDateView as DateView)
-      // console.log(dateView)
       setExpense({
         category: '',
         description: '',
@@ -196,7 +190,6 @@ export default function ExpensesPage(props: any) {
       setIsFormShowing(false)
       setIsDayClicking(true)
       setSchedule({ ...schedule, day: e })
-      // setQuery(e)
     try {
       const selectedYear = await e.getFullYear()
       const currentIndex = await e.getMonth()
@@ -216,8 +209,6 @@ export default function ExpensesPage(props: any) {
         year: selectedYear,
         month: months[currentIndex],
       })
-      // console.log('expense from selectDay', expense)
-      // console.log('after setting date view', calendarData.years)
       const foundYear = await calendarData.years.find(
         (y: CalendarScheduler) => y.year === selectedYear
       )
@@ -254,7 +245,6 @@ export default function ExpensesPage(props: any) {
       const selectedYear = await e.value.getFullYear()
       const currentIndex = await e.value.getMonth()
       // console.log('one', selectedYear, months[currentIndex])
-      console.log(e.activeStartDate)
       const selectedYearTwo = await e.activeStartDate.getFullYear()
       const currentIndexTwo = await e.activeStartDate.getMonth()
       // console.log('two', selectedYearTwo, months[currentIndexTwo], months)
@@ -262,14 +252,11 @@ export default function ExpensesPage(props: any) {
       // console.log(e.activeStartDate, selectedYear, clickedMonth)
       dateView.year = selectedYearTwo
       dateView.month = months[currentIndexTwo]
-      console.log('date view here', dateView)
       const foundYear = await calendarData.years.find(
         (y: CalendarScheduler) => y.year === dateView.year
       )
       for (const month of foundYear.months) {
-        console.log(month)
         if (month.name === dateView.month) {
-          console.log('month here', month)
           //sets the chart to selected month
           setMonthlyChart(month.days)
           // console.log('monthly chart should update', monthlyChart)

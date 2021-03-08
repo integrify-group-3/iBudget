@@ -18,8 +18,9 @@ export default function useMonthlyIncomeChart(monthlyIncomeData: any) {
       let benefitsTotal = 0
       let taxReturnTotal = 0
       let childAllowanceTotal = 0
-      //console.log('monthlyData', monthlyData)
-      if (!monthlyData) {
+      console.log('monthlyData', monthlyData)
+      if (!monthlyData || monthlyData.length < 1) {
+        console.log('this is empty, chartData')
         setChartData([])
       } else {
         console.log('monthlyData from hooks', monthlyIncomeData)
@@ -73,19 +74,26 @@ export default function useMonthlyIncomeChart(monthlyIncomeData: any) {
               }
             }
           }
+          // console.log(defaultMonthlyChartIncomesData)
+          setChartData(defaultMonthlyChartIncomesData)
+
+          const filterData = defaultMonthlyChartIncomesData.filter(
+            (data) => data.amount > 0
+          )
+          console.log('data after filtering', filterData)
+          setChartData(filterData)
+          // console.log('chart should update', chartData)
         }
       }
-
-      const filterData = defaultMonthlyChartIncomesData.filter(
-        (data) => data.amount > 0
-      )
-      setChartData(filterData)
     },
     [monthlyIncomeData, chartData]
   )
 
   useEffect(() => {
-    //setChartData(defaultMonthlyChartIncomesData)
+    //this resets the defaultMonthlyChartIncomesData
+    for (const data of defaultMonthlyChartIncomesData) {
+      data.amount = 0
+    }
     loadMonthlyChart(monthlyIncomeData)
   }, [monthlyIncomeData])
 
