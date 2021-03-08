@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 
-import { SwitchChartBtnProps } from '../../types'
+import { SwitchChartBtnProps } from '../../types/ui'
 
 const useStyles = makeStyles((theme) => ({
   margin: {

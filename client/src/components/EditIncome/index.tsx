@@ -103,7 +103,7 @@ function EditIncome({
                 required={true}
               >
                 <MenuItem value="salary">Salary</MenuItem>
-                <MenuItem value="investment">Investment</MenuItem>
+                <MenuItem value="investments">Investments</MenuItem>
                 <MenuItem value="real estate">Real Estate</MenuItem>
                 <MenuItem value="unemployment benefits">
                   Unemployment Benefits

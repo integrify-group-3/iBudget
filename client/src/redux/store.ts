@@ -2,7 +2,9 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import thunk from 'redux-thunk'
 
-import { AppState, User, CalendarScheduler, DailyExpense } from '../types'
+import { AppState, CalendarScheduler } from '../types'
+import { User } from '../types/user'
+import { DailyExpense } from '../types/expenses'
 import createRootReducer from './reducers'
 import rootSaga from './sagas'
 
@@ -23,6 +25,7 @@ const initState: AppState = {
   income: {
     calendar: {} as CalendarScheduler,
     income: [],
+    selectedMonth: {},
   },
   expenses: {
     calendar: {} as CalendarScheduler,

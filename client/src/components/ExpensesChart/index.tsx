@@ -35,7 +35,8 @@ import {
 import { Palette } from '@devexpress/dx-react-chart'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
-import { ExpensesChartProps, ExpensesChartData } from '../../types'
+import { ExpensesChartData } from '../../types/expenses'
+import { ExpensesChartProps } from '../../types/ui'
 
 const schemeCollection = [
   schemeCategory10,

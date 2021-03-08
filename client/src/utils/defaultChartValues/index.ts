@@ -31,10 +31,10 @@ export const defaultYearChartData = [
 ]
 
 export const defaultMonthlyChartIncomesData = [
-  { category: 'salary', amount: 3000 },
-  { category: 'investments', amount: 500 },
-  { category: 'real state', amount: 6000 },
-  { category: 'unemployment benefits', amount: 200 },
-  { category: 'tax return', amount: 2000 },
-  { category: 'child allowance', amount: 4000 },
+  { category: 'salary', amount: 0 },
+  { category: 'investments', amount: 0 },
+  { category: 'real estate', amount: 0 },
+  { category: 'unemployment benefits', amount: 0 },
+  { category: 'tax return', amount: 0 },
+  { category: 'child allowance', amount: 0 },
 ]

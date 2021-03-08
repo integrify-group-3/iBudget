@@ -14,10 +14,12 @@ import {
   AppState,
   CalendarScheduler,
   DateView,
-  DailyExpense,
-  Expense,
   ViewMonth,
 } from '../../types'
+import {   DailyExpense,
+} from '../../types/expenses'
+
+import { Expense } from '../../types/expenses'
 
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useExpensesChart from '../../hooks/useExpensesChart'
@@ -89,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ExpensesPage(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-    const fixedHeightPaperChart = clsx(classes.paper, classes.fixedHeightChart)
   const fixedHeightPaperTable = clsx(classes.paper, classes.fixedHeightTable)
 
   const isAuthenticated = useSelector(
@@ -115,6 +116,7 @@ export default function ExpensesPage(props: any) {
     defaultDateView,
     defaultMonth,
   ] = useMonthlyExpenses()
+  console.log('expense', defaultMonth)
   const [calendarDate, setCalendarDate] = useState(date)
   const [isFormShowing, setIsFormShowing] = useState(false)
   //moving this to hook

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { AppState, Income, CalendarScheduler, DateView } from '../types'
+import { AppState, CalendarScheduler, DateView } from '../types'
+import { Income } from '../types/income'
 import { fetchIncome } from '../redux/actions/income'
 import { year, currentMonth } from '../utils/dateValues'
 
@@ -9,10 +10,13 @@ export default function useIncome() {
   const dispatch = useDispatch()
   const income = useSelector((state: AppState) => state.income.income)
   const calendar = useSelector((state: AppState) => state.income.calendar)
+  const selectedMonth = useSelector(
+    (state: AppState) => state.income.selectedMonth
+  )
   const [incomeData, setIncomeData] = useState([] as Income[])
   const [calendarData, setCalendarData] = useState({} as CalendarScheduler)
-
   const [err, setErr] = useState(null)
+  const [defaultMonth, setDefaultMonth] = useState<any>()
   const [defaultDateView, setDefaultDateView] = useState({
     year: 0,
     month: '',
@@ -28,10 +32,10 @@ export default function useIncome() {
       setErr(errMessage as any)
     }
     setIncomeData(income)
-    console.log(incomeData)
     setCalendarData(calendar)
     setDefaultDateView({ year: year, month: currentMonth })
-  }, [income, calendar, calendarData])
+    setDefaultMonth(selectedMonth)
+  }, [income, calendar, calendarData, defaultMonth])
 
-  return [err, incomeData, defaultDateView, calendar]
+  return [err, incomeData, defaultDateView, calendar, defaultMonth]
 }

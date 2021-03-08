@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -7,7 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import CancelButton from '../CancelButton'
 
-import { AppState, AddIncomeProps } from '../../types'
+import { AppState } from '../../types'
+import { AddIncomeProps } from '../../types/income'
 import { addIncome } from '../../redux/actions/income'
 import SaveButton from '../SaveButton'
 

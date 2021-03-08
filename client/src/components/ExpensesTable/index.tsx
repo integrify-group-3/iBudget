@@ -15,7 +15,9 @@ import Paper from '@material-ui/core/Paper'
 import Title from '../Title'
 import AddExpenseBtn from '../../components/AddExpenseBtn'
 import EditExpense from '../../components/EditExpense'
-import { AppState, ExpensesTableProps, Expense } from '../../types'
+import { AppState } from '../../types'
+import { Expense } from '../../types/expenses'
+import { ExpensesTableProps } from '../../types/ui'
 import { removeExpense } from '../../redux/actions/expenses'
 
 const useStyles = makeStyles((theme) => ({

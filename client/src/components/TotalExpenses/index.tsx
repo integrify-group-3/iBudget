@@ -1,11 +1,9 @@
 import React from "react";
-import moment from "moment"
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import { TotalExpensesProps } from '../../types'
+import { TotalExpensesProps } from '../../types/expenses'
 import Title from "../Title";
-import { date } from '../../utils/dateValues';
 
 const useStyles = makeStyles({
   depositContext: {
@@ -18,8 +16,7 @@ export default function TotalExpenses({
     year, 
     totalAmount
 }: TotalExpensesProps) {
-  console.log(totalAmount)
-  const classes = useStyles()
+
   return (
     <React.Fragment>
       <Title>

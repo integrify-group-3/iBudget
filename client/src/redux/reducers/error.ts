@@ -3,7 +3,7 @@ import {
   ErrorActions,
   SHOW_ERRORS,
   CLEAR_ERRORS,
-} from '../../types'
+} from '../../types/error'
   
 export default function error(
   state: ErrorState = {

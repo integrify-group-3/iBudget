@@ -9,10 +9,13 @@ import {
   DELETE_EXPENSE,
   CALCULATE_TOTALEXPENSES,
   ExpensesActions,
-  CalendarScheduler,
   DailyExpense,
   Expense,
-} from '../../types'
+} from '../../types/expenses'
+
+import { 
+  CalendarScheduler
+} from '../../types/index'
 
 import { tokenConfig } from './user'
 
@@ -91,38 +94,26 @@ export function calculateTotalExpenses(total: number): ExpensesActions {
 
 const getYearlyExpenses = async (data: any, expense: Expense) => {
   const { year } = expense
-  try {
     const foundYear = await data.years.find(
       (y: CalendarScheduler) => y.year === year
     )
     return foundYear
-  } catch (err) {
-    console.log(err)
-  }
 }
 
 const getMonthlyExpenses = async (data: any, expense: Expense) => {
   const { month } = expense
-  try {
     const foundMonth = await data.months.find(
       (m: CalendarScheduler) => m.name === month
     )
     return foundMonth
-  } catch (err) {
-    console.log(err)
-  }
 }
 
 const getDailyExpenses = async (data: any, expense: Expense) => {
   const { date } = expense
-  try {
     const selectedDay = await data.days.find((d: CalendarScheduler) => {
       return moment(d.day).format('LL') === moment(date).format('LL')
     })
     return selectedDay
-  } catch (err) {
-    console.log(err)
-  }
 }
 
 export function fetchExpenses() {
@@ -161,12 +152,11 @@ export function fetchExpenses() {
 }
 
 export function addExpense(expense: Expense) {
-  console.log('from actions add expense', expense)
   const url = '/api/v1/expense'
   return async (dispatch: Dispatch, getState: any) => {
     try {
       const res = await axios.post(url, expense, tokenConfig(getState))
-      // console.log(res)
+      //we compare all the data on the calendar with the expense data, year, month and day
       const foundYear = await getYearlyExpenses(res.data, expense)
       const foundMonth = await getMonthlyExpenses(foundYear, expense)
       const foundDay = await getDailyExpenses(foundMonth, expense)
