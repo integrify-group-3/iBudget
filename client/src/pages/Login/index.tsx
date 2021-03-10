@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import GoogleLogin from "react-google-login";
 
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import { FaGoogle } from "react-icons/fa";
 
 import { AppState } from '../../types'
-import { loginUser } from '../../redux/actions/user'
+import { loginUser, googleLogin } from '../../redux/actions/user'
 import { clearErrors } from '../../redux/actions/error'
-import ForgotPassword from '../ForgotPassword'
 
 import './style.scss'
 
@@ -74,19 +74,10 @@ export default function Login(props: any) {
     email: '',
     password: '',
   })
-  const [openForgotPassword, setOpenForgotPassword] = useState(false)
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
     dispatch(loginUser(user))
-  }
-
-  const openForgotPasswordOnClick = () => {
-    setOpenForgotPassword(true)
-  }
-
-  const closeForgotPasswordOnClick = () => {
-    setOpenForgotPassword(false)
   }
 
   useEffect(() => {
@@ -103,6 +94,14 @@ export default function Login(props: any) {
       [name]: value,
     })
   }
+
+  const responseSuccessGoogle = (response: any) => {
+    dispatch(googleLogin(response))
+    console.log(response)
+  }
+
+  const responseFailureGoogle = () => {
+  }
   return (
     <div className="login-page-container">
       <Container component="main" maxWidth="xs" className={classes.container}>
@@ -111,6 +110,24 @@ export default function Login(props: any) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          <GoogleLogin
+          clientId="242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com"
+          buttonText="Sign in with Google"
+          onSuccess={responseSuccessGoogle}
+          onFailure={responseFailureGoogle}
+          cookiePolicy={'single_host_origin'}
+          render={(renderProps: any) => (
+            <button onClick={renderProps.onClick} disabled={renderProps.disabled}
+            className="google-auth-btn"
+            >
+              <FaGoogle /><span>Sign In with Google</span></button>
+          )}
+        />
+        <div className="login-page-container__divider">
+          <hr className="login-page-container__divider-line-before">        
+        </hr>
+        <p>Or</p>
+        </div>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               margin="normal"

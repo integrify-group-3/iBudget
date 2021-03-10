@@ -1,5 +1,6 @@
 //user action types
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const GOOGLE_LOGIN = 'GOOGLE_LOGIN'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const SHOW_ERRORS = 'SHOW_ERRORS'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
@@ -48,6 +49,10 @@ export type LoginUserSuccessAction = {
   }
 }
 
+export type GoogleLoginAction = {
+  type: typeof GOOGLE_LOGIN
+}
+
 export type LogoutAction = {
   type: typeof LOGOUT
 }
@@ -85,6 +90,7 @@ export type UserActions =
   | RegisterUserSuccessAction
   | RegisterFailAction
   | LoginUserSuccessAction
+  | GoogleLoginAction
   | LogoutAction
   | UpdateUserAction
   | ForgotPasswordAction
@@ -96,6 +102,7 @@ export type UserState = {
   user: User
   token: string
   isAuthenticated?: boolean
+  isGoogleUser: boolean
   forgotPasswordEmailMsg: string
   resetPasswordMsg: string
 }

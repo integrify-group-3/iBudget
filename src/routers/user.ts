@@ -6,6 +6,7 @@ import { isAuthorized } from '../middlewares/authorized'
 import {
   registerUser,
   loginUser,
+  googleLogin,
   forgotPassword,
   resetPassword,
   findOneUser,
@@ -14,6 +15,7 @@ import {
 
 router.post('/register', registerUser)
 router.post('/login', loginUser)
+router.post('/login/google-auth', googleLogin)
 router.put('/forgot-password', forgotPassword)
 router.put('/reset-password', resetPassword)
 router.get('/auth', isAuthorized, findOneUser)
