@@ -8,9 +8,7 @@ import {
   ExpensesActions,
   DailyExpense,
 } from '../../types/expenses'
-import {
-  CalendarScheduler
-} from '../../types'
+import { CalendarScheduler } from '../../types'
 
 export default function expenses(
   state: ExpensesState = {
@@ -47,10 +45,10 @@ export default function expenses(
         ...state,
         calendar: action.payload.calendar,
         dailyExpenses: expense,
-        selectedMonth: monthlyExpense
+        selectedMonth: monthlyExpense,
       }
     case CALCULATE_TOTALEXPENSES:
-      // console.log(action.payload)
+      console.log('action.payload', action.payload)
       const { total } = action.payload
       return {
         ...state,
