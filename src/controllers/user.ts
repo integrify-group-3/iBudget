@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { OAuth2Client } from 'google-auth-library'
 // import mailgun from 'mailgun-js'
 import sgMail from '@sendgrid/mail'
 import _ from 'lodash'
@@ -9,14 +10,17 @@ import {
   RESET_PASSWORD_KEY,
   CLIENT_URL,
   // MAILGUN_API_KEY,
-  SENDGRID_API_KEY
+  SENDGRID_API_KEY,
 } from '../util/secrets'
 
+const client = new OAuth2Client(
+  '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com'
+)
 // const DOMAIN = 'sandboxc48a258dd8d74f2a9c08ef2ce3a5c1f5.mailgun.org'
 // const mg = mailgun({ apiKey: MAILGUN_API_KEY, domain: DOMAIN })
 sgMail.setApiKey(SENDGRID_API_KEY)
 
-import User from '../models/User'
+import User, { UserDocument } from '../models/User'
 import Calendar from '../models/Calendar'
 import { RequestUser } from '../middlewares/authorized'
 import { dbCalendar } from '../dbCalendar'
@@ -90,6 +94,133 @@ export const registerUser = async (
       next(new BadRequestError('Problem validating user'))
     } else {
       next(new InternalServerError('Please refresh the page'))
+    }
+  }
+}
+
+//@ROUTE POST /v1/user/login/google-auth
+//@DESC Logs in a user with google auth
+//@ACCESS: Private
+
+export const googleLogin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { tokenId } = req.body
+    client
+      .verifyIdToken({
+        idToken: tokenId,
+        audience:
+          '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com',
+      })
+
+      .then((response) => {
+        const payload = response.getPayload()
+        console.log(payload)
+       
+        //we are accessing properties in the class LoginTicket
+        const userPropertiesLoginTicket = {
+          firstName: payload?.given_name,
+          lastName: payload?.family_name,
+          email: payload?.email,
+          emailVerified: payload?.email_verified
+        }
+        const { firstName, lastName, email, emailVerified } = userPropertiesLoginTicket
+        console.log(email, emailVerified, firstName, lastName)
+        if (emailVerified) {
+          User.findOne({ email }).exec((err, user) => {
+            if (err) {
+              return res.status(400).json({
+                msg: 'Something went wrong',
+              })
+            } else {
+              if (user) {
+                console.log('user found', user)
+                jwt.sign(
+                  { id: user._id },
+                  JWT_SECRET,
+                  //we set an expiration for the token
+                  { expiresIn: '30d' },
+                  async (err, token) => {
+                    if (err) throw err
+                    //we make a json file for token and user
+                    console.log('user is here', user)
+                    res.json({
+                      token,
+                      user: {
+                        id: user._id,
+                        email: user.email,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                      },
+                    })
+                  }
+                )
+              } else {
+                console.log('found user', user)
+                const password = email + JWT_SECRET
+                const newUser = new User({
+                  user: {
+                    email,
+                    firstName,
+                    lastName,
+                    password
+                  },
+                })
+                console.log('new user here', newUser)
+                //one calendar is associated to a single user, we set the calendar id to user id to retrieve it for CRUD operations
+                const calendar = new Calendar({
+                  _id: newUser._id,
+                  years: dbCalendar.years,
+                })
+                // calendar.years.push(dbCalendar.years)
+                calendar.save()
+                newUser.save((err: any, user: UserDocument) => {
+                  if (err) {
+                    console.log('error', err)
+                    return res.status(400).json({ msg: 'Something went wrong' })
+                  }
+                  jwt.sign(
+                    { id: user._id },
+                    JWT_SECRET,
+                    //we set an expiration for the token
+                    { expiresIn: '30d' },
+                    async (err, token) => {
+                      if (err) throw err
+                      //we make a json file for token and user
+                      console.log('user is here', user)
+                      const { _id, firstName, lastName, email } = newUser
+                      res.json({
+                        token,
+                        user: {
+                          id: user._id,
+                          email,
+                          firstName,
+                          lastName,
+                          calendar: calendar,
+                        },
+                      })
+                    }
+                  )
+                })
+              }
+            }
+          })
+        }
+      })
+  } catch (err) {
+    if (err.name === 'ValidationError') {
+      next(res.status(400).json({ msg: 'Validation error' }))
+    } else {
+      next(
+        next(
+          res
+            .status(500)
+            .json({ msg: 'Something went wrong. Please refresh the page' })
+        )
+      )
     }
   }
 }
@@ -190,8 +321,7 @@ export const forgotPassword = async (
           console.log('user after updating', user)
           if (err) {
             return res.status(404).json({ msg: 'User not found' })
-          } 
-          else /*{
+          } /*{
               mg.messages().send(emailData, (err) => {
               console.log('email here', emailData)
               if (err) {
@@ -201,18 +331,19 @@ export const forgotPassword = async (
                 msg: `An email has been sent to ${email} with instructions to reset your password`,
               })
             })
-          }*/{
-            sgMail.send(emailData)
-            .then(() => {
-              console.log('email here', emailData)
-              return res.json({
-                msg: `An email has been sent to ${email} with instructions to reset your password`,
+          }*/ else {
+            sgMail
+              .send(emailData)
+              .then(() => {
+                console.log('email here', emailData)
+                return res.json({
+                  msg: `An email has been sent to ${email} with instructions to reset your password`,
+                })
               })
-            })
-            .catch((err) => {
-              console.log('error here', err)
-              return res.json({ msg: err.message })
-            })  
+              .catch((err) => {
+                console.log('error here', err)
+                return res.json({ msg: err.message })
+              })
           }
         })
       }
@@ -256,9 +387,7 @@ export const resetPassword = async (
         User.findOne({ resetLink }, (err, user) => {
           console.log('user here', user)
           if (err || !user) {
-            return res
-              .status(404)
-              .json({ msg: 'invalid token' })
+            return res.status(404).json({ msg: 'invalid token' })
           }
           const obj = {
             password: newPassword,
@@ -274,11 +403,9 @@ export const resetPassword = async (
                 if (err) {
                   return res.status(400).json({ msg: 'password reset error' })
                 } else {
-                  return res
-                    .status(200)
-                    .json({
-                      msg: 'your password has been successfully changed',
-                    })
+                  return res.status(200).json({
+                    msg: 'your password has been successfully changed',
+                  })
                 }
               })
             })
@@ -378,4 +505,7 @@ export const updateUser = async (
   } catch (err) {
     next(new NotFoundError('User not found', err))
   }
+}
+function getPayload() {
+  throw new Error('Function not implemented.')
 }

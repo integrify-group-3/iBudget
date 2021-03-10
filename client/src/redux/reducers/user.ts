@@ -5,6 +5,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
+  GOOGLE_LOGIN,
   LOGOUT,
   UPDATE_USER,
   FORGOT_PASSWORD,
@@ -13,11 +14,12 @@ import {
   CLEAR_RESET_CONFIRMATION,
 } from '../../types/user'
 
-export default function auth(
+export default function user(
   state: UserState = {
     user: {} as User,
     token: '',
     isAuthenticated: false,
+    isGoogleUser: false,
     forgotPasswordEmailMsg: '',
     resetPasswordMsg: '',
   },
@@ -32,6 +34,11 @@ export default function auth(
         user: user,
         token: token,
         isAuthenticated: true,
+      }
+    case GOOGLE_LOGIN:
+      return {
+        ...state,
+        isGoogleUser: true,
       }
     case REGISTER_SUCCESS:
       return {
@@ -49,6 +56,7 @@ export default function auth(
         token: '',
         isAuthenticated: false,
         user: {} as User,
+        isGoogleUser: false,
       }
     case UPDATE_USER:
       return {

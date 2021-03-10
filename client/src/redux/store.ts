@@ -19,6 +19,7 @@ const initState: AppState = {
     user: {} as User,
     token: '',
     isAuthenticated: false,
+    isGoogleUser: false,
     forgotPasswordEmailMsg: '',
     resetPasswordMsg: ''
   },

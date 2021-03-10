@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import {
   LOGIN_SUCCESS,
+  GOOGLE_LOGIN,
   UserActions,
   User,
   REGISTER_SUCCESS,
@@ -40,6 +41,12 @@ export function loginSuccess(user: User, token: string): UserActions {
       user,
       token,
     },
+  }
+}
+
+export function googleLoginSuccess(): UserActions {
+  return {
+    type: GOOGLE_LOGIN,
   }
 }
 
@@ -134,6 +141,27 @@ export function loginUser({ email, password }: any) {
     }
   }
 }
+
+export const googleLogin = (response: any) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const url = `/api/v1/user/login/google-auth`;
+      console.log(response)
+      axios({
+        method: "POST",
+        url,
+        data: { tokenId: response.tokenId },
+      }).then((res) => {
+        console.log(res.data);
+        dispatch(loginSuccess(res.data.user, res.data.token))
+        dispatch(googleLoginSuccess())
+      })
+    } catch (err) {
+      // dispatch(showErrors(err.response.data, err.response.status));
+      console.log(err)
+    }
+  };
+};
 
 export const updateUser = (id: string, user: any) => {
   return async (dispatch: Dispatch, getState: any) => {
