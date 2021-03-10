@@ -32,12 +32,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   HeaderStyle: {
     color: '#886DFA',
-    marginTop: '2rem',
-    fontSize: '23px'
+    fontSize: '23px',
   },
   descStyle: {
     marginBottom: '40px',
@@ -47,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1.5rem',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   btnStyle: {
     borderRadius: 50,
@@ -57,32 +55,29 @@ const useStyles = makeStyles((theme) => ({
     width: '50%',
     textAlign: 'center',
     marginTop: '30px',
-    margin: 'auto',
   },
   editIcon: {
     color: 'white',
-    marginRight: '.4rem'
+    marginRight: '.4rem',
   },
   userIcon: {
     color: '#4F416B',
-    marginRight: '.4rem'
-  }
+    marginRight: '.4rem',
+  },
 }))
 
 export default function User(props: any) {
   const classes = useStyles()
-  const user = useSelector(
-    (state: AppState) => state.user
-  )
-  console.log(user) 
- 
-  const { isAuthenticated } = user
+  const user = useSelector((state: AppState) => state.user)
+  console.log(user)
+
+  const { isAuthenticated, isGoogleUser } = user
   const { id, firstName, lastName, email } = user.user
 
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
-    } 
+    }
   }, [isAuthenticated, props.history])
 
   return (
@@ -92,24 +87,29 @@ export default function User(props: any) {
           User Profile
         </Typography>
         <Typography variant="h4" className={classes.userDetails}>
-          <PersonIcon className={classes.userIcon}/> <span>First Name: {firstName}</span>
+          <PersonIcon className={classes.userIcon} />{' '}
+          <span>First Name: {firstName}</span>
         </Typography>
         <Typography variant="h4" className={classes.userDetails}>
-          <PersonIcon className={classes.userIcon}/> <span>Last Name: {lastName}</span>
+          <PersonIcon className={classes.userIcon} />{' '}
+          <span>Last Name: {lastName}</span>
         </Typography>
         <Typography variant="h4" className={classes.userDetails}>
-          <AlternateEmailIcon className={classes.userIcon}/> <span>email: {email} </span>
+          <AlternateEmailIcon className={classes.userIcon} />{' '}
+          <span>email: {email} </span>
         </Typography>
-        <Button
-          component={Link}
-          to={`/user/${id}/edit`}
-          color="primary"
-          variant="contained"
-          className={classes.btnStyle}
-        >
-          <EditIcon className={classes.editIcon} /> 
-          <span>Update User</span>
-        </Button>
+        {!isGoogleUser && (
+          <Button
+            component={Link}
+            to={`/user/${id}/edit`}
+            color="primary"
+            variant="contained"
+            className={classes.btnStyle}
+          >
+            <EditIcon className={classes.editIcon} />
+            <span>Update User</span>
+          </Button>
+        )}
       </Container>
     </div>
   )
