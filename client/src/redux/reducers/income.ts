@@ -21,7 +21,6 @@ export default function income(
 ): IncomeState {
   switch (action.type) {
   case GET_INCOME:
-    console.log(action.payload.selectedMonth)
     return {
       ...state,
       calendar: action.payload.calendar,

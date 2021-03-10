@@ -19,36 +19,16 @@ const useStyles = makeStyles({
 export default function TotalIncome({
   month,
   year,
-  monthlyIncome,
+  income,
 }: TotalIncomeProps) {
   const classes = useStyles()
-
-  const calculateTotalIncome = () => {
-    let count = 0
-    for (const income of monthlyIncome) {
-      const { amount } = income
-      count += amount
-    }
-    return count
-  }
-
-  useEffect(() => {
-    if(monthlyIncome !== undefined) {
-      calculateTotalIncome()
-    }
-  }, [monthlyIncome, calculateTotalIncome])
-
-  const income = calculateTotalIncome()
   return (
     <React.Fragment>
       <Title>
         Total Income {month} {year}
       </Title>
       <Typography component="p" variant="h4">
-        {income} 
-      </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        on 15 March, 2019
+        {income}
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>
