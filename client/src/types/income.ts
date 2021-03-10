@@ -5,6 +5,7 @@ export const GET_INCOME = 'GET_INCOME'
 export const ADD_INCOME = 'ADD_INCOME'
 export const UPDATE_INCOME = 'UPDATE_INCOME'
 export const DELETE_INCOME = 'DELETE_INCOME'
+export const TOTAL_INCOME = 'TOTAL_INCOME'
 
 export type Income = {
   category: string
@@ -65,14 +66,23 @@ export type TotalIncomeProps = {
   income: number
 }
 
+export type totalMonthlyIncome = {
+  type: typeof TOTAL_INCOME
+  payload: {
+    total: Income[]
+  }
+}
+
 export type IncomeActions =
   | GetIncomeAction
   | AddIncomeAction
   | UpdateIncomeAction
   | DeleteIncomeAction
+  | totalMonthlyIncome
 
 export type IncomeState = {
   calendar: CalendarScheduler
   income: Income[]
   selectedMonth: any
+  total: number | any
 }

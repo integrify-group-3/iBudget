@@ -8,11 +8,10 @@ import {
   IncomeActions,
   UPDATE_INCOME,
   DELETE_INCOME,
+  TOTAL_INCOME,
 } from '../../types/income'
 
-import {
-  CalendarScheduler
-} from '../../types/index'
+import { CalendarScheduler } from '../../types/index'
 
 import { tokenConfig } from './user'
 
@@ -28,7 +27,7 @@ export function getIncome(
     payload: {
       calendar,
       income,
-      selectedMonth
+      selectedMonth,
     },
   }
 }
@@ -59,6 +58,15 @@ export function deleteIncome(income: Income[]): IncomeActions {
   }
 }
 
+export function totalMonthlyIncome(total: Income[]): IncomeActions {
+  return {
+    type: TOTAL_INCOME,
+    payload: {
+      total,
+    },
+  }
+}
+
 export function fetchIncome() {
   const url = '/api/v1/income'
   return async (dispatch: Dispatch, getState: any) => {
@@ -74,18 +82,18 @@ export function fetchIncome() {
 
 const getYearIncome = async (data: any, income: Income) => {
   const { year } = income
-    const foundYear = await data.years.find(
-      (y: CalendarScheduler) => y.year === year
-    )
-    return foundYear
+  const foundYear = await data.years.find(
+    (y: CalendarScheduler) => y.year === year
+  )
+  return foundYear
 }
 
 const getMonthIncome = async (data: any, income: Income) => {
   const { month } = income
-    const foundYear = await data.months.find(
-      (m: CalendarScheduler) => m.name === month
-    )
-    return foundYear
+  const foundYear = await data.months.find(
+    (m: CalendarScheduler) => m.name === month
+  )
+  return foundYear
 }
 
 export function addIncome(newIncome: any) {
@@ -96,10 +104,9 @@ export function addIncome(newIncome: any) {
       const foundYear = await getYearIncome(res.data, newIncome)
       const foundMonth = await getMonthIncome(foundYear, newIncome)
       dispatch(addNewIncome(foundMonth.income))
+    } catch (err) {
+      console.log(err)
     }
-   catch(err) {
-    console.log(err)
-   }
   }
 }
 
@@ -127,6 +134,24 @@ export function removeIncome(id: string, income: Income) {
       dispatch(deleteIncome(foundMonth.income))
     } catch (err) {
       console.log(err)
+    }
+  }
+}
+
+export function getTotalMonthlyIncome(monthlyIncomes: any) {
+  return async (dispatch: Dispatch) => {
+    try {
+      let count: any = 0
+      if (monthlyIncomes !== undefined) {
+        for (const dayIndex in monthlyIncomes.days) {
+          for (const income of monthlyIncomes[dayIndex]) {
+            count += income.amount
+          }
+        }
+        dispatch(totalMonthlyIncome(count))
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 }

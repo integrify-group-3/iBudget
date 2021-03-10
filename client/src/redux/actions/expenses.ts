@@ -13,9 +13,7 @@ import {
   Expense,
 } from '../../types/expenses'
 
-import { 
-  CalendarScheduler
-} from '../../types/index'
+import { CalendarScheduler } from '../../types/index'
 
 import { tokenConfig } from './user'
 
@@ -94,26 +92,26 @@ export function calculateTotalExpenses(total: number): ExpensesActions {
 
 const getYearlyExpenses = async (data: any, expense: Expense) => {
   const { year } = expense
-    const foundYear = await data.years.find(
-      (y: CalendarScheduler) => y.year === year
-    )
-    return foundYear
+  const foundYear = await data.years.find(
+    (y: CalendarScheduler) => y.year === year
+  )
+  return foundYear
 }
 
 const getMonthlyExpenses = async (data: any, expense: Expense) => {
   const { month } = expense
-    const foundMonth = await data.months.find(
-      (m: CalendarScheduler) => m.name === month
-    )
-    return foundMonth
+  const foundMonth = await data.months.find(
+    (m: CalendarScheduler) => m.name === month
+  )
+  return foundMonth
 }
 
 const getDailyExpenses = async (data: any, expense: Expense) => {
   const { date } = expense
-    const selectedDay = await data.days.find((d: CalendarScheduler) => {
-      return moment(d.day).format('LL') === moment(date).format('LL')
-    })
-    return selectedDay
+  const selectedDay = await data.days.find((d: CalendarScheduler) => {
+    return moment(d.day).format('LL') === moment(date).format('LL')
+  })
+  return selectedDay
 }
 
 export function fetchExpenses() {
