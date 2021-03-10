@@ -111,5 +111,7 @@ export default function useYearExpenses(selectedYear: number) {
     }
   }, [expenses])
 
+  console.log('expenses', expenses)
+
   return [err, expenses, dateView, yearTotalExpenses, avgYearExpenses]
 }

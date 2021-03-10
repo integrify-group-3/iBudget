@@ -1,24 +1,22 @@
 import { useState, useEffect } from 'react'
-import { useSelector, useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../types'
-import { getTotalExpenses } from '../redux/actions/expenses' 
+import { getTotalExpenses } from '../redux/actions/expenses'
 
-export default function useTotalExpenses(monthExpenses: any) { 
+export default function useTotalExpenses(monthExpenses: any) {
   const dispatch = useDispatch()
   const [totalExpenses, setTotalExpenses] = useState(0)
-  const total = useSelector(
-    (state: AppState) => state.expenses.total
-  )
- 
+  const total = useSelector((state: AppState) => state.expenses.total)
+
   useEffect(() => {
     dispatch(getTotalExpenses(monthExpenses))
   }, [dispatch, monthExpenses])
 
   useEffect(() => {
-    if(total !== undefined) {
-        setTotalExpenses(total)
-        // console.log('total here', total)
-    } 
+    if (total !== undefined) {
+      setTotalExpenses(total)
+      // console.log('total here', total)
+    }
   }, [total])
 
   return [totalExpenses]
