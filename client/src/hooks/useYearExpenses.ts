@@ -66,17 +66,13 @@ export default function useYearExpenses(selectedYear: number) {
   const calculateYearExpenses = useCallback(
     (data) => {
       let count = 0
-      //   console.log('expenses year', data)
       for (const month of data.months) {
         if (month.days.length > 0) {
           const { days } = month
-          //   console.log('these are not undefined', days)
           for (const day of days) {
-            // console.log(day)
             if (day.expenses.length > 0) {
               for (const expense of day.expenses) {
                 const { amount } = expense
-                // console.log('expense here', amount)
                 count += amount
               }
             }
