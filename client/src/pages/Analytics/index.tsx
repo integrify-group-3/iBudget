@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 import { AppState, CalendarScheduler } from '../../types'
 import { date } from '../../utils/dateValues'
@@ -70,11 +71,10 @@ export default function Analytics(props: any) {
     expensesData,
     yearViewExpenses,
     yearTotalExpenses,
-    avgYExpenses,
   ] = useYearExpenses(selectedYear)
-
-  const [chartErr, chartData] = useYearChart(yearChart)
-  console.log(chartData)
+  // console.log('expenses data', expensesData, 'year view expenses', yearViewExpenses, 'year total expenses', yearTotalExpenses)
+  const [yearChartErr, yearChartData] = useYearChart(yearChart)
+  console.log('year chart data', yearChartData)
 
   console.log('year expenses', expensesData)
 
@@ -113,17 +113,18 @@ export default function Analytics(props: any) {
               <Paper className={fixedHeightPaper}>
                 {/* Total year expenses go hear */}
                 <h2>Expenses {yearViewExpenses.year}</h2>
-                <h4>Total {yearTotalExpenses}</h4>
-                <h4>Average {avgYExpenses} </h4>
+                <Typography component="p" variant="h4">
+                  €{yearTotalExpenses}
+                </Typography>
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <h2>Income </h2>
                 {/* total year income goes here */}
-                <h4>Total</h4>
-                <h4>Average</h4>
-              </Paper>
+                <Typography component="p" variant="h4">
+                  €Total
+                </Typography>              </Paper>
             </Grid>
             <Grid item xs={5} md={6} lg={5}>
               <Paper className={fixedHeightPaper}>
@@ -138,7 +139,7 @@ export default function Analytics(props: any) {
             <Grid item xs={5} md={8} lg={8}>
               {/*Expenses chart goes here, a series or bar chart for expenses and income for the year */}
               <Paper className={classes.chartHeightPaper}>
-                <IncomeExpensesYearChart data={chartData} year={selectedYear} />
+                <IncomeExpensesYearChart data={yearChartData} year={selectedYear} />
               </Paper>
             </Grid>
 

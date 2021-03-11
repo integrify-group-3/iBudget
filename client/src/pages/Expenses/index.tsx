@@ -23,10 +23,11 @@ import { Expense } from '../../types/expenses'
 
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useExpensesChart from '../../hooks/useExpensesChart'
-import useTotalExpenses from '../../hooks/useTotalExpenses'
+import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
+import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import { months, date, year, currentMonth } from '../../utils/dateValues'
 import EmptyChartContainer from '../../components/EmptyChartContainer'
-import ExpensesChart from '../../components/ExpensesChart'
+import ExpensesChart from '../../components/ExpensesMonthlyChart'
 import TotalExpenses from '../../components/TotalExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import ExpensesTable from '../../components/ExpensesTable'
@@ -102,13 +103,14 @@ export default function ExpensesPage(props: any) {
     (state: AppState) => state.expenses.selectedMonth
   )
   const [monthlyChart, setMonthlyChart] = useState([] as DailyExpense[])
-  const [monthlyTotalExpenses, setMonthlyTotalExpenses] = useState(
+  const [monthlyData, setMonthlyData] = useState(
     ([] as unknown) as ViewMonth
   )
   //to be deleted
-  const [query, setQuery] = useState('')
   const [expensesChartData] = useExpensesChart(monthlyChart)
-  const [totalExpenses] = useTotalExpenses(monthlyTotalExpenses)
+  const [totalExpenses] = useTotalMonthlyExpenses(monthlyData)
+  const [totalIncome] = useTotalMonthlyIncome(monthlyData)
+  console.log('total income', totalIncome)
   const [
     err,
     expensesData,
@@ -168,7 +170,7 @@ export default function ExpensesPage(props: any) {
         month: currentMonth,
       })
       loadChart()
-      setMonthlyTotalExpenses(defaultMonth)
+      setMonthlyData(defaultMonth)
       setTileContentData(defaultMonth)
     }
   }, [dateView, calendarData, tileContentData, defaultMonth])
@@ -221,7 +223,7 @@ export default function ExpensesPage(props: any) {
       switchMonth.name = foundMonth.name
       switchMonth.income = foundMonth.income
       switchMonth.days = foundMonth.days
-      setMonthlyTotalExpenses(switchMonth)
+      setMonthlyData(switchMonth)
       //this is the proper way
       const selectedDay = await foundMonth.days.find(
         (d: any) => moment(d.day).format('LL') === moment(e).format('LL')
@@ -261,7 +263,7 @@ export default function ExpensesPage(props: any) {
           setMonthlyChart(month.days)
           // console.log('monthly chart should update', monthlyChart)
           //sets the month expenses and budget to selected month
-          setMonthlyTotalExpenses(month)
+          setMonthlyData(month)
           // console.log(calendarData.years)
           // setTileContentData(month)
           console.log('tile content here', tileContentData)
@@ -280,7 +282,7 @@ export default function ExpensesPage(props: any) {
       // setMonthlyChart(selectedMonth.days)
       //when clicking on the calendar again, the calendar reset the charts to the previous state cuz is still taking the calendar before the state update
       setDailyExpense(expenses)
-      setMonthlyTotalExpenses(selectedMonth)
+      setMonthlyData(selectedMonth)
       setTileContentData(defaultMonth)
     } catch (err) {}
   }, [selectedMonth, expenses, dailyExpense])
@@ -320,6 +322,7 @@ export default function ExpensesPage(props: any) {
                   month={dateView.month}
                   totalAmount={totalExpenses}
                 />
+                <h2 style={{color: 'red'}} title="% expenses/income">{`${Math.floor((totalExpenses / totalIncome)*100)}`}%</h2>
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
@@ -330,6 +333,7 @@ export default function ExpensesPage(props: any) {
                   month={dateView.month}
                   //total month income will be added here
                   totalExpenses={totalExpenses}
+                  totalIncome={totalIncome}
                 />
               </Paper>
             </Grid>

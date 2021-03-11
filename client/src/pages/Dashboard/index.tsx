@@ -9,11 +9,13 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from "@material-ui/core/Typography";
 
-import { AppState, CalendarScheduler, ViewMonth } from '../../types'
+import { AppState, ViewMonth } from '../../types'
 import { date } from '../../utils/dateValues'
 import TotalExpenses from '../../components/TotalExpenses'
+import TotalIncome from '../../components/TotalIncome'
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
-import useTotalExpenses from '../../hooks/useTotalExpenses'
+import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
+import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import IncomeExpensesMonthChart from '../../components/IncomeExpensesMonthChart'
 
 const useStyles = makeStyles((theme) => ({
@@ -62,8 +64,7 @@ export default function Dashboard(props: any) {
     (state: AppState) => state.user.isAuthenticated
   )
   const user = useSelector((state: AppState) => state.user.user)
-  const [calendarDate] = useState(date)
-  const [monthlyTotalExpenses, setMonthlyTotalExpenses] = useState(
+  const [monthlyData, setMonthlyData] = useState(
     ([] as unknown) as ViewMonth
   )
   const [
@@ -73,8 +74,9 @@ export default function Dashboard(props: any) {
     defaultDateView,
     defaultMonth,
   ] = useMonthlyExpenses()
-  const [totalExpenses] = useTotalExpenses(monthlyTotalExpenses)
-
+  const [totalExpenses] = useTotalMonthlyExpenses(monthlyData)
+  const [totalIncome] = useTotalMonthlyIncome(monthlyData)
+  console.log('total income', totalIncome)
   //this is dummy data and it will replaced with the yearChart data and setted each time for the current month
   const [ monthChartData, setMonthChartData] = useState([{month: '', income: 0, expenses: 0}])
    
@@ -82,15 +84,15 @@ export default function Dashboard(props: any) {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-      setMonthlyTotalExpenses(defaultMonth)
-      setMonthChartData([{ month: defaultDateView.month, income: 4500, expenses: totalExpenses }])
-      console.log('should update', monthChartData)
+      setMonthlyData(defaultMonth)
+      setMonthChartData([{ month: defaultDateView.month, income: totalIncome, expenses: totalExpenses }])
+      // console.log('should update', monthChartData)
     }
   }, [isAuthenticated, props.history, setMonthChartData, totalExpenses])
 
   console.log('should update', monthChartData)
   const { year, month } = defaultDateView
-  const { firstName, lastName, email } = user
+  const { firstName, lastName } = user
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -115,9 +117,11 @@ export default function Dashboard(props: any) {
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {/* Current month total income goes here */}
-                <h2>Income for {month} {year}</h2>
-                <h4>Total</h4>
-                <h4>Average</h4>
+                <TotalIncome
+                  year={year}
+                  month={month}
+                  income={totalIncome}
+                />
               </Paper>
             </Grid>
             <Grid item xs={5} md={6} lg={5}>
@@ -128,7 +132,7 @@ export default function Dashboard(props: any) {
                 {/* Current month balance goes here */}
                 <h3>Total Balance {month} {year}</h3>
                 <Typography component="p" variant="h4">
-                  €{totalExpenses}
+                  €{totalIncome - totalExpenses}
                   </Typography>
               </Paper>
             </Grid>

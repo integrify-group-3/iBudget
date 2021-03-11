@@ -7,6 +7,7 @@ import sgMail from '@sendgrid/mail'
 import _ from 'lodash'
 import {
   JWT_SECRET,
+  GOOGLE_API_KEY,
   RESET_PASSWORD_KEY,
   CLIENT_URL,
   // MAILGUN_API_KEY,
@@ -14,7 +15,7 @@ import {
 } from '../util/secrets'
 
 const client = new OAuth2Client(
-  '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com'
+  GOOGLE_API_KEY
 )
 // const DOMAIN = 'sandboxc48a258dd8d74f2a9c08ef2ce3a5c1f5.mailgun.org'
 // const mg = mailgun({ apiKey: MAILGUN_API_KEY, domain: DOMAIN })
@@ -113,7 +114,7 @@ export const googleLogin = async (
       .verifyIdToken({
         idToken: tokenId,
         audience:
-          '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com',
+        GOOGLE_API_KEY
       })
 
       .then((response) => {
