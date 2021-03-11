@@ -138,15 +138,16 @@ export function removeIncome(id: string, income: Income) {
   }
 }
 
-export function getTotalMonthlyIncome(monthlyIncomes: any) {
-  return async (dispatch: Dispatch) => {
+export function getTotalMonthlyIncome(monthlyData: any) {
+  return (dispatch: Dispatch) => {
     try {
       let count: any = 0
-      if (monthlyIncomes !== undefined) {
-        for (const dayIndex in monthlyIncomes.days) {
-          for (const income of monthlyIncomes[dayIndex]) {
-            count += income.amount
-          }
+      if (monthlyData !== undefined) {
+        console.log('from getTotalMonthlyIncome action', monthlyData)
+        for (const income of monthlyData.income) {
+          console.log(income)
+          const { amount } = income
+            count += amount
         }
         dispatch(totalMonthlyIncome(count))
       }

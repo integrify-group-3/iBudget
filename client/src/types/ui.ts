@@ -33,6 +33,10 @@ export type EmptyChartContainerProps = {
   year: number
 }
 
+export type EmptyYearChartContainerProps = {
+  year: number
+}
+
 export type ExpensesTableProps = {
   day: string | Date
   dailyExpense: DailyExpense

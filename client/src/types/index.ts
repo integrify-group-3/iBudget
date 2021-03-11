@@ -88,6 +88,7 @@ export type MonthlyBudgetProps = {
   month: string
   year: number
   totalExpenses: number
+  totalIncome: number
 }
 
 export type YearChartData = {

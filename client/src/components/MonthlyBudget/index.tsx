@@ -16,7 +16,8 @@ const useStyles = makeStyles({
 export default function MonthlyBudget({ 
     month, 
     year, 
-    totalExpenses
+    totalExpenses,
+    totalIncome,
 }: MonthlyBudgetProps) {
   const classes = useStyles()
 
@@ -27,7 +28,7 @@ export default function MonthlyBudget({
       </Title>
       <Typography component="p" variant="h4">
         {/* this will be total income - total expenses  */}
-        €{totalExpenses} 
+        €{totalIncome - totalExpenses} 
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         Current date: {moment(date).format('LL')}

@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import Link from '@material-ui/core/Link'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
@@ -21,7 +20,6 @@ export default function TotalIncome({
   year,
   income,
 }: TotalIncomeProps) {
-  const classes = useStyles()
   return (
     <React.Fragment>
       <Title>
@@ -31,9 +29,6 @@ export default function TotalIncome({
         {income}
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View balance
-        </Link>
       </div>
     </React.Fragment>
   )

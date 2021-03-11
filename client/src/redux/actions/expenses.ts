@@ -198,13 +198,13 @@ export function removeExpense(id: string, expense: Expense) {
   }
 }
 
-export function getTotalExpenses(monthExpenses: any) {
-  return async (dispatch: Dispatch) => {
+export function getTotalExpenses(monthlyData: any) {
+  return (dispatch: Dispatch) => {
     try {
       let count = 0
-      if (monthExpenses !== undefined) {
-        for (const dayIndex in monthExpenses.days) {
-          const { expenses } = monthExpenses.days[dayIndex]
+      if (monthlyData !== undefined) {
+        for (const dayIndex in monthlyData.days) {
+          const { expenses } = monthlyData.days[dayIndex]
           for (const expense of expenses) {
             count += expense.amount
           }
