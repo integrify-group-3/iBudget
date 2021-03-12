@@ -10,11 +10,19 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
-import { AppState, CalendarScheduler } from '../../types'
-import { date } from '../../utils/dateValues'
+import { AppState, CalendarScheduler, ViewMonth, DateView } from '../../types'
+import { date, months } from '../../utils/dateValues'
 import useYearExpenses from '../../hooks/useYearExpenses'
 import useYearChart from '../../hooks/useYearChart'
 import IncomeExpensesYearChart from '../../components/IncomeExpensesYearChart'
+import SwitchAnalyticsViewBtn from '../../components/SwitchAnalyticsViewBtn'
+//testing month view here
+import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
+import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
+import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
+import IncomeExpensesMonthChart from '../../components/IncomeExpensesMonthChart'
+import TotalExpenses from '../../components/TotalExpenses'
+import TotalIncome from '../../components/TotalIncome'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,26 +76,49 @@ export default function Analytics(props: any) {
   const [yearChart, setYearChart] = useState({} as CalendarScheduler)
   const [
     expensesErr,
-    expensesData,
+    yearExpensesData,
     yearViewExpenses,
     yearTotalExpenses,
   ] = useYearExpenses(selectedYear)
-  // console.log('expenses data', expensesData, 'year view expenses', yearViewExpenses, 'year total expenses', yearTotalExpenses)
+  // console.log('expenses data', yearExpensesData, 'year view expenses', yearViewExpenses, 'year total expenses', yearTotalExpenses)
   const [yearChartErr, yearChartData] = useYearChart(yearChart)
-  console.log('year chart data', yearChartData)
+  const [switchView, setSwitchView] = useState(false)
+  //testing the monthly data
 
-  console.log('year expenses', expensesData)
+  const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)
+  const [
+    err,
+    expensesData,
+    calendarYearData,
+    defaultDateView,
+    defaultMonth,
+  ] = useMonthlyExpenses()
+  const [totalExpenses] = useTotalMonthlyExpenses(monthlyData)
+  const [totalIncome] = useTotalMonthlyIncome(monthlyData)
+  console.log('total income', totalIncome)
+  const [monthChartData, setMonthChartData] = useState([
+    { month: '', income: 0, expenses: 0 },
+  ])
+  const [dateView, setDateView] = useState({
+    year: 0,
+    month: '',
+  } as DateView)
 
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
       setSelectedYear(date.getFullYear())
-      setYearChart(expensesData)
+      setYearChart(yearExpensesData)
+      setDateView(defaultDateView)
+      //testing the monthly data
+      setMonthlyData(defaultMonth)
+      setMonthChartData([{ month: defaultDateView.month, income: totalIncome, expenses: totalExpenses }])
+      console.log(monthChartData)
     }
   }, [isAuthenticated, props.history])
 
-  const onChange = async (e: any) => {
+  const onChangeYear = async (e: any) => {
     try {
       const clickedYear = await e.getFullYear()
       setSelectedYear(clickedYear)
@@ -100,6 +131,43 @@ export default function Analytics(props: any) {
       console.log(err)
     }
   }
+
+  const onChangeMonth = async (e: any) => {
+    console.log(e.target)
+    try {
+      const selectedYear = await e.getFullYear()
+      const currentIndex = await e.getMonth()
+      //this is not working
+      // setDateView({year: selectedYear, month: months[currentIndex]})
+      //this is provisory
+      dateView.year = selectedYear
+      dateView.month = months[currentIndex]
+      console.log('date view here', dateView)
+
+      const foundYear = await calendarData.years.find(
+        (y: CalendarScheduler) => y.year === selectedYear
+      )
+      const foundMonth = await foundYear.months.find(
+        (month: any) => month.name === months[currentIndex]
+      )
+      console.log('found month here', foundMonth)
+      setMonthlyData(foundMonth)
+      setMonthChartData([{ month: dateView.month, income: totalIncome, expenses: totalExpenses }])
+
+
+      
+
+    }
+    catch(err) {
+      console.log(err)
+    }
+  }
+
+  const switchAnalyticsView = () => {
+    setSwitchView(!switchView)
+  }
+  const { year, month } = dateView
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -112,19 +180,41 @@ export default function Analytics(props: any) {
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {/* Total year expenses go hear */}
-                <h2>Expenses {yearViewExpenses.year}</h2>
-                <Typography component="p" variant="h4">
-                  €{yearTotalExpenses}
-                </Typography>
+
+                {switchView ? (
+                  <TotalExpenses
+                    year={year}
+                    month={month}
+                    totalAmount={totalExpenses}
+                  />
+                ) : (
+                  <>
+                    <h2>Expenses {yearViewExpenses.year}</h2>
+                    <Typography component="p" variant="h4">
+                      €{yearTotalExpenses}
+                    </Typography>
+                  </>
+                )}
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <h2>Income </h2>
+                {
+                  switchView ? 
+                  <TotalIncome
+                  year={year}
+                  month={month}
+                  income={totalIncome}
+                /> :
+                <>
+                 <h2>Income </h2>
                 {/* total year income goes here */}
                 <Typography component="p" variant="h4">
                   €Total
-                </Typography>              </Paper>
+                </Typography>
+                </>
+                }   
+              </Paper>
             </Grid>
             <Grid item xs={5} md={6} lg={5}>
               <Paper className={fixedHeightPaper}>
@@ -132,26 +222,54 @@ export default function Analytics(props: any) {
                   {user.firstName} {user.lastName}
                 </h3>
                 {/* year balance goes here */}
-                <h3>Total Balance</h3>
+                <h3>Total Balance €{yearTotalExpenses}</h3>
                 <h3>Year {selectedYear}</h3>
+                <SwitchAnalyticsViewBtn
+                  switchAnalyticsView={switchAnalyticsView}
+                  switchView={switchView}
+                />
               </Paper>
             </Grid>
             <Grid item xs={5} md={8} lg={8}>
               {/*Expenses chart goes here, a series or bar chart for expenses and income for the year */}
               <Paper className={classes.chartHeightPaper}>
-                <IncomeExpensesYearChart data={yearChartData} year={selectedYear} />
+                {
+                  switchView ?
+                  <IncomeExpensesMonthChart
+                  data={monthChartData}
+                  year={year}
+                  month={month}                
+                  /> 
+                  :
+                <IncomeExpensesYearChart
+                data={yearChartData}
+                year={selectedYear}
+              />
+
+                }
+               
               </Paper>
             </Grid>
 
             <Grid item xs={10} md={4}>
               {/*Calendar for decade can goe here */}
-              <Calendar
-                onChange={onChange}
-                value={calendarDate}
-                defaultView="decade"
-                maxDetail="decade"
-                // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}
-              />
+              {switchView ? (
+                <Calendar
+                  onChange={onChangeMonth}
+                  value={calendarDate}
+                  defaultView="year"
+                  maxDetail="year"
+                  // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}
+                />
+              ) : (
+                <Calendar
+                  onChange={onChangeYear}
+                  value={calendarDate}
+                  defaultView="decade"
+                  maxDetail="decade"
+                  // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}
+                />
+              )}
             </Grid>
           </Grid>
           <Box pt={4}></Box>

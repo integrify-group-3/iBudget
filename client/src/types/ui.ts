@@ -64,3 +64,8 @@ export type ExpensesChartProps = {
   className?: string
 }
 
+export type SwitchAnalyticsViewBtnProps = {
+  switchAnalyticsView:  (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  switchView: boolean
+}
+

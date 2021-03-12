@@ -9,7 +9,7 @@ function useTotalMonthlyIncome(monthlyData: any) {
   const total = useSelector((state: AppState) => state.income.total)
   // console.log('total income from hooks', total)
   const [totalMonthlyIncome, setTotalMonthlyIncome] = useState(0)
-  console.log(monthlyData)
+  console.log('from total monthly income', monthlyData)
   useEffect(() => {
     dispatch(getTotalMonthlyIncome(monthlyData))
   }, [dispatch, monthlyData])
@@ -20,6 +20,7 @@ function useTotalMonthlyIncome(monthlyData: any) {
     }
   }, [total])
 
+  console.log('from total monthly income', totalMonthlyIncome)
   return [totalMonthlyIncome]
 }
 
