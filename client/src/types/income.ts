@@ -63,7 +63,7 @@ export type IncomeTableProps = {
 export type TotalIncomeProps = {
   month: string
   year: number
-  income: number
+  totalAmount: number
 }
 
 export type totalMonthlyIncome = {

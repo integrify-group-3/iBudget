@@ -9,18 +9,18 @@ function useTotalMonthlyIncome(monthlyData: any) {
   const total = useSelector((state: AppState) => state.income.total)
   // console.log('total income from hooks', total)
   const [totalMonthlyIncome, setTotalMonthlyIncome] = useState(0)
-  console.log('from total monthly income', monthlyData)
+  // console.log('from total monthly income', monthlyData)
   useEffect(() => {
     dispatch(getTotalMonthlyIncome(monthlyData))
   }, [dispatch, monthlyData])
 
   useEffect(() => {
-    if (total) {
+    if (total !== undefined) {
       setTotalMonthlyIncome(total)
+      // console.log('from total monthly income', totalMonthlyIncome)
     }
   }, [total])
 
-  console.log('from total monthly income', totalMonthlyIncome)
   return [totalMonthlyIncome]
 }
 

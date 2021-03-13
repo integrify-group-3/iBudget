@@ -118,7 +118,7 @@ export default function Dashboard(props: any) {
                 <TotalIncome
                   year={year}
                   month={month}
-                  income={totalIncome}
+                  totalAmount={totalIncome}
                 />
               </Paper>
             </Grid>

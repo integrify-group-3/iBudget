@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 export default function TotalIncome({
   month,
   year,
-  income,
+  totalAmount,
 }: TotalIncomeProps) {
   return (
     <React.Fragment>
@@ -26,7 +26,7 @@ export default function TotalIncome({
         Total Income {month} {year}
       </Title>
       <Typography component="p" variant="h4">
-        {income}
+        {totalAmount}
       </Typography>
       <div>
       </div>

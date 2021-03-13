@@ -35,7 +35,6 @@ export default function income(
     case DELETE_INCOME:
     case UPDATE_INCOME:
       const { income } = action.payload
-      console.log('from reducer', income)
       return {
         ...state,
         income: income,
