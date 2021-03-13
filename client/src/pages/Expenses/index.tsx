@@ -28,7 +28,7 @@ import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import { months, date, year, currentMonth } from '../../utils/dateValues'
 import EmptyChartContainer from '../../components/EmptyChartContainer'
 import ExpensesChart from '../../components/ExpensesMonthlyChart'
-import TotalExpenses from '../../components/TotalExpenses'
+import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import ExpensesTable from '../../components/ExpensesTable'
 import TileContent from '../../components/TileContent'
@@ -108,9 +108,8 @@ export default function ExpensesPage(props: any) {
   )
   //to be deleted
   const [expensesChartData] = useExpensesChart(monthlyChart)
-  const [totalExpenses] = useTotalMonthlyExpenses(monthlyData)
-  const [totalIncome] = useTotalMonthlyIncome(monthlyData)
-  console.log('total income', totalIncome)
+  const [totalMonthlyExpenses] = useTotalMonthlyExpenses(monthlyData)
+  const [totalMonthlyIncome] = useTotalMonthlyIncome(monthlyData)
   const [
     err,
     expensesData,
@@ -200,7 +199,7 @@ export default function ExpensesPage(props: any) {
       //we should not modify the state directly but now it's to make it work
       dateView.year = selectedYear
       dateView.month = months[currentIndex]
-      //this is the corret way
+      //this is the correct way
       // setDateView({year: selectedYear, month: months[currentIndex]})
       // console.log('date view', dateView)
       setExpense({
@@ -240,9 +239,6 @@ export default function ExpensesPage(props: any) {
 
   //this function is not working properly, fixing it
   const switchMonthOnClick = async (e: any) => {
-    // console.log(calendarData.years)
-    // console.log(e)
-    // console.log(e.value.getFullYear())
     try {
       const selectedYear = await e.value.getFullYear()
       const currentIndex = await e.value.getMonth()
@@ -317,23 +313,21 @@ export default function ExpensesPage(props: any) {
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <TotalExpenses
+                <TotalMonthlyExpenses
                   year={dateView.year}
                   month={dateView.month}
-                  totalAmount={totalExpenses}
+                  totalAmount={totalMonthlyExpenses}
                 />
-                <h2 style={{color: 'red'}} title="% expenses/income">{`${Math.floor((totalExpenses / totalIncome)*100)}`}%</h2>
+                <h2 style={{color: 'red'}} title="% expenses/income">{`${Math.floor((totalMonthlyExpenses / totalMonthlyIncome)*100)}`}%</h2>
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* Total balance goes here */}
                 <MonthlyBudget
                   year={dateView.year}
                   month={dateView.month}
-                  //total month income will be added here
-                  totalExpenses={totalExpenses}
-                  totalIncome={totalIncome}
+                  totalMonthlyExpenses={totalMonthlyExpenses}
+                  totalMonthlyIncome={totalMonthlyIncome}
                 />
               </Paper>
             </Grid>

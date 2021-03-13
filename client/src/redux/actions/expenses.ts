@@ -7,7 +7,7 @@ import {
   ADD_EXPENSE,
   EDIT_EXPENSE,
   DELETE_EXPENSE,
-  CALCULATE_TOTALEXPENSES,
+  TOTAL_MONTHLY_EXPENSES,
   ExpensesActions,
   DailyExpense,
   Expense,
@@ -83,7 +83,7 @@ export function deleteExpense(
 
 export function calculateTotalExpenses(total: number): ExpensesActions {
   return {
-    type: CALCULATE_TOTALEXPENSES,
+    type: TOTAL_MONTHLY_EXPENSES,
     payload: {
       total,
     },

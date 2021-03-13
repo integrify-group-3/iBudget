@@ -10,8 +10,8 @@ import Paper from '@material-ui/core/Paper'
 import Typography from "@material-ui/core/Typography";
 
 import { AppState, ViewMonth } from '../../types'
-import TotalExpenses from '../../components/TotalExpenses'
-import TotalIncome from '../../components/TotalIncome'
+import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
+import TotalIncome from '../../components/TotalMonthlyIncome'
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
@@ -104,7 +104,7 @@ export default function Dashboard(props: any) {
               <Paper className={fixedHeightPaper}>
                 {/* Current month total expenses go here */}
                 <Paper className={fixedHeightPaper}>
-                  <TotalExpenses
+                  <TotalMonthlyExpenses
                     year={year}
                     month={month}
                     totalAmount={totalExpenses}

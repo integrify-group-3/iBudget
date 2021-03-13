@@ -5,7 +5,7 @@ import {
   IncomeActions,
   UPDATE_INCOME,
   DELETE_INCOME,
-  TOTAL_INCOME,
+  TOTAL_MONTHLY_INCOME,
 } from '../../types/income'
 
 import { CalendarScheduler } from '../../types/index'
@@ -39,7 +39,7 @@ export default function income(
         ...state,
         income: income,
       }
-    case TOTAL_INCOME:
+    case TOTAL_MONTHLY_INCOME:
       const { total } = action.payload
       return {
         ...state,
