@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
-import { AppState, CalendarScheduler, DateView } from '../../types'
+import { AppState, CalendarScheduler, DateView, ViewMonth } from '../../types'
 import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import EmptyChartContainer from '../../components/EmptyChartContainer'
 import { Income } from '../../types/income'
@@ -19,6 +19,7 @@ import TotalIncome from '../../components/TotalIncome'
 import ProfileDashboard from '../../components/ProfileDashboard'
 import { months } from '../../utils/dateValues'
 import IncomeMonthlyChart from '../../components/IncomeMonthlyChart'
+import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
@@ -67,7 +68,9 @@ export default function IncomePage(props: any) {
   const [isFormShowing, setIsFormShowing] = useState(false)
   const [monthlyChart, setMonthlyChart] = useState([])
   const [monthIncome, setMonthIncome] = useState([] as Income[])
-  const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
+  const [monthlyData, setMonthlyData] = useState(
+    ([] as unknown) as ViewMonth
+  )
   const [
     err,
     incomeData,
@@ -75,6 +78,9 @@ export default function IncomePage(props: any) {
     calendarData,
     defaultMonth,
   ] = useIncome()
+  const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
+  const [totalIncome] = useTotalMonthlyIncome(monthlyData)
+  console.log('total income from page', totalIncome)
   const [loaded, setIsLoaded] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
@@ -89,6 +95,8 @@ export default function IncomePage(props: any) {
       if (!isMonthClicking) {
         //atm the below set state keeps running an infinite loop
         setDateView(defaultDateView as DateView)
+        setMonthlyData(defaultMonth)
+        // console.log('monthly data', monthlyData)
         setMonthlyChart(defaultMonth?.income as any)
       }
     }
@@ -105,6 +113,8 @@ export default function IncomePage(props: any) {
     )
     setMonthIncome(foundMonth?.income)
     setMonthlyChart(foundMonth.income)
+    setMonthlyData(foundMonth)
+    // console.log('monthly data', monthlyData)
     setIsLoaded(true)
     // }, 150)
   }
@@ -137,7 +147,7 @@ export default function IncomePage(props: any) {
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
     changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
-
+/*
   const calculateTotalIncome = () => {
     let count = 0
     for (const income of incomeData) {
@@ -151,9 +161,9 @@ export default function IncomePage(props: any) {
     if (incomeData !== undefined) {
       calculateTotalIncome()
     }
-  }, [incomeData, calculateTotalIncome])
+  }, [incomeData, calculateTotalIncome])*/
 
-  const income = calculateTotalIncome()
+  // const income = calculateTotalIncome()
 
   return (
     <div className={classes.root}>
@@ -188,13 +198,13 @@ export default function IncomePage(props: any) {
                 <TotalIncome
                   year={dateView.year}
                   month={dateView.month}
-                  income={income}
+                  totalAmount={totalIncome}
                 />
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <ProfileDashboard income={income} />
+                {/* <ProfileDashboard income={income} /> */}
               </Paper>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
@@ -210,11 +220,11 @@ export default function IncomePage(props: any) {
             </Grid>
             <Grid item xs={10} md={6} lg={6}>
               <Calendar
-                onChange={onChange}
+                // onChange={onChange}
                 value={calendarDate}
                 showNeighboringMonth={true}
-                onClickYear={showYearOnClick}
-                onClickMonth={showMonthOnClick}
+                // onClickYear={showYearOnClick}
+                onChange={showMonthOnClick}
                 defaultView="year"
                 maxDetail="year"
                 // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}

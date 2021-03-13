@@ -143,9 +143,8 @@ export function getTotalMonthlyIncome(monthlyData: any) {
     try {
       let count: any = 0
       if (monthlyData !== undefined) {
-        console.log('from getTotalMonthlyIncome action', monthlyData)
+        // console.log('from getTotalMonthlyIncome action', monthlyData)
         for (const income of monthlyData.income) {
-          console.log(income)
           const { amount } = income
             count += amount
         }

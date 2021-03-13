@@ -10,7 +10,6 @@ import Paper from '@material-ui/core/Paper'
 import Typography from "@material-ui/core/Typography";
 
 import { AppState, ViewMonth } from '../../types'
-import { date } from '../../utils/dateValues'
 import TotalExpenses from '../../components/TotalExpenses'
 import TotalIncome from '../../components/TotalIncome'
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
@@ -86,7 +85,6 @@ export default function Dashboard(props: any) {
     } else {
       setMonthlyData(defaultMonth)
       setMonthChartData([{ month: defaultDateView.month, income: totalIncome, expenses: totalExpenses }])
-      // console.log('should update', monthChartData)
     }
   }, [isAuthenticated, props.history, setMonthChartData, totalExpenses])
 
@@ -120,7 +118,7 @@ export default function Dashboard(props: any) {
                 <TotalIncome
                   year={year}
                   month={month}
-                  income={totalIncome}
+                  totalAmount={totalIncome}
                 />
               </Paper>
             </Grid>
