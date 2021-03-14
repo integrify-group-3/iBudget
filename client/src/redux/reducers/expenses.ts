@@ -4,7 +4,7 @@ import {
   ADD_EXPENSE,
   EDIT_EXPENSE,
   DELETE_EXPENSE,
-  CALCULATE_TOTALEXPENSES,
+  TOTAL_MONTHLY_EXPENSES,
   ExpensesActions,
   DailyExpense,
 } from '../../types/expenses'
@@ -46,7 +46,7 @@ export default function expenses(
         dailyExpenses: expense,
         selectedMonth: monthlyExpense,
       }
-    case CALCULATE_TOTALEXPENSES:
+    case TOTAL_MONTHLY_EXPENSES:
       const { total } = action.payload
       return {
         ...state,

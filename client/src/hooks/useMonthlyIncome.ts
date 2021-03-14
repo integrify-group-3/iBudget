@@ -6,7 +6,7 @@ import { Income } from '../types/income'
 import { fetchIncome } from '../redux/actions/income'
 import { year, currentMonth } from '../utils/dateValues'
 
-export default function useIncome() {
+export default function useMonthlyIncome() {
   const dispatch = useDispatch()
   const income = useSelector((state: AppState) => state.income.income)
   const calendar = useSelector((state: AppState) => state.income.calendar)

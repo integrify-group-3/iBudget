@@ -3,7 +3,7 @@ import moment from "moment"
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import { MonthlyBudgetProps } from '../../types'
+import { YearBudgetProps } from '../../types'
 import Title from "../Title";
 import { date } from '../../utils/dateValues';
 
@@ -13,22 +13,21 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MonthlyBudget({ 
-    month, 
+export default function YearBudget({ 
     year, 
-    totalMonthlyExpenses,
-    totalMonthlyIncome,
-}: MonthlyBudgetProps) {
+    totalYearIncome,
+    totalYearExpenses,
+}: YearBudgetProps) {
   const classes = useStyles()
 
   return (
     <React.Fragment>
       <Title>
-        Total Budget {month} {year}
+        Balance for {year}
       </Title>
       <Typography component="p" variant="h4">
         {/* this will be total income - total expenses  */}
-        €{totalMonthlyIncome - totalMonthlyExpenses} 
+        €{totalYearIncome - totalYearExpenses} 
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         Today: {moment(date).format('LL')}

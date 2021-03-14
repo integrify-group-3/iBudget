@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import { TotalExpensesProps } from '../../types/expenses'
+import { TotalYearExpensesProps } from '../../types/expenses'
 import Title from "../Title";
 
 const useStyles = makeStyles({
@@ -11,16 +11,15 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TotalExpenses({ 
-    month, 
+export default function TotalYearExpenses({ 
     year, 
     totalAmount
-}: TotalExpensesProps) {
+}: TotalYearExpensesProps) {
 
   return (
     <React.Fragment>
       <Title>
-        Total Expenses {month} {year}
+        Total Expenses {year}
       </Title>
       <Typography component="p" variant="h4">
         €{totalAmount} 
