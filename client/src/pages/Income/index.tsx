@@ -13,13 +13,14 @@ import { AppState, CalendarScheduler, DateView, ViewMonth } from '../../types'
 import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import EmptyChartContainer from '../../components/EmptyChartContainer'
 import { Income } from '../../types/income'
-import useIncome from '../../hooks/useIncome'
+import useIncome from '../../hooks/useMonthlyIncome'
 import IncomeTable from '../../components/IncomeTable'
-import TotalIncome from '../../components/TotalIncome'
-import ProfileDashboard from '../../components/ProfileDashboard'
+import TotalMonthlyIncome from '../../components/TotalMonthlyIncome'
 import { months } from '../../utils/dateValues'
 import IncomeMonthlyChart from '../../components/IncomeMonthlyChart'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
+import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
+import MonthlyBudget from '../../components/MonthlyBudget'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 import { useYearIncome } from '../../hooks/useYearIncome'
@@ -85,6 +86,8 @@ export default function IncomePage(props: any) {
   const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
   const [totalIncome] = useTotalMonthlyIncome(monthlyData)
   //console.log('total income from page', totalIncome)
+  const [totalMonthlyIncome] = useTotalMonthlyIncome(monthlyData)
+  const [totalMonthlyExpenses] = useTotalMonthlyExpenses(monthlyData)
   const [loaded, setIsLoaded] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
@@ -131,10 +134,6 @@ export default function IncomePage(props: any) {
     setMonthIncome(incomeData as Income[])
   }, [])
 
-  const onChange = () => {
-    setCalendarDate(calendarDate)
-  }
-
   const showYearOnClick = (e: any) => {
     const year = e.getFullYear()
     setDateView({ ...dateView, year: year })
@@ -151,23 +150,6 @@ export default function IncomePage(props: any) {
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
     changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
-  /*
-  const calculateTotalIncome = () => {
-    let count = 0
-    for (const income of incomeData) {
-      const { amount } = income
-      count += amount
-    }
-    return count
-  }
-
-  useEffect(() => {
-    if (incomeData !== undefined) {
-      calculateTotalIncome()
-    }
-  }, [incomeData, calculateTotalIncome])*/
-
-  // const income = calculateTotalIncome()
 
   return (
     <div className={classes.root}>
@@ -199,17 +181,23 @@ export default function IncomePage(props: any) {
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <TotalIncome
+                <TotalMonthlyIncome
                   year={dateView.year}
                   month={dateView.month}
-                  totalAmount={totalIncome}
+                  totalAmount={totalMonthlyIncome}
                 />
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* <ProfileDashboard income={income} /> */}
-              </Paper>
+                {/* Total balance goes here */}
+                <MonthlyBudget
+                  year={dateView.year}
+                  month={dateView.month}
+                  totalMonthlyExpenses={totalMonthlyExpenses}
+                  totalMonthlyIncome={totalMonthlyIncome}
+                />
+              </Paper>             
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>

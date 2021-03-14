@@ -4,7 +4,7 @@ export const GET_EXPENSES = 'GET_EXPENSES'
 export const ADD_EXPENSE = 'ADD_EXPENSE'
 export const EDIT_EXPENSE = 'EDIT_EXPENSE'
 export const DELETE_EXPENSE = 'DELETE_EXPENSE'
-export const CALCULATE_TOTALEXPENSES = 'CALCULATE_TOTALEXPENSES'
+export const TOTAL_MONTHLY_EXPENSES = 'TOTAL_MONTHLY_EXPENSES'
 
 export type Expense = {
   category: string
@@ -50,13 +50,13 @@ export type ExpensesChartData = {
   amount: number
 }
 
-export type TotalExpensesProps = {
+export type TotalMonthlyExpensesProps = {
   month: string
   year: number
   totalAmount: number
 }
 
-export type TotalExpensesYearProps = {
+export type TotalYearExpensesProps = {
   year: number
   totalAmount: number
 }
@@ -98,8 +98,8 @@ export type DeleteExpenseAction = {
   }
 }
 
-export type TotalExpenseAction = {
-  type: typeof CALCULATE_TOTALEXPENSES
+export type TotalMonthlyExpensesAction = {
+  type: typeof TOTAL_MONTHLY_EXPENSES
   payload: {
     total: number
   }
@@ -110,7 +110,7 @@ export type ExpensesActions =
   | AddExpenseAction
   | EditExpenseAction
   | DeleteExpenseAction
-  | TotalExpenseAction
+  | TotalMonthlyExpensesAction
 
 export type ExpensesState = {
   calendar: CalendarScheduler

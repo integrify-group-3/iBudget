@@ -11,18 +11,19 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
 import { AppState, CalendarScheduler, ViewMonth, DateView } from '../../types'
-import { date, months } from '../../utils/dateValues'
+import { date, year, months, currentMonth } from '../../utils/dateValues'
 import useYearExpenses from '../../hooks/useYearExpenses'
 import useYearChart from '../../hooks/useYearChart'
 import IncomeExpensesYearChart from '../../components/IncomeExpensesYearChart'
 import SwitchAnalyticsViewBtn from '../../components/SwitchAnalyticsViewBtn'
-//testing month view here
+import MonthlyBudget from '../../components/MonthlyBudget'
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import IncomeExpensesMonthChart from '../../components/IncomeExpensesMonthChart'
-import TotalExpenses from '../../components/TotalExpenses'
-import TotalIncome from '../../components/TotalIncome'
+import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
+import TotalYearExpenses from '../../components/TotalYearExpenses'
+import TotalMonthlyIncome from '../../components/TotalMonthlyIncome'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,11 +81,8 @@ export default function Analytics(props: any) {
     yearViewExpenses,
     yearTotalExpenses,
   ] = useYearExpenses(selectedYear)
-  // console.log('expenses data', yearExpensesData, 'year view expenses', yearViewExpenses, 'year total expenses', yearTotalExpenses)
   const [yearChartErr, yearChartData] = useYearChart(yearChart)
   const [switchView, setSwitchView] = useState(false)
-  //testing the monthly data
-
   const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)
   const [
     err,
@@ -93,9 +91,8 @@ export default function Analytics(props: any) {
     defaultDateView,
     defaultMonth,
   ] = useMonthlyExpenses()
-  const [totalExpenses] = useTotalMonthlyExpenses(monthlyData)
-  const [totalIncome] = useTotalMonthlyIncome(monthlyData)
-  // console.log('total income', totalIncome)
+  const [totalMonthlyExpenses] = useTotalMonthlyExpenses(monthlyData)
+  const [totalMonthlyIncome] = useTotalMonthlyIncome(monthlyData)
   const [monthChartData, setMonthChartData] = useState([
     { month: '', income: 0, expenses: 0 },
   ])
@@ -103,6 +100,7 @@ export default function Analytics(props: any) {
     year: 0,
     month: '',
   } as DateView)
+  console.log('defaultDateView', defaultDateView)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -111,16 +109,8 @@ export default function Analytics(props: any) {
       setSelectedYear(date.getFullYear())
       setYearChart(yearExpensesData)
       setDateView(defaultDateView)
-      //testing the monthly data
+      console.log('defaultDateView', defaultDateView, 'dateView', dateView)
       setMonthlyData(defaultMonth)
-      setMonthChartData([
-        {
-          month: defaultDateView.month,
-          income: totalIncome,
-          expenses: totalExpenses,
-        },
-      ])
-      // console.log(monthChartData)
     }
   }, [isAuthenticated, props.history])
 
@@ -154,9 +144,16 @@ export default function Analytics(props: any) {
         (month: any) => month.name === months[currentIndex]
       )
       setMonthlyData(foundMonth)
-      setMonthChartData([
-        { month: dateView.month, income: totalIncome, expenses: totalExpenses },
-      ])
+        setMonthChartData([
+          {
+            month: dateView.month,
+            income: totalMonthlyIncome,
+            expenses: totalMonthlyExpenses,
+          },
+        ])
+        console.log('chart should update', monthChartData)
+
+    
     } catch (err) {
       console.log(err)
     }
@@ -164,8 +161,17 @@ export default function Analytics(props: any) {
 
   const switchAnalyticsView = () => {
     setSwitchView(!switchView)
+    setDateView(defaultDateView)
+    setMonthChartData([
+      {
+        month: defaultDateView.month,
+        income: totalMonthlyIncome,
+        expenses: totalMonthlyExpenses,
+      },
+    ])
   }
   const { year, month } = dateView
+  console.log(' from dateview', year, month)
 
   return (
     <div className={classes.root}>
@@ -178,36 +184,32 @@ export default function Analytics(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* Total year expenses go hear */}
-
                 {switchView ? (
-                  <TotalExpenses
+                  <TotalMonthlyExpenses
                     year={year}
                     month={month}
-                    totalAmount={totalExpenses}
+                    totalAmount={totalMonthlyExpenses}
                   />
                 ) : (
-                  <>
-                    <h2>Expenses {yearViewExpenses.year}</h2>
-                    <Typography component="p" variant="h4">
-                      €{yearTotalExpenses}
-                    </Typography>
-                  </>
+                  <TotalYearExpenses
+                    year={yearViewExpenses.year}
+                    totalAmount={yearTotalExpenses}
+                  />
                 )}
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {switchView ? (
-                  <TotalIncome
+                  <TotalMonthlyIncome
                     year={year}
                     month={month}
-                    totalAmount={totalIncome}
+                    totalAmount={totalMonthlyIncome}
                   />
                 ) : (
                   <>
                     <h2>Income </h2>
-                    {/* total year income goes here */}
+                    {/* total year income goes here, same type of component as TotalYearExpenses */}
                     <Typography component="p" variant="h4">
                       €Total
                     </Typography>
@@ -221,8 +223,17 @@ export default function Analytics(props: any) {
                   {user.firstName} {user.lastName}
                 </h3>
                 {/* year balance goes here */}
-                <h3>Total Balance €{yearTotalExpenses}</h3>
-                <h3>Year {selectedYear}</h3>
+                {!switchView ? (
+                    <h3>Total Budget {selectedYear}: €{yearTotalExpenses}</h3>
+                ) : (
+                  <MonthlyBudget
+                    year={year}
+                    month={month}
+                    totalMonthlyExpenses={totalMonthlyExpenses}
+                    totalMonthlyIncome={totalMonthlyIncome}
+                  />
+                )}
+
                 <SwitchAnalyticsViewBtn
                   switchAnalyticsView={switchAnalyticsView}
                   switchView={switchView}
@@ -253,7 +264,7 @@ export default function Analytics(props: any) {
                 <Calendar
                   onChange={onChangeMonth}
                   value={calendarDate}
-                  defaultView="year"
+                  defaultView="month"
                   maxDetail="year"
                   // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}
                 />

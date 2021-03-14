@@ -1,11 +1,9 @@
 import React from "react";
-import moment from "moment"
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import { TotalExpensesYearProps } from '../../types/expenses'
+import { TotalMonthlyExpensesProps } from '../../types/expenses'
 import Title from "../Title";
-import { date } from '../../utils/dateValues';
 
 const useStyles = makeStyles({
   depositContext: {
@@ -13,22 +11,19 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TotalExpensesYear({ 
+export default function TotalMonthlyExpenses({ 
+    month, 
     year, 
     totalAmount
-}: TotalExpensesYearProps) {
-  const classes = useStyles()
-  
+}: TotalMonthlyExpensesProps) {
+
   return (
     <React.Fragment>
       <Title>
-        Total Expenses {year}
+        Total Expenses {month} {year}
       </Title>
       <Typography component="p" variant="h4">
         €{totalAmount} 
-      </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        Current date: {moment(date).format('LL')}
       </Typography>
     </React.Fragment>
   );

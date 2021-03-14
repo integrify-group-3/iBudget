@@ -8,7 +8,7 @@ import {
   IncomeActions,
   UPDATE_INCOME,
   DELETE_INCOME,
-  TOTAL_INCOME,
+  TOTAL_MONTHLY_INCOME,
 } from '../../types/income'
 
 import { CalendarScheduler } from '../../types/index'
@@ -60,11 +60,11 @@ export function deleteIncome(income: Income[]): IncomeActions {
   }
 }
 
-export function totalMonthlyIncome(total: Income[]): IncomeActions {
+export function totalMonthlyIncome(total: number): IncomeActions {
   return {
-    type: TOTAL_INCOME,
+    type: TOTAL_MONTHLY_INCOME,
     payload: {
-      total,
+      total
     },
   }
 }

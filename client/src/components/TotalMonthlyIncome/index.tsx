@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-import { TotalIncomeProps } from '../../types/income'
+import { TotalMonthlyIncomeProps } from '../../types/income'
 import Title from '../Title'
 
 function preventDefault(event: any) {
@@ -19,7 +19,7 @@ export default function TotalIncome({
   month,
   year,
   totalAmount,
-}: TotalIncomeProps) {
+}: TotalMonthlyIncomeProps) {
   return (
     <React.Fragment>
       <Title>

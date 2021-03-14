@@ -5,7 +5,7 @@ export const GET_INCOME = 'GET_INCOME'
 export const ADD_INCOME = 'ADD_INCOME'
 export const UPDATE_INCOME = 'UPDATE_INCOME'
 export const DELETE_INCOME = 'DELETE_INCOME'
-export const TOTAL_INCOME = 'TOTAL_INCOME'
+export const TOTAL_MONTHLY_INCOME = 'TOTAL_MONTHLY_INCOME'
 
 export type Income = {
   category: string
@@ -61,16 +61,16 @@ export type IncomeTableProps = {
   updateMonthlyIncome: Function
 }
 
-export type TotalIncomeProps = {
+export type TotalMonthlyIncomeProps = {
   month: string
   year: number
   totalAmount: number
 }
 
-export type totalMonthlyIncome = {
-  type: typeof TOTAL_INCOME
+export type TotalMonthlyIncomeAction = {
+  type: typeof TOTAL_MONTHLY_INCOME
   payload: {
-    total: Income[]
+    total: number
   }
 }
 
@@ -79,7 +79,7 @@ export type IncomeActions =
   | AddIncomeAction
   | UpdateIncomeAction
   | DeleteIncomeAction
-  | totalMonthlyIncome
+  | TotalMonthlyIncomeAction
 
 export type IncomeState = {
   calendar: CalendarScheduler
