@@ -22,6 +22,7 @@ export type GetIncomeAction = {
     calendar: CalendarScheduler
     income: Income[]
     selectedMonth: any
+    selectedYear: any
   }
 }
 
@@ -85,4 +86,5 @@ export type IncomeState = {
   income: Income[]
   selectedMonth: any
   total: number | any
+  selectedYear: any
 }

@@ -22,6 +22,7 @@ import IncomeMonthlyChart from '../../components/IncomeMonthlyChart'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
+import { useYearIncome } from '../../hooks/useYearIncome'
 
 const drawerWidth = 240
 
@@ -57,6 +58,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function IncomePage(props: any) {
+  const [currentYear, setCurrentYear] = useState(0)
+  const [total] = useYearIncome(currentYear)
+
+  console.log('total from pages', total)
+
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const isAuthenticated = useSelector(
@@ -68,9 +74,7 @@ export default function IncomePage(props: any) {
   const [isFormShowing, setIsFormShowing] = useState(false)
   const [monthlyChart, setMonthlyChart] = useState([])
   const [monthIncome, setMonthIncome] = useState([] as Income[])
-  const [monthlyData, setMonthlyData] = useState(
-    ([] as unknown) as ViewMonth
-  )
+  const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)
   const [
     err,
     incomeData,
@@ -80,7 +84,7 @@ export default function IncomePage(props: any) {
   ] = useIncome()
   const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
   const [totalIncome] = useTotalMonthlyIncome(monthlyData)
-  console.log('total income from page', totalIncome)
+  //console.log('total income from page', totalIncome)
   const [loaded, setIsLoaded] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
@@ -147,7 +151,7 @@ export default function IncomePage(props: any) {
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
     changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
-/*
+  /*
   const calculateTotalIncome = () => {
     let count = 0
     for (const income of incomeData) {

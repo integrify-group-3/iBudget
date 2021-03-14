@@ -20,7 +20,8 @@ import { year, currentMonth } from '../../utils/dateValues'
 export function getIncome(
   calendar: CalendarScheduler,
   income: Income[],
-  selectedMonth: any
+  selectedMonth: any,
+  selectedYear: any
 ): IncomeActions {
   return {
     type: GET_INCOME,
@@ -28,6 +29,7 @@ export function getIncome(
       calendar,
       income,
       selectedMonth,
+      selectedYear,
     },
   }
 }
@@ -76,7 +78,9 @@ export function fetchIncome() {
     const foundMonth = await foundYear.months.find(
       (month: any) => month.name === currentMonth
     )
-    dispatch(getIncome(data, foundMonth.income, foundMonth))
+    //console.log('foundYear from income actions', foundYear)
+
+    dispatch(getIncome(data, foundMonth.income, foundMonth, foundYear))
   }
 }
 
@@ -146,7 +150,7 @@ export function getTotalMonthlyIncome(monthlyData: any) {
         // console.log('from getTotalMonthlyIncome action', monthlyData)
         for (const income of monthlyData.income) {
           const { amount } = income
-            count += amount
+          count += amount
         }
         dispatch(totalMonthlyIncome(count))
       }

@@ -16,6 +16,7 @@ export default function income(
     income: [],
     selectedMonth: {},
     total: 0,
+    selectedYear: {},
   },
   action: IncomeActions
 ): IncomeState {
@@ -26,6 +27,7 @@ export default function income(
         calendar: action.payload.calendar,
         income: action.payload.income,
         selectedMonth: action.payload.selectedMonth,
+        selectedYear: action.payload.selectedYear,
       }
     case ADD_INCOME:
       return {
