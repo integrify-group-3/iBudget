@@ -21,28 +21,29 @@ const initState: AppState = {
     isAuthenticated: false,
     isGoogleUser: false,
     forgotPasswordEmailMsg: '',
-    resetPasswordMsg: ''
+    resetPasswordMsg: '',
   },
   income: {
     calendar: {} as CalendarScheduler,
     income: [],
     selectedMonth: {},
-    total: 0
+    total: 0,
+    selectedYear: {}
   },
   expenses: {
     calendar: {} as CalendarScheduler,
     selectedYear: {},
     selectedMonth: {},
     dailyExpenses: {} as DailyExpense,
-    total: 0
+    total: 0,
   },
   error: {
     msg: {},
-    status: null
+    status: null,
   },
   validation: {
-    validated: false
-  }
+    validated: false,
+  },
 }
 
 export default function makeStore(initialState = initState) {
@@ -58,7 +59,7 @@ export default function makeStore(initialState = initState) {
 
   // const temp = localStorage.getItem('reduxState')
   // const persistedState = temp ? JSON.parse(temp) : {}
-  
+
   //using saga as the above localstorage throws an error after a while and requires oftern to clear the local storage
   const localState = localStorage.getItem('app-state')
   localState && (initialState = JSON.parse(localState))

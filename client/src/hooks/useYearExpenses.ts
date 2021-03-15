@@ -14,7 +14,7 @@ export default function useYearExpenses(selectedYear: number) {
     year: number
     months: any
   }
-  
+
   const [yearData, setYearData] = useState({
     year: 0,
     months: ([] as unknown) as YearData,
@@ -54,13 +54,7 @@ export default function useYearExpenses(selectedYear: number) {
         console.log(err)
       }
     },
-    [
-      selectedYear,
-      calendarData,
-      yearData,
-      yearTotalExpenses,
-      dateView,
-    ]
+    [selectedYear, calendarData, yearData, yearTotalExpenses, dateView]
   )
 
   const calculateYearExpenses = useCallback(
