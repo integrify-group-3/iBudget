@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/react-calendar": "^3.1.4",
     "@devexpress/dx-react-chart": "^2.7.4",
     "@devexpress/dx-react-chart-material-ui": "^2.7.4",
     "@devexpress/dx-react-core": "^2.7.4",
@@ -67,7 +68,6 @@
   },
   "devDependencies": {
     "@types/d3-scale-chromatic": "^2.0.0",
-    "@types/react-calendar": "^3.1.4",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.7"
   },
