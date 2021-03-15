@@ -70,4 +70,11 @@ app.use('/api/v1/expense', expenseRouter)
 // Custom API error handler
 app.use(apiErrorHandler)
 
+app.use(express.static('client/build'))
+
+app.get('*', function (req, res) {
+  const fullPath = path.join(__dirname,  '../client', 'build', 'index.html')
+  res.sendFile(fullPath)
+})
+
 export default app

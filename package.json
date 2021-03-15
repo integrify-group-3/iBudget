@@ -23,7 +23,8 @@
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect dist/server.js",
-    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "dependencies": {
     "@devexpress/dx-react-chart-material-ui": "^2.7.4",
@@ -127,6 +128,9 @@
       "npx prettier --write",
       "eslint --fix"
     ]
+  },
+  "engines": {
+    "node": "10.x"
   },
   "jest": {
     "testEnvironment": "node"
