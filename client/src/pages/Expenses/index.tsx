@@ -22,12 +22,12 @@ import {   DailyExpense,
 import { Expense } from '../../types/expenses'
 
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
-import useExpensesChart from '../../hooks/useExpensesChart'
+import useMonthlyExpensesChart from '../../hooks/useMonthlyExpensesChart'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import { months, date, year, currentMonth } from '../../utils/dateValues'
 import EmptyChartContainer from '../../components/EmptyChartContainer'
-import ExpensesChart from '../../components/ExpensesMonthlyChart'
+import ExpensesMonthlyChart from '../../components/ExpensesMonthlyChart'
 import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import ExpensesTable from '../../components/ExpensesTable'
@@ -35,8 +35,6 @@ import TileContent from '../../components/TileContent'
 import AddExpense from '../../components/AddExpense'
 
 import 'react-calendar/dist/Calendar.css'
-
-const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -107,7 +105,7 @@ export default function ExpensesPage(props: any) {
     ([] as unknown) as ViewMonth
   )
   //to be deleted
-  const [expensesChartData] = useExpensesChart(monthlyChart)
+  const [expensesChartData] = useMonthlyExpensesChart(monthlyChart)
   const [totalMonthlyExpenses] = useTotalMonthlyExpenses(monthlyData)
   const [totalMonthlyIncome] = useTotalMonthlyIncome(monthlyData)
   const [
@@ -295,7 +293,7 @@ export default function ExpensesPage(props: any) {
             <Grid item xs={5} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 {expensesChartData.length > 0 ? (
-                  <ExpensesChart
+                  <ExpensesMonthlyChart
                     chartData={expensesChartData}
                     year={dateView.year}
                     month={dateView.month}
