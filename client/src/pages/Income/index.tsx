@@ -23,7 +23,7 @@ import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
-import { useYearIncome } from '../../hooks/useYearIncome'
+import useYearIncome from '../../hooks/useYearIncome'
 
 const drawerWidth = 240
 
@@ -59,11 +59,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function IncomePage(props: any) {
-  const [currentYear, setCurrentYear] = useState(0)
-  const [total] = useYearIncome(currentYear)
-
-  console.log('total from pages', total)
-
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const isAuthenticated = useSelector(
@@ -197,7 +192,7 @@ export default function IncomePage(props: any) {
                   totalMonthlyExpenses={totalMonthlyExpenses}
                   totalMonthlyIncome={totalMonthlyIncome}
                 />
-              </Paper>             
+              </Paper>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>

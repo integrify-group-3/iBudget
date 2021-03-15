@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography'
 import { AppState, CalendarScheduler, ViewMonth, DateView } from '../../types'
 import { date, year, months, currentMonth } from '../../utils/dateValues'
 import useYearExpenses from '../../hooks/useYearExpenses'
+import useYearIncome from '../../hooks/useYearIncome'
 import useYearChart from '../../hooks/useYearChart'
 import IncomeExpensesYearChart from '../../components/IncomeExpensesYearChart'
 import SwitchAnalyticsViewBtn from '../../components/SwitchAnalyticsViewBtn'
@@ -24,6 +25,7 @@ import IncomeExpensesMonthChart from '../../components/IncomeExpensesMonthChart'
 import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import TotalYearExpenses from '../../components/TotalYearExpenses'
 import TotalMonthlyIncome from '../../components/TotalMonthlyIncome'
+import TotalYearIncomes from '../../components/TotalYearIncomes'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +83,7 @@ export default function Analytics(props: any) {
     yearViewExpenses,
     yearTotalExpenses,
   ] = useYearExpenses(selectedYear)
+  const [total, incomeDateView] = useYearIncome(selectedYear)
   const [yearChartErr, yearChartData] = useYearChart(yearChart)
   const [switchView, setSwitchView] = useState(false)
   const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)
@@ -100,7 +103,6 @@ export default function Analytics(props: any) {
     year: 0,
     month: '',
   } as DateView)
-  console.log('defaultDateView', defaultDateView)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -109,7 +111,6 @@ export default function Analytics(props: any) {
       setSelectedYear(date.getFullYear())
       setYearChart(yearExpensesData)
       setDateView(defaultDateView)
-      console.log('defaultDateView', defaultDateView, 'dateView', dateView)
       setMonthlyData(defaultMonth)
     }
   }, [isAuthenticated, props.history])
@@ -144,16 +145,14 @@ export default function Analytics(props: any) {
         (month: any) => month.name === months[currentIndex]
       )
       setMonthlyData(foundMonth)
-        setMonthChartData([
-          {
-            month: dateView.month,
-            income: totalMonthlyIncome,
-            expenses: totalMonthlyExpenses,
-          },
-        ])
-        console.log('chart should update', monthChartData)
-
-    
+      setMonthChartData([
+        {
+          month: dateView.month,
+          income: totalMonthlyIncome,
+          expenses: totalMonthlyExpenses,
+        },
+      ])
+      console.log('chart should update', monthChartData)
     } catch (err) {
       console.log(err)
     }
@@ -171,7 +170,6 @@ export default function Analytics(props: any) {
     ])
   }
   const { year, month } = dateView
-  console.log(' from dateview', year, month)
 
   return (
     <div className={classes.root}>
@@ -207,13 +205,7 @@ export default function Analytics(props: any) {
                     totalAmount={totalMonthlyIncome}
                   />
                 ) : (
-                  <>
-                    <h2>Income </h2>
-                    {/* total year income goes here, same type of component as TotalYearExpenses */}
-                    <Typography component="p" variant="h4">
-                      €Total
-                    </Typography>
-                  </>
+                  <TotalYearIncomes year={incomeDateView} totalAmount={total} />
                 )}
               </Paper>
             </Grid>
@@ -224,7 +216,9 @@ export default function Analytics(props: any) {
                 </h3>
                 {/* year balance goes here */}
                 {!switchView ? (
-                    <h3>Total Budget {selectedYear}: €{yearTotalExpenses}</h3>
+                  <h3>
+                    Total Budget {selectedYear}: €{yearTotalExpenses}
+                  </h3>
                 ) : (
                   <MonthlyBudget
                     year={year}
