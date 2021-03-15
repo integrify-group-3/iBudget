@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { AppState, CalendarScheduler } from '../types'
 import { fetchExpenses } from '../redux/actions/expenses'
-import { year } from '../utils/dateValues'
 
-//
 export default function useYearExpenses(selectedYear: number) {
   const dispatch = useDispatch()
   const calendarData = useSelector((state: AppState) => state.expenses.calendar)
@@ -14,17 +12,13 @@ export default function useYearExpenses(selectedYear: number) {
     year: number
     months: any
   }
-
   const [yearData, setYearData] = useState({
     year: 0,
     months: ([] as unknown) as YearData,
   })
   const [err, setErr] = useState(null)
-  const [dateView, setDateView] = useState({
-    year: 0,
-  })
   const [yearTotalExpenses, setYearTotalExpenses] = useState(0)
-  console.log('from year expenses hook', yearData)
+
   useEffect(() => {
     dispatch(fetchExpenses())
   }, [dispatch])
@@ -39,25 +33,35 @@ export default function useYearExpenses(selectedYear: number) {
         const foundYear = await calendarData.years.find(
           (y: CalendarScheduler) => y.year === selectedYear
         )
-        // console.log('found year', foundYear)
-        //this does not update, same as in the Expense page with tileContent
-        // setYearData(foundYear)
-        //as we will need useYearIncome as well for total income, we could just leave the switch chart view on the component as it will just update the chart for both once, since income and expenses are on the same json data. total income will be calcualted on income action and have their own useYearIncome
-        // console.log('year different', foundYear.year, yearData.year)
-
-        // console.log('after update', yearData)
-
         const totalExpenses = calculateYearExpenses(foundYear)
         setYearTotalExpenses(totalExpenses)
-        setDateView({ year: selectedYear })
       } catch (err) {
-        console.log(err)
+        return err
       }
     },
-    [selectedYear, calendarData, yearData, yearTotalExpenses, dateView]
+    [selectedYear, calendarData, yearData, yearTotalExpenses]
   )
 
   const calculateYearExpenses = useCallback(
+    (data) => {
+      let count = 0
+      data &&
+        data.months.map((month: any) => {
+          month &&
+            month.days.map((day: any) => {
+              if (day.expenses.length > 0) {
+                day.expenses.map((expense: any) => {
+                  count += expense.amount
+                })
+              }
+            })
+        })
+      return count
+    },
+    [data]
+  )
+
+  /*const calculateYearExpenses = useCallback(
     (data) => {
       let count = 0
       for (const month of data.months) {
@@ -78,7 +82,7 @@ export default function useYearExpenses(selectedYear: number) {
       return count
     },
     [data]
-  )
+  )*/
 
   useEffect(() => {
     const errMessage = 'There was a problem loading the data. Refresh the page.'
@@ -86,16 +90,12 @@ export default function useYearExpenses(selectedYear: number) {
       setErr(errMessage as any)
     }
     setYearData(data)
-    // console.log(yearExpenses)
     if (data !== undefined) {
       const totalExpenses = calculateYearExpenses(data)
+      console.log('total expenses', totalExpenses)
       setYearTotalExpenses(totalExpenses)
-      setDateView({ year: year })
-      // console.log(data)
     }
   }, [data])
 
-  console.log('expenses', dateView)
-
-  return [err, data, dateView, yearTotalExpenses]
+  return [err, data, yearTotalExpenses]
 }

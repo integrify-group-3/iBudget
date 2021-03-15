@@ -62,7 +62,7 @@ export type IncomeTableProps = {
 }
 
 export type TotalYearIncomeProps = {
-  year: any
+  year: number
   totalAmount: any
 }
 
