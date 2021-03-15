@@ -61,6 +61,11 @@ export type IncomeTableProps = {
   updateMonthlyIncome: Function
 }
 
+export type TotalYearIncomeProps = {
+  year: any
+  totalAmount: any
+}
+
 export type TotalMonthlyIncomeProps = {
   month: string
   year: number

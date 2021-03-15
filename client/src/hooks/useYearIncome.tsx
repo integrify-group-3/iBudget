@@ -3,14 +3,16 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { AppState } from '../types'
 import { fetchIncome } from '../redux/actions/income'
-export function useYearIncome(currentYear: number) {
+import { year } from '../utils/dateValues'
+
+function useYearIncome(selectedYear: number) {
   const dispatch = useDispatch()
   const [total, setTotal] = useState(0)
-  const selectedYear = useSelector(
-    (state: AppState) => state.income.selectedYear
-  )
-  const calendarData = useSelector((state: AppState) => state.expenses.calendar)
-
+  const YearData = useSelector((state: AppState) => state.income.selectedYear)
+  const calendarData = useSelector((state: AppState) => state.income.calendar)
+  const [dateView, setDateView] = useState({
+    year: 0,
+  })
   useEffect(() => {
     dispatch(fetchIncome())
   }, [dispatch])
@@ -24,6 +26,10 @@ export function useYearIncome(currentYear: number) {
     return count
   }, [])
 
+  useEffect(() => {
+    changeYearView(selectedYear)
+  }, [selectedYear])
+
   const changeYearView = useCallback(
     async (currentYear: number) => {
       try {
@@ -32,19 +38,21 @@ export function useYearIncome(currentYear: number) {
         )
         const totalIncomes = calculateTotal(foundYear)
         setTotal(totalIncomes)
+        setDateView({ year: selectedYear })
       } catch (err) {
         console.log(err)
       }
     },
-    [total, currentYear, calculateTotal]
+    [total, selectedYear, calculateTotal, dateView]
   )
 
   useEffect(() => {
-    const totalIncomes = calculateTotal(currentYear)
+    const totalIncomes = calculateTotal(YearData)
     setTotal(totalIncomes)
-  }, [calculateTotal, currentYear])
+    setDateView({ year: year })
+  }, [calculateTotal, selectedYear])
 
-  console.log('total from useYearIncome hooks ', total)
-
-  return [total]
+  return [total, dateView]
 }
+
+export default useYearIncome
