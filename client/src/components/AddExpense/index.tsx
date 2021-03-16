@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import TextField from "@material-ui/core/TextField";
@@ -7,7 +7,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import moment from 'moment';
 
-import { AppState } from '../../types'
 import { AddExpenseProps, Expense } from '../../types/expenses'
 import { addExpense } from '../../redux/actions/expenses'
 import SaveButton from '../SaveButton'
@@ -63,11 +62,9 @@ export default function AddExpense({
   setExpense,
   hideFormOnClick,
   closeForm,
-  updateDailyExpenses
 }: AddExpenseProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const updatedExpenses = useSelector((state: AppState) => state.expenses.dailyExpenses)
 
   const handleSubmit = (e: any) => {
     e.preventDefault();

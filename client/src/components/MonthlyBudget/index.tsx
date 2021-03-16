@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import moment from "moment"
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +11,10 @@ const useStyles = makeStyles({
   depositContext: {
     flex: 1,
   },
+  monthlyBudget: {
+    color: '#865cff',
+    fontWeight: 700
+  }
 });
 
 export default function MonthlyBudget({ 
@@ -26,7 +30,7 @@ export default function MonthlyBudget({
       <Title>
         Total Budget {month} {year}
       </Title>
-      <Typography component="p" variant="h4">
+      <Typography component="p" variant="h4" className={classes.monthlyBudget}>
         {/* this will be total income - total expenses  */}
         €{totalMonthlyIncome - totalMonthlyExpenses} 
       </Typography>

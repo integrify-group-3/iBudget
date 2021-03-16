@@ -94,12 +94,6 @@ export default function ExpensesPage(props: any) {
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
-  const expenses = useSelector(
-    (state: AppState) => state.expenses.dailyExpenses
-  )
-  const selectedMonth = useSelector(
-    (state: AppState) => state.expenses.selectedMonth
-  )
   const [monthlyChart, setMonthlyChart] = useState([] as DailyExpense[])
   const [monthlyData, setMonthlyData] = useState(
     ([] as unknown) as ViewMonth
@@ -152,11 +146,11 @@ export default function ExpensesPage(props: any) {
     setMonthlyChart(defaultMonth?.days)
   }
 
-  console.log('expenses monthly chart data', expensesChartData)
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
+      console.log('I am calling now', expensesData)
       setDateView(defaultDateView as DateView)
       setExpense({
         category: '',
@@ -168,6 +162,7 @@ export default function ExpensesPage(props: any) {
       })
       loadChart()
       setMonthlyData(defaultMonth)
+      console.log('calling now for monthly data expenses', monthlyData)
       setTileContentData(defaultMonth)
     }
   }, [dateView, calendarData, tileContentData, defaultMonth])
@@ -268,19 +263,6 @@ export default function ExpensesPage(props: any) {
     }
   }
 
-  const updateDailyExpenses = useCallback(async () => {
-    try {
-      // console.log('calling from updateDailyExpenses')
-      // console.log(defaultMonth)
-      //this is not updating
-      // setMonthlyChart(selectedMonth.days)
-      //when clicking on the calendar again, the calendar reset the charts to the previous state cuz is still taking the calendar before the state update
-      setDailyExpense(expenses)
-      setMonthlyData(selectedMonth)
-      setTileContentData(defaultMonth)
-    } catch (err) {}
-  }, [selectedMonth, expenses, dailyExpense])
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -314,9 +296,9 @@ export default function ExpensesPage(props: any) {
                 <TotalMonthlyExpenses
                   year={dateView.year}
                   month={dateView.month}
-                  totalAmount={totalMonthlyExpenses}
+                  totalMonthlyExpenses={totalMonthlyExpenses}
+                  totalMonthlyIncome={totalMonthlyIncome}
                 />
-                <h2 style={{color: 'red'}} title="% expenses/income">{`${Math.floor((totalMonthlyExpenses / totalMonthlyIncome)*100)}`}%</h2>
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
@@ -338,7 +320,6 @@ export default function ExpensesPage(props: any) {
                       ? dailyExpense
                       : (expensesData as DailyExpense)
                   }
-                  updateDailyExpenses={updateDailyExpenses}
                   showFormOnClick={showFormOnClick}
                 />
               </Paper>
@@ -361,7 +342,6 @@ export default function ExpensesPage(props: any) {
                     setExpense={setExpense}
                     hideFormOnClick={hideFormOnClick}
                     closeForm={closeForm}
-                    updateDailyExpenses={updateDailyExpenses}
                   />
                 </Paper>
               </Grid>

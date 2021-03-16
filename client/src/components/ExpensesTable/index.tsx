@@ -56,8 +56,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ExpensesTable({
   day,
   dailyExpense,
-  showFormOnClick,
-  updateDailyExpenses
+  showFormOnClick
 }: ExpensesTableProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
@@ -78,11 +77,6 @@ export default function ExpensesTable({
     dispatch(removeExpense(id, expense))
   }
   
-  useEffect(() => {
-    // console.log('I am running from expense table')
-    updateDailyExpenses(updatedExpenses)
-  }, [updatedExpenses])
-
   return (
     <React.Fragment>
       <Title>Expenses for {moment(day).format('LL')}</Title>

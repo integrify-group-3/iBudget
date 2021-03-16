@@ -39,14 +39,14 @@ export function getExpenses(
 export function addNewExpense(
   calendar: CalendarScheduler,
   expense: DailyExpense,
-  monthlyExpense: any
+  monthlyData: any
 ): ExpensesActions {
   return {
     type: ADD_EXPENSE,
     payload: {
       calendar,
       expense,
-      monthlyExpense,
+      monthlyData,
     },
   }
 }
@@ -54,14 +54,14 @@ export function addNewExpense(
 export function editExpense(
   calendar: CalendarScheduler,
   expense: DailyExpense,
-  monthlyExpense: any
+  monthlyData: any
 ): ExpensesActions {
   return {
     type: EDIT_EXPENSE,
     payload: {
       calendar,
       expense,
-      monthlyExpense,
+      monthlyData,
     },
   }
 }
@@ -69,14 +69,14 @@ export function editExpense(
 export function deleteExpense(
   calendar: CalendarScheduler,
   expense: DailyExpense,
-  monthlyExpense: any
+  monthlyData: any
 ): ExpensesActions {
   return {
     type: DELETE_EXPENSE,
     payload: {
       calendar,
       expense,
-      monthlyExpense,
+      monthlyData,
     },
   }
 }

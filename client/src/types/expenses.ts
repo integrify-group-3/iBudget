@@ -33,7 +33,6 @@ export type AddExpenseProps = {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void
   closeForm: Function
-  updateDailyExpenses: Function
 }
 
 export type EditExpenseProps = {
@@ -53,7 +52,8 @@ export type ExpensesChartData = {
 export type TotalMonthlyExpensesProps = {
   month: string
   year: number
-  totalAmount: number
+  totalMonthlyExpenses: number
+  totalMonthlyIncome: number
 }
 
 export type TotalYearExpensesProps = {
@@ -76,7 +76,7 @@ export type AddExpenseAction = {
   payload: {
     calendar: CalendarScheduler
     expense: DailyExpense
-    monthlyExpense: any
+    monthlyData: any
   }
 }
 
@@ -85,7 +85,7 @@ export type EditExpenseAction = {
   payload: {
     calendar: CalendarScheduler
     expense: DailyExpense
-    monthlyExpense: any
+    monthlyData: any
   }
 }
 
@@ -94,7 +94,7 @@ export type DeleteExpenseAction = {
   payload: {
     calendar: CalendarScheduler
     expense: DailyExpense
-    monthlyExpense: any
+    monthlyData: any
   }
 }
 

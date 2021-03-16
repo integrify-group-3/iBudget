@@ -39,12 +39,12 @@ export default function expenses(
     case ADD_EXPENSE:
     case DELETE_EXPENSE:
     case EDIT_EXPENSE:
-      const { expense, monthlyExpense } = action.payload
+      const { expense, monthlyData } = action.payload
       return {
         ...state,
         calendar: action.payload.calendar,
         dailyExpenses: expense,
-        selectedMonth: monthlyExpense,
+        selectedMonth: monthlyData,
       }
     case TOTAL_MONTHLY_EXPENSES:
       const { total } = action.payload
