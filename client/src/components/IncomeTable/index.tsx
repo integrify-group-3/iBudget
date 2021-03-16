@@ -58,7 +58,6 @@ export default function IncomeTable({
   year,
   month,
   monthlyIncome,
-  updateMonthlyIncome,
 }: IncomeTableProps) {
   const [editOpen, setEditOpen] = useState(false)
   const [IncomeId, setIncomeId] = useState('')
@@ -73,7 +72,7 @@ export default function IncomeTable({
     setEditOpen(true)
   }
 
-  const hideFormOnClick = (e: any) => {
+  const hideFormOnClick = () => {
     setEditOpen(false)
   }
 
@@ -143,7 +142,7 @@ export default function IncomeTable({
                       <IconButton
                         aria-label="delete"
                         className={classes.margin}
-                        onClick={(e) => deleteOnClick(income._id, income)}
+                        onClick={() => deleteOnClick(income._id, income)}
                       >
                         <DeleteIcon />
                       </IconButton>

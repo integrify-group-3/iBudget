@@ -9,6 +9,9 @@ const useStyles = makeStyles({
   depositContext: {
     flex: 1,
   },
+  totalIncomeText: {
+    color: '#42A5F5'
+  }
 })
 
 export default function TotalYearIncome({
@@ -16,10 +19,11 @@ export default function TotalYearIncome({
   totalAmount,
 }: TotalYearIncomeProps) {
   console.log(year, totalAmount)
+  const classes = useStyles()
   return (
     <React.Fragment>
       <Title>Total Income {year}</Title> 
-      <Typography component="p" variant="h4">
+      <Typography component="p" variant="h4" className={classes.totalIncomeText}>
         €{totalAmount}
       </Typography>
     </React.Fragment>

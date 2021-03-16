@@ -13,6 +13,7 @@ export default function useMonthlyIncome() {
   const selectedMonth = useSelector(
     (state: AppState) => state.income.selectedMonth
   )
+
   const [incomeData, setIncomeData] = useState([] as Income[])
   const [calendarData, setCalendarData] = useState({} as CalendarScheduler)
   const [err, setErr] = useState(null)
@@ -32,10 +33,11 @@ export default function useMonthlyIncome() {
       setErr(errMessage as any)
     }
     setIncomeData(income)
+    console.log('I run every time income is updated', incomeData)
     setCalendarData(calendar)
     setDefaultDateView({ year: year, month: currentMonth })
     setDefaultMonth(selectedMonth)
   }, [income, calendar, calendarData, defaultMonth])
 
-  return [err, incomeData, defaultDateView, calendar, defaultMonth]
+  return [err, incomeData, defaultDateView, calendar, selectedMonth, defaultMonth]
 }

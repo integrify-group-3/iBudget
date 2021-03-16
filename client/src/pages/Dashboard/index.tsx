@@ -39,9 +39,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    justifyContent: 'center'
   },
   fixedHeight: {
-    height: 240,
+    height: 193,
   },
   fixedHeightCalendar: {
     height: 260,
@@ -102,19 +103,16 @@ export default function Dashboard(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* Current month total expenses go here */}
-                <Paper className={fixedHeightPaper}>
                   <TotalMonthlyExpenses
                     year={year}
                     month={month}
-                    totalAmount={totalExpenses}
+                    totalMonthlyExpenses={totalExpenses}
+                    totalMonthlyIncome={totalIncome}
                   />
-                </Paper>
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* Current month total income goes here */}
                 <TotalIncome
                   year={year}
                   month={month}
@@ -127,7 +125,6 @@ export default function Dashboard(props: any) {
                 <h2>
                   Dashboard {firstName} {lastName}
                 </h2>
-                {/* Current month balance goes here */}
                 <h3>Total Balance {month} {year}</h3>
                 <Typography component="p" variant="h4">
                   €{totalIncome - totalExpenses}
@@ -137,7 +134,6 @@ export default function Dashboard(props: any) {
 
             <Grid item xs={8} md={11} lg={11}>
               <Paper className={classes.chartHeightPaper}>
-                {/*Income/Expenses chart for the current month goes here */}
                 <IncomeExpensesMonthChart
                   data={monthChartData}
                   year={year}

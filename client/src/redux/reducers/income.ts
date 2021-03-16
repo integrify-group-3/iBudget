@@ -6,6 +6,7 @@ import {
   UPDATE_INCOME,
   DELETE_INCOME,
   TOTAL_MONTHLY_INCOME,
+  CLEAR_UPDATING
 } from '../../types/income'
 
 import { CalendarScheduler } from '../../types/index'
@@ -17,6 +18,8 @@ export default function income(
     selectedMonth: {},
     total: 0,
     selectedYear: {},
+    isUpdating: false
+
   },
   action: IncomeActions
 ): IncomeState {
@@ -30,22 +33,25 @@ export default function income(
         selectedYear: action.payload.selectedYear,
       }
     case ADD_INCOME:
-      return {
-        ...state,
-        income: action.payload.income,
-      }
     case DELETE_INCOME:
     case UPDATE_INCOME:
-      const { income } = action.payload
+      const { income, monthlyData } = action.payload
       return {
         ...state,
         income: income,
+        selectedMonth: monthlyData,
+        isUpdating: true
       }
     case TOTAL_MONTHLY_INCOME:
       const { total } = action.payload
       return {
         ...state,
         total,
+      }
+    case CLEAR_UPDATING: 
+      return {
+        ...state,
+        isUpdating: false
       }
     default:
       return state

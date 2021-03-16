@@ -25,7 +25,6 @@ export default function useMonthlyExpensesChart(monthlyData: any) {
         setChartData([])
       } else {
         for (const day of monthlyData) {
-          console.log('day is here', day)
           for (const expense of day.expenses) {
             const { category, amount} = expense
             if (category.includes('housing')) {

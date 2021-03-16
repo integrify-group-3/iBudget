@@ -18,6 +18,7 @@ import useYearChart from '../../hooks/useYearChart'
 import IncomeExpensesYearChart from '../../components/IncomeExpensesYearChart'
 import SwitchAnalyticsViewBtn from '../../components/SwitchAnalyticsViewBtn'
 import MonthlyBudget from '../../components/MonthlyBudget'
+import YearBudget from '../../components/YearBudget'
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
@@ -49,9 +50,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    justifyContent: 'center'
   },
   fixedHeight: {
-    height: 240,
+    height: 185,
   },
   fixedHeightCalendar: {
     height: 260,
@@ -189,7 +191,8 @@ export default function Analytics(props: any) {
                   <TotalMonthlyExpenses
                     year={year}
                     month={month}
-                    totalAmount={totalMonthlyExpenses}
+                    totalMonthlyExpenses={totalMonthlyExpenses}
+                    totalMonthlyIncome={totalMonthlyIncome}
                   />
                 ) : (
                   <TotalYearExpenses
@@ -214,14 +217,11 @@ export default function Analytics(props: any) {
             </Grid>
             <Grid item xs={5} md={6} lg={5}>
               <Paper className={fixedHeightPaper}>
-                <h3>
-                  {user.firstName} {user.lastName}
-                </h3>
-                {/* year balance goes here */}
                 {!switchView ? (
-                  <h3>
-                    Total Budget {selectedYear}: €{totalYearIncome - totalYearExpenses}
-                  </h3>
+                    <YearBudget year={selectedYear}
+                    totalYearIncome={totalYearIncome}
+                    totalYearExpenses={totalYearExpenses}
+                  />
                 ) : (
                   <MonthlyBudget
                     year={year}
