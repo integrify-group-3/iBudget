@@ -9,6 +9,7 @@ import {
   UPDATE_INCOME,
   DELETE_INCOME,
   TOTAL_MONTHLY_INCOME,
+  CLEAR_UPDATING
 } from '../../types/income'
 
 import { CalendarScheduler } from '../../types/index'
@@ -33,29 +34,32 @@ export function getIncome(
     },
   }
 }
-export function addNewIncome(income: Income[]): IncomeActions {
+export function addNewIncome(income: Income[], monthlyData: any): IncomeActions {
   return {
     type: ADD_INCOME,
     payload: {
       income,
+      monthlyData
     },
   }
 }
 
-export function editIncome(income: Income[]): IncomeActions {
+export function editIncome(income: Income[], monthlyData: any): IncomeActions {
   return {
     type: UPDATE_INCOME,
     payload: {
       income,
+      monthlyData
     },
   }
 }
 
-export function deleteIncome(income: Income[]): IncomeActions {
+export function deleteIncome(income: Income[], monthlyData: any): IncomeActions {
   return {
     type: DELETE_INCOME,
     payload: {
       income,
+      monthlyData
     },
   }
 }
@@ -66,6 +70,12 @@ export function totalMonthlyIncome(total: number): IncomeActions {
     payload: {
       total
     },
+  }
+}
+
+export function clearUpdate(): IncomeActions {
+  return {
+    type: CLEAR_UPDATING, 
   }
 }
 
@@ -107,7 +117,7 @@ export function addIncome(newIncome: any) {
       const res = await axios.post(url, newIncome, tokenConfig(getState))
       const foundYear = await getYearIncome(res.data, newIncome)
       const foundMonth = await getMonthIncome(foundYear, newIncome)
-      dispatch(addNewIncome(foundMonth.income))
+      dispatch(addNewIncome(foundMonth.income, foundMonth))
     } catch (err) {
       console.log(err)
     }
@@ -121,7 +131,7 @@ export function updateIncome(income: Income, incomeId: string) {
       const res = await axios.put(url, income, tokenConfig(getState))
       const foundYear = await getYearIncome(res.data, income)
       const foundMonth = await getMonthIncome(foundYear, income)
-      dispatch(editIncome(foundMonth.income))
+      dispatch(editIncome(foundMonth.income, foundMonth))
     } catch (err) {
       console.log(err)
     }
@@ -135,7 +145,7 @@ export function removeIncome(id: string, income: Income) {
       const res = await axios.delete(url, tokenConfig(getState))
       const foundYear = await getYearIncome(res.data, income)
       const foundMonth = await getMonthIncome(foundYear, income)
-      dispatch(deleteIncome(foundMonth.income))
+      dispatch(deleteIncome(foundMonth.income, foundMonth))
     } catch (err) {
       console.log(err)
     }
@@ -157,5 +167,11 @@ export function getTotalMonthlyIncome(monthlyData: any) {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+export default function clearUpdating() {
+  return (dispatch: Dispatch) => {
+    dispatch(clearUpdate())
   }
 }

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import EditIcon from '@material-ui/icons/Edit'
 import PersonIcon from '@material-ui/icons/Person'
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail'
+import FaceIcon from '@material-ui/icons/Face';
 
 import { AppState } from '../../types'
 
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     margin: 'auto',
-    minHeight: '350px',
+    minHeight: '405px',
     width: '400px',
     borderRadius: '10%',
     position: 'absolute',
@@ -39,6 +40,24 @@ const useStyles = makeStyles((theme) => ({
   },
   descStyle: {
     marginBottom: '40px',
+  },
+  userImgContainer: {
+    display: 'inline-block',
+    overflow: 'hidden',
+    height: '100px',
+    width: '100px',
+    objectFit: 'cover',
+    marginLeft: '.4rem',
+    borderRadius: '50%',
+    marginTop: '1rem'
+  },
+  userImg: {
+    objectFit: 'cover',
+    width: '100%',
+    height: '100%'
+  },
+  userPictureIcon: {
+    fontSize: '6rem'
   },
   userDetails: {
     fontSize: '16px',
@@ -72,20 +91,30 @@ export default function User(props: any) {
   console.log(user)
 
   const { isAuthenticated, isGoogleUser } = user
-  const { id, firstName, lastName, email } = user.user
+  const { id, firstName, lastName, email, picture } = user.user
 
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     }
   }, [isAuthenticated, props.history])
-
+  console.log(typeof(picture))
+  if(picture) {
+    console.log(picture) 
+  } else {
+    console.log('it is undefined')
+  }
   return (
     <div className="home-page-container">
       <Container className={classes.container}>
         <Typography variant="h4" className={classes.HeaderStyle}>
           User Profile
         </Typography>
+        <div className={classes.userImgContainer}>
+          { picture ? <img src={picture} alt={firstName} className={classes.userImg} />
+          : <FaceIcon className={classes.userPictureIcon} />
+          }
+        </div>
         <Typography variant="h4" className={classes.userDetails}>
           <PersonIcon className={classes.userIcon} />{' '}
           <span>First Name: {firstName}</span>

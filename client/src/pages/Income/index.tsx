@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Calendar from 'react-calendar'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 
 import { AppState, CalendarScheduler, DateView, ViewMonth } from '../../types'
+import { clearUpdate } from '../../redux/actions/income'
 import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import EmptyChartContainer from '../../components/EmptyChartContainer'
 import { Income } from '../../types/income'
@@ -23,9 +24,7 @@ import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
-import useYearIncome from '../../hooks/useYearIncome'
 
-const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,14 +59,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function IncomePage(props: any) {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
+  const isUpdating = useSelector((state: AppState) => state.income.isUpdating)
+
   const [isMonthClicking, setIsMonthClicking] = useState(false)
   const [calendarDate, setCalendarDate] = useState(new Date())
   const [calendar, setCalendar] = useState({} as any)
-  const [isFormShowing, setIsFormShowing] = useState(false)
   const [monthlyChart, setMonthlyChart] = useState([])
   const [monthIncome, setMonthIncome] = useState([] as Income[])
   const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)
@@ -79,8 +80,6 @@ export default function IncomePage(props: any) {
     defaultMonth,
   ] = useIncome()
   const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
-  const [totalIncome] = useTotalMonthlyIncome(monthlyData)
-  //console.log('total income from page', totalIncome)
   const [totalMonthlyIncome] = useTotalMonthlyIncome(monthlyData)
   const [totalMonthlyExpenses] = useTotalMonthlyExpenses(monthlyData)
   const [loaded, setIsLoaded] = useState(false)
@@ -89,59 +88,63 @@ export default function IncomePage(props: any) {
     month: '',
   } as DateView)
 
+  //this one only loads the chart for default month
+  const loadChart = () => {
+    setMonthlyChart(defaultMonth?.income as any)
+  }
+
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
       setCalendar(calendarData)
+      console.log(isMonthClicking, isUpdating)
       if (!isMonthClicking) {
+        // console.log('I am calling now', incomeData)
         //atm the below set state keeps running an infinite loop
         setDateView(defaultDateView as DateView)
+        loadChart()
+        // console.log('I am calling now for monthly data', defaultMonth)
         setMonthlyData(defaultMonth)
-        // console.log('monthly data', monthlyData)
-        setMonthlyChart(defaultMonth?.income as any)
+        dispatch(clearUpdate())
+      } else if(isMonthClicking && isUpdating) {
+         setMonthlyData(defaultMonth)
+         loadChart()
+         setMonthIncome(defaultMonth.income)
+         console.log('income data shuld update', incomeData)
+        //  console.log(monthIncome)
+         dispatch(clearUpdate())
+        //  console.log('monthly data from ismonthclicking', monthlyData)
       }
     }
-  }, [isAuthenticated, calendarData, dateView, defaultDateView])
+  }, [isAuthenticated, monthIncome, incomeData, calendarData, dateView, defaultDateView, defaultMonth])
+
   const changeMonthView = (
     currentYear: number,
     currentMonth: string,
     foundYear: CalendarScheduler | undefined,
     currentIndex: number
   ) => {
-    //setTimeout(() => {
     const foundMonth = foundYear?.months.find(
       (month: any) => month.name === months[currentIndex]
     )
     setMonthIncome(foundMonth?.income)
     setMonthlyChart(foundMonth.income)
+    console.log('from changeMonthView', monthlyChart)
     setMonthlyData(foundMonth)
-    // console.log('monthly data', monthlyData)
+    console.log('from changeMonthView', monthlyData)
     setIsLoaded(true)
-    // }, 150)
   }
 
-  const updateMonthlyIncome = (updatedIncome: Income[]) => {
-    setMonthIncome(updatedIncome)
-  }
-
-  useEffect(() => {
-    setMonthIncome(incomeData as Income[])
-  }, [])
-
-  const showYearOnClick = (e: any) => {
-    const year = e.getFullYear()
-    setDateView({ ...dateView, year: year })
-    const yearIncome = calendar.years.find(
-      (calendar: any) => calendar.year === year
-    )
-  }
+  // useEffect(() => {
+  //   setMonthIncome(incomeData as Income[])
+  // }, [])
 
   const showMonthOnClick = (e: any) => {
     setIsMonthClicking(true)
     const year = e.getFullYear()
-    const yearIncome = calendar.years.find((i: any) => i.year === year)
     const currentIndex = e.getMonth()
+    const yearIncome = calendar.years.find((i: any) => i.year === year)
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
     changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
@@ -201,7 +204,6 @@ export default function IncomePage(props: any) {
                   monthlyIncome={!isMonthClicking ? incomeData : monthIncome}
                   year={dateView.year}
                   month={dateView.month}
-                  updateMonthlyIncome={updateMonthlyIncome}
                 />
               </Paper>
             </Grid>

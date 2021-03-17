@@ -5,6 +5,7 @@ export const ADD_EXPENSE = 'ADD_EXPENSE'
 export const EDIT_EXPENSE = 'EDIT_EXPENSE'
 export const DELETE_EXPENSE = 'DELETE_EXPENSE'
 export const TOTAL_MONTHLY_EXPENSES = 'TOTAL_MONTHLY_EXPENSES'
+export const CLEAR_UPDATING = 'CLEAR_UPDATING'
 
 export type Expense = {
   category: string
@@ -33,7 +34,6 @@ export type AddExpenseProps = {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void
   closeForm: Function
-  updateDailyExpenses: Function
 }
 
 export type EditExpenseProps = {
@@ -53,7 +53,8 @@ export type ExpensesChartData = {
 export type TotalMonthlyExpensesProps = {
   month: string
   year: number
-  totalAmount: number
+  totalMonthlyExpenses: number
+  totalMonthlyIncome: number
 }
 
 export type TotalYearExpensesProps = {
@@ -76,7 +77,7 @@ export type AddExpenseAction = {
   payload: {
     calendar: CalendarScheduler
     expense: DailyExpense
-    monthlyExpense: any
+    monthlyData: any
   }
 }
 
@@ -85,7 +86,7 @@ export type EditExpenseAction = {
   payload: {
     calendar: CalendarScheduler
     expense: DailyExpense
-    monthlyExpense: any
+    monthlyData: any
   }
 }
 
@@ -94,7 +95,7 @@ export type DeleteExpenseAction = {
   payload: {
     calendar: CalendarScheduler
     expense: DailyExpense
-    monthlyExpense: any
+    monthlyData: any
   }
 }
 
@@ -105,12 +106,17 @@ export type TotalMonthlyExpensesAction = {
   }
 }
 
+export type ClearUpdating = {
+  type: typeof CLEAR_UPDATING
+}
+
 export type ExpensesActions =
   | GetExpensesAction
   | AddExpenseAction
   | EditExpenseAction
   | DeleteExpenseAction
   | TotalMonthlyExpensesAction
+  | ClearUpdating
 
 export type ExpensesState = {
   calendar: CalendarScheduler
@@ -118,4 +124,5 @@ export type ExpensesState = {
   selectedMonth: any
   dailyExpenses: DailyExpense
   total: number
+  isUpdating: boolean
 }

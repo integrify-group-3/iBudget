@@ -6,6 +6,7 @@ export const ADD_INCOME = 'ADD_INCOME'
 export const UPDATE_INCOME = 'UPDATE_INCOME'
 export const DELETE_INCOME = 'DELETE_INCOME'
 export const TOTAL_MONTHLY_INCOME = 'TOTAL_MONTHLY_INCOME'
+export const CLEAR_UPDATING = 'CLEAR_UPDATING'
 
 export type Income = {
   category: string
@@ -30,6 +31,7 @@ export type AddIncomeAction = {
   type: typeof ADD_INCOME
   payload: {
     income: Income[]
+    monthlyData: any
   }
 }
 
@@ -37,6 +39,7 @@ export type UpdateIncomeAction = {
   type: typeof UPDATE_INCOME
   payload: {
     income: Income[]
+    monthlyData: any
   }
 }
 
@@ -44,6 +47,7 @@ export type DeleteIncomeAction = {
   type: typeof DELETE_INCOME
   payload: {
     income: Income[]
+    monthlyData: any
   }
 }
 
@@ -62,7 +66,7 @@ export type IncomeTableProps = {
 }
 
 export type TotalYearIncomeProps = {
-  year: any
+  year: number
   totalAmount: any
 }
 
@@ -79,12 +83,17 @@ export type TotalMonthlyIncomeAction = {
   }
 }
 
+export type ClearUpdating = {
+  type: typeof CLEAR_UPDATING
+}
+
 export type IncomeActions =
   | GetIncomeAction
   | AddIncomeAction
   | UpdateIncomeAction
   | DeleteIncomeAction
   | TotalMonthlyIncomeAction
+  | ClearUpdating
 
 export type IncomeState = {
   calendar: CalendarScheduler
@@ -92,4 +101,5 @@ export type IncomeState = {
   selectedMonth: any
   total: number | any
   selectedYear: any
+  isUpdating: boolean
 }

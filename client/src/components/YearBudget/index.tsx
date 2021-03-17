@@ -11,6 +11,10 @@ const useStyles = makeStyles({
   depositContext: {
     flex: 1,
   },
+  yearBudgetText: {
+    color: '#865cff',
+    fontWeight: 700
+  }
 });
 
 export default function YearBudget({ 
@@ -19,14 +23,12 @@ export default function YearBudget({
     totalYearExpenses,
 }: YearBudgetProps) {
   const classes = useStyles()
-
   return (
     <React.Fragment>
       <Title>
         Balance for {year}
       </Title>
-      <Typography component="p" variant="h4">
-        {/* this will be total income - total expenses  */}
+      <Typography component="p" variant="h4" className={classes.yearBudgetText}>
         €{totalYearIncome - totalYearExpenses} 
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>

@@ -10,12 +10,16 @@ import Paper from '@material-ui/core/Paper'
 import Typography from "@material-ui/core/Typography";
 
 import { AppState, ViewMonth } from '../../types'
+import { DailyExpense } from '../../types/expenses'
 import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import TotalIncome from '../../components/TotalMonthlyIncome'
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import IncomeExpensesMonthChart from '../../components/IncomeExpensesMonthChart'
+import useMonthlyExpensesChart from '../../hooks/useMonthlyExpensesChart'
+import ExpensesMonthlyChartDashboard from '../../components/ExpensesMonthlyChartDashboard'
+import EmptyChartContainer from '../../components/EmptyChartContainer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,9 +43,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    justifyContent: 'center'
   },
   fixedHeight: {
-    height: 240,
+    height: 193,
   },
   fixedHeightCalendar: {
     height: 260,
@@ -77,14 +82,17 @@ export default function Dashboard(props: any) {
   const [totalIncome] = useTotalMonthlyIncome(monthlyData)
   console.log('total income', totalIncome)
   //this is dummy data and it will replaced with the yearChart data and setted each time for the current month
-  const [ monthChartData, setMonthChartData] = useState([{month: '', income: 0, expenses: 0}])
-   
+  const [monthChartData, setMonthChartData] = useState([{month: '', income: 0, expenses: 0}])
+  const [monthlyExpensesChartCategory, setMonthlyExpensesChartCategory] = useState([] as DailyExpense[])
+  const [expensesChartData] = useMonthlyExpensesChart(monthlyExpensesChartCategory)
+
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
       setMonthlyData(defaultMonth)
       setMonthChartData([{ month: defaultDateView.month, income: totalIncome, expenses: totalExpenses }])
+      setMonthlyExpensesChartCategory(defaultMonth.days)
     }
   }, [isAuthenticated, props.history, setMonthChartData, totalExpenses])
 
@@ -102,19 +110,16 @@ export default function Dashboard(props: any) {
           <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* Current month total expenses go here */}
-                <Paper className={fixedHeightPaper}>
                   <TotalMonthlyExpenses
                     year={year}
                     month={month}
-                    totalAmount={totalExpenses}
+                    totalMonthlyExpenses={totalExpenses}
+                    totalMonthlyIncome={totalIncome}
                   />
-                </Paper>
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* Current month total income goes here */}
                 <TotalIncome
                   year={year}
                   month={month}
@@ -127,7 +132,6 @@ export default function Dashboard(props: any) {
                 <h2>
                   Dashboard {firstName} {lastName}
                 </h2>
-                {/* Current month balance goes here */}
                 <h3>Total Balance {month} {year}</h3>
                 <Typography component="p" variant="h4">
                   €{totalIncome - totalExpenses}
@@ -135,15 +139,33 @@ export default function Dashboard(props: any) {
               </Paper>
             </Grid>
 
-            <Grid item xs={8} md={11} lg={11}>
+            <Grid item xs={8} md={11} lg={6}>
               <Paper className={classes.chartHeightPaper}>
-                {/*Income/Expenses chart for the current month goes here */}
                 <IncomeExpensesMonthChart
                   data={monthChartData}
                   year={year}
                   month={month}                
                   /> 
               </Paper>
+            </Grid>
+            <Grid item xs={8} md={11} lg={6}>
+            <Paper className={classes.chartHeightPaper}>
+            {expensesChartData.length > 0 ? (
+                  <ExpensesMonthlyChartDashboard
+                    chartData={expensesChartData}
+                    year={year}
+                    month={month}
+                    valueField="amount"
+                    argumentField="category"
+                    name="category"
+                  />
+                ) : (
+                  <EmptyChartContainer
+                    month={month}
+                    year={year}
+                  />
+                )}
+                 </Paper>
             </Grid>
           </Grid>
           <Box pt={4}></Box>

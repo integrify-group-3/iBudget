@@ -18,7 +18,7 @@ export default function useYearChart(yearData: any) {
         defaultYearChartData.forEach((m: any) => {
             if (m.month === month.name) {
               const monthObj = {month: '', income: 0, expenses: 0}
-              monthObj.month = month.name
+              monthObj.month = month.name.slice(0, 3)
               let countIncome = 0
               let countExpenses = 0
               for (const income of month.income) {

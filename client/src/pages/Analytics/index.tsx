@@ -18,6 +18,7 @@ import useYearChart from '../../hooks/useYearChart'
 import IncomeExpensesYearChart from '../../components/IncomeExpensesYearChart'
 import SwitchAnalyticsViewBtn from '../../components/SwitchAnalyticsViewBtn'
 import MonthlyBudget from '../../components/MonthlyBudget'
+import YearBudget from '../../components/YearBudget'
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
@@ -25,7 +26,7 @@ import IncomeExpensesMonthChart from '../../components/IncomeExpensesMonthChart'
 import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import TotalYearExpenses from '../../components/TotalYearExpenses'
 import TotalMonthlyIncome from '../../components/TotalMonthlyIncome'
-import TotalYearIncomes from '../../components/TotalYearIncomes'
+import TotalYearIncome from '../../components/TotalYearIncome'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,9 +50,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    justifyContent: 'center'
   },
   fixedHeight: {
-    height: 240,
+    height: 185,
   },
   fixedHeightCalendar: {
     height: 260,
@@ -80,10 +82,9 @@ export default function Analytics(props: any) {
   const [
     expensesErr,
     yearExpensesData,
-    yearViewExpenses,
-    yearTotalExpenses,
+    totalYearExpenses,
   ] = useYearExpenses(selectedYear)
-  const [total, incomeDateView] = useYearIncome(selectedYear)
+  const [totalYearIncome] = useYearIncome(selectedYear)
   const [yearChartErr, yearChartData] = useYearChart(yearChart)
   const [switchView, setSwitchView] = useState(false)
   const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)
@@ -110,10 +111,11 @@ export default function Analytics(props: any) {
     } else {
       setSelectedYear(date.getFullYear())
       setYearChart(yearExpensesData)
+      console.log('default date view', defaultDateView)
       setDateView(defaultDateView)
       setMonthlyData(defaultMonth)
     }
-  }, [isAuthenticated, props.history])
+  }, [isAuthenticated, dateView, props.history])
 
   const onChangeYear = async (e: any) => {
     try {
@@ -170,6 +172,9 @@ export default function Analytics(props: any) {
     ])
   }
   const { year, month } = dateView
+  console.log('date view', dateView)
+  // console.log('total year income', totalYearIncome)
+  // console.log('total year income date view', incomeDateView)
 
   return (
     <div className={classes.root}>
@@ -186,12 +191,13 @@ export default function Analytics(props: any) {
                   <TotalMonthlyExpenses
                     year={year}
                     month={month}
-                    totalAmount={totalMonthlyExpenses}
+                    totalMonthlyExpenses={totalMonthlyExpenses}
+                    totalMonthlyIncome={totalMonthlyIncome}
                   />
                 ) : (
                   <TotalYearExpenses
-                    year={yearViewExpenses.year}
-                    totalAmount={yearTotalExpenses}
+                    year={selectedYear}
+                    totalAmount={totalYearExpenses}
                   />
                 )}
               </Paper>
@@ -205,20 +211,17 @@ export default function Analytics(props: any) {
                     totalAmount={totalMonthlyIncome}
                   />
                 ) : (
-                  <TotalYearIncomes year={incomeDateView} totalAmount={total} />
+                  <TotalYearIncome year={selectedYear} totalAmount={totalYearIncome} />
                 )}
               </Paper>
             </Grid>
             <Grid item xs={5} md={6} lg={5}>
               <Paper className={fixedHeightPaper}>
-                <h3>
-                  {user.firstName} {user.lastName}
-                </h3>
-                {/* year balance goes here */}
                 {!switchView ? (
-                  <h3>
-                    Total Budget {selectedYear}: €{yearTotalExpenses}
-                  </h3>
+                    <YearBudget year={selectedYear}
+                    totalYearIncome={totalYearIncome}
+                    totalYearExpenses={totalYearExpenses}
+                  />
                 ) : (
                   <MonthlyBudget
                     year={year}

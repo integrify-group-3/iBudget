@@ -2,15 +2,11 @@ import { useState, useEffect, useCallback } from 'react'
 
 import { defaultMonthlyChartExpensesData } from '../utils/defaultChartValues'
 
-export default function useExpensesChart(monthlyChart: any) {
+export default function useMonthlyExpensesChart(monthlyData: any) {
   const [chartData, setChartData] = useState([{ category: '', amount: 0 }])
 
-  useEffect(() => {
-    loadChartData(monthlyChart)
-  }, [monthlyChart])
-
   const loadChartData = useCallback(
-    (monthlyChart) => {
+    (monthlyData) => {
       let housingTotal = 0
       let transportationTotal = 0
       let foodTotal = 0
@@ -25,10 +21,10 @@ export default function useExpensesChart(monthlyChart: any) {
       let debtTotal = 0
       let savingsTotal = 0
       let holidayTotal = 0
-      if (monthlyChart.length < 1) {
+      if (monthlyData.length < 1) {
         setChartData([])
       } else {
-        for (const day of monthlyChart) {
+        for (const day of monthlyData) {
           for (const expense of day.expenses) {
             const { category, amount} = expense
             if (category.includes('housing')) {
@@ -144,7 +140,8 @@ export default function useExpensesChart(monthlyChart: any) {
               }
             }
           }
-          // setChartData(defaultMonthlyChartExpensesData)
+          setChartData(defaultMonthlyChartExpensesData)
+          //we only want to show the categories that have a value > 0
           const filteredChartData = defaultMonthlyChartExpensesData.filter((data) => {
             if (data.amount > 0) {
               return data
@@ -155,8 +152,15 @@ export default function useExpensesChart(monthlyChart: any) {
         }
       }
     },
-    [monthlyChart, chartData]
+    [monthlyData, chartData]
   )
+
+  useEffect(() => {
+    for (const data of defaultMonthlyChartExpensesData) {
+      data.amount = 0
+    }
+    loadChartData(monthlyData)
+  }, [monthlyData])
 
   return [chartData]
 }

@@ -14,7 +14,6 @@ export type IncomeTableProps = {
   year: number
   month: string
   monthlyIncome: any
-  updateMonthlyIncome: Function
 }
 
 export type AddIncomeBtnProps = {
@@ -41,7 +40,6 @@ export type ExpensesTableProps = {
   day: string | Date
   dailyExpense: DailyExpense
   showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-  updateDailyExpenses: Function
 }
 
 export type AddExpenseBtnProps = {
@@ -55,6 +53,17 @@ export type MonthlyBudgetProps = {
 }
 
 export type ExpensesChartProps = {
+  chartData: ExpensesChartData[]
+  year: number
+  month: string
+  valueField: string
+  argumentField: string
+  name: string
+  className?: string
+}
+
+
+export type ExpensesChartDashboardProps = {
   chartData: ExpensesChartData[]
   year: number
   month: string

@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-import { TotalMonthlyIncomeProps } from '../../types/income'
+import { TotalYearIncomeProps } from '../../types/income'
 import EmptyTotal from '../EmptyTotal'
 import Title from '../Title'
 
@@ -15,17 +15,15 @@ const useStyles = makeStyles({
   },
 })
 
-export default function TotalMonthlyIncome({
-  month,
+export default function TotalYearIncome({
   year,
   totalAmount,
-}: TotalMonthlyIncomeProps) {
+}: TotalYearIncomeProps) {
+  console.log(year, totalAmount)
   const classes = useStyles()
   return (
     <React.Fragment>
-      <Title>
-        Total Income {month} {year}
-      </Title>
+      <Title>Total Income {year}</Title>
       {totalAmount > 0 ? (
         <Typography
           component="p"
@@ -37,8 +35,6 @@ export default function TotalMonthlyIncome({
       ) : (
         <EmptyTotal />
       )}
-
-      <div></div>
     </React.Fragment>
   )
 }
