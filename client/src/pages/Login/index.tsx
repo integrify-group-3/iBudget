@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import GoogleLogin from "react-google-login";
+import GoogleLogin from 'react-google-login'
 
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import { FaGoogle } from "react-icons/fa";
+import { FaGoogle } from 'react-icons/fa'
 
 import { AppState } from '../../types'
 import { loginUser, googleLogin } from '../../redux/actions/user'
@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Login(props: any) {
+  const clientID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
@@ -100,8 +101,7 @@ export default function Login(props: any) {
     console.log(response)
   }
 
-  const responseFailureGoogle = () => {
-  }
+  const responseFailureGoogle = () => {}
   return (
     <div className="login-page-container">
       <Container component="main" maxWidth="xs" className={classes.container}>
@@ -111,23 +111,26 @@ export default function Login(props: any) {
             Sign in
           </Typography>
           <GoogleLogin
-          clientId="242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com"
-          buttonText="Sign in with Google"
-          onSuccess={responseSuccessGoogle}
-          onFailure={responseFailureGoogle}
-          cookiePolicy={'single_host_origin'}
-          render={(renderProps: any) => (
-            <button onClick={renderProps.onClick} disabled={renderProps.disabled}
-            className="google-auth-btn"
-            >
-              <FaGoogle /><span>Sign In with Google</span></button>
-          )}
-        />
-        <div className="login-page-container__divider">
-          <hr className="login-page-container__divider-line-before">        
-        </hr>
-        <p>Or</p>
-        </div>
+            clientId={clientID}
+            buttonText="Sign in with Google"
+            onSuccess={responseSuccessGoogle}
+            onFailure={responseFailureGoogle}
+            cookiePolicy={'single_host_origin'}
+            render={(renderProps: any) => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                className="google-auth-btn"
+              >
+                <FaGoogle />
+                <span>Sign In with Google</span>
+              </button>
+            )}
+          />
+          <div className="login-page-container__divider">
+            <hr className="login-page-container__divider-line-before"></hr>
+            <p>Or</p>
+          </div>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               margin="normal"
@@ -166,10 +169,7 @@ export default function Login(props: any) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <NavLink to="/forgot-password"
-                >
-                  Forgot password?
-                </NavLink>
+                <NavLink to="/forgot-password">Forgot password?</NavLink>
               </Grid>
               <Grid item>
                 <NavLink to="/register">

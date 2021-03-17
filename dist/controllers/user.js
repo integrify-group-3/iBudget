@@ -67,10 +67,10 @@ exports.registerUser = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                     res.json({
                         user: {
                             id: user.id,
-                            password: user.password,
-                            email: user.email,
                             firstName: user.firstName,
                             lastName: user.lastName,
+                            email: user.email,
+                            password: user.password,
                             calendar: calendar,
                         },
                     });
@@ -96,19 +96,20 @@ exports.googleLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         client
             .verifyIdToken({
             idToken: tokenId,
-            audience: secrets_1.GOOGLE_API_KEY
+            audience: secrets_1.GOOGLE_API_KEY,
         })
             .then((response) => {
             const payload = response.getPayload();
-            console.log(payload);
+            console.log('payload here', payload);
             //we are accessing properties in the class LoginTicket
             const userPropertiesLoginTicket = {
                 firstName: payload === null || payload === void 0 ? void 0 : payload.given_name,
                 lastName: payload === null || payload === void 0 ? void 0 : payload.family_name,
                 email: payload === null || payload === void 0 ? void 0 : payload.email,
-                emailVerified: payload === null || payload === void 0 ? void 0 : payload.email_verified
+                emailVerified: payload === null || payload === void 0 ? void 0 : payload.email_verified,
+                picture: payload === null || payload === void 0 ? void 0 : payload.picture,
             };
-            const { firstName, lastName, email, emailVerified } = userPropertiesLoginTicket;
+            const { firstName, lastName, email, emailVerified, picture, } = userPropertiesLoginTicket;
             console.log(email, emailVerified, firstName, lastName);
             if (emailVerified) {
                 User_1.default.findOne({ email }).exec((err, user) => {
@@ -131,9 +132,10 @@ exports.googleLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                                     token,
                                     user: {
                                         id: user._id,
-                                        email: user.email,
                                         firstName: user.firstName,
                                         lastName: user.lastName,
+                                        email: user.email,
+                                        picture: user.picture,
                                     },
                                 });
                             }));
@@ -142,12 +144,12 @@ exports.googleLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                             console.log('found user', user);
                             const password = email + secrets_1.JWT_SECRET;
                             const newUser = new User_1.default({
-                                user: {
-                                    email,
-                                    firstName,
-                                    lastName,
-                                    password
-                                },
+                                // user: {
+                                firstName,
+                                lastName,
+                                email,
+                                password,
+                                picture,
                             });
                             console.log('new user here', newUser);
                             //one calendar is associated to a single user, we set the calendar id to user id to retrieve it for CRUD operations
@@ -169,7 +171,7 @@ exports.googleLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                                         throw err;
                                     //we make a json file for token and user
                                     console.log('user is here', user);
-                                    const { _id, firstName, lastName, email } = newUser;
+                                    const { _id, firstName, lastName, email, picture, } = newUser;
                                     res.json({
                                         token,
                                         user: {
@@ -177,6 +179,7 @@ exports.googleLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                                             email,
                                             firstName,
                                             lastName,
+                                            picture,
                                             calendar: calendar,
                                         },
                                     });
