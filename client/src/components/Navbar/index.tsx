@@ -20,6 +20,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { NavLink } from 'react-router-dom'
+import FaceIcon from '@material-ui/icons/Face';
 
 import { AppState } from '../../types'
 import { logout } from '../../redux/actions/user'
@@ -104,7 +105,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      width: '20rem',
+      width: '24rem',
     },
     content: {
       flexGrow: 1,
@@ -120,9 +121,36 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '1.7rem',
       // backgroundColor: '#4F416B'
     },
+    userContainer: {
+      width: '10rem', 
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
     userLink: {
       textDecoration: 'none',
-      color: 'white'
+      color: 'white',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: '.4rem'
+    },
+    userImgContainer: {
+      display: 'inline-block',
+      overflow: 'hidden',
+      height: '32px',
+      width: '32px',
+      objectFit: 'cover',
+      marginLeft: '.4rem',
+      borderRadius: '50%'
+    },
+    userPictureIcon: {
+      fontSize: '32px'
+    },
+    userImg: {
+      objectFit: 'cover',
+      width: '100%',
+      height: '100%'
     }
   })
 )
@@ -136,7 +164,7 @@ const Navbar = () => {
     (state: AppState) => state.user.isAuthenticated
   )
   const user = useSelector((state: AppState) => state.user.user)
-
+  console.log('user', user)
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -171,10 +199,14 @@ const Navbar = () => {
             <span>iBudget</span>
             {isAuthenticated && (
               <Typography className={classes.headerUser}>
-                <span>
+                <span className={classes.userContainer}>
                   Hello{' '}
                   <NavLink to={`/user/${user.id}`} className={classes.userLink}>
-                    {user.firstName} {user.lastName}
+                    <span>{user.firstName} {user.lastName}</span>
+                    <div className={classes.userImgContainer}>
+                      { user.picture ? <img src={user.picture} alt={user.firstName} className={classes.userImg}/>
+:  <FaceIcon className={classes.userPictureIcon} />}
+                    </div>
                   </NavLink>
                 </span>
                 <Button

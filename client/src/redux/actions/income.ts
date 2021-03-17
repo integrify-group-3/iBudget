@@ -75,8 +75,7 @@ export function totalMonthlyIncome(total: number): IncomeActions {
 
 export function clearUpdate(): IncomeActions {
   return {
-    type: CLEAR_UPDATING,
-  
+    type: CLEAR_UPDATING, 
   }
 }
 

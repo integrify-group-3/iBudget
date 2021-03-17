@@ -1,27 +1,25 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import EventNoteIcon from '@material-ui/icons/EventNote';
-
+import DataUsageIcon from '@material-ui/icons/DataUsage';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
 import Title from "../Title";
 
 const useStyles = makeStyles({
-  emptyChartContainer: {
+  emptyTotalContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    padding: '3rem 0'
+    padding: '1rem 0'
   },
   header: {
     fontSize: '22px'
   },
-  calendarIcon: {
-    fontSize: '68px',
+  dataUsageIcon: {
+    fontSize: '55px',
     color: 'lightgrey',
-    marginTop: '1rem'
   },
   depositContext: {
     flex: 1,
@@ -31,14 +29,11 @@ const useStyles = makeStyles({
 export default function EmptyTotal() {
   const classes = useStyles()
   return (
-    <main className={classes.emptyChartContainer}>
+    <main className={classes.emptyTotalContainer}>
       <Title>
-        No Data 
+        No Data Recorded
       </Title>
-      <HourglassEmptyIcon className={classes.calendarIcon}/>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        
-      </Typography>
+      <DataUsageIcon className={classes.dataUsageIcon}/>
     </main>
   );
 }

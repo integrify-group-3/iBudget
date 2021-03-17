@@ -14,9 +14,7 @@ import {
   SENDGRID_API_KEY,
 } from '../util/secrets'
 
-const client = new OAuth2Client(
-  GOOGLE_API_KEY
-)
+const client = new OAuth2Client(GOOGLE_API_KEY)
 // const DOMAIN = 'sandboxc48a258dd8d74f2a9c08ef2ce3a5c1f5.mailgun.org'
 // const mg = mailgun({ apiKey: MAILGUN_API_KEY, domain: DOMAIN })
 sgMail.setApiKey(SENDGRID_API_KEY)
@@ -79,10 +77,10 @@ export const registerUser = async (
             res.json({
               user: {
                 id: user.id,
-                password: user.password,
-                email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
+                email: user.email,
+                password: user.password,
                 calendar: calendar,
               },
             })
@@ -113,22 +111,28 @@ export const googleLogin = async (
     client
       .verifyIdToken({
         idToken: tokenId,
-        audience:
-        GOOGLE_API_KEY
+        audience: GOOGLE_API_KEY,
       })
 
       .then((response) => {
         const payload = response.getPayload()
-        console.log(payload)
-       
+        console.log('payload here', payload)
+
         //we are accessing properties in the class LoginTicket
         const userPropertiesLoginTicket = {
           firstName: payload?.given_name,
           lastName: payload?.family_name,
           email: payload?.email,
-          emailVerified: payload?.email_verified
+          emailVerified: payload?.email_verified,
+          picture: payload?.picture,
         }
-        const { firstName, lastName, email, emailVerified } = userPropertiesLoginTicket
+        const {
+          firstName,
+          lastName,
+          email,
+          emailVerified,
+          picture,
+        } = userPropertiesLoginTicket
         console.log(email, emailVerified, firstName, lastName)
         if (emailVerified) {
           User.findOne({ email }).exec((err, user) => {
@@ -152,9 +156,10 @@ export const googleLogin = async (
                       token,
                       user: {
                         id: user._id,
-                        email: user.email,
                         firstName: user.firstName,
                         lastName: user.lastName,
+                        email: user.email,
+                        picture: user.picture,
                       },
                     })
                   }
@@ -163,12 +168,13 @@ export const googleLogin = async (
                 console.log('found user', user)
                 const password = email + JWT_SECRET
                 const newUser = new User({
-                  user: {
-                    email,
+                  // user: {
                     firstName,
                     lastName,
-                    password
-                  },
+                    email,
+                    password,
+                    picture,
+                  // },
                 })
                 console.log('new user here', newUser)
                 //one calendar is associated to a single user, we set the calendar id to user id to retrieve it for CRUD operations
@@ -192,7 +198,13 @@ export const googleLogin = async (
                       if (err) throw err
                       //we make a json file for token and user
                       console.log('user is here', user)
-                      const { _id, firstName, lastName, email } = newUser
+                      const {
+                        _id,
+                        firstName,
+                        lastName,
+                        email,
+                        picture,
+                      } = newUser
                       res.json({
                         token,
                         user: {
@@ -200,6 +212,7 @@ export const googleLogin = async (
                           email,
                           firstName,
                           lastName,
+                          picture,
                           calendar: calendar,
                         },
                       })

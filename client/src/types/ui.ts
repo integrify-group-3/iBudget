@@ -62,6 +62,17 @@ export type ExpensesChartProps = {
   className?: string
 }
 
+
+export type ExpensesChartDashboardProps = {
+  chartData: ExpensesChartData[]
+  year: number
+  month: string
+  valueField: string
+  argumentField: string
+  name: string
+  className?: string
+}
+
 export type SwitchAnalyticsViewBtnProps = {
   switchAnalyticsView:  (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   switchView: boolean
