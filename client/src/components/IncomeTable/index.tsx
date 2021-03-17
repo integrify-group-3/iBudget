@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import TableBody from '@material-ui/core/TableBody'
+import Table from '@material-ui/core/Table'
 
 import { removeIncome } from '../../redux/actions/income'
 import { Income } from '../../types/income'
@@ -23,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
   depositContext: {
     flex: 0,
   },
-  margin: {
+  deleteBtn: {
     margin: theme.spacing(1),
+    color: 'red',
   },
   incomeList: {
     display: 'flex',
@@ -91,68 +94,71 @@ export default function IncomeTable({
           <Title>
             Income for {month} {year}
           </Title>
-          {monthlyIncome.length < 1 ? (
-            <Typography component="p" variant="h6">
-              No income registered
-            </Typography>
-          ) : (
-            <>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Category</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Amount</TableCell>
-                </TableRow>
-              </TableHead>
-              {monthlyIncome.map((income: any) => {
-                const { _id, category, description, amount } = income
-                return (
-                  <TableRow key={_id}>
-                    <TableCell>{category}</TableCell>
-                    <TableCell>{description}</TableCell>
-                    <TableCell>{amount}</TableCell>
-                    <TableCell>
-                      {editOpen && (
-                        <Grid
-                          item
-                          xs={12}
-                          md={12}
-                          lg={12}
-                          className={classes.incomeContainer}
-                        >
-                          <Paper className={classes.incomeFormContainer}>
-                            <EditIncome
-                              incomeId={IncomeId}
-                              hideFormOnClick={hideFormOnClick}
-                              monthlyIncome={monthlyIncome}
-                              month={month}
-                              year={year}
-                            />
-                          </Paper>
-                        </Grid>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <EditIcon
-                        className={classes.editIncome}
-                        onClick={() => openEditOnClick(income._id)}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <IconButton
-                        aria-label="delete"
-                        className={classes.margin}
-                        onClick={() => deleteOnClick(income._id, income)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
+          <Table size="small">
+            {monthlyIncome.length < 1 ? (
+              <Typography component="p" variant="h6">
+                No income registered
+              </Typography>
+            ) : (
+              <>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Category</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Amount</TableCell>
                   </TableRow>
-                )
-              })}
-            </>
-          )}
-          <AddIncomeBtn showFormOnClick={showFormOnClick} />
+                </TableHead>
+                {editOpen && (
+                  <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    lg={12}
+                    className={classes.incomeContainer}
+                  >
+                    <Paper className={classes.incomeFormContainer}>
+                      <EditIncome
+                        incomeId={IncomeId}
+                        hideFormOnClick={hideFormOnClick}
+                        monthlyIncome={monthlyIncome}
+                        month={month}
+                        year={year}
+                      />
+                    </Paper>
+                  </Grid>
+                )}
+                <TableBody>
+                  {monthlyIncome.map((income: any) => {
+                    const { _id, category, description, amount } = income
+                    return (
+                      <TableRow key={_id}>
+                        <TableCell>{category}</TableCell>
+                        <TableCell>{description}</TableCell>
+                        <TableCell>{amount}</TableCell>
+
+                        <TableCell>
+                          <EditIcon
+                            className={classes.editIncome}
+                            onClick={() => openEditOnClick(income._id)}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <IconButton
+                            aria-label="delete"
+                            className={classes.deleteBtn}
+                            onClick={() => deleteOnClick(income._id, income)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </>
+            )}
+            <AddIncomeBtn showFormOnClick={showFormOnClick} />
+          </Table>
         </>
       ) : (
         <Grid item xs={12} md={12} lg={12} className={classes.incomeContainer}>
