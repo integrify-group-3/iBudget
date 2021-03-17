@@ -5,6 +5,7 @@ export const ADD_EXPENSE = 'ADD_EXPENSE'
 export const EDIT_EXPENSE = 'EDIT_EXPENSE'
 export const DELETE_EXPENSE = 'DELETE_EXPENSE'
 export const TOTAL_MONTHLY_EXPENSES = 'TOTAL_MONTHLY_EXPENSES'
+export const CLEAR_UPDATING = 'CLEAR_UPDATING'
 
 export type Expense = {
   category: string
@@ -105,12 +106,17 @@ export type TotalMonthlyExpensesAction = {
   }
 }
 
+export type ClearUpdating = {
+  type: typeof CLEAR_UPDATING
+}
+
 export type ExpensesActions =
   | GetExpensesAction
   | AddExpenseAction
   | EditExpenseAction
   | DeleteExpenseAction
   | TotalMonthlyExpensesAction
+  | ClearUpdating
 
 export type ExpensesState = {
   calendar: CalendarScheduler
@@ -118,4 +124,5 @@ export type ExpensesState = {
   selectedMonth: any
   dailyExpenses: DailyExpense
   total: number
+  isUpdating: boolean
 }

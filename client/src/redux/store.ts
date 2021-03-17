@@ -37,6 +37,7 @@ const initState: AppState = {
     selectedMonth: {},
     dailyExpenses: {} as DailyExpense,
     total: 0,
+    isUpdating: false
   },
   error: {
     msg: {},

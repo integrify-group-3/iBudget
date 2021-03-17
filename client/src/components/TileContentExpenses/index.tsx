@@ -38,10 +38,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '13px',
     borderRadius: '5px',
     zIndex: 2,
-    lineHeight: '1.8'
+    lineHeight: '1.8',
   },
   previewExpensesDate: {
-    fontWeight: 700
+    fontWeight: 700,
   },
   previewExpensesItem: {
     display: 'flex',
@@ -49,15 +49,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     borderBottom: '1px solid lightgrey',
-
   },
 }))
 
-export default function TileContent({
-    date,
-    view,
-    contentData,
-    activeStartDate
+export default function TileContentExpenses({
+  date,
+  view,
+  contentData,
+  activeStartDate,
 }: TileContentProps) {
   const classes = useStyles()
   const [day, setDay] = useState({} as DailyExpense)
@@ -65,29 +64,26 @@ export default function TileContent({
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
   // console.log('content data for month', contentData)
-  const loadTiles = useCallback(
-    () => {
-        if (contentData !== undefined) {
-          const selectedDay = contentData.days.find(
-            (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
-          )
-          // console.log(selectedDay)
-          setDay(selectedDay)
-          setLoadTileContent(true)
-          if (view === 'month' && day !== undefined && loadTileContent) {
-            if (day.expenses.length > 0) {
-              setTileLoaded(true)
-              // setLoadTileContent(false)
-            }
-          }
+  const loadTiles = useCallback(() => {
+    if (contentData !== undefined) {
+      const selectedDay = contentData.days.find(
+        (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
+      )
+      // console.log(selectedDay)
+      setDay(selectedDay)
+      setLoadTileContent(true)
+      if (view === 'month' && day !== undefined && loadTileContent) {
+        if (day.expenses.length > 0) {
+          setTileLoaded(true)
+          // setLoadTileContent(false)
         }
-    },
-    [day, loadTileContent, tileLoaded],
-  )
+      }
+    }
+  }, [day, loadTileContent, tileLoaded])
   useEffect(() => {
     setTimeout(() => {
-      loadTiles()      
-    }, 1000)
+      loadTiles()
+    }, 500)
   }, [loadTiles])
 
   const showExpensesPreview = () => {
@@ -97,29 +93,26 @@ export default function TileContent({
     setIsShowing(false)
   }
 
-  if(!tileLoaded)
+  if (!tileLoaded) return <div></div>
+
   return (
-    <div></div>
+    <div
+      className={classes.tileContent}
+      onMouseEnter={showExpensesPreview}
+      onMouseLeave={hideExpensesPreview}
+    >
+      {isShowing && (
+        <ul className={classes.previewExpenses}>
+          <li className={classes.previewExpensesDate}>{day.day}</li>
+          {day.expenses.map((e: any) => (
+            <>
+              <li key={e._id} className={classes.previewExpensesItem}>
+                {e.category} {e.amount}
+              </li>
+            </>
+          ))}
+        </ul>
+      )}
+    </div>
   )
-  
-    return (
-      <div
-        className={classes.tileContent}
-        onMouseEnter={showExpensesPreview}
-        onMouseLeave={hideExpensesPreview}
-      >
-        {isShowing && (
-          <ul className={classes.previewExpenses}>
-            <li className={classes.previewExpensesDate}>{day.day}</li>
-            {day.expenses.map((e: any) => (
-              <>
-                <li key={e._id} className={classes.previewExpensesItem}>
-                  {e.category} {e.amount}
-                </li>
-              </>
-            ))}
-          </ul>
-        )}
-      </div>
-    )
-  } 
+}

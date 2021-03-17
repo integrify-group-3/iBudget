@@ -8,6 +8,7 @@ import {
   EDIT_EXPENSE,
   DELETE_EXPENSE,
   TOTAL_MONTHLY_EXPENSES,
+  CLEAR_UPDATING,
   ExpensesActions,
   DailyExpense,
   Expense,
@@ -87,6 +88,13 @@ export function calculateTotalExpenses(total: number): ExpensesActions {
     payload: {
       total,
     },
+  }
+}
+
+export function clearUpdate(): ExpensesActions {
+  return {
+    type: CLEAR_UPDATING,
+  
   }
 }
 
@@ -214,5 +222,11 @@ export function getTotalExpenses(monthlyData: any) {
     } catch (err) {
       console.log(err)
     }
+  }
+}
+
+export default function clearUpdating() {
+  return (dispatch: Dispatch) => {
+    dispatch(clearUpdate())
   }
 }

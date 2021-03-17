@@ -7,6 +7,7 @@ export type UserDocument = Document & {
     lastName: string;
     email: string;
     password: string;
+    picture: string;
     registeredAt: Date;
     resetLink: string;
     calendar: CalendarDocument;
@@ -29,6 +30,9 @@ const userSchema = new mongoose.Schema({
     password: {
       type: String,
       required: true,
+    },
+    picture: {
+      type: String
     },
     registeredAt: {
       type: Date,

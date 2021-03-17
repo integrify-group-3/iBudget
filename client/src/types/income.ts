@@ -6,7 +6,6 @@ export const ADD_INCOME = 'ADD_INCOME'
 export const UPDATE_INCOME = 'UPDATE_INCOME'
 export const DELETE_INCOME = 'DELETE_INCOME'
 export const TOTAL_MONTHLY_INCOME = 'TOTAL_MONTHLY_INCOME'
-
 export const CLEAR_UPDATING = 'CLEAR_UPDATING'
 
 export type Income = {
@@ -103,5 +102,4 @@ export type IncomeState = {
   total: number | any
   selectedYear: any
   isUpdating: boolean
-
 }

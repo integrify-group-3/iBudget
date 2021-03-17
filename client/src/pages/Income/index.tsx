@@ -98,6 +98,7 @@ export default function IncomePage(props: any) {
       props.history.push('/login')
     } else {
       setCalendar(calendarData)
+      console.log(isMonthClicking, isUpdating)
       if (!isMonthClicking) {
         // console.log('I am calling now', incomeData)
         //atm the below set state keeps running an infinite loop
@@ -116,7 +117,7 @@ export default function IncomePage(props: any) {
         //  console.log('monthly data from ismonthclicking', monthlyData)
       }
     }
-  }, [isAuthenticated, calendarData, dateView, defaultDateView, defaultMonth])
+  }, [isAuthenticated, monthIncome, incomeData, calendarData, dateView, defaultDateView, defaultMonth])
 
   const changeMonthView = (
     currentYear: number,

@@ -1,3 +1,4 @@
+//this calendar will be added to each new user that registers or signs in with google auth. the calendar id will be the same as the user id
 export const dbCalendar = {
     years: [
         {
@@ -975,6 +976,332 @@ export const dbCalendar = {
               },
             ],
           },
+          {
+            year: 2031,
+            months: [
+              {
+                name: 'January',
+                income: [],
+                days: []
+            },
+            {
+                name: 'February',
+                income: [],
+                days: []
+            },
+            {
+                name: 'March',
+                income: [],
+                days: []
+            },
+            {
+                name: 'April',
+                income: [],
+                days: []
+            },
+            {
+                name: 'May',
+                income: [],
+                days: []
+            },
+            {
+                name: 'June',
+                income: [],
+                days: []
+            },
+            {
+                name: 'July',
+                income: [],
+                days: []
+            },
+            {
+                name: 'August',
+                income: [],
+                days: []
+            },
+            {
+                name: 'September',
+                income: [],
+                days: []
+            },
+            {
+                name: 'October',
+                income: [],
+                days: []
+            },
+            {
+                name: 'November',
+                income: [],
+                days: []
+              },
+              {
+                name: 'December',
+                income: [],
+                days: []
+              },
+            ],
+          },
+          {
+            year: 2032,
+            months: [
+              {
+                name: 'January',
+                income: [],
+                days: []
+            },
+            {
+                name: 'February',
+                income: [],
+                days: []
+            },
+            {
+                name: 'March',
+                income: [],
+                days: []
+            },
+            {
+                name: 'April',
+                income: [],
+                days: []
+            },
+            {
+                name: 'May',
+                income: [],
+                days: []
+            },
+            {
+                name: 'June',
+                income: [],
+                days: []
+            },
+            {
+                name: 'July',
+                income: [],
+                days: []
+            },
+            {
+                name: 'August',
+                income: [],
+                days: []
+            },
+            {
+                name: 'September',
+                income: [],
+                days: []
+            },
+            {
+                name: 'October',
+                income: [],
+                days: []
+            },
+            {
+                name: 'November',
+                income: [],
+                days: []
+              },
+              {
+                name: 'December',
+                income: [],
+                days: []
+              },
+            ],
+          },
+          {
+            year: 2033,
+            months: [
+              {
+                name: 'January',
+                income: [],
+                days: []
+            },
+            {
+                name: 'February',
+                income: [],
+                days: []
+            },
+            {
+                name: 'March',
+                income: [],
+                days: []
+            },
+            {
+                name: 'April',
+                income: [],
+                days: []
+            },
+            {
+                name: 'May',
+                income: [],
+                days: []
+            },
+            {
+                name: 'June',
+                income: [],
+                days: []
+            },
+            {
+                name: 'July',
+                income: [],
+                days: []
+            },
+            {
+                name: 'August',
+                income: [],
+                days: []
+            },
+            {
+                name: 'September',
+                income: [],
+                days: []
+            },
+            {
+                name: 'October',
+                income: [],
+                days: []
+            },
+            {
+                name: 'November',
+                income: [],
+                days: []
+              },
+              {
+                name: 'December',
+                income: [],
+                days: []
+              },
+            ],
+          },
+          {
+            year: 2034,
+            months: [
+              {
+                name: 'January',
+                income: [],
+                days: []
+            },
+            {
+                name: 'February',
+                income: [],
+                days: []
+            },
+            {
+                name: 'March',
+                income: [],
+                days: []
+            },
+            {
+                name: 'April',
+                income: [],
+                days: []
+            },
+            {
+                name: 'May',
+                income: [],
+                days: []
+            },
+            {
+                name: 'June',
+                income: [],
+                days: []
+            },
+            {
+                name: 'July',
+                income: [],
+                days: []
+            },
+            {
+                name: 'August',
+                income: [],
+                days: []
+            },
+            {
+                name: 'September',
+                income: [],
+                days: []
+            },
+            {
+                name: 'October',
+                income: [],
+                days: []
+            },
+            {
+                name: 'November',
+                income: [],
+                days: []
+              },
+              {
+                name: 'December',
+                income: [],
+                days: []
+              },
+            ],
+          },
+          {
+            year: 2035,
+            months: [
+              {
+                name: 'January',
+                income: [],
+                days: []
+            },
+            {
+                name: 'February',
+                income: [],
+                days: []
+            },
+            {
+                name: 'March',
+                income: [],
+                days: []
+            },
+            {
+                name: 'April',
+                income: [],
+                days: []
+            },
+            {
+                name: 'May',
+                income: [],
+                days: []
+            },
+            {
+                name: 'June',
+                income: [],
+                days: []
+            },
+            {
+                name: 'July',
+                income: [],
+                days: []
+            },
+            {
+                name: 'August',
+                income: [],
+                days: []
+            },
+            {
+                name: 'September',
+                income: [],
+                days: []
+            },
+            {
+                name: 'October',
+                income: [],
+                days: []
+            },
+            {
+                name: 'November',
+                income: [],
+                days: []
+              },
+              {
+                name: 'December',
+                income: [],
+                days: []
+              },
+            ],
+          },
+          
     ]
 }
 

@@ -5,6 +5,7 @@ import {
   EDIT_EXPENSE,
   DELETE_EXPENSE,
   TOTAL_MONTHLY_EXPENSES,
+  CLEAR_UPDATING,
   ExpensesActions,
   DailyExpense,
 } from '../../types/expenses'
@@ -17,6 +18,7 @@ export default function expenses(
     selectedMonth: {},
     dailyExpenses: {} as DailyExpense,
     total: 0,
+    isUpdating: false,
   },
   action: ExpensesActions
 ): ExpensesState {
@@ -45,12 +47,18 @@ export default function expenses(
         calendar: action.payload.calendar,
         dailyExpenses: expense,
         selectedMonth: monthlyData,
+        isUpdating: true,
       }
     case TOTAL_MONTHLY_EXPENSES:
       const { total } = action.payload
       return {
         ...state,
         total,
+      }
+    case CLEAR_UPDATING:
+      return {
+        ...state,
+        isUpdating: false,
       }
     default:
       return state

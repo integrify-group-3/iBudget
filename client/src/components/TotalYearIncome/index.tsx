@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
 import { TotalYearIncomeProps } from '../../types/income'
+import EmptyTotal from '../EmptyTotal'
 import Title from '../Title'
 
 const useStyles = makeStyles({
@@ -10,8 +11,8 @@ const useStyles = makeStyles({
     flex: 1,
   },
   totalIncomeText: {
-    color: '#42A5F5'
-  }
+    color: '#42A5F5',
+  },
 })
 
 export default function TotalYearIncome({
@@ -22,10 +23,18 @@ export default function TotalYearIncome({
   const classes = useStyles()
   return (
     <React.Fragment>
-      <Title>Total Income {year}</Title> 
-      <Typography component="p" variant="h4" className={classes.totalIncomeText}>
-        €{totalAmount}
-      </Typography>
+      <Title>Total Income {year}</Title>
+      {totalAmount > 0 ? (
+        <Typography
+          component="p"
+          variant="h4"
+          className={classes.totalIncomeText}
+        >
+          €{totalAmount}
+        </Typography>
+      ) : (
+        <EmptyTotal />
+      )}
     </React.Fragment>
   )
 }
