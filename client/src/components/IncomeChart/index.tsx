@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import Paper from '@material-ui/core/Paper';
+import React, { useEffect, useState } from 'react'
+import Paper from '@material-ui/core/Paper'
 import {
   Chart,
   PieSeries,
   Legend,
   Title,
-} from '@devexpress/dx-react-chart-material-ui';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import FormControl from '@material-ui/core/FormControl';
-import { Animation, Palette } from '@devexpress/dx-react-chart';
+} from '@devexpress/dx-react-chart-material-ui'
+import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
+import NativeSelect from '@material-ui/core/NativeSelect'
+import FormControl from '@material-ui/core/FormControl'
+import { Animation, Palette } from '@devexpress/dx-react-chart'
 
 import {
   schemeCategory10,
@@ -22,7 +22,7 @@ import {
   schemeSet1,
   schemeSet2,
   schemeSet3,
-} from 'd3-scale-chromatic';
+} from 'd3-scale-chromatic'
 
 const schemeCollection = [
   schemeCategory10,
@@ -34,12 +34,12 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
-];
+]
 
 const demoStyles = (theme: any) => ({
-    root: {
-        height: '400px'
-    },
+  root: {
+    height: '400px',
+  },
   typography: {
     marginTop: 0,
     marginBottom: theme.spacing(1),
@@ -58,39 +58,37 @@ const demoStyles = (theme: any) => ({
     justifyContent: 'center',
     marginTop: theme.spacing(1),
   },
-});
+})
 
 const Demo = (props: any) => {
-   
-  const [scheme, setScheme] = useState(schemeCollection[0])   
+  const [scheme, setScheme] = useState(schemeCollection[0])
   const changeScheme = (e: any) => {
-    setScheme(schemeCollection[e.target.value]);
+    setScheme(schemeCollection[e.target.value])
   }
- 
-    const { classes } = props;
-    // console.log('chart data', props.chartData)
-    // console.log('values', props.valueField, 'arguments', props.argumentField)
-    return (
-      <Paper>
-        {
-            props.chartLoaded ? 
-            <>
-            <Chart
+
+  const { classes } = props
+  // console.log('chart data', props.chartData)
+  // console.log('values', props.valueField, 'arguments', props.argumentField)
+  return (
+    <Paper>
+      {props.chartLoaded ? (
+        <>
+          <Chart
             data={props.chartData}
             // className={classes.root}
           >
-            <Palette scheme={scheme}                   
-            // name="category"
- />
+            <Palette
+              scheme={scheme}
+              // name="category"
+            />
             <PieSeries
               valueField={props.valueField}
               argumentField={props.argumentField}
               name={props.name}
-            /> 
+              outerRadius={0.2}
+            />
             <Legend />
-            <Title
-            text={`Income Chart ${props.month} ${props.year}`}
-          />
+            <Title text={`Income Chart ${props.month} ${props.year}`} />
             <Animation />
           </Chart>
           <div className={classes.schemeConteiner}>
@@ -103,7 +101,13 @@ const Demo = (props: any) => {
             ))}
           </div>
           <div className={classes.div}>
-            <Typography component="h5" variant="h5" className={classes.typography}>Scheme</Typography>
+            <Typography
+              component="h5"
+              variant="h5"
+              className={classes.typography}
+            >
+              Scheme
+            </Typography>
             <FormControl>
               <NativeSelect onChange={changeScheme} defaultValue={0}>
                 <option value={0}>schemeCategory10</option>
@@ -117,13 +121,13 @@ const Demo = (props: any) => {
                 <option value={8}>schemeSet3</option>
               </NativeSelect>
             </FormControl>
-          </div> 
-          </>
-          : 'loading chart'
-        } 
-      
-      </Paper>
-    );
+          </div>
+        </>
+      ) : (
+        'loading chart'
+      )}
+    </Paper>
+  )
 }
 
-export default withStyles(demoStyles, { name: 'Demo' })(Demo);
+export default withStyles(demoStyles, { name: 'Demo' })(Demo)

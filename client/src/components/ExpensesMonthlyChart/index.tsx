@@ -29,8 +29,6 @@ import {
   schemeSet1,
   schemeSet2,
   schemeSet3,
-  
-
 } from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
@@ -48,12 +46,11 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
- 
 ]
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
-    height: '200px',
+    height: '100px',
   },
   chartContainer: {
     height: '10rem',
@@ -77,8 +74,8 @@ const useStyles = makeStyles((theme: any) => ({
     marginTop: theme.spacing(1),
   },
   pieChart: {
-    width: '80%,',
-  }
+    width: '20%,',
+  },
 }))
 
 export default function ExpensesChart({
@@ -142,6 +139,8 @@ export default function ExpensesChart({
               valueField={valueField}
               argumentField={argumentField}
               name={name}
+              outerRadius={0.4}
+              innerRadius={0.1}
             />
             <Legend />
             <Title text={`Expenses Chart ${month} ${year}`} />
