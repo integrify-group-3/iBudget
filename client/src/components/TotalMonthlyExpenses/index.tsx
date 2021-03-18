@@ -35,7 +35,7 @@ export default function TotalMonthlyExpenses({
   return (
     <React.Fragment>
       <Title>
-        Total Expenses {month} {year}
+        Expenses {month} {year}
       </Title>
       {totalMonthlyExpenses > 0 ? (
         <Typography
@@ -45,7 +45,7 @@ export default function TotalMonthlyExpenses({
         >
           <span>€{totalMonthlyExpenses} </span>
           <span className={classes.percentageToIncome} title='percentage to income'>
-            {`${Math.floor((totalMonthlyExpenses / totalMonthlyIncome) * 100)}`}
+            {`${totalMonthlyIncome < 1 ? `100` : Math.round((totalMonthlyExpenses / totalMonthlyIncome) * 100)}`}
             %
           </span>
         </Typography>

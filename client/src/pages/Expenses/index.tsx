@@ -136,7 +136,7 @@ export default function ExpensesPage(props: any) {
     year: 0,
   } as Expense)
   const { category, description, amount } = expense
-
+  // console.log('expenses data', dailyExpense)
   const loadChart = () => {
     setMonthlyChart(defaultMonth?.days)
   }
@@ -145,8 +145,9 @@ export default function ExpensesPage(props: any) {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
-      console.log('check here', isDayClicking, isUpdating)
+      // console.log('check here', isDayClicking, isUpdating)
       if (!isDayClicking) {
+        console.log(defaultDateView)
         setDateView(defaultDateView as DateView)
         setExpense({
           category: '',
@@ -159,19 +160,21 @@ export default function ExpensesPage(props: any) {
         loadChart()
         setMonthlyData(defaultMonth)
         setDailyExpense(expensesData)
-        // console.log('calling now for monthly data expenses', monthlyData)
-
         setTileContentData(defaultMonth)
         dispatch(clearUpdate())
       } else if (isDayClicking && isUpdating) {
-        console.log(isUpdating)
-        console.log('day clicking and updating', expensesData)
-        loadChart()
-        setMonthlyData(defaultMonth)
-        setDailyExpense(expensesData)
-        console.log('this should update', dailyExpense)
-        setTileContentData(defaultMonth)
-        dispatch(clearUpdate())
+        setTimeout(() => {
+          console.log(isUpdating)
+          setMonthlyData(defaultMonth)
+          setDailyExpense(expensesData)
+          // console.log('this should update, daily expense', dailyExpense)
+          setTileContentData(defaultMonth)
+          console.log('day clicking and updating, expensesData', expensesData)
+          console.log(tileContentData)
+          loadChart()
+          dispatch(clearUpdate())
+        }, 1000);
+       
       }
     }
   }, [
@@ -200,6 +203,7 @@ export default function ExpensesPage(props: any) {
   const showDayOnClick = async (e: any) => {
     setIsFormShowing(false)
     setIsDayClicking(true)
+    console.log(e)
     setSchedule({ ...schedule, day: e })
     try {
       const selectedYear = await e.getFullYear()
@@ -247,55 +251,55 @@ export default function ExpensesPage(props: any) {
     }
   }
 
-  // console.log('tile content here', tileContentData)
-  // console.log('monthly chart', monthlyChart)
-
   //this function is not working properly, fixing it
-  const switchMonthOnClick = async (e: any) => {
+  const switchMonthOnClick = useCallback 
+  (async (e: any) => {
+    console.log(e)
+    setIsFormShowing(false)
+    setIsDayClicking(true)
+    setSchedule({ ...schedule, day: e.activeStartDate})
+
     try {
-      const selectedYear = await e.value.getFullYear()
-      const currentIndex = await e.value.getMonth()
-      const selectedYearTwo = await e.activeStartDate.getFullYear()
-      const currentIndexTwo = await e.activeStartDate.getMonth()
-      const clickedMonth = months[currentIndex]
-      dateView.year = selectedYearTwo
-      dateView.month = months[currentIndexTwo]
+      const selectedYear = await e.activeStartDate.getFullYear()
+      const currentIndex = await e.activeStartDate.getMonth()
+      // console.log('selectedYearTwo, current indextwo', selectedYear, currentIndex)
+      dateView.year = selectedYear
+      dateView.month = months[currentIndex]
       console.log('date view', dateView)
       const foundYear = await calendarData.years.find(
         (y: CalendarScheduler) => y.year === dateView.year
       )
       const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === months[currentIndexTwo]
+        (month: any) => month.name === months[currentIndex]
       )
-      // await foundYear.months.map((month: any) => {
-      //   if((month.name === dateView.month))
-      setTileContentData(foundMonth)
+      console.log(foundMonth)
 
-      setMonthlyChart(foundMonth.days)
-      setMonthlyData(foundMonth)
-      //sets the month expenses and budget to selected month
-      setMonthlyData(foundMonth)
-      // console.log(calendarData.years)
-      // })
-      /*
-      for (const month of foundYear.months) {
-        if (month.name === dateView.month) {
-          //sets the chart to selected month
-         
-          setMonthlyChart(month.days)
-          console.log('monthly chart should update', monthlyChart)
-          //sets the month expenses and budget to selected month
-          setMonthlyData(month)
-          // console.log(calendarData.years)
-          console.log('month here', month)
-          setTileContentData(month)
-          console.log('tile content here from switchMonthOnClick', tileContentData)
-        } 
-      }*/
+      // await foundYear.months.map((month: any) => {
+      if((foundMonth.name === dateView.month)) {
+        switchMonth.name = foundMonth.name
+        switchMonth.income = foundMonth.income
+        switchMonth.days = foundMonth.days
+        setTileContentData(foundMonth)
+        setMonthlyChart(foundMonth.days)
+        setMonthlyData(switchMonth)
+        console.log('monthly data', monthlyData)
+        console.log('monthly chart', monthlyChart)
+        const selectedDay = await foundMonth.days.find(
+          (d: any) => moment(d.day).format('LL') === moment(e.activeStartDate).format('LL')
+        )
+        if (selectedDay !== undefined) {
+          setDailyExpense(selectedDay)
+        } else {
+          setDailyExpense(schedule)
+        }
+
+      }
     } catch (err) {
       return err
     }
-  }
+  }, [monthlyData]
+  )
+
 
   return (
     <div className={classes.root}>
@@ -350,9 +354,10 @@ export default function ExpensesPage(props: any) {
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
                   dailyExpense={
-                    isDayClicking
-                      ? dailyExpense
-                      : (expensesData as DailyExpense)
+                    dailyExpense
+                    // isDayClicking
+                    //   ? dailyExpense
+                    //   : (expensesData as DailyExpense)
                   }
                   showFormOnClick={showFormOnClick}
                 />
@@ -392,7 +397,6 @@ export default function ExpensesPage(props: any) {
                     date={date}
                     view={view}
                     activeStartDate={activeStartDate}
-                    // contentData={isDayClicking ? tileContentData : defaultMonth}
                     contentData={tileContentData}
                   />
                 )}

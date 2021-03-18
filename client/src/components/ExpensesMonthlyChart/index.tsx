@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper'
 import {
   Chart,
   PieSeries,
+  PieSeriesProps,
   ValueAxis,
   ArgumentAxis,
   BarSeries,
@@ -48,7 +49,6 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
- 
 ]
 
 const useStyles = makeStyles((theme: any) => ({
@@ -85,11 +85,8 @@ export default function ExpensesChart({
   chartData,
   year,
   month,
-  valueField,
-  argumentField,
-  name,
 }: ExpensesChartProps) {
-  const [scheme, setScheme] = useState(schemeCollection[7])
+  const [scheme, setScheme] = useState(schemeCollection[3])
 
   const changeScheme = (e: any) => {
     setScheme(schemeCollection[e.target.value])
@@ -112,15 +109,17 @@ export default function ExpensesChart({
           <ArgumentAxis />
           <ValueAxis />
 
-          {chartData.map((data: ExpensesChartData) => (
+          {chartData.map((data: ExpensesChartData) => ( 
             <BarSeries
-              valueField={valueField}
-              argumentField={argumentField}
+              valueField="amount"
+              argumentField="category"
               name={data.category}
             />
-          ))}
-
-          <Stack />
+          ))}  
+        
+          <Stack  stacks={[
+              { series: [`category`, `amount`] },
+            ]}/>
           <EventTracker />
           <Tooltip />
           <Legend />
@@ -139,9 +138,9 @@ export default function ExpensesChart({
               // name="category"
             />
             <PieSeries
-              valueField={valueField}
-              argumentField={argumentField}
-              name={name}
+              valueField="amount"
+              argumentField="category"
+              name="category"
             />
             <Legend />
             <Title text={`Expenses Chart ${month} ${year}`} />
@@ -153,7 +152,7 @@ export default function ExpensesChart({
             <Tooltip />
             <Animation />
           </Chart>
-          <div className={classes.schemeContainer}>
+          {/*<div className={classes.schemeContainer}>
             {scheme.map((color) => (
               <div
                 key={color}
@@ -162,7 +161,7 @@ export default function ExpensesChart({
               />
             ))}
           </div>
-          <div className={classes.div}>
+           <div className={classes.div}>
             <Typography
               component="h5"
               variant="h5"
@@ -183,7 +182,7 @@ export default function ExpensesChart({
                 <option value={8}>schemeSet3</option>
               </NativeSelect>
             </FormControl>
-          </div>
+          </div> */}
         </>
       )}
     </Paper>

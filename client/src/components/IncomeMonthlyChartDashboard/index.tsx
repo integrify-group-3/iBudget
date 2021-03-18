@@ -29,11 +29,14 @@ import {
   schemeSet1,
   schemeSet2,
   schemeSet3,
+  
+
 } from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
-import { IncomeChartDataProps } from '../../types'
+import { ExpensesChartData } from '../../types/expenses'
+import { IncomeChartDashboardProps } from '../../types'
 
 const schemeCollection = [
   schemeCategory10,
@@ -45,14 +48,15 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
+ 
 ]
 
 const useStyles = makeStyles((theme: any) => ({
-  root: {
-    height: '200px',
-  },
   chartContainer: {
-    height: '10rem',
+    height: '265px'
+  },
+  root: {
+    height: '100px',
   },
   typography: {
     marginTop: 0,
@@ -72,27 +76,21 @@ const useStyles = makeStyles((theme: any) => ({
     justifyContent: 'center',
     marginTop: theme.spacing(1),
   },
-  pieChart: {
-    width: '80%,',
-  },
+ 
 }))
 
-export default function IncomeMonthlyChart({
+export default function IncomeMonthlyChartDashboard({
   chartData,
-  month,
   year,
+  month,
   valueField,
   argumentField,
   name,
-}: IncomeChartDataProps) {
-  const [scheme, setScheme] = useState(schemeCollection[3])
-
-  const changeScheme = (e: any) => {
-    setScheme(schemeCollection[e.target.value])
-  }
+}: IncomeChartDashboardProps) {
+  const [scheme, setScheme] = useState(schemeCollection[1])
   const classes = useStyles()
   const [switchChart, setSwitchChart] = useState(false)
-
+  console.log(argumentField, name, argumentField, chartData)
   const switchChartView = () => {
     setSwitchChart(!switchChart)
   }
@@ -101,34 +99,36 @@ export default function IncomeMonthlyChart({
   const barChartText = 'Bar Chart'
 
   return (
-    <Paper>
-      {switchChart ? (
+    <Paper className={classes.chartContainer}>
+      {!switchChart ? (
         <Chart data={chartData}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
 
-          {chartData.map((data: any) => (
             <BarSeries
               valueField={valueField}
               argumentField={argumentField}
-              name={data.category}
+              name={name}
             />
-          ))}
 
-          <Stack />
+        <Stack
+            stacks={[
+              { series: [`${valueField}`, `${name}`, `${argumentField}`] },
+            ]}
+          />
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Income Chart ${month} ${year}`} />
+          <Title text={`Expenses ${month} ${year}`} />
           <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={pieChartText}
-          />
+          /> 
           <Animation />
         </Chart>
       ) : (
-        <>
+        <div className={classes.chartContainer}>
           <Chart data={chartData}>
             <Palette
               scheme={scheme}
@@ -140,47 +140,18 @@ export default function IncomeMonthlyChart({
               name={name}
             />
             <Legend />
-            <Title text={`Income Chart ${month} ${year}`} />
+            <Title text={`Income ${month} ${year}`} />
             <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
-            />
+            /> 
             <EventTracker />
             <Tooltip />
             <Animation />
           </Chart>
-          <div className={classes.schemeContainer}>
-            {scheme.map((color) => (
-              <div
-                key={color}
-                className={classes.item}
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-          <div className={classes.div}>
-            <Typography
-              component="h5"
-              variant="h5"
-              className={classes.typography}
-            >
-              Scheme
-            </Typography>
-            <FormControl>
-              <NativeSelect onChange={changeScheme} defaultValue={0}>
-                <option value={0}>schemeCategory10</option>
-                <option value={1}>schemeAccent</option>
-                <option value={2}>schemeDark2</option>
-                <option value={3}>schemePaired</option>
-                <option value={4}>schemePastel1</option>
-                <option value={5}>schemePastel2</option>
-                <option value={6}>schemeSet1</option>
-                <option value={7}>schemeSet2</option>
-                <option value={8}>schemeSet3</option>
-              </NativeSelect>
-            </FormControl>
-          </div>
-        </>
+         
+      
+        </div>
       )}
     </Paper>
   )

@@ -29,8 +29,6 @@ import {
   schemeSet1,
   schemeSet2,
   schemeSet3,
-  
-
 } from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
@@ -48,15 +46,14 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
- 
 ]
 
 const useStyles = makeStyles((theme: any) => ({
-  root: {
-    height: '200px',
-  },
   chartContainer: {
-    height: '10rem',
+    height: '265px',
+  },
+  root: {
+    height: '100px',
   },
   typography: {
     marginTop: 0,
@@ -76,9 +73,6 @@ const useStyles = makeStyles((theme: any) => ({
     justifyContent: 'center',
     marginTop: theme.spacing(1),
   },
-  pieChart: {
-    width: '80%,',
-  }
 }))
 
 export default function ExpensesMonthlyChartDashboard({
@@ -89,7 +83,7 @@ export default function ExpensesMonthlyChartDashboard({
   argumentField,
   name,
 }: ExpensesChartDashboardProps) {
-  const [scheme, setScheme] = useState(schemeCollection[7])
+  const [scheme, setScheme] = useState(schemeCollection[8])
   const classes = useStyles()
   const [switchChart, setSwitchChart] = useState(false)
   console.log(argumentField, name, argumentField, chartData)
@@ -101,36 +95,37 @@ export default function ExpensesMonthlyChartDashboard({
   const barChartText = 'Bar Chart'
 
   return (
-    <Paper>
-      {switchChart ? (
+    <Paper className={classes.chartContainer}>
+      {!switchChart ? (
         <Chart data={chartData}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
-
+          {chartData.map((data: ExpensesChartData) => (
             <BarSeries
               valueField={valueField}
               argumentField={argumentField}
-              name={name}
+              name={data.category}
             />
+          ))}
 
-        <Stack
-            stacks={[
-              { series: [`${valueField}`, `${name}`] },
-            ]}
-          />
+          {chartData.map((data: ExpensesChartData) => (
+            console.log(data)
+            // <Stack stacks={[{ series: [`${data.category}`, `${argumentField}`] }]} />
+          ))}
+          <Stack />
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses ${month} ${year}`} />
-          {/* <SwitchChartBtn
+          <Title text={`Expenses by category`} />
+          <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={pieChartText}
-          /> */}
+          /> 
           <Animation />
         </Chart>
       ) : (
-        <>
+        <div className={classes.chartContainer}>
           <Chart data={chartData}>
             <Palette
               scheme={scheme}
@@ -142,18 +137,16 @@ export default function ExpensesMonthlyChartDashboard({
               name={name}
             />
             <Legend />
-            <Title text={`Expenses ${month} ${year}`} />
-            {/* <SwitchChartBtn
+            <Title text={`Expenses by category`} />
+            <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
-            /> */}
+            /> 
             <EventTracker />
             <Tooltip />
             <Animation />
           </Chart>
-         
-      
-        </>
+        </div>
       )}
     </Paper>
   )
