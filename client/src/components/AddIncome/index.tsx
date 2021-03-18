@@ -29,9 +29,7 @@ const useStyles = makeStyles((theme) =>
     },
     btnSaveWrapper: {
       display: 'flex',
-      justifyContent: 'center',
-      width: '100%',
-      margin: '0 auto'
+      paddingLeft: '65px',
     },
     buttons: {
       border: 'none',

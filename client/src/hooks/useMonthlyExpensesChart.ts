@@ -21,12 +21,12 @@ export default function useMonthlyExpensesChart(monthlyData: any) {
       let debtTotal = 0
       let savingsTotal = 0
       let holidayTotal = 0
-      if (monthlyData.length < 1) {
+      if (!monthlyData) {
         setChartData([])
       } else {
         for (const day of monthlyData) {
           for (const expense of day.expenses) {
-            const { category, amount} = expense
+            const { category, amount } = expense
             if (category.includes('housing')) {
               housingTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
@@ -142,11 +142,13 @@ export default function useMonthlyExpensesChart(monthlyData: any) {
           }
           setChartData(defaultMonthlyChartExpensesData)
           //we only want to show the categories that have a value > 0
-          const filteredChartData = defaultMonthlyChartExpensesData.filter((data) => {
-            if (data.amount > 0) {
-              return data
+          const filteredChartData = defaultMonthlyChartExpensesData.filter(
+            (data) => {
+              if (data.amount > 0) {
+                return data
+              }
             }
-          })
+          )
           setChartData(filteredChartData)
           // console.log('this should update', chartData)
         }
