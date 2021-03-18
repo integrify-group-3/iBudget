@@ -56,10 +56,6 @@ export type ExpensesChartProps = {
   chartData: ExpensesChartData[]
   year: number
   month: string
-  valueField: string
-  argumentField: string
-  name: string
-  className?: string
 }
 
 

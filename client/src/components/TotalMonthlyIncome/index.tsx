@@ -24,7 +24,7 @@ export default function TotalMonthlyIncome({
   return (
     <React.Fragment>
       <Title>
-        Total Income {month} {year}
+        Income {month} {year}
       </Title>
       {totalAmount > 0 ? (
         <Typography
