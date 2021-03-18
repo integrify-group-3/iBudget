@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteBtn: {
     margin: theme.spacing(1),
-    color: 'red',
+    color: '#ff3a56',
   },
   incomeList: {
     display: 'flex',

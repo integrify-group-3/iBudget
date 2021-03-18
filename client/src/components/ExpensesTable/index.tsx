@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   deleteExpense: {
-    color: 'red',
+    color: '#ff3a56',
     cursor: 'pointer',
   },
   editExpenseContainer: {

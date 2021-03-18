@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const months = [
     'January',
     'February',
@@ -14,6 +16,7 @@ export const months = [
   ]
 
   export const date = new Date()
+  export const formattedCurrentDate = moment(date).format('LL')
   export const year = date.getFullYear() 
   export const monthIndex = date.getMonth()
   export const currentMonth = months[monthIndex]

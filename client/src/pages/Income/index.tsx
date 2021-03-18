@@ -165,9 +165,6 @@ export default function IncomePage(props: any) {
                     chartData={incomeChartData}
                     month={dateView.month}
                     year={dateView.year}
-                    valueField="amount"
-                    argumentField="category"
-                    name="category"
                   />
                 ) : (
                   <EmptyChartContainer

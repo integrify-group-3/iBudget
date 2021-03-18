@@ -29,12 +29,14 @@ import {
   schemeSet1,
   schemeSet2,
   schemeSet3,
+  
+
 } from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
 import { ExpensesChartData } from '../../types/expenses'
-import { ExpensesChartDashboardProps } from '../../types/ui'
+import { IncomeChartDashboardProps } from '../../types'
 
 const schemeCollection = [
   schemeCategory10,
@@ -46,11 +48,12 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
+ 
 ]
 
 const useStyles = makeStyles((theme: any) => ({
   chartContainer: {
-    height: '265px',
+    height: '265px'
   },
   root: {
     height: '100px',
@@ -73,17 +76,18 @@ const useStyles = makeStyles((theme: any) => ({
     justifyContent: 'center',
     marginTop: theme.spacing(1),
   },
+ 
 }))
 
-export default function ExpensesMonthlyChartDashboard({
+export default function IncomeMonthlyChartDashboard({
   chartData,
   year,
   month,
   valueField,
   argumentField,
   name,
-}: ExpensesChartDashboardProps) {
-  const [scheme, setScheme] = useState(schemeCollection[8])
+}: IncomeChartDashboardProps) {
+  const [scheme, setScheme] = useState(schemeCollection[1])
   const classes = useStyles()
   const [switchChart, setSwitchChart] = useState(false)
   console.log(argumentField, name, argumentField, chartData)
@@ -96,28 +100,27 @@ export default function ExpensesMonthlyChartDashboard({
 
   return (
     <Paper className={classes.chartContainer}>
-      {switchChart ? (
+      {!switchChart ? (
         <Chart data={chartData}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
-          {chartData.map((data: ExpensesChartData) => (
+
             <BarSeries
               valueField={valueField}
               argumentField={argumentField}
-              name={data.category}
+              name={name}
             />
-          ))}
 
-          {chartData.map((data: ExpensesChartData) => (
-            console.log(data)
-            // <Stack stacks={[{ series: [`${data.category}`, `${argumentField}`] }]} />
-          ))}
-          <Stack />
+        <Stack
+            stacks={[
+              { series: [`${valueField}`, `${name}`, `${argumentField}`] },
+            ]}
+          />
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses by category`} />
+          <Title text={`Expenses ${month} ${year}`} />
           <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={pieChartText}
@@ -138,7 +141,7 @@ export default function ExpensesMonthlyChartDashboard({
               innerRadius={0.5}
             />
             <Legend />
-            <Title text={`Expenses by category`} />
+            <Title text={`Income ${month} ${year}`} />
             <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
@@ -147,6 +150,8 @@ export default function ExpensesMonthlyChartDashboard({
             <Tooltip />
             <Animation />
           </Chart>
+         
+      
         </div>
       )}
     </Paper>

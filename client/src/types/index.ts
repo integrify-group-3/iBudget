@@ -1,5 +1,5 @@
 // Action types
-import { UserState } from './user'
+import { UserState, User } from './user'
 import { Income, IncomeState } from './income'
 import { Expense, DailyExpense, ExpensesState } from './expenses'
 import { ValidationState } from './validation'
@@ -84,6 +84,13 @@ export type ViewMonth = {
   income: Array<Income>
 }
 
+export type ProfileDashboardProps = {
+  totalBudget: number
+  year: string
+  month: number
+  user: User
+}
+
 export type MonthlyBudgetProps = {
   month: string
   year: number
@@ -123,6 +130,12 @@ export type IncomeChartData = {
 }
 
 export type IncomeChartDataProps = {
+  chartData: IncomeChartData[]
+  year: number
+  month: string
+}
+
+export type IncomeChartDashboardProps = {
   chartData: IncomeChartData[]
   year: number
   month: string
