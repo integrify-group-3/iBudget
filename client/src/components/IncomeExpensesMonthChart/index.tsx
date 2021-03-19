@@ -27,11 +27,17 @@ export default function IncomeExpensesMonthChart({
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
-          <BarSeries valueField="income" argumentField="month" name="Income" />
+          <BarSeries 
+            valueField="income" 
+            argumentField="month" 
+            name="Income" 
+            color="#2d27a7"
+            />
           <BarSeries
             valueField="expenses"
             argumentField="month"
             name="Expenses"
+            color="#e51a60"
           />
           <Stack />
           <EventTracker />

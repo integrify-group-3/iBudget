@@ -28,6 +28,7 @@ import ExpensesTable from '../../components/ExpensesTable'
 import TileContentExpenses from '../../components/TileContentExpenses'
 import AddExpense from '../../components/AddExpense'
 import { clearUpdate } from '../../redux/actions/expenses'
+import { bigTabletScreen, mobileScreen } from '../../utils/windowSize'
 
 import 'react-calendar/dist/Calendar.css'
 
@@ -36,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     padding: '5rem 1rem',
-    width: '100vw',
-    paddingLeft: '6rem',
+    width: '98vw',
+    paddingLeft: `${mobileScreen ? `3rem` : `6rem`}`,
     overflow: 'hidden',
+    // background: '#131313;'
   },
   container: {
     paddingTop: theme.spacing(3),
@@ -46,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: '90vw',
+    width: `${mobileScreen ? `99vw` : `90vw`}`,
   },
   paper: {
     padding: theme.spacing(2),
@@ -56,9 +58,17 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 240,
+    borderRadius: '18px',
+    // background: '#131313',
+    border: '1px solid lightgrey',
+  },
+  testDarkColors: {
+    color: '#48464f',
   },
   fixedHeightTable: {
     height: 340,
+    borderRadius: '18px',
+    // background: '#131313'
   },
   fixedHeightChart: {
     height: 550,
@@ -173,8 +183,7 @@ export default function ExpensesPage(props: any) {
           console.log(tileContentData)
           loadChart()
           dispatch(clearUpdate())
-        }, 1000);
-       
+        }, 1000)
       }
     }
   }, [
@@ -252,54 +261,55 @@ export default function ExpensesPage(props: any) {
   }
 
   //this function is not working properly, fixing it
-  const switchMonthOnClick = useCallback 
-  (async (e: any) => {
-    console.log(e)
-    setIsFormShowing(false)
-    setIsDayClicking(true)
-    setSchedule({ ...schedule, day: e.activeStartDate})
+  const switchMonthOnClick = useCallback(
+    async (e: any) => {
+      console.log(e)
+      setIsFormShowing(false)
+      setIsDayClicking(true)
+      setSchedule({ ...schedule, day: e.activeStartDate })
 
-    try {
-      const selectedYear = await e.activeStartDate.getFullYear()
-      const currentIndex = await e.activeStartDate.getMonth()
-      // console.log('selectedYearTwo, current indextwo', selectedYear, currentIndex)
-      dateView.year = selectedYear
-      dateView.month = months[currentIndex]
-      console.log('date view', dateView)
-      const foundYear = await calendarData.years.find(
-        (y: CalendarScheduler) => y.year === dateView.year
-      )
-      const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === months[currentIndex]
-      )
-      console.log(foundMonth)
-
-      // await foundYear.months.map((month: any) => {
-      if((foundMonth.name === dateView.month)) {
-        switchMonth.name = foundMonth.name
-        switchMonth.income = foundMonth.income
-        switchMonth.days = foundMonth.days
-        setTileContentData(foundMonth)
-        setMonthlyChart(foundMonth.days)
-        setMonthlyData(switchMonth)
-        console.log('monthly data', monthlyData)
-        console.log('monthly chart', monthlyChart)
-        const selectedDay = await foundMonth.days.find(
-          (d: any) => moment(d.day).format('LL') === moment(e.activeStartDate).format('LL')
+      try {
+        const selectedYear = await e.activeStartDate.getFullYear()
+        const currentIndex = await e.activeStartDate.getMonth()
+        // console.log('selectedYearTwo, current indextwo', selectedYear, currentIndex)
+        dateView.year = selectedYear
+        dateView.month = months[currentIndex]
+        console.log('date view', dateView)
+        const foundYear = await calendarData.years.find(
+          (y: CalendarScheduler) => y.year === dateView.year
         )
-        if (selectedDay !== undefined) {
-          setDailyExpense(selectedDay)
-        } else {
-          setDailyExpense(schedule)
+        const foundMonth = await foundYear.months.find(
+          (month: any) => month.name === months[currentIndex]
+        )
+        console.log(foundMonth)
+
+        // await foundYear.months.map((month: any) => {
+        if (foundMonth.name === dateView.month) {
+          switchMonth.name = foundMonth.name
+          switchMonth.income = foundMonth.income
+          switchMonth.days = foundMonth.days
+          setTileContentData(foundMonth)
+          setMonthlyChart(foundMonth.days)
+          setMonthlyData(switchMonth)
+          console.log('monthly data', monthlyData)
+          console.log('monthly chart', monthlyChart)
+          const selectedDay = await foundMonth.days.find(
+            (d: any) =>
+              moment(d.day).format('LL') ===
+              moment(e.activeStartDate).format('LL')
+          )
+          if (selectedDay !== undefined) {
+            setDailyExpense(selectedDay)
+          } else {
+            setDailyExpense(schedule)
+          }
         }
-
+      } catch (err) {
+        return err
       }
-    } catch (err) {
-      return err
-    }
-  }, [dateView, monthlyData]
+    },
+    [dateView, monthlyData]
   )
-
 
   return (
     <div className={classes.root}>
@@ -310,7 +320,27 @@ export default function ExpensesPage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={5} md={6} lg={6}>
+            <Grid item xs={5} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <MonthlyBudget
+                  year={dateView.year}
+                  month={dateView.month}
+                  totalMonthlyExpenses={totalMonthlyExpenses}
+                  totalMonthlyIncome={totalMonthlyIncome}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={5} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <TotalMonthlyExpenses
+                  year={dateView.year}
+                  month={dateView.month}
+                  totalMonthlyExpenses={totalMonthlyExpenses}
+                  totalMonthlyIncome={totalMonthlyIncome}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={11} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChart
@@ -326,27 +356,8 @@ export default function ExpensesPage(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <TotalMonthlyExpenses
-                  year={dateView.year}
-                  month={dateView.month}
-                  totalMonthlyExpenses={totalMonthlyExpenses}
-                  totalMonthlyIncome={totalMonthlyIncome}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={5} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <MonthlyBudget
-                  year={dateView.year}
-                  month={dateView.month}
-                  totalMonthlyExpenses={totalMonthlyExpenses}
-                  totalMonthlyIncome={totalMonthlyIncome}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+
+            <Grid item xs={11} md={6} lg={6}>
               <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}

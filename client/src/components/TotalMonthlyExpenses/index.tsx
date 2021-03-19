@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     flex: 1,
   },
   totalExpensesText: {
-    color: '#FF7043',
+    color: '#fd3865',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',

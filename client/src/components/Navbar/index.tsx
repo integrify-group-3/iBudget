@@ -105,21 +105,12 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      width: '24rem',
+      width: '20rem',
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
       overflow: 'auto',
-    },
-    btnStyle: {
-      borderRadius: 50,
-      width: '35%',
-      textAlign: 'center',
-      margin: 'auto',
-      padding: '.3rem',
-      height: '1.7rem',
-      // backgroundColor: '#4F416B'
     },
     userContainer: {
       width: '10rem', 
@@ -151,7 +142,16 @@ const useStyles = makeStyles((theme: Theme) =>
       objectFit: 'cover',
       width: '100%',
       height: '100%'
-    }
+    },
+    btnStyle: {
+      borderRadius: 50,
+      width: '32%',
+      textAlign: 'center',
+      marginLeft: '2rem',
+      padding: '.3rem',
+      height: '1.7rem',
+      // backgroundColor: '#4F416B'
+    },
   })
 )
 

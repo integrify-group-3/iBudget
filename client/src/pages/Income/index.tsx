@@ -158,22 +158,6 @@ export default function IncomePage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={5} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                {incomeChartData.length > 0 ? (
-                  <IncomeMonthlyChart
-                    chartData={incomeChartData}
-                    month={dateView.month}
-                    year={dateView.year}
-                  />
-                ) : (
-                  <EmptyChartContainer
-                    month={dateView.month}
-                    year={dateView.year}
-                  />
-                )}
-              </Paper>
-            </Grid>
             <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <TotalMonthlyIncome
@@ -192,6 +176,22 @@ export default function IncomePage(props: any) {
                   totalMonthlyExpenses={totalMonthlyExpenses}
                   totalMonthlyIncome={totalMonthlyIncome}
                 />
+              </Paper>
+            </Grid>
+            <Grid item xs={5} md={6} lg={6}>
+              <Paper className={fixedHeightPaper}>
+                {incomeChartData.length > 0 ? (
+                  <IncomeMonthlyChart
+                    chartData={incomeChartData}
+                    month={dateView.month}
+                    year={dateView.year}
+                  />
+                ) : (
+                  <EmptyChartContainer
+                    month={dateView.month}
+                    year={dateView.year}
+                  />
+                )}
               </Paper>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
