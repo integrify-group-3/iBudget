@@ -1,25 +1,15 @@
 import React, { useState } from 'react'
-import Paper from '@material-ui/core/Paper'
 
 import {
   Chart,
   PieSeries,
-  PieSeriesProps,
-  ValueAxis,
-  ArgumentAxis,
-  BarSeries,
   Legend,
   Tooltip,
   Title,
+  
 } from '@devexpress/dx-react-chart-material-ui'
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import NativeSelect from '@material-ui/core/NativeSelect'
-import FormControl from '@material-ui/core/FormControl'
-import { Animation } from '@devexpress/dx-react-chart'
-import { scaleBand } from '@devexpress/dx-chart-core'
-import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
-import { EventTracker } from '@devexpress/dx-react-chart'
+import { Animation, EventTracker, Palette } from '@devexpress/dx-react-chart'
 import {
   schemeCategory10,
   schemeAccent,
@@ -31,10 +21,8 @@ import {
   schemeSet2,
   schemeSet3,
 } from 'd3-scale-chromatic'
-import { Palette } from '@devexpress/dx-react-chart'
 
-import SwitchChartBtn from '../../components/SwitchChartBtn'
-import { ExpensesChartData } from '../../types/expenses'
+
 import { ExpensesChartProps } from '../../types/ui'
 
 const schemeCollection = [
@@ -86,9 +74,6 @@ export default function ExpensesChart({
 }: ExpensesChartProps) {
   const [scheme, setScheme] = useState(schemeCollection[3])
 
-  const changeScheme = (e: any) => {
-    setScheme(schemeCollection[e.target.value])
-  }
   const classes = useStyles()
 
   return (

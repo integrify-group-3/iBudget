@@ -117,7 +117,6 @@ export default function ExpensesMonthlyChartDashboard({
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses by category`} />
           <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={pieChartText}
@@ -138,7 +137,6 @@ export default function ExpensesMonthlyChartDashboard({
               innerRadius={0.5}
             />
             <Legend />
-            <Title text={`Expenses by category`} />
             <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
