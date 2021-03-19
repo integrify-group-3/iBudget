@@ -47,6 +47,6 @@ export default function useYearIncome(selectedYear: number) {
     setTotal(totalIncomes)
   }, [calculateTotal])
 
-  return [total]
+  return [yearData, total]
 }
 

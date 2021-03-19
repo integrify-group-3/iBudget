@@ -15,13 +15,16 @@ import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import EmptyChartContainer from '../../components/EmptyChartContainer'
 import { Income } from '../../types/income'
 import useIncome from '../../hooks/useMonthlyIncome'
+import useYearIncome from '../../hooks/useYearIncome'
 import IncomeTable from '../../components/IncomeTable'
 import TotalMonthlyIncome from '../../components/TotalMonthlyIncome'
-import { months } from '../../utils/dateValues'
+import { date, months } from '../../utils/dateValues'
 import IncomeMonthlyChart from '../../components/IncomeMonthlyChart'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
+import TileContentIncome from '../../components/TileContentIncome'
+
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
@@ -65,8 +68,8 @@ export default function IncomePage(props: any) {
     (state: AppState) => state.user.isAuthenticated
   )
   const isUpdating = useSelector((state: AppState) => state.income.isUpdating)
-
   const [isMonthClicking, setIsMonthClicking] = useState(false)
+  const [selectedYear, setSelectedYear] = useState(0)
   const [calendarDate, setCalendarDate] = useState(new Date())
   const [calendar, setCalendar] = useState({} as any)
   const [monthlyChart, setMonthlyChart] = useState([])
@@ -79,6 +82,7 @@ export default function IncomePage(props: any) {
     calendarData,
     defaultMonth,
   ] = useIncome()
+  const [yearData, totalYearIncome] = useYearIncome(selectedYear)
   const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
   const [totalMonthlyIncome] = useTotalMonthlyIncome(monthlyData)
   const [totalMonthlyExpenses] = useTotalMonthlyExpenses(monthlyData)
@@ -87,6 +91,11 @@ export default function IncomePage(props: any) {
     year: 0,
     month: '',
   } as DateView)
+  const [tileContentData, setTileContentData] = useState({
+    name: '',
+    income: [],
+    days: [{ day: '', expenses: [] }],
+  } as ViewMonth)
 
   //this one only loads the chart for default month
   const loadChart = () => {
@@ -98,6 +107,7 @@ export default function IncomePage(props: any) {
       props.history.push('/login')
     } else {
       setCalendar(calendarData)
+      setSelectedYear(date.getFullYear())
       console.log(isMonthClicking, isUpdating)
       if (!isMonthClicking) {
         // console.log('I am calling now', incomeData)
@@ -106,6 +116,7 @@ export default function IncomePage(props: any) {
         loadChart()
         // console.log('I am calling now for monthly data', defaultMonth)
         setMonthlyData(defaultMonth)
+        setTileContentData(yearData.months)
         dispatch(clearUpdate())
       } else if(isMonthClicking && isUpdating) {
          setMonthlyData(defaultMonth)
@@ -135,10 +146,6 @@ export default function IncomePage(props: any) {
     console.log('from changeMonthView', monthlyData)
     setIsLoaded(true)
   }
-
-  // useEffect(() => {
-  //   setMonthIncome(incomeData as Income[])
-  // }, [])
 
   const showMonthOnClick = (e: any) => {
     setIsMonthClicking(true)
@@ -206,15 +213,20 @@ export default function IncomePage(props: any) {
             </Grid>
             <Grid item xs={10} md={6} lg={6}>
               <Calendar
-                // onChange={onChange}
                 value={calendarDate}
                 showNeighboringMonth={true}
-                // onClickYear={showYearOnClick}
                 onChange={showMonthOnClick}
                 defaultView="year"
                 maxDetail="year"
-                // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}
-              />
+                tileContent={({ activeStartDate, date, view }: any) => (
+                  <TileContentIncome
+                    date={date}
+                    view={view}
+                    activeStartDate={activeStartDate}
+                    contentData={tileContentData}
+                  />
+                )}         
+                />
             </Grid>
           </Grid>
           <Box pt={4}></Box>
