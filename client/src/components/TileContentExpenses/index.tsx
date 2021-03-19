@@ -69,17 +69,16 @@ export default function TileContentExpenses({
       const selectedDay = contentData.days.find(
         (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
       )
-      // console.log(selectedDay)
       setDay(selectedDay)
       setLoadTileContent(true)
       if (view === 'month' && day !== undefined && loadTileContent) {
         if (day.expenses.length > 0) {
           setTileLoaded(true)
-          // setLoadTileContent(false)
         }
       }
     }
   }, [day, loadTileContent, tileLoaded])
+
   useEffect(() => {
     setTimeout(() => {
       loadTiles()

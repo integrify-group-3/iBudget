@@ -85,7 +85,7 @@ export default function Analytics(props: any) {
     yearExpensesData,
     totalYearExpenses,
   ] = useYearExpenses(selectedYear)
-  const [totalYearIncome] = useYearIncome(selectedYear)
+  const [yearData, totalYearIncome] = useYearIncome(selectedYear)
   const [yearChartErr, yearChartData] = useYearChart(yearChart)
   const [switchView, setSwitchView] = useState(false)
   const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)

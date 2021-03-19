@@ -35,7 +35,6 @@ import { Palette } from '@devexpress/dx-react-chart'
 import SwitchChartBtn from '../../components/SwitchChartBtn'
 import { ExpensesChartData } from '../../types/expenses'
 import { ExpensesChartDashboardProps } from '../../types/ui'
-
 const schemeCollection = [
   schemeCategory10,
   schemeAccent,
@@ -128,7 +127,6 @@ export default function ExpensesMonthlyChartDashboard({
           <Chart data={chartData}>
             <Palette
               scheme={scheme}
-              // name="category"
             />
             <PieSeries
               valueField={valueField}
