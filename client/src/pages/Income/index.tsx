@@ -107,7 +107,7 @@ export default function IncomePage(props: any) {
     } else {
       setCalendar(calendarData)
       setSelectedYear(date.getFullYear())
-      // console.log(isMonthClicking, isUpdating)
+      //console.log(isMonthClicking, isUpdating)
       if (!isMonthClicking) {
         // console.log('I am calling now', incomeData)
         //atm the below set state keeps running an infinite loop
@@ -148,9 +148,9 @@ export default function IncomePage(props: any) {
     )
     setMonthIncome(foundMonth?.income)
     setMonthlyChart(foundMonth.income)
-    console.log('from changeMonthView', monthlyChart)
+    //console.log('from changeMonthView', monthlyChart)
     setMonthlyData(foundMonth)
-    console.log('from changeMonthView', monthlyData)
+    //console.log('from changeMonthView', monthlyData)
     setIsLoaded(true)
   }
 
