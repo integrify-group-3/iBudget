@@ -28,7 +28,6 @@ import TileContentIncome from '../../components/TileContentIncome'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -53,7 +52,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 340,
+    // height: 340,
+    height: 240,
+    borderRadius: '18px',
+
   },
   chartHeightPaper: {
     height: 640,
@@ -128,7 +130,15 @@ export default function IncomePage(props: any) {
         //  console.log('monthly data from ismonthclicking', monthlyData)
       }
     }
-  }, [isAuthenticated, monthIncome, incomeData, calendarData, dateView, defaultDateView, defaultMonth])
+  }, [
+    isAuthenticated,
+    monthIncome,
+    incomeData,
+    calendarData,
+    dateView,
+    defaultDateView,
+    defaultMonth,
+  ])
 
   const changeMonthView = (
     currentYear: number,

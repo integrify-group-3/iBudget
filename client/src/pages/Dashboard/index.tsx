@@ -53,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
     height: 195,
     borderRadius: '18px'
   },
+  fixedHeightChart: {
+    height: 243,
+    borderRadius: '18px'
+  },
   fixedHeightCalendar: {
     height: 260,
   },
@@ -64,27 +68,17 @@ const useStyles = makeStyles((theme) => ({
   chartHeightPaper: {
     height: 370,
   },
-  chartsContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  chartExpensesPaper: {
-    height: '200px',
-    width: '500px',
-    marginTop: `${bigTabletScreen ? '8rem' : '0'}`
-  },
-  chartIncomePaper: {
-    height: '200px',
-    width: '548px',
-    marginTop: '5rem',
-  },
+  fixedHeightChartIncome: {
+    marginTop: '1rem'
+  }
 }))
 
 export default function Dashboard(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const fixedHeightPaperChart = clsx(classes.paper, classes.fixedHeightChart)
+  const fixedHeightPaperChartIncome = clsx(classes.paper, classes.fixedHeightChartIncome)
+
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
@@ -135,7 +129,6 @@ export default function Dashboard(props: any) {
 
   console.log('should update', monthChartData)
   const { year, month } = defaultDateView
-  const { firstName, lastName } = user
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -189,9 +182,8 @@ export default function Dashboard(props: any) {
               xs={8}
               md={12}
               lg={6}
-              className={classes.chartsContainer}
             >
-              <Paper className={classes.chartExpensesPaper}>
+              <Paper className={fixedHeightPaperChart}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChartDashboard
                     chartData={expensesChartData}
@@ -205,7 +197,7 @@ export default function Dashboard(props: any) {
                   <EmptyChartContainer month={month} year={year} />
                 )}
               </Paper>
-              <Paper className={classes.chartIncomePaper}>
+              <Paper className={`${fixedHeightPaperChart} ${fixedHeightPaperChartIncome}`}>
                 {incomeChartData.length > 0 ? (
                   <IncomeMonthlyChartDashboard
                     chartData={incomeChartData}

@@ -49,7 +49,7 @@ const schemeCollection = [
 
 const useStyles = makeStyles((theme: any) => ({
   chartContainer: {
-    height: '265px',
+    height: '243px',
   },
   root: {
     height: '100px',
@@ -85,7 +85,7 @@ export default function ExpensesMonthlyChartDashboard({
   const [scheme, setScheme] = useState(schemeCollection[8])
   const classes = useStyles()
   const [switchChart, setSwitchChart] = useState(false)
-  console.log(argumentField, name, argumentField, chartData)
+
   const switchChartView = () => {
     setSwitchChart(!switchChart)
   }
@@ -94,8 +94,9 @@ export default function ExpensesMonthlyChartDashboard({
   const barChartText = 'Bar Chart'
 
   return (
-    <Paper className={classes.chartContainer}>
+    <>
       {switchChart ? (
+      <div className={classes.chartContainer}>
         <Chart data={chartData}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
@@ -122,6 +123,7 @@ export default function ExpensesMonthlyChartDashboard({
           /> 
           <Animation />
         </Chart>
+        </div>
       ) : (
         <div className={classes.chartContainer}>
           <Chart data={chartData}>
@@ -133,6 +135,7 @@ export default function ExpensesMonthlyChartDashboard({
               argumentField={argumentField}
               name={name}
               innerRadius={0.5}
+              outerRadius={0.9}
             />
             <Legend />
             <SwitchChartBtn
@@ -145,6 +148,6 @@ export default function ExpensesMonthlyChartDashboard({
           </Chart>
         </div>
       )}
-    </Paper>
+    </>
   )
 }

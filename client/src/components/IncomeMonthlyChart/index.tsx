@@ -86,6 +86,7 @@ export default function IncomeMonthlyChart({
               argumentField="category"
               name="category"
               innerRadius={0.5}
+              outerRadius={0.9}
             />
             <Legend />
             <Title text={`Income Chart ${month} ${year}`} /> 

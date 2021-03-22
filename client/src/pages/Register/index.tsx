@@ -1,8 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import GoogleLogin from 'react-google-login'
 import { Formik, Field, Form } from 'formik'
 import Button from '@material-ui/core/Button'
+import { FaGoogle } from 'react-icons/fa'
 import * as yup from 'yup'
 import {
   CssBaseline,
@@ -15,7 +17,7 @@ import {
 } from '@material-ui/core'
 
 import { AppState } from '../../types'
-import { registerUser } from '../../redux/actions/user'
+import { registerUser, googleLogin } from '../../redux/actions/user'
 
 import './style.scss'
 
@@ -24,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage:
       'linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.8))',
     borderRadius: '25px',
-    marginTop: '4rem',
-    padding: '1rem 2rem',
+    marginTop: '11rem',
+    padding: '0 2rem',
   },
   inputField: {
     borderRadius: '25px',
@@ -61,10 +63,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+
+
 export default function Register() {
   const dispatch = useDispatch()
   const classes = useStyles()
+  //this will be fixed later
+  // const clientID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`
+  const clientID = '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com'
   const errorMsg = useSelector((state: AppState) => state.error.msg.msg)
+  const responseSuccessGoogle = (response: any) => {
+    dispatch(googleLogin(response))
+  }
+  const responseFailureGoogle = () => {}
+
 
   return (
     <div className="login-page-container">
@@ -74,6 +86,27 @@ export default function Register() {
           <Typography component="h1" variant="h5" className={classes.registerHeader}>
             Sign up
           </Typography>
+          <GoogleLogin
+            clientId={clientID}
+            buttonText="Sign up with Google"
+            onSuccess={responseSuccessGoogle}
+            onFailure={responseFailureGoogle}
+            cookiePolicy={'single_host_origin'}
+            render={(renderProps: any) => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                className="google-auth-btn"
+              >
+                <FaGoogle />
+                <span>Sign Up with Google</span>
+              </button>
+            )}
+          /> 
+          <div className="login-page-container__divider">
+            <hr className="login-page-container__divider-line-before"></hr>
+            <p>Or</p>
+          </div>
           <Formik
             initialValues={{
               firstName: '',

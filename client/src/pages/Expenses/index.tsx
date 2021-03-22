@@ -59,8 +59,6 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
     borderRadius: '18px',
-    // background: '#131313',
-    border: '1px solid lightgrey',
   },
   testDarkColors: {
     color: '#48464f',
@@ -179,8 +177,8 @@ export default function ExpensesPage(props: any) {
           setDailyExpense(expensesData)
           // console.log('this should update, daily expense', dailyExpense)
           setTileContentData(defaultMonth)
-          console.log('day clicking and updating, expensesData', expensesData)
-          console.log(tileContentData)
+          // console.log('day clicking and updating, expensesData', expensesData)
+          console.log('tile content data', tileContentData)
           loadChart()
           dispatch(clearUpdate())
         }, 1000)
@@ -245,7 +243,7 @@ export default function ExpensesPage(props: any) {
       switchMonth.income = foundMonth.income
       switchMonth.days = foundMonth.days
       setMonthlyData(switchMonth)
-      console.log('monthly data from switchMonthDay', monthlyData)
+      // console.log('monthly data from switchMonthDay', monthlyData)
       //this is the proper way
       const selectedDay = await foundMonth.days.find(
         (d: any) => moment(d.day).format('LL') === moment(e).format('LL')
@@ -281,18 +279,18 @@ export default function ExpensesPage(props: any) {
         const foundMonth = await foundYear.months.find(
           (month: any) => month.name === months[currentIndex]
         )
-        console.log(foundMonth)
+        console.log('found month here', foundMonth)
 
         // await foundYear.months.map((month: any) => {
         if (foundMonth.name === dateView.month) {
+          console.log('these are the same', foundMonth.name, dateView.month)
           switchMonth.name = foundMonth.name
           switchMonth.income = foundMonth.income
           switchMonth.days = foundMonth.days
           setTileContentData(foundMonth)
           setMonthlyChart(foundMonth.days)
           setMonthlyData(switchMonth)
-          console.log('monthly data', monthlyData)
-          console.log('monthly chart', monthlyChart)
+        
           const selectedDay = await foundMonth.days.find(
             (d: any) =>
               moment(d.day).format('LL') ===
@@ -308,9 +306,12 @@ export default function ExpensesPage(props: any) {
         return err
       }
     },
-    [dateView, monthlyData]
+    [dateView, monthlyData, monthlyChart]
   )
-
+  console.log('monthly data', monthlyData)
+  console.log('monthly chart', monthlyChart)
+  console.log('chart lenght', expensesChartData.length)
+  
   return (
     <div className={classes.root}>
       <CssBaseline />

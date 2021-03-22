@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-evenly',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     padding: '2.3rem 2rem',
     fontSize: '13px',
     borderRadius: '5px',

@@ -112,7 +112,6 @@ export default function Analytics(props: any) {
     } else {
       setSelectedYear(date.getFullYear())
       setYearChart(yearExpensesData)
-      console.log('default date view', defaultDateView)
       setDateView(defaultDateView)
       setMonthlyData(defaultMonth)
     }

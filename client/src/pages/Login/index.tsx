@@ -64,7 +64,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Login(props: any) {
-  const clientID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`
+  //this will be fixed later
+  // const clientID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`
+  const clientID = '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com'
+  console.log(clientID)
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
@@ -98,7 +101,6 @@ export default function Login(props: any) {
 
   const responseSuccessGoogle = (response: any) => {
     dispatch(googleLogin(response))
-    console.log(response)
   }
 
   const responseFailureGoogle = () => {}

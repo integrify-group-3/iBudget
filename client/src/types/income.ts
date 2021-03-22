@@ -70,6 +70,11 @@ export type IncomeTableProps = {
   updateMonthlyIncome: Function
 }
 
+export type IncomeChartData = {
+  category: string
+  amount: number
+}
+
 export type TotalYearIncomeProps = {
   year: number
   totalAmount: any

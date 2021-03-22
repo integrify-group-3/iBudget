@@ -26,7 +26,7 @@ export default function YearBudget({
   return (
     <React.Fragment>
       <Title>
-        Balance for {year}
+        Total Budget for {year}
       </Title>
       <Typography component="p" variant="h4" className={classes.yearBudgetText}>
         €{totalYearIncome - totalYearExpenses} 

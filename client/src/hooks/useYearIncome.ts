@@ -16,7 +16,7 @@ export default function useYearIncome(selectedYear: number) {
 
   const calculateTotal = useCallback((yearData: any) => {
     let count = 0
-    yearData &&
+    yearData !== undefined &&
     yearData.months.map((month: any) =>
         month.income.map((income: any) => (count += income?.amount))
       )
