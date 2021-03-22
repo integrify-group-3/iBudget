@@ -19,7 +19,6 @@ export default function useMonthlyIncomeChart(monthlyIncomeData: any) {
       let taxReturnTotal = 0
       let childAllowanceTotal = 0
       if (!monthlyData || monthlyData.length < 1) {
-        console.log('this is empty, chartData')
         setChartData([])
       } else {
         for (const income of monthlyIncomeData) {

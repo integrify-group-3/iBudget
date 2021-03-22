@@ -17,6 +17,11 @@ export type Income = {
   date: any
 }
 
+export type DailyIncome = {
+  month: string
+  income: Income[]
+}
+
 export type GetIncomeAction = {
   type: typeof GET_INCOME
   payload: {
