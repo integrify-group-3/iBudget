@@ -63,7 +63,11 @@ export default function Home(props: any) {
         <Typography color="primary" variant="h6" className={classes.descStyle}>
           Cause your cash matters
         </Typography>
-        <Button
+        {isAuthenticated ?
+        <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        :
+        <>
+          <Button
           component={Link}
           to="register"
           color="primary"
@@ -81,6 +85,9 @@ export default function Home(props: any) {
         >
           Sign in
         </Button>
+        </>
+        }
+      
       </Container>
     </div>
   )

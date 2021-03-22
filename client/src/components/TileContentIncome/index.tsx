@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import moment from 'moment'
+
+import { TileContentProps } from '../../types/ui'
+import { ViewMonth } from '../../types'
 
 const useStyles = makeStyles((theme) => ({
   tileList: {
@@ -48,12 +52,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function TileContentIncome(props: any) {
+export default function TileContentIncome({
+  view,
+  date,
+  activeStartDate,
+  contentData,
+}: any) {
   const classes = useStyles()
-  console.log(props)
+  
+ 
+ 
   return (
     <div>
-      <p>Data goes here</p>
+      <p>
+        
+      </p>
     </div>
   )
 }

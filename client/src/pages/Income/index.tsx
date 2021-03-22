@@ -28,7 +28,6 @@ import TileContentIncome from '../../components/TileContentIncome'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -108,7 +107,7 @@ export default function IncomePage(props: any) {
     } else {
       setCalendar(calendarData)
       setSelectedYear(date.getFullYear())
-      console.log(isMonthClicking, isUpdating)
+      // console.log(isMonthClicking, isUpdating)
       if (!isMonthClicking) {
         // console.log('I am calling now', incomeData)
         //atm the below set state keeps running an infinite loop
@@ -118,17 +117,25 @@ export default function IncomePage(props: any) {
         setMonthlyData(defaultMonth)
         setTileContentData(yearData.months)
         dispatch(clearUpdate())
-      } else if(isMonthClicking && isUpdating) {
-         setMonthlyData(defaultMonth)
-         loadChart()
-         setMonthIncome(defaultMonth.income)
-         console.log('income data shuld update', incomeData)
+      } else if (isMonthClicking && isUpdating) {
+        setMonthlyData(defaultMonth)
+        loadChart()
+        setMonthIncome(defaultMonth.income)
+        console.log('income data shuld update', incomeData)
         //  console.log(monthIncome)
-         dispatch(clearUpdate())
+        dispatch(clearUpdate())
         //  console.log('monthly data from ismonthclicking', monthlyData)
       }
     }
-  }, [isAuthenticated, monthIncome, incomeData, calendarData, dateView, defaultDateView, defaultMonth])
+  }, [
+    isAuthenticated,
+    monthIncome,
+    incomeData,
+    calendarData,
+    dateView,
+    defaultDateView,
+    defaultMonth,
+  ])
 
   const changeMonthView = (
     currentYear: number,
@@ -225,8 +232,8 @@ export default function IncomePage(props: any) {
                     activeStartDate={activeStartDate}
                     contentData={tileContentData}
                   />
-                )}         
-                />
+                )}
+              />
             </Grid>
           </Grid>
           <Box pt={4}></Box>

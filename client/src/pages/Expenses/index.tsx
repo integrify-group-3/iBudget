@@ -281,18 +281,18 @@ export default function ExpensesPage(props: any) {
         const foundMonth = await foundYear.months.find(
           (month: any) => month.name === months[currentIndex]
         )
-        console.log(foundMonth)
+        console.log('found month here', foundMonth)
 
         // await foundYear.months.map((month: any) => {
         if (foundMonth.name === dateView.month) {
+          console.log('these are the same', foundMonth.name, dateView.month)
           switchMonth.name = foundMonth.name
           switchMonth.income = foundMonth.income
           switchMonth.days = foundMonth.days
           setTileContentData(foundMonth)
           setMonthlyChart(foundMonth.days)
           setMonthlyData(switchMonth)
-          console.log('monthly data', monthlyData)
-          console.log('monthly chart', monthlyChart)
+        
           const selectedDay = await foundMonth.days.find(
             (d: any) =>
               moment(d.day).format('LL') ===
@@ -308,9 +308,12 @@ export default function ExpensesPage(props: any) {
         return err
       }
     },
-    [dateView, monthlyData]
+    [dateView, monthlyData, monthlyChart]
   )
-
+  console.log('monthly data', monthlyData)
+  console.log('monthly chart', monthlyChart)
+  console.log('chart lenght', expensesChartData.length)
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
