@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import moment from 'moment'
+
+import { DailyIncome } from '../../types/income'
 
 const useStyles = makeStyles((theme) => ({
   tileList: {
@@ -17,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: '4.6rem',
     borderRadius: '50px',
   },
-  previewExpenses: {
+  previewIncomes: {
     minHeight: '5.6rem',
     width: '12rem',
     position: 'absolute',
@@ -36,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 2,
     lineHeight: '1.8',
   },
-  previewExpensesDate: {
+  previewIncomesDate: {
     fontWeight: 700,
   },
-  previewExpensesItem: {
+  previewIncomesItem: {
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'column',
@@ -48,12 +51,70 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function TileContentIncome(props: any) {
+export default function TileContentIncome({ contentData, date, view }: any) {
   const classes = useStyles()
-  console.log(props)
+  const [loadTileContent, setLoadTileContent] = useState(false)
+  const [contentIncome, setContentIncome] = useState([])
+  const [tileLoaded, setTileLoaded] = useState(false)
+  const [isShowing, setIsShowing] = useState(false)
+
+  const loadTIles = useCallback(async () => {
+    try {
+      const foundMonth = await contentData.find(
+        (data: any) => data.name === moment(date).format('MMMM')
+      )
+
+      setLoadTileContent(true)
+      if (
+        foundMonth.income !== undefined &&
+        loadTileContent &&
+        view === 'year'
+      ) {
+        if (foundMonth.income.length > 0) {
+          setContentIncome(foundMonth.income)
+          setTileLoaded(true)
+        }
+      }
+    } catch (err) {
+      return err
+    }
+  }, [tileLoaded, loadTileContent, contentData])
+
+  useEffect(() => {
+    setTimeout(() => {
+      loadTIles()
+    }, 1000)
+  }, [loadTIles])
+
+  const showIncomesPreview = () => {
+    setIsShowing(true)
+  }
+  const hideIncomesPreview = () => {
+    setIsShowing(false)
+  }
+
+  if (!tileLoaded) return <div></div>
+
   return (
-    <div>
-      <p>Data goes here</p>
+    <div
+      className={classes.tileContent}
+      onMouseEnter={showIncomesPreview}
+      onMouseLeave={hideIncomesPreview}
+    >
+      {isShowing && (
+        <div className={classes.previewIncomes}>
+          {contentIncome.map((income: any) => (
+            <>
+              <div className={classes.previewIncomesDate}>{income.month}</div>
+              <ul key={income._id} style={{ listStyle: 'none' }}>
+                <li className={classes.previewIncomesItem}>
+                  {income.category} {income.amount}
+                </li>
+              </ul>
+            </>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

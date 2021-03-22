@@ -108,7 +108,7 @@ export default function IncomePage(props: any) {
     } else {
       setCalendar(calendarData)
       setSelectedYear(date.getFullYear())
-      console.log(isMonthClicking, isUpdating)
+      //console.log(isMonthClicking, isUpdating)
       if (!isMonthClicking) {
         // console.log('I am calling now', incomeData)
         //atm the below set state keeps running an infinite loop
@@ -118,13 +118,13 @@ export default function IncomePage(props: any) {
         setMonthlyData(defaultMonth)
         setTileContentData(yearData.months)
         dispatch(clearUpdate())
-      } else if(isMonthClicking && isUpdating) {
-         setMonthlyData(defaultMonth)
-         loadChart()
-         setMonthIncome(defaultMonth.income)
-         console.log('income data shuld update', incomeData)
+      } else if (isMonthClicking && isUpdating) {
+        setMonthlyData(defaultMonth)
+        loadChart()
+        setMonthIncome(defaultMonth.income)
+        console.log('income data shuld update', incomeData)
         //  console.log(monthIncome)
-         dispatch(clearUpdate())
+        dispatch(clearUpdate())
         //  console.log('monthly data from ismonthclicking', monthlyData)
       }
     }
@@ -141,9 +141,9 @@ export default function IncomePage(props: any) {
     )
     setMonthIncome(foundMonth?.income)
     setMonthlyChart(foundMonth.income)
-    console.log('from changeMonthView', monthlyChart)
+    //console.log('from changeMonthView', monthlyChart)
     setMonthlyData(foundMonth)
-    console.log('from changeMonthView', monthlyData)
+    //console.log('from changeMonthView', monthlyData)
     setIsLoaded(true)
   }
 
@@ -225,8 +225,8 @@ export default function IncomePage(props: any) {
                     activeStartDate={activeStartDate}
                     contentData={tileContentData}
                   />
-                )}         
-                />
+                )}
+              />
             </Grid>
           </Grid>
           <Box pt={4}></Box>
