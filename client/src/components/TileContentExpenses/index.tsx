@@ -65,11 +65,12 @@ export default function TileContentExpenses({
   const [isShowing, setIsShowing] = useState(false)
 
   const loadTiles = useCallback(async () => {
-    // if (contentData !== undefined) {
+    
       try {
         const selectedDay = await contentData.days.find(
           (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
         )
+        console.log('selected day', selectedDay)
         setDay(selectedDay)
         setLoadTileContent(true)
         if (view === 'month' && loadTileContent) {
@@ -81,8 +82,7 @@ export default function TileContentExpenses({
       catch(err) {
         return err
       }
-      
-    // }
+ 
   }, [day, loadTileContent, tileLoaded])
 
   useEffect(() => {

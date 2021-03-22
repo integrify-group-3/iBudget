@@ -49,7 +49,7 @@
   
   .react-calendar__tile--active {
     background:#865CFF;
-    color: white;
+    color: #18b6b6;
     border-radius: 50px;
   }
   .react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus {

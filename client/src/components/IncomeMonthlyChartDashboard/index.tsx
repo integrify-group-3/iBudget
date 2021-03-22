@@ -35,7 +35,7 @@ import {
 import { Palette } from '@devexpress/dx-react-chart'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
-import { ExpensesChartData } from '../../types/expenses'
+import { IncomeChartData } from '../../types/income'
 import { IncomeChartDashboardProps } from '../../types'
 
 const schemeCollection = [
@@ -53,7 +53,7 @@ const schemeCollection = [
 
 const useStyles = makeStyles((theme: any) => ({
   chartContainer: {
-    height: '265px'
+    height: '243px'
   },
   root: {
     height: '100px',
@@ -99,18 +99,21 @@ export default function IncomeMonthlyChartDashboard({
   const barChartText = 'Bar Chart'
 
   return (
-    <Paper className={classes.chartContainer}>
-      {!switchChart ? (
+    <>
+      {switchChart ? (
+      <div className={classes.chartContainer}>
         <Chart data={chartData}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
 
+          {chartData.map((data: IncomeChartData) => (
             <BarSeries
               valueField={valueField}
               argumentField={argumentField}
-              name={name}
+              name={data.category}
             />
+          ))}
 
         <Stack
             stacks={[
@@ -120,13 +123,13 @@ export default function IncomeMonthlyChartDashboard({
           <EventTracker />
           <Tooltip />
           <Legend />
-          <Title text={`Expenses ${month} ${year}`} />
           <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={pieChartText}
           /> 
           <Animation />
         </Chart>
+        </div>
       ) : (
         <div className={classes.chartContainer}>
           <Chart data={chartData}>
@@ -139,9 +142,9 @@ export default function IncomeMonthlyChartDashboard({
               argumentField={argumentField}
               name={name}
               innerRadius={0.5}
+              outerRadius={0.9}
             />
             <Legend />
-            <Title text={`Income ${month} ${year}`} />
             <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
@@ -154,6 +157,6 @@ export default function IncomeMonthlyChartDashboard({
       
         </div>
       )}
-    </Paper>
+    </>
   )
 }

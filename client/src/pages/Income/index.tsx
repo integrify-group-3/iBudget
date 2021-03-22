@@ -52,7 +52,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 340,
+    // height: 340,
+    height: 240,
+    borderRadius: '18px',
+
   },
   chartHeightPaper: {
     height: 640,

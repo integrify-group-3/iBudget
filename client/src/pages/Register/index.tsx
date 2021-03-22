@@ -68,7 +68,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
   const dispatch = useDispatch()
   const classes = useStyles()
-  const clientID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`
+  //this will be fixed later
+  // const clientID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`
+  const clientID = '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com'
   const errorMsg = useSelector((state: AppState) => state.error.msg.msg)
   const responseSuccessGoogle = (response: any) => {
     dispatch(googleLogin(response))
@@ -84,7 +86,7 @@ export default function Register() {
           <Typography component="h1" variant="h5" className={classes.registerHeader}>
             Sign up
           </Typography>
-          {/* <GoogleLogin
+          <GoogleLogin
             clientId={clientID}
             buttonText="Sign up with Google"
             onSuccess={responseSuccessGoogle}
@@ -100,7 +102,7 @@ export default function Register() {
                 <span>Sign Up with Google</span>
               </button>
             )}
-          /> */}
+          /> 
           <div className="login-page-container__divider">
             <hr className="login-page-container__divider-line-before"></hr>
             <p>Or</p>
