@@ -45,7 +45,7 @@ export type ToggleDialogAction = {
   }
 }
 
-export type UiActions = ToggleDialogAction
+export type UiActions = ToggleDialogAction 
 
 // Use this union in reducer
 export type ProductActions = AddProductAction | RemoveProductAction

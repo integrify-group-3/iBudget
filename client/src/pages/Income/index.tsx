@@ -112,8 +112,6 @@ export default function IncomePage(props: any) {
       setSelectedYear(date.getFullYear())
       //console.log(isMonthClicking, isUpdating)
       if (!isMonthClicking) {
-        // console.log('I am calling now', incomeData)
-        //atm the below set state keeps running an infinite loop
         setDateView(defaultDateView as DateView)
         loadChart()
         // console.log('I am calling now for monthly data', defaultMonth)

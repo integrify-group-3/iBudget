@@ -43,7 +43,7 @@ export default function useMonthlyExpenses(
     // console.log('I run every time expenses are updated', expenses)
     setExpensesData(expenses)
     setCalendarData(calendar)
-    console.log('I run every time expenses are updated', expensesData)
+    // console.log('I run every time expenses are updated', expensesData)
     setDateView({ year: year, month: currentMonth })
   }, [expenses, calendar, calendarData, monthData])
   

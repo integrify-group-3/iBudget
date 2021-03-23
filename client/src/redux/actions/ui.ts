@@ -1,10 +1,10 @@
 import {
   TOGGLE_DIALOG,
-  ToggleDialogAction,
+  UiActions,
   DialogType,
 } from '../../types'
 
-export function toggleDialog(dialog: DialogType): ToggleDialogAction {
+export function toggleDialog(dialog: DialogType): UiActions {
   return {
     type: TOGGLE_DIALOG,
     payload: {
@@ -12,3 +12,4 @@ export function toggleDialog(dialog: DialogType): ToggleDialogAction {
     }
   }
 }
+

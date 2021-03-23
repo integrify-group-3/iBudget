@@ -56,25 +56,23 @@ export default function TileContentExpenses({
   date,
   view,
   contentData,
-  activeStartDate,
+  activeStartDate
 }: TileContentProps) {
-  const classes = useStyles()
+  const classes = useStyles()  
   const [day, setDay] = useState({} as DailyExpense)
   const [loadTileContent, setLoadTileContent] = useState(false)
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
 
   const loadTiles = useCallback(async () => {
-    
       try {
         const selectedDay = await contentData.days.find(
           (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
         )
-        console.log('selected day', selectedDay)
         setDay(selectedDay)
         setLoadTileContent(true)
-        if (view === 'month' && loadTileContent) {
-          if (day.expenses.length > 0) {
+        if (view === 'month' && day !== undefined && loadTileContent) {
+          if (day.expenses !== undefined && day.expenses.length > 0) {
             setTileLoaded(true)
           }
         }
@@ -82,8 +80,7 @@ export default function TileContentExpenses({
       catch(err) {
         return err
       }
- 
-  }, [day, loadTileContent, tileLoaded])
+  }, [contentData, day, loadTileContent, tileLoaded])
 
   useEffect(() => {
     setTimeout(() => {

@@ -18,7 +18,6 @@ export default function ui(
       },
     }
   }
-
   default:
     return state
   }
