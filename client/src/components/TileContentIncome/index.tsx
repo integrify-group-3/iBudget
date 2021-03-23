@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import moment from 'moment'
 
-import { DailyIncome } from '../../types/income'
+import './style.scss'
 
 const useStyles = makeStyles((theme) => ({
   tileList: {
@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TileContentIncome({ contentData, date, view }: any) {
   const classes = useStyles()
   const [loadTileContent, setLoadTileContent] = useState(false)
+  const [monthName, setMonthName] = useState('')
   const [contentIncome, setContentIncome] = useState([])
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
@@ -71,6 +72,7 @@ export default function TileContentIncome({ contentData, date, view }: any) {
         view === 'year'
       ) {
         if (foundMonth.income.length > 0) {
+          setMonthName(foundMonth.name)
           setContentIncome(foundMonth.income)
           setTileLoaded(true)
         }
@@ -97,15 +99,16 @@ export default function TileContentIncome({ contentData, date, view }: any) {
 
   return (
     <div
-      className={classes.tileContent}
+      // className={classes.tileContent}
+      className="tile-content"
       onMouseEnter={showIncomesPreview}
       onMouseLeave={hideIncomesPreview}
     >
       {isShowing && (
-        <div className={classes.previewIncomes}>
+        <ul className={classes.previewIncomes}>
+          <li className={classes.previewIncomesDate}>{monthName}</li>
           {contentIncome.map((income: any) => (
             <>
-              <div className={classes.previewIncomesDate}>{income.month}</div>
               <ul key={income._id} style={{ listStyle: 'none' }}>
                 <li className={classes.previewIncomesItem}>
                   {income.category} {income.amount}
@@ -113,7 +116,7 @@ export default function TileContentIncome({ contentData, date, view }: any) {
               </ul>
             </>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   )
