@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     padding: '5rem 1rem',
-    width: '100vw',
+    width: '98vw',
     paddingLeft: '6rem',
     overflow: 'hidden',
   },

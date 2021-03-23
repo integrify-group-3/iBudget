@@ -58,7 +58,7 @@ export default function IncomeExpensesYearChart({
             btnText={lineChartText}
           />
 
-          {/* <Animation />  */}
+          {/* <Animation />   */}
         </Chart>
       ) : (
         <Chart data={data}>
@@ -83,7 +83,7 @@ export default function IncomeExpensesYearChart({
             btnText={barChartText}
           />
 
-          {/* <Animation /> */}
+          {/* <Animation />  */}
         </Chart>
       )}
     </Paper>
