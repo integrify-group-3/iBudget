@@ -1,6 +1,7 @@
 import { DailyExpense, ExpensesChartData } from './expenses'
 import { User } from './user'
 
+
 export type NavbarSecondaryListItemsProps = {
   user: User
 }

@@ -13,7 +13,7 @@ const initState: AppState = {
     inCart: [],
   },
   ui: {
-    dialogOpen: {},
+    dialogOpen: {}
   },
   user: {
     user: {} as User,

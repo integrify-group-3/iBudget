@@ -148,14 +148,12 @@ export default function ExpensesPage(props: any) {
   const loadChart = () => {
     setMonthlyChart(defaultMonth?.days)
   }
-
   useEffect(() => {
     if (!isAuthenticated) {
       props.history.push('/login')
     } else {
       // console.log('check here', isDayClicking, isUpdating)
       if (!isDayClicking) {
-        console.log(defaultDateView)
         setDateView(defaultDateView as DateView)
         setExpense({
           category: '',
@@ -178,7 +176,6 @@ export default function ExpensesPage(props: any) {
           // console.log('this should update, daily expense', dailyExpense)
           setTileContentData(defaultMonth)
           // console.log('day clicking and updating, expensesData', expensesData)
-          console.log('tile content data', tileContentData)
           loadChart()
           dispatch(clearUpdate())
         }, 1000)
@@ -193,6 +190,7 @@ export default function ExpensesPage(props: any) {
     tileContentData,
     defaultMonth,
   ])
+  console.log('tile content data', tileContentData)
 
   const showFormOnClick = () => {
     setIsFormShowing(true)
@@ -210,7 +208,6 @@ export default function ExpensesPage(props: any) {
   const showDayOnClick = async (e: any) => {
     setIsFormShowing(false)
     setIsDayClicking(true)
-    console.log(e)
     setSchedule({ ...schedule, day: e })
     try {
       const selectedYear = await e.getFullYear()
@@ -261,7 +258,6 @@ export default function ExpensesPage(props: any) {
   //this function is not working properly, fixing it
   const switchMonthOnClick = useCallback(
     async (e: any) => {
-      console.log(e)
       setIsFormShowing(false)
       setIsDayClicking(true)
       setSchedule({ ...schedule, day: e.activeStartDate })
@@ -279,11 +275,10 @@ export default function ExpensesPage(props: any) {
         const foundMonth = await foundYear.months.find(
           (month: any) => month.name === months[currentIndex]
         )
-        console.log('found month here', foundMonth)
-
+        // console.log('found month here', foundMonth)
         // await foundYear.months.map((month: any) => {
         if (foundMonth.name === dateView.month) {
-          console.log('these are the same', foundMonth.name, dateView.month)
+          // console.log('these are the same', foundMonth.name, dateView.month)
           switchMonth.name = foundMonth.name
           switchMonth.income = foundMonth.income
           switchMonth.days = foundMonth.days
@@ -308,9 +303,9 @@ export default function ExpensesPage(props: any) {
     },
     [dateView, monthlyData, monthlyChart]
   )
-  console.log('monthly data', monthlyData)
-  console.log('monthly chart', monthlyChart)
-  console.log('chart lenght', expensesChartData.length)
+  // console.log('monthly data', monthlyData)
+  // console.log('monthly chart', monthlyChart)
+  // console.log('chart lenght', expensesChartData.length)
   
   return (
     <div className={classes.root}>
@@ -418,3 +413,7 @@ export default function ExpensesPage(props: any) {
     </div>
   )
 }
+function loadTileContentUpdate() {
+  throw new Error('Function not implemented.')
+}
+
