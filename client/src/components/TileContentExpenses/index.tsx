@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { DailyExpense } from '../../types/expenses'
 import { TileContentProps } from '../../types/ui'
 
+import './style.scss'
 const useStyles = makeStyles((theme) => ({
   tileList: {
     margin: theme.spacing(1),
@@ -74,6 +75,7 @@ export default function TileContentExpenses({
         if (view === 'month' && day !== undefined && loadTileContent) {
           if (day.expenses !== undefined && day.expenses.length > 0) {
             setTileLoaded(true)
+            console.log('these days have expenses', day)
           }
         }
       }
@@ -95,7 +97,7 @@ export default function TileContentExpenses({
     setIsShowing(false)
   }
 
-  if (!tileLoaded) return <div></div>
+  if (!tileLoaded || !day || day.expenses.length < 1) return <div></div>
 
   return (
     <div

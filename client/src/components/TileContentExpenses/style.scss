@@ -1,0 +1,12 @@
+.animate-appear {
+    animation: createBox 0.25s;
+  }
+  
+  @keyframes createBox {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
