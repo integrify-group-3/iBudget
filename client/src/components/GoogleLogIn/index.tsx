@@ -18,9 +18,7 @@ const useStyles = makeStyles((theme) => ({
 function GoogleLogIn({ isSigIn }: any) {
   const dispatch = useDispatch()
   const classes = useStyles()
-  console.log('isSignIn', isSigIn)
-  const clientID =
-    '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com'
+  const clientID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`
   const responseSuccessGoogle = (response: any) => {
     dispatch(googleLogin(response))
   }

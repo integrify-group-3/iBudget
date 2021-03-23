@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import moment from 'moment'
 
+import { ViewMonth } from '../../types'
 import './style.scss'
 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +56,7 @@ export default function TileContentIncome({ contentData, date, view }: any) {
   const classes = useStyles()
   const [loadTileContent, setLoadTileContent] = useState(false)
   const [monthName, setMonthName] = useState('')
+  const [month, setMonth] = useState({} as ViewMonth)
   const [contentIncome, setContentIncome] = useState([])
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
@@ -64,23 +66,22 @@ export default function TileContentIncome({ contentData, date, view }: any) {
       const foundMonth = await contentData.find(
         (data: any) => data.name === moment(date).format('MMMM')
       )
-
+      setMonth(foundMonth)  
       setLoadTileContent(true)
+      console.log('month here', month)
       if (
-        foundMonth.income !== undefined &&
+        month.income !== undefined &&
         loadTileContent &&
         view === 'year'
       ) {
-        if (foundMonth.income.length > 0) {
-          setMonthName(foundMonth.name)
-          setContentIncome(foundMonth.income)
+        if (month.income.length > 0) {
           setTileLoaded(true)
-        }
+        } 
       }
     } catch (err) {
       return err
     }
-  }, [tileLoaded, loadTileContent, contentData])
+  }, [contentData, month, loadTileContent, tileLoaded])
 
   useEffect(() => {
     setTimeout(() => {
@@ -95,7 +96,7 @@ export default function TileContentIncome({ contentData, date, view }: any) {
     setIsShowing(false)
   }
 
-  if (!tileLoaded) return <div></div>
+  if (!tileLoaded || !month || month.income.length < 1) return <div></div>
 
   return (
     <div
@@ -106,8 +107,8 @@ export default function TileContentIncome({ contentData, date, view }: any) {
     >
       {isShowing && (
         <ul className={classes.previewIncomes}>
-          <li className={classes.previewIncomesDate}>{monthName}</li>
-          {contentIncome.map((income: any) => (
+          <li className={classes.previewIncomesDate}>{month.name}</li>
+          {month.income.map((income: any) => (
             <>
               <ul key={income._id} style={{ listStyle: 'none' }}>
                 <li className={classes.previewIncomesItem}>

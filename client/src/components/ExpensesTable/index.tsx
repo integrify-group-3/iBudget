@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
+import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import { makeStyles } from '@material-ui/core/styles'
@@ -27,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   editExpense: {
+    margin: theme.spacing(1),
     color: 'lightblue',
-    cursor: 'pointer',
   },
-  deleteExpense: {
+  deleteBtn: {
+    margin: theme.spacing(1),
     color: '#ff3a56',
-    cursor: 'pointer',
   },
   editExpenseContainer: {
     backgroundColor: 'rgba(25, 20, 20, 0.6)',
@@ -45,18 +46,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     top: '0',
     left: '17px',
-    zIndex: 2 
+    zIndex: 2,
   },
   editExpenseFormContainer: {
     position: 'fixed',
-    top: '27%'
+    top: '27%',
   },
 }))
 
 export default function ExpensesTable({
   day,
   dailyExpense,
-  showFormOnClick
+  showFormOnClick,
 }: ExpensesTableProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
@@ -73,16 +74,16 @@ export default function ExpensesTable({
   const hideFormOnClick = () => {
     setEditOpen(false)
   }
-  const deleteExpenseOnClick = (id: string, expense: Expense) => {
+  const deleteOnClick = (id: string, expense: Expense) => {
     dispatch(removeExpense(id, expense))
   }
-  
+
   return (
     <React.Fragment>
       <Title>Expenses for {moment(day).format('LL')}</Title>
       <Table size="small">
         {dailyExpense.expenses !== undefined &&
-        dailyExpense.expenses.length > 0 ? 
+        dailyExpense.expenses.length > 0 ? (
           <>
             <TableHead>
               <TableRow>
@@ -91,55 +92,67 @@ export default function ExpensesTable({
                 <TableCell>Amount</TableCell>
               </TableRow>
             </TableHead>
-            {editOpen &&
-               <Grid item xs={12} md={12} lg={12} className={classes.editExpenseContainer}>
-               <Paper className={classes.editExpenseFormContainer}>
-                <EditExpense
-                  key={expenseId}
-                  expenseId={expenseId}
-                  day={day}
-                  dailyExpense={dailyExpense}
-                  hideFormOnClick={hideFormOnClick}
-                />
-              </Paper>
+            {editOpen && (
+              <Grid
+                item
+                xs={12}
+                md={12}
+                lg={12}
+                className={classes.editExpenseContainer}
+              >
+                <Paper className={classes.editExpenseFormContainer}>
+                  <EditExpense
+                    key={expenseId}
+                    expenseId={expenseId}
+                    day={day}
+                    dailyExpense={dailyExpense}
+                    hideFormOnClick={hideFormOnClick}
+                  />
+                </Paper>
               </Grid>
-              }
-              <TableBody>
-                {dailyExpense.expenses.map((expense: any) => {
-                  const { _id, category, description, amount } = expense
-                  return (
-                    <>
-                      <TableRow key={_id}>
-                        <TableCell>{category}</TableCell>
-                        <TableCell>{description}</TableCell>
-                        <TableCell>{amount}</TableCell>
-                        <TableCell>
-                          <EditIcon
-                            className={classes.editExpense}
-                            onClick={() => openEditOnClick(_id)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <DeleteIcon
-                            className={classes.deleteExpense}
-                            onClick={() => deleteExpenseOnClick(_id, expense)}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    </>
-                  )
-                  })}
-                <div className={classes.addExpense}>
-                  <AddExpenseBtn showFormOnClick={showFormOnClick} />
-                </div>
-              </TableBody>
+            )}
+            <TableBody>
+              {dailyExpense.expenses.map((expense: any) => {
+                const { _id, category, description, amount } = expense
+                return (
+                  <>
+                    <TableRow key={_id}>
+                      <TableCell>{category}</TableCell>
+                      <TableCell>{description}</TableCell>
+                      <TableCell>{amount}</TableCell>
+                      <TableCell>
+                        <IconButton
+                          aria-label="edit"
+                          className={classes.editExpense}
+                          onClick={() => openEditOnClick(_id)}
+                        >
+                        <EditIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton
+                          aria-label="delete"
+                          className={classes.deleteBtn}
+                          onClick={() => deleteOnClick(_id, expense)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                )
+              })}
+              <div className={classes.addExpense}>
+                <AddExpenseBtn showFormOnClick={showFormOnClick} />
+              </div>
+            </TableBody>
           </>
-         : 
+        ) : (
           <>
             <p>No expenses recorded</p>
             <AddExpenseBtn showFormOnClick={showFormOnClick} />
           </>
-        }
+        )}
       </Table>
     </React.Fragment>
   )

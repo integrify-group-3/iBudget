@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Calendar from 'react-calendar'
 import clsx from 'clsx'
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     padding: '5rem 3rem',
-    width: '100vw',
+    width: '98vw',
     paddingLeft: '6rem',
     overflow: 'hidden',
   },
@@ -116,18 +116,21 @@ export default function IncomePage(props: any) {
         loadChart()
         // console.log('I am calling now for monthly data', defaultMonth)
         setMonthlyData(defaultMonth)
+        setMonthIncome(incomeData)
         setTileContentData(yearData.months)
         dispatch(clearUpdate())
       } else if (isMonthClicking && isUpdating) {
-        setMonthlyData(defaultMonth)
-        loadChart()
-        setMonthIncome(defaultMonth.income)
-        console.log('income data shuld update', incomeData)
-        setTileContentData(yearData.months)
-        console.log('tile content data', tileContentData)
-        //  console.log(monthIncome)
-        dispatch(clearUpdate())
-        //  console.log('monthly data from ismonthclicking', monthlyData)
+        setTimeout(() => {
+          setMonthlyData(defaultMonth)
+          loadChart()
+          setMonthIncome(defaultMonth.income)
+          // console.log('income data should update', incomeData)
+          setTileContentData(yearData.months)
+          console.log('tile content data', tileContentData)
+          //  console.log(monthIncome)
+          dispatch(clearUpdate())
+          //  console.log('monthly data from ismonthclicking', monthlyData)
+        }, 1000);
       }
     }
   }, [
@@ -135,18 +138,20 @@ export default function IncomePage(props: any) {
     monthIncome,
     incomeData,
     calendarData,
+    tileContentData,
+    yearData,
     dateView,
     defaultDateView,
     defaultMonth,
   ])
 
-  const changeMonthView = (
+  const changeMonthView = async (
     currentYear: number,
     currentMonth: string,
     foundYear: CalendarScheduler | undefined,
     currentIndex: number
   ) => {
-    const foundMonth = foundYear?.months.find(
+    const foundMonth = await foundYear?.months.find(
       (month: any) => month.name === months[currentIndex]
     )
     setMonthIncome(foundMonth?.income)
@@ -157,16 +162,36 @@ export default function IncomePage(props: any) {
     setIsLoaded(true)
   }
 
-  const showMonthOnClick = (e: any) => {
+  const showMonthOnClick = async (e: any) => {
     setIsMonthClicking(true)
-    const year = e.getFullYear()
+    const selectedYear = e.getFullYear()
     const currentIndex = e.getMonth()
-    const yearIncome = calendar.years.find((i: any) => i.year === year)
-    setDateView({ ...dateView, year: year, month: months[currentIndex] })
-    changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
+    const foundYear = await calendar.years.find((i: any) => i.year === selectedYear)
+    setTileContentData(foundYear.months)
+    setDateView({ ...dateView, year: selectedYear, month: months[currentIndex] })
+    changeMonthView(dateView.year, dateView.month, foundYear, currentIndex)
   }
 
-  console.log('month income', monthIncome)
+  const switchYearOnClick = useCallback (
+    async (e: any) => {
+    try {
+      const selectedYear = e.activeStartDate.getFullYear()
+      console.log('selected year', selectedYear)
+      const foundYear = await calendar.years.find((i: any) => i.year === selectedYear)
+      console.log('year data', yearData)
+      console.log('found year', foundYear)
+      setTileContentData(foundYear.months)
+      // console.log('tile content data', tileContentData)
+    }
+    catch(err) {
+
+    }
+   
+  }, [tileContentData]
+  )
+
+  // console.log('tile content data', tileContentData)
+  // console.log('month income', monthIncome)
 
   return (
     <div className={classes.root}>
@@ -217,7 +242,8 @@ export default function IncomePage(props: any) {
               <Paper className={fixedHeightPaper}>
                 <IncomeTable
                   // key={calendar?._id}
-                  monthlyIncome={!isMonthClicking ? incomeData : monthIncome}
+                  // monthlyIncome={!isMonthClicking ? incomeData : monthIncome}
+                  monthlyIncome={monthIncome}
                   year={dateView.year}
                   month={dateView.month}
                 />
@@ -228,6 +254,7 @@ export default function IncomePage(props: any) {
                 value={calendarDate}
                 showNeighboringMonth={true}
                 onChange={showMonthOnClick}
+                onActiveStartDateChange={switchYearOnClick}
                 defaultView="year"
                 maxDetail="year"
                 tileContent={({ activeStartDate, date, view }: any) => (

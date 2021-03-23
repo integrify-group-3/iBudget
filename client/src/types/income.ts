@@ -36,7 +36,9 @@ export type AddIncomeAction = {
   type: typeof ADD_INCOME
   payload: {
     income: Income[]
+    calendar: CalendarScheduler
     monthlyData: any
+    yearData: any
   }
 }
 
@@ -44,7 +46,9 @@ export type UpdateIncomeAction = {
   type: typeof UPDATE_INCOME
   payload: {
     income: Income[]
+    calendar: CalendarScheduler
     monthlyData: any
+    yearData: any
   }
 }
 
@@ -52,7 +56,9 @@ export type DeleteIncomeAction = {
   type: typeof DELETE_INCOME
   payload: {
     income: Income[]
+    calendar: CalendarScheduler
     monthlyData: any
+    yearData: any
   }
 }
 
