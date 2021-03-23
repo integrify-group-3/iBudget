@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import GoogleLogin from 'react-google-login'
 
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -13,12 +12,11 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import { FaGoogle } from 'react-icons/fa'
 
 import { AppState } from '../../types'
-import { loginUser, googleLogin } from '../../redux/actions/user'
+import { loginUser } from '../../redux/actions/user'
 import { clearErrors } from '../../redux/actions/error'
-
+import GoogleLogIn from '../../components/GoogleLogIn'
 import './style.scss'
 
 const useStyles = makeStyles((theme) => ({
@@ -64,16 +62,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Login(props: any) {
-  //this will be fixed later
-  // const clientID = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`
-  const clientID = '242854292077-jj45elli5ttdmni2jck0vc1is7r1d2rp.apps.googleusercontent.com'
-  console.log(clientID)
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
   const errorMsg = useSelector((state: AppState) => state.error.msg.msg)
   const classes = useStyles()
+  const [isSignIn] = useState(true)
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -99,11 +94,6 @@ export default function Login(props: any) {
     })
   }
 
-  const responseSuccessGoogle = (response: any) => {
-    dispatch(googleLogin(response))
-  }
-
-  const responseFailureGoogle = () => {}
   return (
     <div className="login-page-container">
       <Container component="main" maxWidth="xs" className={classes.container}>
@@ -112,23 +102,7 @@ export default function Login(props: any) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <GoogleLogin
-            clientId={clientID}
-            buttonText="Sign in with Google"
-            onSuccess={responseSuccessGoogle}
-            onFailure={responseFailureGoogle}
-            cookiePolicy={'single_host_origin'}
-            render={(renderProps: any) => (
-              <button
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                className="google-auth-btn"
-              >
-                <FaGoogle />
-                <span>Sign In with Google</span>
-              </button>
-            )}
-          />
+          <GoogleLogIn isSigIn={isSignIn} />
           <div className="login-page-container__divider">
             <hr className="login-page-container__divider-line-before"></hr>
             <p>Or</p>

@@ -13,7 +13,7 @@ import {
   FORGOT_PASSWORD,
   RESET_PASSWORD,
   CLEAR_EMAIL_CONFIRMATION,
-  CLEAR_RESET_CONFIRMATION
+  CLEAR_RESET_CONFIRMATION,
 } from '../../types/user'
 
 import { showErrors, clearErrors } from './error'
@@ -76,13 +76,13 @@ export function resetPasswordConfirm(resetMsg: string): UserActions {
 
 export function clearEmailConfirmation(): UserActions {
   return {
-    type: CLEAR_EMAIL_CONFIRMATION
+    type: CLEAR_EMAIL_CONFIRMATION,
   }
 }
 
 export function clearResetPasswordConfirmation(): UserActions {
   return {
-    type: CLEAR_RESET_CONFIRMATION
+    type: CLEAR_RESET_CONFIRMATION,
   }
 }
 
@@ -145,14 +145,14 @@ export function loginUser({ email, password }: any) {
 export const googleLogin = (response: any) => {
   return async (dispatch: Dispatch) => {
     try {
-      const url = `/api/v1/user/login/google-auth`;
+      const url = `/api/v1/user/login/google-auth`
       console.log(response)
       axios({
-        method: "POST",
+        method: 'POST',
         url,
         data: { tokenId: response.tokenId },
       }).then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         dispatch(loginSuccess(res.data.user, res.data.token))
         dispatch(googleLoginSuccess())
       })
@@ -160,8 +160,8 @@ export const googleLogin = (response: any) => {
       // dispatch(showErrors(err.response.data, err.response.status));
       console.log(err)
     }
-  };
-};
+  }
+}
 
 export const updateUser = (id: string, user: any) => {
   return async (dispatch: Dispatch, getState: any) => {
@@ -200,11 +200,11 @@ export const clearResetConfirmation = () => {
   }
 }
 
-export const resetPassword = (
- { newPassword,
+export const resetPassword = ({
+  newPassword,
   repeatNewPassword,
-  resetLink} : any
-) => {
+  resetLink,
+}: any) => {
   return async (dispatch: Dispatch) => {
     try {
       const body = { newPassword, repeatNewPassword, resetLink }
