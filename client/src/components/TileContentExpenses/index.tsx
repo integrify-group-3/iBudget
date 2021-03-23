@@ -6,6 +6,7 @@ import { DailyExpense } from '../../types/expenses'
 import { TileContentProps } from '../../types/ui'
 
 import './style.scss'
+
 const useStyles = makeStyles((theme) => ({
   tileList: {
     margin: theme.spacing(1),
@@ -101,7 +102,7 @@ export default function TileContentExpenses({
 
   return (
     <div
-      className={classes.tileContent}
+      className="tile-content"
       onMouseEnter={showExpensesPreview}
       onMouseLeave={hideExpensesPreview}
     >

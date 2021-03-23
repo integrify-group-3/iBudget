@@ -123,6 +123,8 @@ export default function IncomePage(props: any) {
         loadChart()
         setMonthIncome(defaultMonth.income)
         console.log('income data shuld update', incomeData)
+        setTileContentData(yearData.months)
+        console.log('tile content data', tileContentData)
         //  console.log(monthIncome)
         dispatch(clearUpdate())
         //  console.log('monthly data from ismonthclicking', monthlyData)
@@ -163,6 +165,8 @@ export default function IncomePage(props: any) {
     setDateView({ ...dateView, year: year, month: months[currentIndex] })
     changeMonthView(dateView.year, dateView.month, yearIncome, currentIndex)
   }
+
+  console.log('month income', monthIncome)
 
   return (
     <div className={classes.root}>
