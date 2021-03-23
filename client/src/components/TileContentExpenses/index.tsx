@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { DailyExpense } from '../../types/expenses'
 import { TileContentProps } from '../../types/ui'
 
+import './style.scss'
 const useStyles = makeStyles((theme) => ({
   tileList: {
     margin: theme.spacing(1),
@@ -56,34 +57,32 @@ export default function TileContentExpenses({
   date,
   view,
   contentData,
-  activeStartDate,
+  activeStartDate
 }: TileContentProps) {
-  const classes = useStyles()
+  const classes = useStyles()  
   const [day, setDay] = useState({} as DailyExpense)
   const [loadTileContent, setLoadTileContent] = useState(false)
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
 
   const loadTiles = useCallback(async () => {
-    
       try {
         const selectedDay = await contentData.days.find(
           (d: any) => moment(d.day).format('LL') === moment(date).format('LL')
         )
-        console.log('selected day', selectedDay)
         setDay(selectedDay)
         setLoadTileContent(true)
-        if (view === 'month' && loadTileContent) {
-          if (day.expenses.length > 0) {
+        if (view === 'month' && day !== undefined && loadTileContent) {
+          if (day.expenses !== undefined && day.expenses.length > 0) {
             setTileLoaded(true)
+            console.log('these days have expenses', day)
           }
         }
       }
       catch(err) {
         return err
       }
- 
-  }, [day, loadTileContent, tileLoaded])
+  }, [contentData, day, loadTileContent, tileLoaded])
 
   useEffect(() => {
     setTimeout(() => {
@@ -98,7 +97,7 @@ export default function TileContentExpenses({
     setIsShowing(false)
   }
 
-  if (!tileLoaded) return <div></div>
+  if (!tileLoaded || !day || day.expenses.length < 1) return <div></div>
 
   return (
     <div

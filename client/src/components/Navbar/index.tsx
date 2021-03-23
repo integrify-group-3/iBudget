@@ -164,7 +164,7 @@ const Navbar = () => {
     (state: AppState) => state.user.isAuthenticated
   )
   const user = useSelector((state: AppState) => state.user.user)
-  console.log('user', user)
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
