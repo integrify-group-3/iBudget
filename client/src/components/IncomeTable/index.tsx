@@ -137,10 +137,13 @@ export default function IncomeTable({
                         <TableCell>{amount}</TableCell>
 
                         <TableCell>
-                          <EditIcon
+                          
+                          <IconButton
                             className={classes.editIncome}
                             onClick={() => openEditOnClick(income._id)}
-                          />
+                          >
+                          <EditIcon />
+                          </IconButton>
                         </TableCell>
                         <TableCell>
                           <IconButton

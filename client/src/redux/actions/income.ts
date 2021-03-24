@@ -9,7 +9,7 @@ import {
   UPDATE_INCOME,
   DELETE_INCOME,
   TOTAL_MONTHLY_INCOME,
-  CLEAR_UPDATING
+  CLEAR_UPDATING,
 } from '../../types/income'
 
 import { CalendarScheduler } from '../../types/index'
@@ -34,32 +34,53 @@ export function getIncome(
     },
   }
 }
-export function addNewIncome(income: Income[], monthlyData: any): IncomeActions {
+export function addNewIncome(
+  income: Income[],
+  calendar: CalendarScheduler,
+  monthlyData: any,
+  yearData: any
+): IncomeActions {
   return {
     type: ADD_INCOME,
     payload: {
       income,
-      monthlyData
+      calendar,
+      monthlyData,
+      yearData,
     },
   }
 }
 
-export function editIncome(income: Income[], monthlyData: any): IncomeActions {
+export function editIncome(
+  income: Income[],
+  calendar: CalendarScheduler,
+  monthlyData: any,
+  yearData: any
+): IncomeActions {
   return {
     type: UPDATE_INCOME,
     payload: {
       income,
-      monthlyData
+      calendar,
+      monthlyData,
+      yearData,
     },
   }
 }
 
-export function deleteIncome(income: Income[], monthlyData: any): IncomeActions {
+export function deleteIncome(
+  income: Income[],
+  calendar: CalendarScheduler,
+  monthlyData: any,
+  yearData: any
+): IncomeActions {
   return {
     type: DELETE_INCOME,
     payload: {
       income,
-      monthlyData
+      calendar,
+      monthlyData,
+      yearData,
     },
   }
 }
@@ -68,14 +89,14 @@ export function totalMonthlyIncome(total: number): IncomeActions {
   return {
     type: TOTAL_MONTHLY_INCOME,
     payload: {
-      total
+      total,
     },
   }
 }
 
 export function clearUpdate(): IncomeActions {
   return {
-    type: CLEAR_UPDATING, 
+    type: CLEAR_UPDATING,
   }
 }
 
@@ -117,7 +138,7 @@ export function addIncome(newIncome: any) {
       const res = await axios.post(url, newIncome, tokenConfig(getState))
       const foundYear = await getYearIncome(res.data, newIncome)
       const foundMonth = await getMonthIncome(foundYear, newIncome)
-      dispatch(addNewIncome(foundMonth.income, foundMonth))
+      dispatch(addNewIncome(foundMonth.income, res.data, foundMonth, foundYear))
     } catch (err) {
       console.log(err)
     }
@@ -131,7 +152,7 @@ export function updateIncome(income: Income, incomeId: string) {
       const res = await axios.put(url, income, tokenConfig(getState))
       const foundYear = await getYearIncome(res.data, income)
       const foundMonth = await getMonthIncome(foundYear, income)
-      dispatch(editIncome(foundMonth.income, foundMonth))
+      dispatch(editIncome(foundMonth.income, res.data, foundMonth, foundYear))
     } catch (err) {
       console.log(err)
     }
@@ -145,7 +166,7 @@ export function removeIncome(id: string, income: Income) {
       const res = await axios.delete(url, tokenConfig(getState))
       const foundYear = await getYearIncome(res.data, income)
       const foundMonth = await getMonthIncome(foundYear, income)
-      dispatch(deleteIncome(foundMonth.income, foundMonth))
+      dispatch(deleteIncome(foundMonth.income, res.data, foundMonth, foundYear))
     } catch (err) {
       console.log(err)
     }

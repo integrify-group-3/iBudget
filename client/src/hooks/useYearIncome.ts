@@ -43,8 +43,8 @@ export default function useYearIncome(selectedYear: number) {
   )
 
   useEffect(() => {
-    const totalIncomes = calculateTotal(yearData)
-    setTotal(totalIncomes)
+    const totalIncome = calculateTotal(yearData)
+    setTotal(totalIncome)
   }, [calculateTotal])
 
   return [yearData, total]

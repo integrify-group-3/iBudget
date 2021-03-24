@@ -170,7 +170,6 @@ export default function ExpensesPage(props: any) {
         dispatch(clearUpdate())
       } else if (isDayClicking && isUpdating) {
         setTimeout(() => {
-          console.log(isUpdating)
           setMonthlyData(defaultMonth)
           setDailyExpense(expensesData)
           // console.log('this should update, daily expense', dailyExpense)
@@ -413,7 +412,5 @@ export default function ExpensesPage(props: any) {
     </div>
   )
 }
-function loadTileContentUpdate() {
-  throw new Error('Function not implemented.')
-}
+
 
