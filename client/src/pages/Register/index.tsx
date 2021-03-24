@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage:
       'linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.8))',
     borderRadius: '25px',
-    marginTop: '11rem',
+    marginTop: '4rem',
     padding: '0 2rem',
   },
   inputField: {
@@ -41,15 +41,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  registerHeader: {
-    marginTop: '1.5rem'
-  },
   form: {
     width: '100%',
-    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
     backgroundColor: '#865CFF',
     color: 'white',
     borderRadius: '50px',
@@ -57,26 +52,24 @@ const useStyles = makeStyles((theme) => ({
   errorMsg: {
     color: 'red',
     textAlign: 'center',
-    marginTop: '1rem' 
-  }
+  },
+  title: {
+    paddingTop: '10px',
+  },
 }))
-
-
 
 export default function Register() {
   const dispatch = useDispatch()
   const classes = useStyles()
-  
+
   const errorMsg = useSelector((state: AppState) => state.error.msg.msg)
-
-
 
   return (
     <div className="login-page-container">
       <Container component="main" maxWidth="xs" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5" className={classes.registerHeader}>
+          <Typography component="h1" variant="h5" className={classes.title}>
             Sign up
           </Typography>
           <GoogleLogIn />
@@ -114,11 +107,13 @@ export default function Register() {
                 .required('Password is required'),
               repeatPassword: yup
                 .string()
-                .test('passwords-match', 'Passwords must match', function (
-                  value
-                ) {
-                  return this.parent.password === value
-                }),
+                .test(
+                  'passwords-match',
+                  'Passwords must match',
+                  function (value) {
+                    return this.parent.password === value
+                  }
+                ),
             })}
             onSubmit={(values, { resetForm }) => {
               dispatch(registerUser(values))
@@ -220,7 +215,9 @@ export default function Register() {
                   </Grid>
                 </Grid>
                 <Grid container>
-                  <Grid item className={classes.errorMsg}>{errorMsg}</Grid>
+                  <Grid item className={classes.errorMsg}>
+                    {errorMsg}
+                  </Grid>
                 </Grid>
               </Form>
             )}

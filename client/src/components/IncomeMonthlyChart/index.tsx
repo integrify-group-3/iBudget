@@ -7,7 +7,6 @@ import {
   Tooltip,
   Title,
 } from '@devexpress/dx-react-chart-material-ui'
-import { makeStyles } from '@material-ui/core/styles'
 import { Animation } from '@devexpress/dx-react-chart'
 import { EventTracker } from '@devexpress/dx-react-chart'
 import {
@@ -37,35 +36,15 @@ const schemeCollection = [
   schemeSet3,
 ]
 
-const useStyles = makeStyles((theme: any) => ({
-  root: {
-    height: '200px',
-  },
-  chartContainer: {
-    height: '10rem',
-  },
-  typography: {
-    marginTop: 0,
-    marginBottom: theme.spacing(1),
-  },
-  div: {
-    width: '200px',
-    marginLeft: '50px',
-    paddingBottom: '30px',
-  },
-  item: {
-    width: '40px',
-    height: '40px',
-  },
-  schemeContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: theme.spacing(1),
-  },
-  pieChart: {
-    width: '80%,',
-  },
-}))
+
+
+const chartRootStyle = {
+  flexGrow: 0,
+}
+
+const ChartRoot = (props: any) => (
+  <Legend.Root {...props} style={chartRootStyle} />
+)
 
 export default function IncomeMonthlyChart({
   chartData,
@@ -73,27 +52,26 @@ export default function IncomeMonthlyChart({
   year,
 }: IncomeChartDataProps) {
   const [scheme, setScheme] = useState(schemeCollection[3])
-  const classes = useStyles()
 
   return (
-          <Chart data={chartData}>
-            <Palette
-              scheme={scheme}
-              // name="category"
-            />
-            <PieSeries
-              valueField="amount"
-              argumentField="category"
-              name="category"
-              innerRadius={0.5}
-              outerRadius={0.9}
-            />
-            <Legend />
-            <Title text={`Income Chart ${month} ${year}`} /> 
+    <Chart data={chartData} rootComponent={ChartRoot}>
+      <Palette
+        scheme={scheme}
+        // name="category"
+      />
+      <PieSeries
+        valueField="amount"
+        argumentField="category"
+        name="category"
+        innerRadius={0.5}
+        outerRadius={0.9}
+      />
+      <Legend />
+      <Title text={`Income Chart ${month} ${year}`} />
 
-            <EventTracker />
-            <Tooltip />
-            <Animation />
-          </Chart>
+      <EventTracker />
+      <Tooltip />
+      <Animation />
+    </Chart>
   )
 }

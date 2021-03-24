@@ -6,9 +6,7 @@ import {
   Legend,
   Tooltip,
   Title,
-  
 } from '@devexpress/dx-react-chart-material-ui'
-import { makeStyles } from '@material-ui/core/styles'
 import { Animation, EventTracker, Palette } from '@devexpress/dx-react-chart'
 import {
   schemeCategory10,
@@ -21,7 +19,6 @@ import {
   schemeSet2,
   schemeSet3,
 } from 'd3-scale-chromatic'
-
 
 import { ExpensesChartProps } from '../../types/ui'
 
@@ -37,35 +34,13 @@ const schemeCollection = [
   schemeSet3,
 ]
 
-const useStyles = makeStyles((theme: any) => ({
-  root: {
-    height: '100px',
-  },
-  chartContainer: {
-    height: '10rem',
-  },
-  typography: {
-    marginTop: 0,
-    marginBottom: theme.spacing(1),
-  },
-  div: {
-    width: '200px',
-    marginLeft: '50px',
-    paddingBottom: '30px',
-  },
-  item: {
-    width: '40px',
-    height: '40px',
-  },
-  schemeContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: theme.spacing(1),
-  },
-  pieChart: {
-    width: '20%,',
-  },
-}))
+const chartRootStyle = {
+  flexGrow: 0,
+}
+
+const ChartRoot = (props: any) => (
+  <Legend.Root {...props} style={chartRootStyle} />
+)
 
 export default function ExpensesChart({
   chartData,
@@ -74,10 +49,8 @@ export default function ExpensesChart({
 }: ExpensesChartProps) {
   const [scheme, setScheme] = useState(schemeCollection[3])
 
-  const classes = useStyles()
-
   return (
-    <Chart data={chartData}>
+    <Chart data={chartData} rootComponent={ChartRoot}>
       <Palette
         scheme={scheme}
         // name="category"

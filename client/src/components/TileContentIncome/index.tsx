@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import moment from 'moment'
 
+import { ViewMonth } from '../../types'
 import './style.scss'
 
 const useStyles = makeStyles((theme) => ({
@@ -49,13 +50,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     borderBottom: '1px solid lightgrey',
   },
+  tileContentList: {
+    listStyle: 'none',
+  },
 }))
 
 export default function TileContentIncome({ contentData, date, view }: any) {
   const classes = useStyles()
   const [loadTileContent, setLoadTileContent] = useState(false)
-  const [monthName, setMonthName] = useState('')
-  const [contentIncome, setContentIncome] = useState([])
+  const [month, setMonth] = useState({} as ViewMonth)
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
 
@@ -64,23 +67,18 @@ export default function TileContentIncome({ contentData, date, view }: any) {
       const foundMonth = await contentData.find(
         (data: any) => data.name === moment(date).format('MMMM')
       )
-
+      setMonth(foundMonth)
       setLoadTileContent(true)
-      if (
-        foundMonth.income !== undefined &&
-        loadTileContent &&
-        view === 'year'
-      ) {
-        if (foundMonth.income.length > 0) {
-          setMonthName(foundMonth.name)
-          setContentIncome(foundMonth.income)
+      console.log('month here', month)
+      if (month.income !== undefined && loadTileContent && view === 'year') {
+        if (month.income.length > 0) {
           setTileLoaded(true)
         }
       }
     } catch (err) {
       return err
     }
-  }, [tileLoaded, loadTileContent, contentData])
+  }, [contentData, month, loadTileContent, tileLoaded])
 
   useEffect(() => {
     setTimeout(() => {
@@ -95,7 +93,7 @@ export default function TileContentIncome({ contentData, date, view }: any) {
     setIsShowing(false)
   }
 
-  if (!tileLoaded) return <div></div>
+  if (!tileLoaded || !month || month.income.length < 1) return <div></div>
 
   return (
     <div
@@ -106,10 +104,10 @@ export default function TileContentIncome({ contentData, date, view }: any) {
     >
       {isShowing && (
         <ul className={classes.previewIncomes}>
-          <li className={classes.previewIncomesDate}>{monthName}</li>
-          {contentIncome.map((income: any) => (
+          <li className={classes.previewIncomesDate}>{month.name}</li>
+          {month.income.map((income: any) => (
             <>
-              <ul key={income._id} style={{ listStyle: 'none' }}>
+              <ul key={income._id} className={classes.tileContentList}>
                 <li className={classes.previewIncomesItem}>
                   {income.category} {income.amount}
                 </li>

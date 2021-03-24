@@ -35,11 +35,13 @@ export default function income(
     case ADD_INCOME:
     case DELETE_INCOME:
     case UPDATE_INCOME:
-      const { income, monthlyData } = action.payload
+      const { income, calendar, monthlyData, yearData } = action.payload
       return {
         ...state,
         income: income,
+        calendar: calendar,
         selectedMonth: monthlyData,
+        selectedYear: yearData,
         isUpdating: true
       }
     case TOTAL_MONTHLY_INCOME:

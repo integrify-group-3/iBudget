@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     padding: '5rem 1rem',
-    width: '100vw',
+    width: '98vw',
     paddingLeft: `${mobileScreen ? `3rem` : `6rem`}`,
     overflow: 'hidden',
   },

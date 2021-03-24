@@ -34,6 +34,7 @@ export default function useMonthlyIncome() {
     }
     setIncomeData(income)
     setCalendarData(calendar)
+    console.log('I run every time expenses are updated', calendar)
     setDefaultDateView({ year: year, month: currentMonth })
     setDefaultMonth(selectedMonth)
   }, [income, calendar, calendarData, defaultMonth])
