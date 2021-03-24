@@ -29,8 +29,6 @@ import {
   schemeSet1,
   schemeSet2,
   schemeSet3,
-  
-
 } from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
@@ -48,12 +46,11 @@ const schemeCollection = [
   schemeSet1,
   schemeSet2,
   schemeSet3,
- 
 ]
 
 const useStyles = makeStyles((theme: any) => ({
   chartContainer: {
-    height: '243px'
+    height: '243px',
   },
   root: {
     height: '100px',
@@ -76,8 +73,17 @@ const useStyles = makeStyles((theme: any) => ({
     justifyContent: 'center',
     marginTop: theme.spacing(1),
   },
- 
 }))
+
+const chartRootStyle = {
+  flexGrow: 0,
+  paddingTop: '10px',
+  marginTop: '25px',
+}
+
+const ChartRoot = (props: any) => (
+  <Legend.Root {...props} style={chartRootStyle} />
+)
 
 export default function IncomeMonthlyChartDashboard({
   chartData,
@@ -101,38 +107,38 @@ export default function IncomeMonthlyChartDashboard({
   return (
     <>
       {switchChart ? (
-      <div className={classes.chartContainer}>
-        <Chart data={chartData}>
-          <ArgumentScale factory={scaleBand} />
-          <ArgumentAxis />
-          <ValueAxis />
+        <div className={classes.chartContainer}>
+          <Chart data={chartData}>
+            <ArgumentScale factory={scaleBand} />
+            <ArgumentAxis />
+            <ValueAxis />
 
-          {chartData.map((data: IncomeChartData) => (
-            <BarSeries
-              valueField={valueField}
-              argumentField={argumentField}
-              name={data.category}
+            {chartData.map((data: IncomeChartData) => (
+              <BarSeries
+                valueField={valueField}
+                argumentField={argumentField}
+                name={data.category}
+              />
+            ))}
+
+            <Stack
+              stacks={[
+                { series: [`${valueField}`, `${name}`, `${argumentField}`] },
+              ]}
             />
-          ))}
-
-        <Stack
-            stacks={[
-              { series: [`${valueField}`, `${name}`, `${argumentField}`] },
-            ]}
-          />
-          <EventTracker />
-          <Tooltip />
-          <Legend />
-          <SwitchChartBtn
-            switchChartView={switchChartView}
-            btnText={pieChartText}
-          /> 
-          <Animation />
-        </Chart>
+            <EventTracker />
+            <Tooltip />
+            <Legend />
+            <SwitchChartBtn
+              switchChartView={switchChartView}
+              btnText={pieChartText}
+            />
+            <Animation />
+          </Chart>
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData}>
+          <Chart data={chartData} rootComponent={ChartRoot}>
             <Palette
               scheme={scheme}
               // name="category"
@@ -142,19 +148,17 @@ export default function IncomeMonthlyChartDashboard({
               argumentField={argumentField}
               name={name}
               innerRadius={0.5}
-              outerRadius={0.9}
+              outerRadius={1.3}
             />
             <Legend />
             <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
-            /> 
+            />
             <EventTracker />
             <Tooltip />
             <Animation />
           </Chart>
-         
-      
         </div>
       )}
     </>
