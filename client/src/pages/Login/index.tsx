@@ -25,10 +25,9 @@ const useStyles = makeStyles((theme) => ({
       'linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 255, 255, 0.8))',
     borderRadius: '25px',
     marginTop: '4rem',
-    padding: '1rem 2rem',
   },
   paper: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(3),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -45,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '.3rem',
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
     backgroundColor: '#865CFF',
     color: 'white',
     borderRadius: '50px',
