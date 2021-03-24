@@ -6,7 +6,7 @@ import { defaultYearChartData } from '../utils/defaultChartValues'
 export default function useYearChart(yearData: any) {
  
   const [err, setErr] = useState(null)
-  let [chartData, setChartData] = useState([] as YearChartData[])
+  const [chartData, setChartData] = useState([] as YearChartData[])
   // this chart will show a comparison between expenses and income per year
   
   const loadChartData = 
@@ -66,5 +66,5 @@ export default function useYearChart(yearData: any) {
       loadChartData(yearData)
   }, [yearData])
   
-  return [err, chartData]
+  return [chartData]
 }

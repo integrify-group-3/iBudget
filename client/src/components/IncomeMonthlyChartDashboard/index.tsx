@@ -90,7 +90,7 @@ export default function IncomeMonthlyChartDashboard({
   const [scheme, setScheme] = useState(schemeCollection[1])
   const classes = useStyles()
   const [switchChart, setSwitchChart] = useState(false)
-  console.log(argumentField, name, argumentField, chartData)
+
   const switchChartView = () => {
     setSwitchChart(!switchChart)
   }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import Calendar from 'react-calendar'
 import clsx from 'clsx'
@@ -8,10 +8,9 @@ import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 
 import { AppState, CalendarScheduler, ViewMonth, DateView } from '../../types'
-import { date, year, months, currentMonth } from '../../utils/dateValues'
+import { date, months } from '../../utils/dateValues'
 import useYearExpenses from '../../hooks/useYearExpenses'
 import useYearIncome from '../../hooks/useYearIncome'
 import useYearChart from '../../hooks/useYearChart'
@@ -27,6 +26,10 @@ import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import TotalYearExpenses from '../../components/TotalYearExpenses'
 import TotalMonthlyIncome from '../../components/TotalMonthlyIncome'
 import TotalYearIncome from '../../components/TotalYearIncome'
+import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
+import EmptyYearChartContainer from '../../components/EmptyYearChartContainer'
+
+import { setTimeout } from 'timers'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,11 +53,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   fixedHeight: {
-    height: 185,
-    borderRadius: '18px'
+    height: 195,
+    borderRadius: '18px',
   },
   fixedHeightCalendar: {
     height: 260,
@@ -75,18 +78,15 @@ export default function Analytics(props: any) {
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
-  const user = useSelector((state: AppState) => state.user.user)
   const calendarData = useSelector((state: AppState) => state.expenses.calendar)
   const [calendarDate] = useState(date)
   const [selectedYear, setSelectedYear] = useState(0)
   const [yearChart, setYearChart] = useState({} as CalendarScheduler)
-  const [
-    expensesErr,
-    yearExpensesData,
-    totalYearExpenses,
-  ] = useYearExpenses(selectedYear)
+  const [expensesErr, yearExpensesData, totalYearExpenses] = useYearExpenses(
+    selectedYear
+  )
   const [yearData, totalYearIncome] = useYearIncome(selectedYear)
-  const [yearChartErr, yearChartData] = useYearChart(yearChart)
+  const [yearChartData] = useYearChart(yearChart)
   const [switchView, setSwitchView] = useState(false)
   const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)
   const [
@@ -131,34 +131,37 @@ export default function Analytics(props: any) {
     }
   }
 
-  const onChangeMonth = async (e: any) => {
-    try {
-      const selectedYear = await e.getFullYear()
-      const currentIndex = await e.getMonth()
-      //this is not working
-      // setDateView({year: selectedYear, month: months[currentIndex]})
-      //this is provisory
-      dateView.year = selectedYear
-      dateView.month = months[currentIndex]
-      const foundYear = await calendarData.years.find(
-        (y: CalendarScheduler) => y.year === selectedYear
-      )
-      const foundMonth = await foundYear.months.find(
-        (month: any) => month.name === months[currentIndex]
-      )
-      setMonthlyData(foundMonth)
-      setMonthChartData([
-        {
-          month: dateView.month,
-          income: totalMonthlyIncome,
-          expenses: totalMonthlyExpenses,
-        },
-      ])
-      console.log('chart should update', monthChartData)
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  const onChangeMonth = useCallback(
+    async (e: any) => {
+      try {
+        const selectedYear = await e.getFullYear()
+        const currentIndex = await e.getMonth()
+        //this is not working
+        // setDateView({year: selectedYear, month: months[currentIndex]})
+        //this is provisory
+        dateView.year = selectedYear
+        dateView.month = months[currentIndex]
+        const foundYear = await calendarData.years.find(
+          (y: CalendarScheduler) => y.year === selectedYear
+        )
+        const foundMonth = await foundYear.months.find(
+          (month: any) => month.name === months[currentIndex]
+        )
+        setMonthlyData(foundMonth)
+        setMonthChartData([
+          {
+            month: dateView.month,
+            income: totalMonthlyIncome,
+            expenses: totalMonthlyExpenses,
+          },
+        ])
+        console.log('chart should update', monthChartData)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    [dateView, monthlyData, monthChartData]
+  )
 
   const switchAnalyticsView = () => {
     setSwitchView(!switchView)
@@ -172,7 +175,7 @@ export default function Analytics(props: any) {
     ])
   }
   const { year, month } = dateView
-  console.log('date view', dateView)
+  // console.log('date view', dateView)
   // console.log('total year income', totalYearIncome)
   // console.log('total year income date view', incomeDateView)
 
@@ -185,10 +188,11 @@ export default function Analytics(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-          <Grid item xs={5} md={4} lg={5}>
+            <Grid item xs={5} md={4} lg={5}>
               <Paper className={fixedHeightPaper}>
                 {!switchView ? (
-                    <YearBudget year={selectedYear}
+                  <YearBudget
+                    year={selectedYear}
                     totalYearIncome={totalYearIncome}
                     totalYearExpenses={totalYearExpenses}
                   />
@@ -200,7 +204,6 @@ export default function Analytics(props: any) {
                     totalMonthlyIncome={totalMonthlyIncome}
                   />
                 )}
-
                 <SwitchAnalyticsViewBtn
                   switchAnalyticsView={switchAnalyticsView}
                   switchView={switchView}
@@ -233,7 +236,10 @@ export default function Analytics(props: any) {
                     totalAmount={totalMonthlyIncome}
                   />
                 ) : (
-                  <TotalYearIncome year={selectedYear} totalAmount={totalYearIncome} />
+                  <TotalYearIncome
+                    year={selectedYear}
+                    totalAmount={totalYearIncome}
+                  />
                 )}
               </Paper>
             </Grid>
@@ -241,16 +247,28 @@ export default function Analytics(props: any) {
               {/*Expenses chart goes here, a series or bar chart for expenses and income for the year */}
               <Paper className={classes.chartHeightPaper}>
                 {switchView ? (
-                  <IncomeExpensesMonthChart
-                    data={monthChartData}
-                    year={year}
-                    month={month}
-                  />
+                  <>
+                    {totalMonthlyIncome > 0 || totalMonthlyExpenses > 0 ? (
+                      <IncomeExpensesMonthChart
+                        data={monthChartData}
+                        year={year}
+                        month={month}
+                      />
+                    ) : (
+                      <EmptyMonthlyChartContainer month={month} year={year} />
+                    )}
+                  </>
                 ) : (
-                  <IncomeExpensesYearChart
-                    data={yearChartData}
-                    year={selectedYear}
-                  />
+                  <>
+                    {totalYearIncome > 0 || totalYearExpenses > 0 ? (
+                      <IncomeExpensesYearChart
+                        data={yearChartData}
+                        year={selectedYear}
+                      />
+                    ) : (
+                      <EmptyYearChartContainer year={year} />
+                    )}
+                  </>
                 )}
               </Paper>
             </Grid>

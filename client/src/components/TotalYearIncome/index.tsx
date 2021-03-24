@@ -19,7 +19,6 @@ export default function TotalYearIncome({
   year,
   totalAmount,
 }: TotalYearIncomeProps) {
-  console.log(year, totalAmount)
   const classes = useStyles()
   return (
     <React.Fragment>

@@ -64,25 +64,12 @@ export default function AddIncome({
     year: year,
     month: month,
   })
-  console.log('from add income', income)
   const { category, description, amount } = income
-  /*
-  useEffect(() => {
-    updateMonthlyIncome(updatedIncome)
-    console.log(updatedIncome)
-  }, [])
-  console.log(updatedIncome)
-*/
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
     dispatch(addIncome(income))
-
     handleClose()
-    /*
-    setTimeout(() => {
-      console.log('income should update here', updatedIncome)
-      updateMonthlyIncome(updatedIncome)
-    }, 3000)*/
   }
 
   const handleChange = (e: any) => {

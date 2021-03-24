@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 
 import { AppState, ViewMonth } from '../../types'
 import { DailyExpense } from '../../types/expenses'
@@ -22,7 +21,7 @@ import useMonthlyExpensesChart from '../../hooks/useMonthlyExpensesChart'
 import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import ExpensesMonthlyChartDashboard from '../../components/ExpensesMonthlyChartDashboard'
 import IncomeMonthlyChartDashboard from '../../components/IncomeMonthlyChartDashboard'
-import EmptyChartContainer from '../../components/EmptyChartContainer'
+import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import { bigTabletScreen, mobileScreen } from '../../utils/windowSize'
 
 const useStyles = makeStyles((theme) => ({
@@ -51,11 +50,11 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 195,
-    borderRadius: '18px'
+    borderRadius: '18px',
   },
   fixedHeightChart: {
     height: 243,
-    borderRadius: '18px'
+    borderRadius: '18px',
   },
   fixedHeightCalendar: {
     height: 260,
@@ -69,15 +68,18 @@ const useStyles = makeStyles((theme) => ({
     height: 370,
   },
   fixedHeightChartIncome: {
-    marginTop: '1rem'
-  }
+    marginTop: '1rem',
+  },
 }))
 
 export default function Dashboard(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const fixedHeightPaperChart = clsx(classes.paper, classes.fixedHeightChart)
-  const fixedHeightPaperChartIncome = clsx(classes.paper, classes.fixedHeightChartIncome)
+  const fixedHeightPaperChartIncome = clsx(
+    classes.paper,
+    classes.fixedHeightChartIncome
+  )
 
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
@@ -93,7 +95,6 @@ export default function Dashboard(props: any) {
   ] = useMonthlyExpenses()
   const [totalExpenses] = useTotalMonthlyExpenses(monthlyData)
   const [totalIncome] = useTotalMonthlyIncome(monthlyData)
-  console.log('total income', totalIncome)
   //this is dummy data and it will replaced with the yearChart data and setted each time for the current month
   const [monthChartData, setMonthChartData] = useState([
     { month: '', income: 0, expenses: 0 },
@@ -115,6 +116,7 @@ export default function Dashboard(props: any) {
       props.history.push('/login')
     } else {
       setMonthlyData(defaultMonth)
+      console.log('total income', totalIncome)
       setMonthChartData([
         {
           month: defaultDateView.month,
@@ -125,9 +127,25 @@ export default function Dashboard(props: any) {
       setMonthlyExpensesChartCategory(defaultMonth.days)
       setMonthlyIncomeChartCategory(defaultMonth.income)
     }
-  }, [isAuthenticated, props.history, setMonthChartData, totalExpenses])
+  }, [
+    isAuthenticated,
+    props.history,
+    setMonthChartData,
+    totalIncome,
+    totalExpenses,
+  ])
 
   console.log('should update', monthChartData)
+  // console.log('checking condition for empty chart', !monthChartData[1], !monthChartData[2])
+  //if this is true, no chart
+  /*
+  if(monthChartData[1] && monthChartData[2]) {
+    console.log('chart')
+  }
+  if(!monthChartData[1] && !monthChartData[2]) {
+    console.log('no chart')
+  }*/
+
   const { year, month } = defaultDateView
   return (
     <div className={classes.root}>
@@ -167,22 +185,20 @@ export default function Dashboard(props: any) {
                 />
               </Paper>
             </Grid>
-
             <Grid item xs={11} md={11} lg={6}>
               <Paper className={classes.chartHeightPaper}>
-                <IncomeExpensesMonthChart
-                  data={monthChartData}
-                  year={year}
-                  month={month}
-                />
+                {totalIncome > 0 || totalExpenses > 0 ? (
+                  <IncomeExpensesMonthChart
+                    data={monthChartData}
+                    year={year}
+                    month={month}
+                  />
+                ) : (
+                  <EmptyMonthlyChartContainer month={month} year={year} />
+                )}
               </Paper>
             </Grid>
-            <Grid
-              item
-              xs={8}
-              md={12}
-              lg={6}
-            >
+            <Grid item xs={8} md={12} lg={6}>
               <Paper className={fixedHeightPaperChart}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChartDashboard
@@ -194,10 +210,12 @@ export default function Dashboard(props: any) {
                     name="category"
                   />
                 ) : (
-                  <EmptyChartContainer month={month} year={year} />
+                  <EmptyMonthlyChartContainer month={month} year={year} />
                 )}
               </Paper>
-              <Paper className={`${fixedHeightPaperChart} ${fixedHeightPaperChartIncome}`}>
+              <Paper
+                className={`${fixedHeightPaperChart} ${fixedHeightPaperChartIncome}`}
+              >
                 {incomeChartData.length > 0 ? (
                   <IncomeMonthlyChartDashboard
                     chartData={incomeChartData}
@@ -208,9 +226,9 @@ export default function Dashboard(props: any) {
                     name="category"
                   />
                 ) : (
-                  <EmptyChartContainer month={month} year={year} />
+                  <EmptyMonthlyChartContainer month={month} year={year} />
                 )}
-              </Paper> 
+              </Paper>
             </Grid>
           </Grid>
           <Box pt={4}></Box>
