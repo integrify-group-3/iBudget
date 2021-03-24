@@ -155,6 +155,7 @@ export const googleLogin = (response: any) => {
         console.log(res.data)
         dispatch(loginSuccess(res.data.user, res.data.token))
         dispatch(googleLoginSuccess())
+        window.location.href = '/dashboard'
       })
     } catch (err) {
       // dispatch(showErrors(err.response.data, err.response.status));

@@ -49,11 +49,11 @@ export default function Home(props: any) {
     (state: AppState) => state.user.isAuthenticated
   )
   useEffect(() => {
-    if(isAuthenticated) {
+    if (isAuthenticated) {
       props.history.push('/dashboard')
     }
   }, [isAuthenticated])
-  
+
   return (
     <div className="home-page-container">
       <Container className={classes.container}>
@@ -63,31 +63,39 @@ export default function Home(props: any) {
         <Typography color="primary" variant="h6" className={classes.descStyle}>
           Cause your cash matters
         </Typography>
-        {isAuthenticated ?
-        <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-        :
-        <>
-          <Button
-          component={Link}
-          to="register"
-          color="primary"
-          variant="contained"
-          className={classes.btnStyle}
-        >
-          Join Today
-        </Button>
-        <Button
-          color="secondary"
-          component={Link}
-          to="login"
-          variant="contained"
-          className={classes.btnStyle}
-        >
-          Sign in
-        </Button>
-        </>
-        }
-      
+        {isAuthenticated ? (
+          <div className="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        ) : (
+          <>
+            <Button
+              component={Link}
+              to="register"
+              color="primary"
+              variant="contained"
+              className={classes.btnStyle}
+            >
+              Join Today
+            </Button>
+            <Button
+              color="secondary"
+              component={Link}
+              to="login"
+              variant="contained"
+              className={classes.btnStyle}
+            >
+              Sign in
+            </Button>
+          </>
+        )}
       </Container>
     </div>
   )

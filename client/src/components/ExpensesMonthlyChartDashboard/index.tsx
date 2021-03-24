@@ -74,6 +74,14 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }))
 
+const chartRootStyle = {
+  flexGrow: 0,
+}
+
+const ChartRoot = (props: any) => (
+  <Legend.Root {...props} style={chartRootStyle} />
+)
+
 export default function ExpensesMonthlyChartDashboard({
   chartData,
   year,
@@ -96,52 +104,50 @@ export default function ExpensesMonthlyChartDashboard({
   return (
     <>
       {switchChart ? (
-      <div className={classes.chartContainer}>
-        <Chart data={chartData}>
-          <ArgumentScale factory={scaleBand} />
-          <ArgumentAxis />
-          <ValueAxis />
-          {chartData.map((data: ExpensesChartData) => (
-            <BarSeries
-              valueField={valueField}
-              argumentField={argumentField}
-              name={data.category}
-            />
-          ))}
+        <div className={classes.chartContainer}>
+          <Chart data={chartData}>
+            <ArgumentScale factory={scaleBand} />
+            <ArgumentAxis />
+            <ValueAxis />
+            {chartData.map((data: ExpensesChartData) => (
+              <BarSeries
+                valueField={valueField}
+                argumentField={argumentField}
+                name={data.category}
+              />
+            ))}
 
-          {chartData.map((data: ExpensesChartData) => (
-            console.log(data)
-            // <Stack stacks={[{ series: [`${data.category}`, `${argumentField}`] }]} />
-          ))}
-          <Stack />
-          <EventTracker />
-          <Tooltip />
-          <Legend />
-          <SwitchChartBtn
-            switchChartView={switchChartView}
-            btnText={pieChartText}
-          /> 
-          <Animation />
-        </Chart>
+            {chartData.map(
+              (data: ExpensesChartData) => console.log(data)
+              // <Stack stacks={[{ series: [`${data.category}`, `${argumentField}`] }]} />
+            )}
+            <Stack />
+            <EventTracker />
+            <Tooltip />
+            <Legend />
+            <SwitchChartBtn
+              switchChartView={switchChartView}
+              btnText={pieChartText}
+            />
+            <Animation />
+          </Chart>
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData}>
-            <Palette
-              scheme={scheme}
-            />
+          <Chart data={chartData} rootComponent={ChartRoot}>
+            <Palette scheme={scheme} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}
               name={name}
               innerRadius={0.5}
-              outerRadius={0.9}
+              outerRadius={1.3}
             />
             <Legend />
             <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
-            /> 
+            />
             <EventTracker />
             <Tooltip />
             <Animation />

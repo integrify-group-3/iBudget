@@ -50,14 +50,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     borderBottom: '1px solid lightgrey',
   },
+  tileContentList: {
+    listStyle: 'none',
+  },
 }))
 
 export default function TileContentIncome({ contentData, date, view }: any) {
   const classes = useStyles()
   const [loadTileContent, setLoadTileContent] = useState(false)
-  const [monthName, setMonthName] = useState('')
   const [month, setMonth] = useState({} as ViewMonth)
-  const [contentIncome, setContentIncome] = useState([])
   const [tileLoaded, setTileLoaded] = useState(false)
   const [isShowing, setIsShowing] = useState(false)
 
@@ -66,17 +67,13 @@ export default function TileContentIncome({ contentData, date, view }: any) {
       const foundMonth = await contentData.find(
         (data: any) => data.name === moment(date).format('MMMM')
       )
-      setMonth(foundMonth)  
+      setMonth(foundMonth)
       setLoadTileContent(true)
       console.log('month here', month)
-      if (
-        month.income !== undefined &&
-        loadTileContent &&
-        view === 'year'
-      ) {
+      if (month.income !== undefined && loadTileContent && view === 'year') {
         if (month.income.length > 0) {
           setTileLoaded(true)
-        } 
+        }
       }
     } catch (err) {
       return err
@@ -110,7 +107,7 @@ export default function TileContentIncome({ contentData, date, view }: any) {
           <li className={classes.previewIncomesDate}>{month.name}</li>
           {month.income.map((income: any) => (
             <>
-              <ul key={income._id} style={{ listStyle: 'none' }}>
+              <ul key={income._id} className={classes.tileContentList}>
                 <li className={classes.previewIncomesItem}>
                   {income.category} {income.amount}
                 </li>
