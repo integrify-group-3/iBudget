@@ -36,6 +36,8 @@ import SwitchChartBtn from '../../components/SwitchChartBtn'
 import { IncomeChartData } from '../../types/income'
 import { IncomeChartDashboardProps } from '../../types'
 
+import './style.scss'
+
 const schemeCollection = [
   schemeCategory10,
   schemeAccent,
@@ -81,8 +83,19 @@ const chartRootStyle = {
   marginTop: '25px',
 }
 
+const pieRootStyle = {
+  flexGrow: 0,
+  height: '20rem',
+}
+
 const ChartRoot = (props: any) => (
   <Legend.Root {...props} style={chartRootStyle} />
+)
+
+const PieRoot = (props: any) => <Legend.Root {...props} style={pieRootStyle} />
+
+const legendLabelComponent = (props: any) => (
+  <Legend.Label {...props} className="label-text" />
 )
 
 export default function IncomeMonthlyChartDashboard({
@@ -138,23 +151,20 @@ export default function IncomeMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} rootComponent={ChartRoot}>
-            <Palette
-              scheme={scheme}
-              // name="category"
-            />
+          <Chart data={chartData} height={239}>
+            <Palette scheme={scheme} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}
               name={name}
               innerRadius={0.5}
-              outerRadius={1.3}
+              outerRadius={0.9}
             />
-            <Legend />
-            <SwitchChartBtn
+            <Legend labelComponent={legendLabelComponent} />
+            {/* <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
-            />
+            /> */}
             <EventTracker />
             <Tooltip />
             <Animation />

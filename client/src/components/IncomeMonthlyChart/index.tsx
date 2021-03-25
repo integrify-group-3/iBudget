@@ -24,6 +24,8 @@ import { Palette } from '@devexpress/dx-react-chart'
 
 import { IncomeChartDataProps } from '../../types'
 
+import './style.scss'
+
 const schemeCollection = [
   schemeCategory10,
   schemeAccent,
@@ -36,11 +38,10 @@ const schemeCollection = [
   schemeSet3,
 ]
 
-
-
 const chartRootStyle = {
-  flexGrow: 0,
 }
+
+const legendLabelComponent = (props: any) => ( <Legend.Label {...props} className="label-text"/> )
 
 const ChartRoot = (props: any) => (
   <Legend.Root {...props} style={chartRootStyle} />
@@ -54,7 +55,7 @@ export default function IncomeMonthlyChart({
   const [scheme, setScheme] = useState(schemeCollection[3])
 
   return (
-    <Chart data={chartData} rootComponent={ChartRoot}>
+    <Chart data={chartData} height={240}>
       <Palette
         scheme={scheme}
         // name="category"
@@ -66,8 +67,8 @@ export default function IncomeMonthlyChart({
         innerRadius={0.5}
         outerRadius={0.9}
       />
-      <Legend />
-      <Title text={`Income Chart ${month} ${year}`} />
+      <Legend labelComponent={legendLabelComponent}/>
+      {/* <Title text={`Income Chart ${month} ${year}`} /> */}
 
       <EventTracker />
       <Tooltip />
