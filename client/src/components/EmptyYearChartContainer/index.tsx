@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import EventNoteIcon from '@material-ui/icons/EventNote';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 import { EmptyYearChartContainerProps } from '../../types/ui'
 import Title from "../Title";
@@ -12,12 +12,12 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    padding: '3rem 0'
+    padding: '10rem 0'
   },
   header: {
     fontSize: '22px'
   },
-  calendarIcon: {
+  emptyChartIcon: {
     fontSize: '68px',
     color: 'lightgrey',
     marginTop: '1rem'
@@ -40,7 +40,7 @@ export default function EmptyYearChartContainer({
       <Typography component="p" variant="h4" className={classes.header}>
         No data registered for {year} 
       </Typography>
-      <EventNoteIcon className={classes.calendarIcon}/>
+      <EqualizerIcon className={classes.emptyChartIcon}/>
       <Typography color="textSecondary" className={classes.depositContext}>
         
       </Typography>

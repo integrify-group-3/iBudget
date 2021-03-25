@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import { AppState, CalendarScheduler, DateView, ViewMonth } from '../../types'
 import { clearUpdate } from '../../redux/actions/income'
 import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
-import EmptyChartContainer from '../../components/EmptyChartContainer'
+import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import { Income } from '../../types/income'
 import useIncome from '../../hooks/useMonthlyIncome'
 import useYearIncome from '../../hooks/useYearIncome'
@@ -202,16 +202,7 @@ export default function IncomePage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={5} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <TotalMonthlyIncome
-                  year={dateView.year}
-                  month={dateView.month}
-                  totalAmount={totalMonthlyIncome}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={5} md={4} lg={3}>
+          <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {/* Total balance goes here */}
                 <MonthlyBudget
@@ -219,6 +210,15 @@ export default function IncomePage(props: any) {
                   month={dateView.month}
                   totalMonthlyExpenses={totalMonthlyExpenses}
                   totalMonthlyIncome={totalMonthlyIncome}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={5} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <TotalMonthlyIncome
+                  year={dateView.year}
+                  month={dateView.month}
+                  totalAmount={totalMonthlyIncome}
                 />
               </Paper>
             </Grid>
@@ -231,7 +231,7 @@ export default function IncomePage(props: any) {
                     year={dateView.year}
                   />
                 ) : (
-                  <EmptyChartContainer
+                  <EmptyMonthlyChartContainer
                     month={dateView.month}
                     year={dateView.year}
                   />

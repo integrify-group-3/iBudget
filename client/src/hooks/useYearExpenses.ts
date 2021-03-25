@@ -92,7 +92,6 @@ export default function useYearExpenses(selectedYear: number) {
     setYearData(data)
     if (data !== undefined) {
       const totalExpenses = calculateYearExpenses(data)
-      console.log('total expenses', totalExpenses)
       setYearTotalExpenses(totalExpenses)
     }
   }, [data])

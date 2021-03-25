@@ -17,6 +17,7 @@ import PersonIcon from '@material-ui/icons/Person'
 import { NavbarSecondaryListItemsProps } from '../../types/ui'
 import logo from '../../imgs/logo.svg'
 
+import './style.scss'
 const linkStyle = {
   textDecoration: 'none',
   color: 'white',
@@ -26,6 +27,10 @@ const navIconStyle = {
   color: 'white',
   opacity: '0.9',
 }
+const styleActive = {
+  color: '#4112c7',
+  backgroundColor: 'white'
+}
 
 export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
   return (
@@ -34,7 +39,7 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
       <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
       <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
     </ListSubheader>
-    <NavLink to="/dashboard" style={linkStyle} title="Dashboard">
+    <NavLink to="/dashboard" style={linkStyle} activeStyle={styleActive} title="Dashboard">
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon style={navIconStyle} />
@@ -42,7 +47,7 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
         <ListItemText primary="Dashboard" />
       </ListItem>
     </NavLink>
-    <NavLink to="/income" style={linkStyle} title="Income">
+    <NavLink to="/income" style={linkStyle} activeStyle={styleActive} title="Income">
       <ListItem button>
         <ListItemIcon>
           <AccountBalanceWalletIcon style={navIconStyle} />
@@ -50,7 +55,7 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
         <ListItemText primary="Income" />
       </ListItem>
     </NavLink>
-    <NavLink to="/expenses" style={linkStyle} title="Expenses">
+    <NavLink to="/expenses" style={linkStyle} activeStyle={styleActive} title="Expenses">
       <ListItem button>
         <ListItemIcon>
           <MoneyOffIcon style={navIconStyle} />
@@ -58,7 +63,7 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
         <ListItemText primary="Expenses" />
       </ListItem>
     </NavLink>
-    <NavLink to="/analytics" style={linkStyle} title="Analytics">
+    <NavLink to="/analytics" style={linkStyle} activeStyle={styleActive} title="Analytics">
       <ListItem button>
         <ListItemIcon>
           <TrendingUpIcon style={navIconStyle} />
@@ -66,7 +71,7 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
         <ListItemText primary="Analytics" />
       </ListItem>
     </NavLink>
-    <NavLink to={`/user/${user.id}`} style={linkStyle} title="User Profile">
+    <NavLink to={`/user/${user.id}`} style={linkStyle} activeStyle={styleActive} title="User Profile">
       <ListItem button>
         <ListItemIcon>
           <PersonIcon style={navIconStyle} />

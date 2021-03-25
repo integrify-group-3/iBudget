@@ -20,7 +20,7 @@ import useMonthlyExpensesChart from '../../hooks/useMonthlyExpensesChart'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import { months, date, year, currentMonth } from '../../utils/dateValues'
-import EmptyChartContainer from '../../components/EmptyChartContainer'
+import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import ExpensesMonthlyChart from '../../components/ExpensesMonthlyChart'
 import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
@@ -344,7 +344,7 @@ export default function ExpensesPage(props: any) {
                     month={dateView.month}
                   />
                 ) : (
-                  <EmptyChartContainer
+                  <EmptyMonthlyChartContainer
                     month={dateView.month}
                     year={dateView.year}
                   />
