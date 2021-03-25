@@ -260,7 +260,6 @@ export default function ExpensesPage(props: any) {
       setIsFormShowing(false)
       setIsDayClicking(true)
       setSchedule({ ...schedule, day: e.activeStartDate })
-
       try {
         const selectedYear = await e.activeStartDate.getFullYear()
         const currentIndex = await e.activeStartDate.getMonth()
@@ -356,12 +355,7 @@ export default function ExpensesPage(props: any) {
               <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
-                  dailyExpense={
-                    dailyExpense
-                    // isDayClicking
-                    //   ? dailyExpense
-                    //   : (expensesData as DailyExpense)
-                  }
+                  dailyExpense={dailyExpense}
                   showFormOnClick={showFormOnClick}
                 />
               </Paper>
