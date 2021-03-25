@@ -89,7 +89,7 @@ export const secondaryListItems = (
       <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
       <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
     </ListSubheader>
-    <NavLink to="/register" style={linkStyle} title="Sign up">
+    <NavLink to="/register" style={linkStyle} activeStyle={styleActive} title="Sign up">
       <ListItem button>
         <ListItemIcon>
           <PersonAddIcon style={navIconStyle} />
@@ -97,7 +97,7 @@ export const secondaryListItems = (
         <ListItemText primary="Sign up"/>
       </ListItem>
     </NavLink>
-    <NavLink to="/login" style={linkStyle} title="Sign in">
+    <NavLink to="/login" style={linkStyle} activeStyle={styleActive} title="Sign in">
       <ListItem button>
         <ListItemIcon>
           <ExitToAppIcon style={navIconStyle} />
@@ -105,7 +105,7 @@ export const secondaryListItems = (
         <ListItemText primary="Sign in"/>
       </ListItem>
     </NavLink>
-    <NavLink to="/" style={linkStyle} title="Home" >
+    <NavLink to="/" style={linkStyle} activeStyle={styleActive} title="Home" >
       <ListItem button>
         <ListItemIcon>
           <HomeIcon style={navIconStyle}/>

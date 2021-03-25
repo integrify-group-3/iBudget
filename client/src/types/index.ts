@@ -144,6 +144,12 @@ export type IncomeChartDashboardProps = {
   name: string
 }
 
+export type TileContentIncomeExpenses = {
+  month: string
+  income: number
+  expenses: number
+}
+
 export type AppState = {
   product: ProductState
   ui: UiState

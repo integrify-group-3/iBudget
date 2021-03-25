@@ -1,0 +1,22 @@
+.tile-content {
+    animation: createBox 0.55s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    position: absolute;
+    background-color: rgba(87, 146, 223, 0.5);
+    height: 4.6rem;
+    width: 4.6rem;
+    border-radius: 50px;
+  }
+  
+  @keyframes createBox {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }

@@ -32,7 +32,7 @@ export default function IncomeExpensesYearChart({
   return (
     <Paper className="chart-container">
       {!switchChart ? (
-        <Chart data={data}>
+        <Chart data={data} height={450}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />

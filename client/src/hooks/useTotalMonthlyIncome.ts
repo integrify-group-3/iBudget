@@ -7,9 +7,8 @@ import { getTotalMonthlyIncome } from '../redux/actions/income'
 export default function useTotalMonthlyIncome(monthlyData: any) {
   const dispatch = useDispatch()
   const total = useSelector((state: AppState) => state.income.total)
-  console.log('total income from hooks', total)
   const [totalMonthlyIncome, setTotalMonthlyIncome] = useState(0)
-  // console.log('from total monthly income', monthlyData)
+
   useEffect(() => {
     dispatch(getTotalMonthlyIncome(monthlyData))
   }, [dispatch, monthlyData])
@@ -17,7 +16,6 @@ export default function useTotalMonthlyIncome(monthlyData: any) {
   useEffect(() => {
     if (total !== undefined) {
       setTotalMonthlyIncome(total)
-      console.log('from total monthly income', totalMonthlyIncome)
     }
   }, [total])
 

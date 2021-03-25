@@ -28,8 +28,7 @@ import TotalMonthlyIncome from '../../components/TotalMonthlyIncome'
 import TotalYearIncome from '../../components/TotalYearIncome'
 import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import EmptyYearChartContainer from '../../components/EmptyYearChartContainer'
-
-import { setTimeout } from 'timers'
+import TileContentMonthIncomeExpenses from '../../components/TileContentMonthIncomeExpenses'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,6 +100,7 @@ export default function Analytics(props: any) {
   const [monthChartData, setMonthChartData] = useState([
     { month: '', income: 0, expenses: 0 },
   ])
+  
   const [dateView, setDateView] = useState({
     year: 0,
     month: '',
@@ -174,11 +174,22 @@ export default function Analytics(props: any) {
       },
     ])
   }
-  const { year, month } = dateView
-  // console.log('date view', dateView)
-  // console.log('total year income', totalYearIncome)
-  // console.log('total year income date view', incomeDateView)
 
+  const switchYearOnClick = useCallback ( 
+    async(e: any) => {
+      try {
+        const clickedYear = await e.activeStartDate.getFullYear()
+        const foundYear = await calendarData.years.find(
+          (y: CalendarScheduler) => y.year === clickedYear
+        )
+        setYearChart(foundYear)
+      } catch(err) {}
+    
+  },[yearChart, calendarData]
+  )
+
+  const { year, month } = dateView
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -266,7 +277,7 @@ export default function Analytics(props: any) {
                         year={selectedYear}
                       />
                     ) : (
-                      <EmptyYearChartContainer year={year} />
+                      <EmptyYearChartContainer year={selectedYear} />
                     )}
                   </>
                 )}
@@ -281,6 +292,15 @@ export default function Analytics(props: any) {
                   value={calendarDate}
                   defaultView="month"
                   maxDetail="year"
+                  onActiveStartDateChange={switchYearOnClick}
+                  tileContent={({ activeStartDate, date, view }: any) => (
+                    <TileContentMonthIncomeExpenses
+                      date={date}
+                      view={view}
+                      activeStartDate={activeStartDate}
+                      tileContentData={yearChartData}
+                    />
+                  )}
                   // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}
                 />
               ) : (

@@ -64,12 +64,14 @@ export default function TileContentIncome({ contentData, date, view }: any) {
 
   const loadTIles = useCallback(async () => {
     try {
+      console.log(contentData)
+      setTileLoaded(false)
       const foundMonth = await contentData.find(
         (data: any) => data.name === moment(date).format('MMMM')
       )
       setMonth(foundMonth)
       setLoadTileContent(true)
-      console.log('month here', month)
+      // console.log('month here', month)
       if (month.income !== undefined && loadTileContent && view === 'year') {
         if (month.income.length > 0) {
           setTileLoaded(true)
@@ -78,7 +80,7 @@ export default function TileContentIncome({ contentData, date, view }: any) {
     } catch (err) {
       return err
     }
-  }, [contentData, month, loadTileContent, tileLoaded])
+  }, [contentData, month, loadTileContent])
 
   useEffect(() => {
     setTimeout(() => {
