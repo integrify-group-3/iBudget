@@ -35,6 +35,9 @@ import { Palette } from '@devexpress/dx-react-chart'
 import SwitchChartBtn from '../../components/SwitchChartBtn'
 import { ExpensesChartData } from '../../types/expenses'
 import { ExpensesChartDashboardProps } from '../../types/ui'
+
+import './style.scss'
+
 const schemeCollection = [
   schemeCategory10,
   schemeAccent,
@@ -76,11 +79,28 @@ const useStyles = makeStyles((theme: any) => ({
 
 const chartRootStyle = {
   flexGrow: 0,
+  fontSize: '10px'
+}
+const pointRootStyle = {
+  height: '12rem'
+}
+
+const legendRootStyle = {
+}
+const legendItemStyle = {
 }
 
 const ChartRoot = (props: any) => (
   <Legend.Root {...props} style={chartRootStyle} />
 )
+
+const PieRoot = (props: any) => (
+  <PieSeries.Point {...props} style={pointRootStyle} />
+)
+
+const legendRootComponent = (props: any) => ( <Legend.Root {...props} style={legendRootStyle} /> )
+const legendItemComponent = (props: any) => ( <Legend.Item {...props} style={legendItemStyle} /> )
+const legendLabelComponent = (props: any) => ( <Legend.Label {...props} className="label-text"/> )
 
 export default function ExpensesMonthlyChartDashboard({
   chartData,
@@ -105,7 +125,7 @@ export default function ExpensesMonthlyChartDashboard({
     <>
       {switchChart ? (
         <div className={classes.chartContainer}>
-          <Chart data={chartData}>
+          <Chart data={chartData} rootComponent={ChartRoot}>
             <ArgumentScale factory={scaleBand} />
             <ArgumentAxis />
             <ValueAxis />
@@ -134,20 +154,24 @@ export default function ExpensesMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} rootComponent={ChartRoot}>
+          <Chart data={chartData} height={239}>
             <Palette scheme={scheme} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}
               name={name}
               innerRadius={0.5}
-              outerRadius={1.3}
+              outerRadius={0.9}
+              pointComponent={PieRoot}
             />
-            <Legend />
-            <SwitchChartBtn
+            <Legend
+            rootComponent={legendRootComponent}
+            itemComponent={legendItemComponent} 
+            labelComponent={legendLabelComponent}/>
+            {/* <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
-            />
+            /> */}
             <EventTracker />
             <Tooltip />
             <Animation />

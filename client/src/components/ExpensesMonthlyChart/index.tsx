@@ -22,6 +22,8 @@ import {
 
 import { ExpensesChartProps } from '../../types/ui'
 
+import './style.scss'
+
 const schemeCollection = [
   schemeCategory10,
   schemeAccent,
@@ -39,8 +41,10 @@ const chartRootStyle = {
 }
 
 const ChartRoot = (props: any) => (
-  <Legend.Root {...props} style={chartRootStyle} />
+  <Legend.Root {...props} style={chartRootStyle} className="chart-root" />
 )
+const pointComponentRoot = (props: any) => ( <PieSeries.Point {...props} className="pieseries"/> )
+const legendLabelComponent = (props: any) => ( <Legend.Label {...props} className="label-text"/> )
 
 export default function ExpensesChart({
   chartData,
@@ -50,7 +54,7 @@ export default function ExpensesChart({
   const [scheme, setScheme] = useState(schemeCollection[3])
 
   return (
-    <Chart data={chartData} rootComponent={ChartRoot}>
+    <Chart data={chartData} height={240}>
       <Palette
         scheme={scheme}
         // name="category"
@@ -61,9 +65,10 @@ export default function ExpensesChart({
         name="category"
         innerRadius={0.5}
         outerRadius={0.9}
+        pointComponent={pointComponentRoot}
       />
-      <Legend />
-      <Title text={`Expenses Chart ${month} ${year}`} />
+      <Legend labelComponent={legendLabelComponent} />
+      {/* <Title text={`Expenses Chart ${month} ${year}`} /> */}
       <EventTracker />
       <Tooltip />
       <Animation />
