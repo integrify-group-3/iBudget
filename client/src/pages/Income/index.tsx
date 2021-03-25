@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
     // height: 340,
     height: 240,
     borderRadius: '18px',
-
   },
   chartHeightPaper: {
     height: 640,
@@ -130,7 +129,7 @@ export default function IncomePage(props: any) {
           //  console.log(monthIncome)
           dispatch(clearUpdate())
           //  console.log('monthly data from ismonthclicking', monthlyData)
-        }, 1000);
+        }, 1000)
       }
     }
   }, [
@@ -166,28 +165,32 @@ export default function IncomePage(props: any) {
     setIsMonthClicking(true)
     const selectedYear = e.getFullYear()
     const currentIndex = e.getMonth()
-    const foundYear = await calendar.years.find((i: any) => i.year === selectedYear)
+    const foundYear = await calendar.years.find(
+      (i: any) => i.year === selectedYear
+    )
     setTileContentData(foundYear.months)
-    setDateView({ ...dateView, year: selectedYear, month: months[currentIndex] })
+    setDateView({
+      ...dateView,
+      year: selectedYear,
+      month: months[currentIndex],
+    })
     changeMonthView(dateView.year, dateView.month, foundYear, currentIndex)
   }
 
-  const switchYearOnClick = useCallback (
+  const switchYearOnClick = useCallback(
     async (e: any) => {
-    try {
-      const selectedYear = e.activeStartDate.getFullYear()
-      console.log('selected year', selectedYear)
-      const foundYear = await calendar.years.find((i: any) => i.year === selectedYear)
-      console.log('year data', yearData)
-      console.log('found year', foundYear)
-      setTileContentData(foundYear.months)
-      // console.log('tile content data', tileContentData)
-    }
-    catch(err) {
-
-    }
-   
-  }, [tileContentData]
+      try {
+        const selectedYear = await e.activeStartDate.getFullYear()
+        const foundYear = await calendar.years.find(
+          (i: any) => i.year === selectedYear
+        )
+        console.log('found year', foundYear)
+        //this is not updating
+        setTileContentData(foundYear.months)
+        console.log('tile content data', tileContentData)
+      } catch (err) {}
+    },
+    [tileContentData, calendar]
   )
 
   // console.log('tile content data', tileContentData)
@@ -202,7 +205,7 @@ export default function IncomePage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-          <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={5} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {/* Total balance goes here */}
                 <MonthlyBudget

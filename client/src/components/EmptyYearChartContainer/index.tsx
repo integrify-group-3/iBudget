@@ -31,7 +31,6 @@ export default function EmptyYearChartContainer({
     year, 
 }: EmptyYearChartContainerProps) {
   const classes = useStyles()
-  
   return (
     <main className={classes.emptyChartContainer}>
       <Title>
