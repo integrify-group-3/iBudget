@@ -25,10 +25,10 @@ import ExpensesMonthlyChart from '../../components/ExpensesMonthlyChart'
 import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import ExpensesTable from '../../components/ExpensesTable'
-import TileContentExpenses from '../../components/TileContentExpenses'
+import TileContentMonthlyExpenses from '../../components/TileContentMonthlyExpenses'
 import AddExpense from '../../components/AddExpense'
 import { clearUpdate } from '../../redux/actions/expenses'
-import { bigTabletScreen, mobileScreen } from '../../utils/windowSize'
+import { mobileScreen } from '../../utils/windowSize'
 
 import 'react-calendar/dist/Calendar.css'
 
@@ -390,7 +390,7 @@ export default function ExpensesPage(props: any) {
                 onActiveStartDateChange={switchMonthOnClick}
                 showNeighboringMonth={true}
                 tileContent={({ activeStartDate, date, view }: any) => (
-                  <TileContentExpenses
+                  <TileContentMonthlyExpenses
                     date={date}
                     view={view}
                     activeStartDate={activeStartDate}

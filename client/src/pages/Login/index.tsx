@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  title: {
+    color: '#865CFF',
+    paddingTop: '25px',
+  },
   input: {
     padding: '.3rem',
   },
@@ -47,11 +51,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#865CFF',
     color: 'white',
     borderRadius: '50px',
+    marginTop: '1rem',
+  },
+  forgotPasswordSignup: {
+    marginTop: '1rem',
   },
   errorMsg: {
     color: 'red',
     textAlign: 'center',
     marginTop: '1rem',
+  },
+  signUpLink: {
+    textDecoration: 'none',
   },
   forgotPasswordLink: {
     color: '#865CFF',
@@ -97,7 +108,7 @@ export default function Login(props: any) {
       <Container component="main" maxWidth="xs" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" className={classes.title}>
             Sign in
           </Typography>
           <GoogleLogIn isSigIn={isSignIn} />
@@ -129,10 +140,6 @@ export default function Login(props: any) {
               autoComplete="current-password"
               className={classes.input}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -141,12 +148,14 @@ export default function Login(props: any) {
             >
               Sign In
             </Button>
-            <Grid container>
+            <Grid container className={classes.forgotPasswordSignup}>
               <Grid item xs>
-                <NavLink to="/forgot-password">Forgot password?</NavLink>
+                <NavLink to="/forgot-password" className={classes.signUpLink}>
+                  Forgot password?
+                </NavLink>
               </Grid>
               <Grid item>
-                <NavLink to="/register">
+                <NavLink to="/register" className={classes.signUpLink}>
                   {"Don't have an account? Sign Up"}
                 </NavLink>
               </Grid>
