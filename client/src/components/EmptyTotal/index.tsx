@@ -19,7 +19,6 @@ const useStyles = makeStyles({
     fontSize: '50px',
     color: 'lightgrey',
     alignSelf: 'center'
-
   },
   depositContext: {
     flex: 1,

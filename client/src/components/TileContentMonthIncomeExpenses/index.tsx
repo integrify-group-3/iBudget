@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
+import EventNoteIcon from '@material-ui/icons/EventNote';
 
-import { DailyExpense } from '../../types/expenses'
-import { TileContentProps } from '../../types/ui'
 import { TileContentIncomeExpenses } from '../../types'
 
 import './style.scss'
@@ -37,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-evenly',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    padding: '2.3rem 2rem',
+    padding: '1.5rem 2.5rem',
     fontSize: '13px',
     borderRadius: '5px',
     zIndex: 2,
@@ -45,14 +44,26 @@ const useStyles = makeStyles((theme) => ({
   },
   previewIncomeExpensesDate: {
     fontWeight: 700,
-  },
-  previewExpensesItem: {
     display: 'flex',
     justifyContent: 'space-between',
-    flexDirection: 'column',
     alignItems: 'center',
+    color: '#595565',
     borderBottom: '1px solid lightgrey',
   },
+  eventNoteIcon: {
+    fontSize: '19px',
+    color: 'lightgrey',
+    alignSelf: 'center',
+    marginRight: '.4rem',    
+  },
+  previewIncomeExpensesInc: {
+    fontWeight: 700,
+    color: '#42A5F5'
+  },
+  previewIncomeExpensesExp: {
+    fontWeight: 700,
+    color: '#fd3865',
+},
 }))
 
 export default function TileContentMonthIncomeExpenses({
@@ -102,7 +113,7 @@ export default function TileContentMonthIncomeExpenses({
   const hideIncomeExpensesPreview = () => {
     setIsShowing(false)
   }
-  //   console.log(tileIncomeExpenses)
+
   const { month, income, expenses } = tileIncomeExpenses
   if (!tileLoaded) return <div></div>
   return (
@@ -113,9 +124,12 @@ export default function TileContentMonthIncomeExpenses({
     >
       {isShowing && (
         <ul className={classes.previewIncomeExpenses}>
-          <li className={classes.previewIncomeExpensesDate}>{month}</li>
-          <li className={classes.previewIncomeExpensesDate}>Income: {income}</li>
-          <li className={classes.previewIncomeExpensesDate}>Expenses: {expenses}</li>
+          <li className={classes.previewIncomeExpensesDate}>
+              <EventNoteIcon className={classes.eventNoteIcon} />
+              <span>{month}</span>
+              </li>
+          <li className={classes.previewIncomeExpensesInc}>Income: €{income}</li>
+          <li className={classes.previewIncomeExpensesExp}>Expenses: €{expenses}</li>
         </ul>
       )}
     </div>

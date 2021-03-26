@@ -119,7 +119,7 @@ export default function ExpensesTable({
                     <TableRow key={_id}>
                       <TableCell>{category}</TableCell>
                       <TableCell>{description}</TableCell>
-                      <TableCell>{amount}</TableCell>
+                      <TableCell>€{amount}</TableCell>
                       <TableCell>
                         <IconButton
                           aria-label="edit"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
+import EventNoteIcon from '@material-ui/icons/EventNote';
 
 import { DailyExpense } from '../../types/expenses'
 import { TileContentProps } from '../../types/ui'
@@ -42,19 +43,35 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 2,
     lineHeight: '1.8',
   },
+  eventNoteIcon: {
+    fontSize: '19px',
+    color: 'lightgrey',
+    alignSelf: 'center',
+    marginRight: '.4rem',    
+  },
   previewExpensesDate: {
     fontWeight: 700,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    color: '#595565',
   },
   previewExpensesItem: {
     display: 'flex',
     justifyContent: 'space-between',
-    flexDirection: 'column',
     alignItems: 'center',
     borderBottom: '1px solid lightgrey',
+    marginLeft: '1.99em',
+    color: '#0e0e0f',
   },
+  amount: {
+    fontWeight: 700,
+    color: '#fd3865',
+    marginLeft: '.4rem'
+  }
 }))
 
-export default function TileContentExpenses({
+export default function TileContentMonthlyExpenses({
   date,
   view,
   contentData,
@@ -108,11 +125,15 @@ export default function TileContentExpenses({
     >
       {isShowing && (
         <ul className={classes.previewExpenses}>
-          <li className={classes.previewExpensesDate}>{day.day}</li>
+          <li className={classes.previewExpensesDate}>
+          <EventNoteIcon className={classes.eventNoteIcon} />
+            <span>{day.day}</span>
+            </li>
           {day.expenses.map((e: any) => (
             <>
               <li key={e._id} className={classes.previewExpensesItem}>
-                {e.category} {e.amount}
+                <span>{e.category}</span>
+                <span className={classes.amount}>€{e.amount}</span>
               </li>
             </>
           ))}
