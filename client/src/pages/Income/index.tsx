@@ -23,7 +23,7 @@ import IncomeMonthlyChart from '../../components/IncomeMonthlyChart'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
-import TileContentIncome from '../../components/TileContentIncome'
+import TileContentMonthlyIncome from '../../components/TileContentMonthlyIncome'
 
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
@@ -56,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
     height: 240,
     borderRadius: '18px',
   },
+  fixedHeightTable: {
+    height: 340,
+    borderRadius: '18px',
+    // background: '#131313'
+  },
   chartHeightPaper: {
     height: 640,
   },
@@ -65,6 +70,7 @@ export default function IncomePage(props: any) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const fixedHeightPaperTable = clsx(classes.paper, classes.fixedHeightTable)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
@@ -242,7 +248,7 @@ export default function IncomePage(props: any) {
               </Paper>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={fixedHeightPaperTable}>
                 <IncomeTable
                   // key={calendar?._id}
                   // monthlyIncome={!isMonthClicking ? incomeData : monthIncome}
@@ -261,7 +267,7 @@ export default function IncomePage(props: any) {
                 defaultView="year"
                 maxDetail="year"
                 tileContent={({ activeStartDate, date, view }: any) => (
-                  <TileContentIncome
+                  <TileContentMonthlyIncome
                     date={date}
                     view={view}
                     activeStartDate={activeStartDate}

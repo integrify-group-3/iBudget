@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import moment from 'moment'
+import EventNoteIcon from '@material-ui/icons/EventNote'
 
 import { ViewMonth } from '../../types'
 import './style.scss'
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: '4.6rem',
     borderRadius: '50px',
   },
-  previewIncomes: {
+  previewIncome: {
     minHeight: '5.6rem',
     width: '12rem',
     position: 'absolute',
@@ -33,29 +34,49 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-evenly',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: '2.3rem 2rem',
     fontSize: '13px',
-    borderRadius: '5px',
+    borderRadius: '8px',
     zIndex: 2,
     lineHeight: '1.8',
   },
-  previewIncomesDate: {
+  previewIncomeDate: {
     fontWeight: 700,
-  },
-  previewIncomesItem: {
     display: 'flex',
     justifyContent: 'space-between',
-    flexDirection: 'column',
+    alignItems: 'center',
+    color: '#595565',
+  },
+  eventNoteIcon: {
+    fontSize: '19px',
+    color: 'lightgrey',
+    alignSelf: 'center',
+    marginRight: '.4rem',
+  },
+  previewIncomeItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
     alignItems: 'center',
     borderBottom: '1px solid lightgrey',
+    marginLeft: '1.99em',
+    color: '#0e0e0f',
   },
   tileContentList: {
     listStyle: 'none',
   },
+  amount: {
+    fontWeight: 700,
+    marginLeft: '.4rem',
+    color: '#42A5F5',
+  }
 }))
 
-export default function TileContentIncome({ contentData, date, view }: any) {
+export default function TileContentMonthlyIncome({
+  contentData,
+  date,
+  view,
+}: any) {
   const classes = useStyles()
   const [loadTileContent, setLoadTileContent] = useState(false)
   const [month, setMonth] = useState({} as ViewMonth)
@@ -99,21 +120,22 @@ export default function TileContentIncome({ contentData, date, view }: any) {
 
   return (
     <div
-      // className={classes.tileContent}
       className="tile-content"
-      onMouseEnter={showIncomesPreview}
-      onMouseLeave={hideIncomesPreview}
+        onMouseEnter={showIncomesPreview}
+        onMouseLeave={hideIncomesPreview}
     >
       {isShowing && (
-        <ul className={classes.previewIncomes}>
-          <li className={classes.previewIncomesDate}>{month.name}</li>
+        <ul className={classes.previewIncome}>
+          <li className={classes.previewIncomeDate}>
+            <EventNoteIcon className={classes.eventNoteIcon} />
+            <span>{month.name}</span>
+          </li>
           {month.income.map((income: any) => (
             <>
-              <ul key={income._id} className={classes.tileContentList}>
-                <li className={classes.previewIncomesItem}>
-                  {income.category} {income.amount}
-                </li>
-              </ul>
+              <li className={classes.previewIncomeItem}>
+                <span>{income.category}</span>
+                <span className={classes.amount}>€{income.amount}</span> 
+              </li>
             </>
           ))}
         </ul>

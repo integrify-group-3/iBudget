@@ -21,11 +21,15 @@ import './style.scss'
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    backgroundImage:
-      'linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.8))',
+    background:
+    'linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 255, 255, 0.8))',
     borderRadius: '25px',
     marginTop: '4rem',
     padding: '0 2rem',
+  },
+  title: {
+    color: '#865CFF',
+    paddingTop: '25px',
   },
   inputField: {
     borderRadius: '25px',
@@ -48,13 +52,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#865CFF',
     color: 'white',
     borderRadius: '50px',
+    marginTop: '1rem'
+  },
+  signIn: {
+    marginTop: '1rem'
+  },
+  signUpLink: {
+    textDecoration: 'none'
   },
   errorMsg: {
     color: 'red',
     textAlign: 'center',
-  },
-  title: {
-    paddingTop: '10px',
   },
 }))
 
@@ -65,7 +73,7 @@ export default function Register() {
   const errorMsg = useSelector((state: AppState) => state.error.msg.msg)
 
   return (
-    <div className="login-page-container">
+    <div className="register-page-container">
       <Container component="main" maxWidth="xs" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
@@ -73,8 +81,8 @@ export default function Register() {
             Sign up
           </Typography>
           <GoogleLogIn />
-          <div className="login-page-container__divider">
-            <hr className="login-page-container__divider-line-before"></hr>
+          <div className="register-page-container__divider">
+            <hr className="register-page-container__divider-line-before"></hr>
             <p>Or</p>
           </div>
           <Formik
@@ -123,7 +131,7 @@ export default function Register() {
             {({ errors, touched, isValid }) => (
               <Form className={classes.form} noValidate>
                 <Field
-                  variant="outlined"
+                  // variant="outlined"
                   margin="normal"
                   required
                   helperText={touched.firstName ? errors.firstName : ''}
@@ -138,7 +146,7 @@ export default function Register() {
                 <Field
                   helperText={touched.lastName ? errors.lastName : ''}
                   error={touched.lastName && Boolean(errors.lastName)}
-                  variant="outlined"
+                  // variant="outlined"
                   margin="normal"
                   required
                   id="lastName"
@@ -152,7 +160,7 @@ export default function Register() {
                 <Field
                   helperText={touched.email ? errors.email : ''}
                   error={touched.email && Boolean(errors.email)}
-                  variant="outlined"
+                  // variant="outlined"
                   margin="normal"
                   required
                   fullWidth
@@ -167,7 +175,7 @@ export default function Register() {
                 <Field
                   helperText={touched.password ? errors.password : ''}
                   error={touched.password && Boolean(errors.password)}
-                  variant="outlined"
+                  // variant="outlined"
                   margin="normal"
                   required
                   fullWidth
@@ -186,7 +194,7 @@ export default function Register() {
                   error={
                     touched.repeatPassword && Boolean(errors.repeatPassword)
                   }
-                  variant="outlined"
+                  // variant="outlined"
                   margin="normal"
                   required
                   fullWidth
@@ -207,10 +215,10 @@ export default function Register() {
                 >
                   Register
                 </Button>
-                <Grid container>
+                <Grid container className={classes.signIn}>
                   <Grid item>
-                    <NavLink to="/login">
-                      {'Already have an account? Login'}
+                    <NavLink to="/login" className={classes.signUpLink}>
+                      {'Already have an account? Sign Up'}
                     </NavLink>
                   </Grid>
                 </Grid>

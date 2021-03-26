@@ -7,6 +7,7 @@ import { AddIncomeBtnProps } from '../../types/ui'
 const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
+    width: '7rem'
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
