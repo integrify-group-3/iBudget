@@ -24,6 +24,7 @@ import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import TileContentMonthlyIncome from '../../components/TileContentMonthlyIncome'
+import { mobileScreen } from '../../utils/windowSize'
 
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 3rem',
     width: '98vw',
-    paddingLeft: '6rem',
+    paddingLeft: `${mobileScreen ? `3.6rem` : `6rem`}`,
     overflow: 'hidden',
   },
   container: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: '90vw',
+    width: `${mobileScreen ? `99vw` : `90vw`}`,
   },
   paper: {
     padding: theme.spacing(2),
@@ -52,8 +53,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    // height: 340,
     height: 240,
+    borderRadius: '18px',
+  },
+  fixedHeightBudget: {
+    height: `${mobileScreen ? 120 : 240}`,
+    borderRadius: '18px',
+  },
+  fixedHeightIncome: {
+    height: `${mobileScreen ? 120 : 240}`,
     borderRadius: '18px',
   },
   fixedHeightTable: {
@@ -70,6 +78,8 @@ export default function IncomePage(props: any) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const fixedHeightPaperBudget = clsx(classes.paper, classes.fixedHeightBudget)
+  const fixedHeightPaperIncome = clsx(classes.paper, classes.fixedHeightIncome)
   const fixedHeightPaperTable = clsx(classes.paper, classes.fixedHeightTable)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
@@ -211,9 +221,8 @@ export default function IncomePage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={10} md={6} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* Total balance goes here */}
                 <MonthlyBudget
                   year={dateView.year}
                   month={dateView.month}
@@ -222,7 +231,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={10} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <TotalMonthlyIncome
                   year={dateView.year}
@@ -231,7 +240,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={6} lg={6}>
+            <Grid item xs={10} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 {incomeChartData.length > 0 ? (
                   <IncomeMonthlyChart
@@ -247,7 +256,7 @@ export default function IncomePage(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={10} md={6} lg={6}>
               <Paper className={fixedHeightPaperTable}>
                 <IncomeTable
                   // key={calendar?._id}

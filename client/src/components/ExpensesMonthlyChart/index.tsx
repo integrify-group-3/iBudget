@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import {
   Chart,
@@ -8,39 +8,16 @@ import {
   Title,
 } from '@devexpress/dx-react-chart-material-ui'
 import { Animation, EventTracker, Palette } from '@devexpress/dx-react-chart'
-import {
-  schemeCategory10,
-  schemeAccent,
-  schemeDark2,
-  schemePaired,
-  schemePastel1,
-  schemePastel2,
-  schemeSet1,
-  schemeSet2,
-  schemeSet3,
-} from 'd3-scale-chromatic'
 
 import { ExpensesChartProps } from '../../types/ui'
 
 import './style.scss'
 
-const schemeCollection = [
-  schemeCategory10,
-  schemeAccent,
-  schemeDark2,
-  schemePaired,
-  schemePastel1,
-  schemePastel2,
-  schemeSet1,
-  schemeSet2,
-  schemeSet3,
-]
-
 const chartRootStyle = {
-  flexGrow: 0,
+  flexGrow: 0.55,
 }
 
-const ChartRoot = (props: any) => (
+const chartRoot = (props: any) => (
   <Legend.Root {...props} style={chartRootStyle} className="chart-root" />
 )
 const pointComponentRoot = (props: any) => ( <PieSeries.Point {...props} className="pieseries"/> )
@@ -51,13 +28,10 @@ export default function ExpensesChart({
   year,
   month,
 }: ExpensesChartProps) {
-  const [scheme, setScheme] = useState(schemeCollection[3])
-
   return (
-    <Chart data={chartData} height={240}>
+    <Chart data={chartData} height={240} rootComponent={chartRoot}>
       <Palette
-        scheme={scheme}
-        // name="category"
+       scheme={chartData.map((data) => data.color)}
       />
       <PieSeries
         valueField="amount"

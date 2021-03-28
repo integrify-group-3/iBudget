@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `3rem` : `6rem`}`,
+    paddingLeft: `${mobileScreen ? `3.6rem` : `6rem`}`,
     overflow: 'hidden',
   },
   container: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: '90vw',
+    width: `${mobileScreen ? `99vw` : `90vw`}`,
   },
   paper: {
     padding: theme.spacing(2),
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   chartHeightPaper: {
-    height: 370,
+    height: `${mobileScreen ? 270 : 370}`,
   },
   fixedHeightChartIncome: {
     marginTop: '1rem',
@@ -156,26 +156,7 @@ export default function Dashboard(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={6} md={3} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <TotalMonthlyExpenses
-                  year={year}
-                  month={month}
-                  totalMonthlyExpenses={totalExpenses}
-                  totalMonthlyIncome={totalIncome}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={6} md={3} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <TotalIncome
-                  year={year}
-                  month={month}
-                  totalAmount={totalIncome}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={11} md={5} lg={5}>
+          <Grid item xs={10} md={5} lg={5}>
               <Paper className={fixedHeightPaper}>
                 <ProfileDashboardBudget
                   totalBudget={totalIncome - totalExpenses}
@@ -185,7 +166,26 @@ export default function Dashboard(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={11} md={11} lg={6}>
+            <Grid item xs={5} md={3} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <TotalMonthlyExpenses
+                  year={year}
+                  month={month}
+                  totalMonthlyExpenses={totalExpenses}
+                  totalMonthlyIncome={totalIncome}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={5} md={3} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <TotalIncome
+                  year={year}
+                  month={month}
+                  totalAmount={totalIncome}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={10} md={11} lg={6}>
               <Paper className={classes.chartHeightPaper}>
                 {totalIncome > 0 || totalExpenses > 0 ? (
                   <IncomeExpensesMonthChart
@@ -198,7 +198,7 @@ export default function Dashboard(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={8} md={12} lg={6}>
+            <Grid item xs={10} md={12} lg={6}>
               <Paper className={fixedHeightPaperChart}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChartDashboard

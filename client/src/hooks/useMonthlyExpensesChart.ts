@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { defaultMonthlyChartExpensesData } from '../utils/defaultChartValues'
 
 export default function useMonthlyExpensesChart(monthlyData: any) {
-  const [chartData, setChartData] = useState([{ category: '', amount: 0 }])
+  const [chartData, setChartData] = useState([{ category: '', amount: 0, color: '' }])
 
   const loadChartData = useCallback(
     (monthlyData) => {

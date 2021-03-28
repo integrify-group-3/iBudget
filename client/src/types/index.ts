@@ -127,6 +127,7 @@ export type IncomeExpensesYearChartProps = {
 export type IncomeChartData = {
   category: string
   amount: number
+  color: string
 }
 
 export type IncomeChartDataProps = {

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `3rem` : `6rem`}`,
+    paddingLeft: `${mobileScreen ? `3.6rem` : `6rem`}`,
     overflow: 'hidden',
     // background: '#131313;'
   },

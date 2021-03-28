@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import { TotalMonthlyIncomeProps } from '../../types/income'
 import EmptyTotal from '../EmptyTotal'
 import Title from '../Title'
+import { mobileScreen } from '../../utils/windowSize'
 
 const useStyles = makeStyles({
   depositContext: {
@@ -12,6 +13,7 @@ const useStyles = makeStyles({
   },
   totalIncomeText: {
     color: '#42A5F5',
+    fontSize: `${mobileScreen ? '1rem' : '2.125rem'}`
   },
 })
 
@@ -24,7 +26,9 @@ export default function TotalMonthlyIncome({
   return (
     <React.Fragment>
       <Title>
-        Income {month} {year}
+        My Income 
+        {/* month and year are for testing purposes */}
+        {/* {month} {year} */}
       </Title>
       {totalAmount > 0 ? (
         <Typography

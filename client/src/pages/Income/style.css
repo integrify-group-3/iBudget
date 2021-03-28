@@ -3,7 +3,8 @@
     height: 31.2rem;
     width: 36rem;
     border-radius: 25px;
-    box-shadow: 0 1rem 1rem rgba(184, 173, 173, 0.6);
+    border: 1px solid rgb(243, 239, 239);
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   }
   
   .react-calendar__month-view__weekdays {
@@ -49,7 +50,7 @@
   
   .react-calendar__tile--active {
     background:#865CFF;
-    color: #18b6b6;
+    color: #cccf20;
     border-radius: 50px;
   }
   .react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus {

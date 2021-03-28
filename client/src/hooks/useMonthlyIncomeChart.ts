@@ -7,6 +7,7 @@ export default function useMonthlyIncomeChart(monthlyIncomeData: any) {
     {
       category: '',
       amount: 0,
+      color: ''
     },
   ])
 

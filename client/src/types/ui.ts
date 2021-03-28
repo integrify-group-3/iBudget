@@ -1,7 +1,6 @@
 import { DailyExpense, ExpensesChartData } from './expenses'
 import { User } from './user'
 
-
 export type NavbarSecondaryListItemsProps = {
   user: User
 }
@@ -18,7 +17,7 @@ export type IncomeTableProps = {
 }
 
 export type AddIncomeBtnProps = {
-    showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export type TileContentProps = {
@@ -59,7 +58,6 @@ export type ExpensesChartProps = {
   month: string
 }
 
-
 export type ExpensesChartDashboardProps = {
   chartData: ExpensesChartData[]
   year: number
@@ -71,7 +69,8 @@ export type ExpensesChartDashboardProps = {
 }
 
 export type SwitchAnalyticsViewBtnProps = {
-  switchAnalyticsView:  (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  switchAnalyticsView: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void
   switchView: boolean
 }
-

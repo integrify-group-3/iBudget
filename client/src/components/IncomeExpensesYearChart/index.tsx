@@ -17,11 +17,20 @@ import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
 import { IncomeExpensesYearChartProps } from '../../types'
 import SwitchChartBtn from '../../components/SwitchChartBtn'
 
+const chartLegendStyle = {
+  display: 'flex',
+  width: '10rem',
+  justifyContent: 'center',
+}
+
+const legendLabelComponent = (props: any) => (
+  <Legend.Item {...props} style={chartLegendStyle} />
+)
+
 export default function IncomeExpensesYearChart({
   data,
   year,
 }: IncomeExpensesYearChartProps) {
-
   const [switchChart, setSwitchChart] = useState(false)
   const switchChartView = () => {
     setSwitchChart(!switchChart)
@@ -36,23 +45,24 @@ export default function IncomeExpensesYearChart({
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
-          <BarSeries 
-            valueField="income" 
-            argumentField="month" 
-            name="Income" 
-            color="#5cddff"
+          <BarSeries
+            valueField="income"
+            argumentField="month"
+            name="Income"
+            color="#2E5090"
           />
           <BarSeries
             valueField="expenses"
             argumentField="month"
             name="Expenses"
-            color="#e51a60"
+            color="#FF6666"
           />
           <Stack />
           <EventTracker />
           <Tooltip />
-          <Legend />
-          <Title text={`Expenses/Income for ${year}`} />
+          <Legend position="top" rootComponent={legendLabelComponent} />
+          {/* Title with year is for testing */}
+          {/* <Title text={`Expenses/Income for ${year}`} /> */}
           <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={lineChartText}
@@ -61,23 +71,26 @@ export default function IncomeExpensesYearChart({
           {/* <Animation />   */}
         </Chart>
       ) : (
-        <Chart data={data}>
+        <Chart data={data} height={450}>
           <ArgumentAxis />
           <ValueAxis />
           <SplineSeries
             valueField="income"
             name="income"
             argumentField={`month`}
+            color="#2E5090"
           />
           <SplineSeries
             valueField="expenses"
             name="expenses"
             argumentField={`month`}
+            color="#FF6666"
           />
           <EventTracker />
           <Tooltip />
-          <Legend />
-          <Title text={`Expenses/Income for ${year}`} />
+          <Legend position="top" rootComponent={legendLabelComponent} />
+          {/* title is only for testing */}
+          {/* <Title text={`Expenses/Income for ${year}`} /> */}
           <SwitchChartBtn
             switchChartView={switchChartView}
             btnText={barChartText}

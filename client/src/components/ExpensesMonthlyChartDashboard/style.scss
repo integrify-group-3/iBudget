@@ -4,3 +4,9 @@
         font-size: 1em;
     }
 }
+
+#center-axis-container {
+    display: flex;
+    flex-direction: row;
+    flex-grow: .55;
+}
