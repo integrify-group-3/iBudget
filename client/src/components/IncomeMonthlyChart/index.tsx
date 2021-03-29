@@ -15,8 +15,12 @@ import { IncomeChartDataProps } from '../../types'
 
 import './style.scss'
 
+const chartRootStyle = {
+  flexGrow: 0.55,
+}
+
 const legendLabelComponent = (props: any) => (
-  <Legend.Label {...props} className="label-text" />
+  <Legend.Label {...props} style={chartRootStyle} className="label-text" />
 )
 
 export default function IncomeMonthlyChart({
@@ -24,12 +28,10 @@ export default function IncomeMonthlyChart({
   month,
   year,
 }: IncomeChartDataProps) {
- console.log(chartData)
+  console.log(chartData)
   return (
-    <Chart data={chartData} height={240}>
-      <Palette 
-      scheme={chartData.map((data) => data.color)}
-       /> 
+    <Chart data={chartData} height={200}>
+      <Palette scheme={chartData.map((data) => data.color)} />
       <PieSeries
         valueField="amount"
         argumentField="category"

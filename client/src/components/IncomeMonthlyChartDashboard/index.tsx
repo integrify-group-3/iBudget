@@ -121,7 +121,7 @@ export default function IncomeMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} height={239}>
+          <Chart data={chartData} height={200}>
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}

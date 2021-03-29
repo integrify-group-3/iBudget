@@ -91,11 +91,13 @@ export default function IncomeTable({
     <React.Fragment>
       {!openForm ? (
         <>
-          <Title>
-            Income for {month} {year}
-          </Title>
+          {month && year && (
+            <Title>
+              Income for {month} {year}
+            </Title>
+          )}
           <Table size="small">
-            {monthlyIncome.length < 1 ? (
+            {monthlyIncome === null ? (
               <Typography component="p" variant="h6">
                 No income registered
               </Typography>
@@ -128,34 +130,35 @@ export default function IncomeTable({
                   </Grid>
                 )}
                 <TableBody>
-                  {monthlyIncome.map((income: any) => {
-                    const { _id, category, description, amount } = income
-                    return (
-                      <TableRow key={_id}>
-                        <TableCell>{category}</TableCell>
-                        <TableCell>{description}</TableCell>
-                        <TableCell>€{amount}</TableCell>
+                  {monthlyIncome &&
+                    monthlyIncome.map((income: any) => {
+                      const { _id, category, description, amount } = income
+                      return (
+                        <TableRow key={_id}>
+                          <TableCell>{category}</TableCell>
+                          <TableCell>{description}</TableCell>
+                          <TableCell>€{amount}</TableCell>
 
-                        <TableCell>
-                          <IconButton
-                            className={classes.editIncome}
-                            onClick={() => openEditOnClick(income._id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        </TableCell>
-                        <TableCell>
-                          <IconButton
-                            aria-label="delete"
-                            className={classes.deleteBtn}
-                            onClick={() => deleteOnClick(income._id, income)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })}
+                          <TableCell>
+                            <IconButton
+                              className={classes.editIncome}
+                              onClick={() => openEditOnClick(income._id)}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                          </TableCell>
+                          <TableCell>
+                            <IconButton
+                              aria-label="delete"
+                              className={classes.deleteBtn}
+                              onClick={() => deleteOnClick(income._id, income)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
                 </TableBody>
               </>
             )}
