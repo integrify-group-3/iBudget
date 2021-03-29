@@ -16,7 +16,6 @@ import Paper from '@material-ui/core/Paper'
 import Title from '../Title'
 import AddExpenseBtn from '../../components/AddExpenseBtn'
 import EditExpense from '../../components/EditExpense'
-import { AppState } from '../../types'
 import { Expense } from '../../types/expenses'
 import { ExpensesTableProps } from '../../types/ui'
 import { removeExpense } from '../../redux/actions/expenses'
@@ -61,9 +60,6 @@ export default function ExpensesTable({
 }: ExpensesTableProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const updatedExpenses = useSelector(
-    (state: AppState) => state.expenses.dailyExpenses
-  )
   const [editOpen, setEditOpen] = useState(false)
   const [expenseId, setExpenseId] = useState('')
 
