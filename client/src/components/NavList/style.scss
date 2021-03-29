@@ -1,5 +1,10 @@
 .active:hover, 
 .active:focus {
-    background-color: white;
     color: #865CFF;
+}
+.active:active {
+    color: #865CFF;
+}
+.nav-link {
+    background: white;
 }

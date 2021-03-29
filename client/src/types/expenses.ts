@@ -48,6 +48,7 @@ export type EditExpenseProps = {
 export type ExpensesChartData = {
   category: string
   amount: number
+  color: string
 }
 
 export type TotalMonthlyExpensesProps = {

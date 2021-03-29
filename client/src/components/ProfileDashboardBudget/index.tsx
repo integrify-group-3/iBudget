@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
   },
   userDetails: {
-    marginLeft: '.4rem'
+    marginLeft: '.4rem',
   },
   depositContext: {
     flex: 1,
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
   clockIcon: {
     color: 'lightgrey',
-    marginLeft: '.3rem',
+    marginRight: '.3rem',
   },
 })
 
@@ -44,17 +44,20 @@ export default function ProfileDashboardBudget({
 }: ProfileDashboardProps) {
   const classes = useStyles()
   const { id, firstName, lastName } = user
-
   return (
     <React.Fragment>
       <Title>
         <div className={classes.userLink}>
-        <NavLink to={`/user/${id}`} color="primary" className={classes.userLink}>
-          <PersonIcon />{' '}
-          <span className={classes.userDetails}>
-            {firstName} {lastName}
-          </span>
-        </NavLink>
+          <NavLink
+            to={`/user/${id}`}
+            color="primary"
+            className={classes.userLink}
+          >
+            <PersonIcon />{' '}
+            <span className={classes.userDetails}>
+              {firstName} {lastName}
+            </span>
+          </NavLink>
         </div>
       </Title>
       <Typography
@@ -63,13 +66,13 @@ export default function ProfileDashboardBudget({
         className={classes.monthlyBudgetText}
       >
         <Title>
-          Your budget {month} {year}
+          My budget {month} {year}
         </Title>{' '}
         €{totalBudget}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        Today {formattedCurrentDate}{' '}
         <ScheduleIcon className={classes.clockIcon} />
+        {formattedCurrentDate}{' '}
       </Typography>
     </React.Fragment>
   )

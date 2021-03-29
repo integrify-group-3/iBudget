@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Paper from '@material-ui/core/Paper'
 
 import {
   Chart,
@@ -12,24 +11,10 @@ import {
   Title,
 } from '@devexpress/dx-react-chart-material-ui'
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import NativeSelect from '@material-ui/core/NativeSelect'
-import FormControl from '@material-ui/core/FormControl'
 import { Animation } from '@devexpress/dx-react-chart'
 import { scaleBand } from '@devexpress/dx-chart-core'
 import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
 import { EventTracker } from '@devexpress/dx-react-chart'
-import {
-  schemeCategory10,
-  schemeAccent,
-  schemeDark2,
-  schemePaired,
-  schemePastel1,
-  schemePastel2,
-  schemeSet1,
-  schemeSet2,
-  schemeSet3,
-} from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
@@ -37,18 +22,6 @@ import { IncomeChartData } from '../../types/income'
 import { IncomeChartDashboardProps } from '../../types'
 
 import './style.scss'
-
-const schemeCollection = [
-  schemeCategory10,
-  schemeAccent,
-  schemeDark2,
-  schemePaired,
-  schemePastel1,
-  schemePastel2,
-  schemeSet1,
-  schemeSet2,
-  schemeSet3,
-]
 
 const useStyles = makeStyles((theme: any) => ({
   chartContainer: {
@@ -106,17 +79,15 @@ export default function IncomeMonthlyChartDashboard({
   argumentField,
   name,
 }: IncomeChartDashboardProps) {
-  const [scheme, setScheme] = useState(schemeCollection[1])
   const classes = useStyles()
   const [switchChart, setSwitchChart] = useState(false)
+  const pieChartText = 'Pie Chart'
+  const barChartText = 'Bar Chart'
 
   const switchChartView = () => {
     setSwitchChart(!switchChart)
   }
-
-  const pieChartText = 'Pie Chart'
-  const barChartText = 'Bar Chart'
-
+ 
   return (
     <>
       {switchChart ? (
@@ -125,7 +96,6 @@ export default function IncomeMonthlyChartDashboard({
             <ArgumentScale factory={scaleBand} />
             <ArgumentAxis />
             <ValueAxis />
-
             {chartData.map((data: IncomeChartData) => (
               <BarSeries
                 valueField={valueField}
@@ -152,7 +122,7 @@ export default function IncomeMonthlyChartDashboard({
       ) : (
         <div className={classes.chartContainer}>
           <Chart data={chartData} height={239}>
-            <Palette scheme={scheme} />
+            <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}

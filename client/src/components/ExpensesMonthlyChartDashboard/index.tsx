@@ -12,24 +12,10 @@ import {
   Title,
 } from '@devexpress/dx-react-chart-material-ui'
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import NativeSelect from '@material-ui/core/NativeSelect'
-import FormControl from '@material-ui/core/FormControl'
 import { Animation } from '@devexpress/dx-react-chart'
 import { scaleBand } from '@devexpress/dx-chart-core'
 import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
 import { EventTracker } from '@devexpress/dx-react-chart'
-import {
-  schemeCategory10,
-  schemeAccent,
-  schemeDark2,
-  schemePaired,
-  schemePastel1,
-  schemePastel2,
-  schemeSet1,
-  schemeSet2,
-  schemeSet3,
-} from 'd3-scale-chromatic'
 import { Palette } from '@devexpress/dx-react-chart'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
@@ -37,18 +23,6 @@ import { ExpensesChartData } from '../../types/expenses'
 import { ExpensesChartDashboardProps } from '../../types/ui'
 
 import './style.scss'
-
-const schemeCollection = [
-  schemeCategory10,
-  schemeAccent,
-  schemeDark2,
-  schemePaired,
-  schemePastel1,
-  schemePastel2,
-  schemeSet1,
-  schemeSet2,
-  schemeSet3,
-]
 
 const useStyles = makeStyles((theme: any) => ({
   chartContainer: {
@@ -78,28 +52,22 @@ const useStyles = makeStyles((theme: any) => ({
 }))
 
 const chartRootStyle = {
-  flexGrow: 0,
-  fontSize: '10px'
+  flexGrow: 0.55,
+  fontSize: '10px',
+  marginLeft: '1.3rem'
 }
 const pointRootStyle = {
   height: '12rem'
 }
 
-const legendRootStyle = {
-}
-const legendItemStyle = {
-}
-
-const ChartRoot = (props: any) => (
-  <Legend.Root {...props} style={chartRootStyle} />
+const chartRoot = (props: any) => (
+  <Chart.Label {...props} style={chartRootStyle}/>
 )
 
 const PieRoot = (props: any) => (
-  <PieSeries.Point {...props} style={pointRootStyle} />
+  <PieSeries.Point {...props} style={chartRootStyle}/>
 )
 
-const legendRootComponent = (props: any) => ( <Legend.Root {...props} style={legendRootStyle} /> )
-const legendItemComponent = (props: any) => ( <Legend.Item {...props} style={legendItemStyle} /> )
 const legendLabelComponent = (props: any) => ( <Legend.Label {...props} className="label-text"/> )
 
 export default function ExpensesMonthlyChartDashboard({
@@ -110,7 +78,6 @@ export default function ExpensesMonthlyChartDashboard({
   argumentField,
   name,
 }: ExpensesChartDashboardProps) {
-  const [scheme, setScheme] = useState(schemeCollection[8])
   const classes = useStyles()
   const [switchChart, setSwitchChart] = useState(false)
 
@@ -120,12 +87,12 @@ export default function ExpensesMonthlyChartDashboard({
 
   const pieChartText = 'Pie Chart'
   const barChartText = 'Bar Chart'
-
+  
   return (
     <>
       {switchChart ? (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} rootComponent={ChartRoot}>
+          <Chart data={chartData} rootComponent={chartRoot}>
             <ArgumentScale factory={scaleBand} />
             <ArgumentAxis />
             <ValueAxis />
@@ -136,11 +103,6 @@ export default function ExpensesMonthlyChartDashboard({
                 name={data.category}
               />
             ))}
-
-            {chartData.map(
-              (data: ExpensesChartData) => console.log(data)
-              // <Stack stacks={[{ series: [`${data.category}`, `${argumentField}`] }]} />
-            )}
             <Stack />
             <EventTracker />
             <Tooltip />
@@ -154,8 +116,8 @@ export default function ExpensesMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} height={239}>
-            <Palette scheme={scheme} />
+          <Chart data={chartData} height={239} width={400}>
+            <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}
@@ -165,8 +127,6 @@ export default function ExpensesMonthlyChartDashboard({
               pointComponent={PieRoot}
             />
             <Legend
-            rootComponent={legendRootComponent}
-            itemComponent={legendItemComponent} 
             labelComponent={legendLabelComponent}/>
             {/* <SwitchChartBtn
               switchChartView={switchChartView}
