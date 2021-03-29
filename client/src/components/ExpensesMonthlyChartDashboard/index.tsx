@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme: any) => ({
 }))
 
 const chartRootStyle = {
-  flexGrow: 0.55,
   fontSize: '10px',
   marginLeft: '1.3rem'
 }
@@ -116,7 +115,7 @@ export default function ExpensesMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} height={239} width={400}>
+          <Chart data={chartData} height={239} width={430}>
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
