@@ -159,7 +159,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const classes = useStyles()
   const theme = useTheme()
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
@@ -200,7 +200,7 @@ const Navbar = () => {
             {isAuthenticated && (
               <Typography className={classes.headerUser}>
                 <span className={classes.userContainer}>
-                  Hello{' '}
+                  Hello
                   <NavLink to={`/user/${user.id}`} className={classes.userLink}>
                     <span>{user.firstName} {user.lastName}</span>
                     <div className={classes.userImgContainer}>
