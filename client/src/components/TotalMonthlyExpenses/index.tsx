@@ -28,7 +28,8 @@ const useStyles = makeStyles({
   },
   forwardIcon: {
     color: '#fd3865',
-    fontSize: '2.3rem'
+    fontSize: '2.3rem',
+    marginRight: '2rem'
   }
 })
 

@@ -19,7 +19,8 @@ const useStyles = makeStyles({
   forwardIcon: {
     color: '#42A5F5',
     fontSize: '2.3rem',
-    transform: 'rotate(-180deg)'
+    transform: 'rotate(-180deg)',
+    marginRight: '3rem'
   }
 })
 
