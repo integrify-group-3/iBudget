@@ -170,7 +170,11 @@ export default function IncomePage(props: any) {
       (month: any) => month.name === months[currentIndex]
     )
     setMonthIncome(foundMonth?.income)
-    setMonthlyChart(foundMonth.income)
+    if (foundMonth) {
+      setMonthlyChart(foundMonth?.income)
+    } else {
+      alert('no year registered')
+    }
     //console.log('from changeMonthView', monthlyChart)
     setMonthlyData(foundMonth)
     //console.log('from changeMonthView', monthlyData)
@@ -181,10 +185,12 @@ export default function IncomePage(props: any) {
     setIsMonthClicking(true)
     const selectedYear = e.getFullYear()
     const currentIndex = e.getMonth()
-    const foundYear = await calendar.years.find(
-      (i: any) => i.year === selectedYear
-    )
-    setTileContentData(foundYear.months)
+    const foundYear = await calendar.years.find((i: any) => {
+      return i.year === selectedYear
+    })
+    if (foundYear) {
+      setTileContentData(foundYear.months)
+    }
     setDateView({
       ...dateView,
       year: selectedYear,
