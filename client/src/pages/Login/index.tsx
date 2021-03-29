@@ -114,7 +114,7 @@ export default function Login(props: any) {
           <GoogleLogIn isSigIn={isSignIn} />
           <div className="login-page-container__divider">
             <hr className="login-page-container__divider-line-before"></hr>
-            <p>Or</p>
+            <p>OR</p>
           </div>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField

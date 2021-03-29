@@ -28,7 +28,7 @@ export default function MonthlyBudget({
   return (
     <React.Fragment>
       <Title>
-        Total Budget {month} {year}
+        My Budget {month} {year}
       </Title>
       <Typography component="p" variant="h4" className={classes.monthlyBudget}>
         {/* this will be total income - total expenses  */}

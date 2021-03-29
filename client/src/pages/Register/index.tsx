@@ -69,7 +69,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
   const dispatch = useDispatch()
   const classes = useStyles()
-
   const errorMsg = useSelector((state: AppState) => state.error.msg.msg)
 
   return (
@@ -83,7 +82,7 @@ export default function Register() {
           <GoogleLogIn />
           <div className="register-page-container__divider">
             <hr className="register-page-container__divider-line-before"></hr>
-            <p>Or</p>
+            <p>OR</p>
           </div>
           <Formik
             initialValues={{

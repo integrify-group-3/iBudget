@@ -29,6 +29,7 @@ import TotalYearIncome from '../../components/TotalYearIncome'
 import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import EmptyYearChartContainer from '../../components/EmptyYearChartContainer'
 import TileContentMonthIncomeExpenses from '../../components/TileContentMonthIncomeExpenses'
+import { bigTabletScreen, mobileScreen } from '../../utils/windowSize'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: '6rem',
+    paddingLeft: `${mobileScreen ? `3.6rem` : `6rem`}`,
     overflow: 'hidden',
   },
   container: {
@@ -199,7 +200,7 @@ export default function Analytics(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={5} md={4} lg={5}>
+            <Grid item xs={10} md={4} lg={5}>
               <Paper className={fixedHeightPaper}>
                 {!switchView ? (
                   <YearBudget
@@ -221,7 +222,7 @@ export default function Analytics(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={6} md={4} lg={3}>
+            <Grid item xs={10} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {switchView ? (
                   <TotalMonthlyExpenses
@@ -238,7 +239,7 @@ export default function Analytics(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={6} md={4} lg={3}>
+            <Grid item xs={10} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {switchView ? (
                   <TotalMonthlyIncome
@@ -254,8 +255,7 @@ export default function Analytics(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={5} md={12} lg={7}>
-              {/*Expenses chart goes here, a series or bar chart for expenses and income for the year */}
+            <Grid item xs={10} md={12} lg={7}>
               <Paper className={classes.chartHeightPaper}>
                 {switchView ? (
                   <>
@@ -285,7 +285,6 @@ export default function Analytics(props: any) {
             </Grid>
 
             <Grid item xs={10} md={12} lg={5}>
-              {/*Calendar for year and decade can go here */}
               {switchView ? (
                 <Calendar
                   onChange={onChangeMonth}
