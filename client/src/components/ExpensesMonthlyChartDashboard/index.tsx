@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Paper from '@material-ui/core/Paper'
 
 import {
   Chart,
@@ -52,36 +51,15 @@ const useStyles = makeStyles((theme: any) => ({
 }))
 
 const chartRootStyle = {
-  fontSize: '10px',
   marginLeft: '1.3rem',
-}
-const pointRootStyle = {
-  height: '12rem',
+  flexGrow: 'no !important'
 }
 
 const chartRoot = (props: any) => (
   <Chart.Label {...props} style={chartRootStyle} />
 )
 
-const PieRoot = (props: any) => (
-  <PieSeries.Point {...props} style={chartRootStyle} />
-)
-
-const chartsRootStyle = {
-  /*   fontSize: '10px',
-  marginLeft: '1.3rem',
-  height: '200px',
-  width: '437px' */
-  flexGrow: 'no !important',
-}
-
-const chartRoots = (props: any) => (
-  <Legend.Root {...props} style={chartsRootStyle} /*className="chart-root" */ />
-)
-
-const legendLabelComponent = (props: any) => (
-  <Legend.Label {...props} className="label-text" />
-)
+const legendLabelComponent = (props: any) => ( <Legend.Label {...props} className="label-text"/> )
 
 export default function ExpensesMonthlyChartDashboard({
   chartData,
@@ -129,15 +107,16 @@ export default function ExpensesMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} height={200} rootComponent={chartRoots}>
+          <Chart data={chartData} 
+          height={200} 
+          width={444}>
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}
               name={name}
-              innerRadius={0.4}
-              outerRadius={0.7}
-              pointComponent={PieRoot}
+              innerRadius={0.45}
+              outerRadius={0.8}
             />
             <Legend labelComponent={legendLabelComponent} />
             {/* <SwitchChartBtn

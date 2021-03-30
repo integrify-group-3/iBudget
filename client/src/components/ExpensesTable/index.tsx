@@ -20,9 +20,14 @@ import { Expense } from '../../types/expenses'
 import { ExpensesTableProps } from '../../types/ui'
 import { removeExpense } from '../../redux/actions/expenses'
 
-import useExpensesIcons from '../../hooks/useExpensesIcons'
-
 const useStyles = makeStyles((theme) => ({
+  tableCell: {
+    padding: '6px 0px 6px 16px',
+  },
+  amount: {
+    color: '#865CFF',
+    fontWeight: 700
+  },
   addExpense: {
     display: 'flex',
     justifyContent: 'center',
@@ -64,8 +69,6 @@ export default function ExpensesTable({
   const dispatch = useDispatch()
   const [editOpen, setEditOpen] = useState(false)
   const [expenseId, setExpenseId] = useState('')
-  // console.log('icons', dailyExpense)
-  const [stylesPosts, stylesIcons] = useExpensesIcons(dailyExpense.expenses)
 
   const openEditOnClick = (id: string) => {
     setExpenseId(id)
@@ -89,8 +92,12 @@ export default function ExpensesTable({
                 <TableCell>Category</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Amount</TableCell>
-                <TableCell><span style={{marginLeft: '1.3rem'}}>Edit</span></TableCell>
-                <TableCell><span style={{marginLeft: '0.5rem'}}>Delete</span></TableCell>
+                <TableCell>
+                  <span style={{ marginLeft: '1.3rem' }}>Edit</span>
+                </TableCell>
+                <TableCell>
+                  <span style={{ marginLeft: '0.5rem' }}>Delete</span>
+                </TableCell>
               </TableRow>
             </TableHead>
             {editOpen && (
@@ -118,16 +125,21 @@ export default function ExpensesTable({
                 return (
                   <>
                     <TableRow key={_id}>
-                      <TableCell>
+                      <TableCell className={classes.tableCell}>
                         <i
                           className={icon}
-                          style={{ color: '#c9c7ce', fontSize: '1.3rem', marginRight: '.2rem' }}
+                          style={{
+                            color: '#865cff8c',
+                            fontSize: '1.3rem',
+                            marginRight: '.4rem',
+                          }}
+                          title={category}
                         ></i>
-                        <span>{category}</span>
+                        <span>{category}</span> 
                       </TableCell>
                       <TableCell>{description}</TableCell>
-                      <TableCell>€{amount}</TableCell>
-                      <TableCell>
+                      <TableCell className={classes.amount}>€{amount}</TableCell>
+                      <TableCell className={classes.tableCell}>
                         <IconButton
                           aria-label="edit"
                           className={classes.editExpense}
@@ -136,7 +148,7 @@ export default function ExpensesTable({
                           <EditIcon />
                         </IconButton>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className={classes.tableCell}>
                         <IconButton
                           aria-label="delete"
                           className={classes.deleteBtn}
