@@ -37,8 +37,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
   },
   header: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    marginLeft: '.5rem',
   },
   clear: {
     cursor: 'pointer',
@@ -101,10 +100,9 @@ export default function EditExpense({
   }
 
   return (
-    <div>
       <div className={classes.paper}>
         <div className="form-container">
-          <h3>{moment(day).format('LL')}</h3>
+          <h3 className={classes.header}>{moment(day).format('LL')}</h3>
           <form onSubmit={handleSubmit} className={classes.root}>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
@@ -114,7 +112,6 @@ export default function EditExpense({
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 name="category"
-                // size="small"
                 value={category}
                 onChange={handleChange}
                 className={classes.select}
@@ -132,7 +129,7 @@ export default function EditExpense({
                         .toUpperCase()}${category.slice(1)}`}</span>
                       <i
                         className={icon}
-                        style={{ color: `${iconStyle}`, fontSize: '1.3rem', opacity: '0.6' }}
+                        style={{ color: `${iconStyle}`, fontSize: '1.3rem', opacity: '0.6', marginLeft: '14rem' }}
                       ></i>
                     </MenuItem>
                   )
@@ -173,6 +170,5 @@ export default function EditExpense({
           </form>
         </div>
       </div>
-    </div>
   )
 }

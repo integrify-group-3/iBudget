@@ -34,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
     width: '27rem',
   },
   header: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    marginLeft: '.5rem',
   },
   input: {
     width: '22rem',
@@ -85,10 +84,9 @@ export default function AddExpense({
   }
 
   return (
-    <div>
       <div className={classes.paper}>
         <div className="form-container">
-          <h3>{moment(day).format('LL')}</h3>
+          <h3 className={classes.header}>{moment(day).format('LL')}</h3>
           <form onSubmit={handleSubmit} className={classes.root}>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
@@ -99,7 +97,6 @@ export default function AddExpense({
                 id="demo-simple-select"
                 name="category"
                 className={classes.select}
-                // size="small"
                 value={category}
                 onChange={handleChange}
                 required={true}
@@ -161,8 +158,5 @@ export default function AddExpense({
           </form>
         </div>
       </div>
-      {/* </Fade> */}
-      {/* </Modal>  */}
-    </div>
   )
 }

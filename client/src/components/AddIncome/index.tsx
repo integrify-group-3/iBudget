@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) =>
       background: 'none',
     },
     select: {
-      width: '20.5rem',
+      width: '22rem',
     },
     input: {
       width: '22rem',
@@ -80,7 +80,6 @@ export default function AddIncome({
     })
   }
   return (
-    <div>
       <div className={classes.paper}>
         <div className="form-container">
           <h4>Add Income</h4>
@@ -142,6 +141,5 @@ export default function AddIncome({
           </form>
         </div>
       </div>
-    </div>
   )
 }
