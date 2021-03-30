@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
-export default function useExpensesIcons(dailyExpense: any) {
+export default function useExpensesIcons(dailyIncome: any) {
   const incomesIcons = [
     { category: 'salary', icon: 'fas fa-hand-holding-usd' },
     { category: 'investments', icon: 'fas fa-shopping-cart' },
@@ -9,12 +9,11 @@ export default function useExpensesIcons(dailyExpense: any) {
     { category: 'tax return', icon: 'fas fa-shopping-bag' },
     { category: 'child allowance', icon: 'fas fa-dumbbell' },
   ]
-  const [icons, setIcons] = useState({ day: '', expenses: [] })
+  const [icons, setIcons] = useState({ day: '', incomes: [] })
 
   const loadIncomesIcons = useCallback(
     async (incomes) => {
       if (incomes !== undefined) {
-        //   if(dailyExpense.expenses.length > 0) {
         const iconsArr = [] as any
         await incomes.forEach((income: any) => {
           incomesIcons.forEach((icon) => {
@@ -24,24 +23,20 @@ export default function useExpensesIcons(dailyExpense: any) {
             }
           })
         })
-        console.log(iconsArr)
-        setIcons({ day: dailyExpense.day, expenses: iconsArr })
-        console.log(icons)
-        // }
-
-        // } else {
-        //   console.log('no expense here')
+        console.log('iconsarray from income hooks', iconsArr)
+        setIcons({ day: dailyIncome.day, incomes: iconsArr })
+        console.log('icons from hooks', icons)
       }
     },
-    [dailyExpense, incomesIcons, icons]
+    [dailyIncome, incomesIcons, icons]
   )
 
   useEffect(() => {
-    if (dailyExpense !== undefined) {
-      console.log('reading', dailyExpense)
-      loadIncomesIcons(dailyExpense.expenses)
+    if (dailyIncome !== undefined) {
+      console.log('reading from income hooks', dailyIncome)
+      loadIncomesIcons(dailyIncome.incomes)
     }
-  }, [dailyExpense])
+  }, [dailyIncome])
 
   return [icons]
 }

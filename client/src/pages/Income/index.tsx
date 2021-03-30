@@ -25,7 +25,7 @@ import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import TileContentMonthlyIncome from '../../components/TileContentMonthlyIncome'
 import { mobileScreen } from '../../utils/windowSize'
-
+import useIncomesIcons from '../../hooks/useIncomesIcons'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
@@ -103,6 +103,9 @@ export default function IncomePage(props: any) {
   const [incomeChartData] = useMonthlyIncomeChart(monthlyChart)
   const [totalMonthlyIncome] = useTotalMonthlyIncome(monthlyData)
   const [totalMonthlyExpenses] = useTotalMonthlyExpenses(monthlyData)
+  const [dailyIncome, setDailyIncome] = useState({} as any)
+  const [formattedIncome] = useIncomesIcons(dailyIncome)
+  console.log('icons', formattedIncome)
   const [loaded, setIsLoaded] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
@@ -133,12 +136,14 @@ export default function IncomePage(props: any) {
         setMonthlyData(defaultMonth)
         setMonthIncome(incomeData)
         setTileContentData(yearData.months)
+        setDailyIncome(incomeData)
         dispatch(clearUpdate())
       } else if (isMonthClicking && isUpdating) {
         setTimeout(() => {
           setMonthlyData(defaultMonth)
           loadChart()
           setMonthIncome(defaultMonth.income)
+          setDailyIncome(incomeData)
           // console.log('income data should update', incomeData)
           setTileContentData(yearData.months)
           console.log('tile content data', tileContentData)
@@ -217,6 +222,7 @@ export default function IncomePage(props: any) {
 
   // console.log('tile content data', tileContentData)
   // console.log('month income', monthIncome)
+  console.log('formattedIncome', formattedIncome)
 
   return (
     <div className={classes.root}>
