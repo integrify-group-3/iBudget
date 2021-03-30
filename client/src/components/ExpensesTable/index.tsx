@@ -20,7 +20,7 @@ import { Expense } from '../../types/expenses'
 import { ExpensesTableProps } from '../../types/ui'
 import { removeExpense } from '../../redux/actions/expenses'
 
-import useExpensesIcons from "../../hooks/useExpensesIcons";
+import useExpensesIcons from '../../hooks/useExpensesIcons'
 
 const useStyles = makeStyles((theme) => ({
   addExpense: {
@@ -65,7 +65,7 @@ export default function ExpensesTable({
   const [editOpen, setEditOpen] = useState(false)
   const [expenseId, setExpenseId] = useState('')
   // console.log('icons', dailyExpense)
-  const [stylesPosts, stylesIcons] = useExpensesIcons(dailyExpense.expenses);
+  const [stylesPosts, stylesIcons] = useExpensesIcons(dailyExpense.expenses)
 
   const openEditOnClick = (id: string) => {
     setExpenseId(id)
@@ -89,6 +89,9 @@ export default function ExpensesTable({
                 <TableCell>Category</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Amount</TableCell>
+                <TableCell><span style={{marginLeft: '1.3rem'}}>Edit</span></TableCell>
+                <TableCell>Delete</TableCell>
+
               </TableRow>
             </TableHead>
             {editOpen && (
@@ -117,10 +120,12 @@ export default function ExpensesTable({
                   <>
                     <TableRow key={_id}>
                       <TableCell>
-                        <i className={icon} style={{color: 'darkgray', fontSize: '1.3rem'}}></i> 
-                        {stylesIcons}
+                        <i
+                          className={icon}
+                          style={{ color: '#c9c7ce', fontSize: '1.3rem', marginRight: '.2rem' }}
+                        ></i>
+                        <span>{category}</span>
                       </TableCell>
-                      <TableCell>{category}</TableCell>
                       <TableCell>{description}</TableCell>
                       <TableCell>€{amount}</TableCell>
                       <TableCell>
