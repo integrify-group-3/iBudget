@@ -20,6 +20,8 @@ import { Expense } from '../../types/expenses'
 import { ExpensesTableProps } from '../../types/ui'
 import { removeExpense } from '../../redux/actions/expenses'
 
+import useExpensesIcons from "../../hooks/useExpensesIcons";
+
 const useStyles = makeStyles((theme) => ({
   addExpense: {
     display: 'flex',
@@ -62,6 +64,8 @@ export default function ExpensesTable({
   const dispatch = useDispatch()
   const [editOpen, setEditOpen] = useState(false)
   const [expenseId, setExpenseId] = useState('')
+  // console.log('icons', dailyExpense)
+  const [stylesPosts, stylesIcons] = useExpensesIcons(dailyExpense.expenses);
 
   const openEditOnClick = (id: string) => {
     setExpenseId(id)
@@ -73,7 +77,6 @@ export default function ExpensesTable({
   const deleteOnClick = (id: string, expense: Expense) => {
     dispatch(removeExpense(id, expense))
   }
-
   return (
     <React.Fragment>
       <Title>Expenses for {moment(day).format('LL')}</Title>
@@ -109,10 +112,14 @@ export default function ExpensesTable({
             )}
             <TableBody>
               {dailyExpense.expenses.map((expense: any) => {
-                const { _id, category, description, amount } = expense
+                const { _id, category, description, amount, icon } = expense
                 return (
                   <>
                     <TableRow key={_id}>
+                      <TableCell>
+                        <i className={icon} style={{color: 'darkgray', fontSize: '1.3rem'}}></i> 
+                        {stylesIcons}
+                      </TableCell>
                       <TableCell>{category}</TableCell>
                       <TableCell>{description}</TableCell>
                       <TableCell>€{amount}</TableCell>
@@ -122,7 +129,7 @@ export default function ExpensesTable({
                           className={classes.editExpense}
                           onClick={() => openEditOnClick(_id)}
                         >
-                        <EditIcon />
+                          <EditIcon />
                         </IconButton>
                       </TableCell>
                       <TableCell>

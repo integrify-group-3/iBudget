@@ -55,7 +55,7 @@ export default function Home(props: any) {
   }, [isAuthenticated])
 
   return (
-    <div className="home-page-container">
+    <div className="home-page">
       <Container className={classes.container}>
         <Typography variant="h3" className={classes.HeaderStyle}>
           iBudget

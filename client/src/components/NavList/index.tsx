@@ -35,13 +35,8 @@ const styleActive = {
 
 export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
   return (
-    <div>
-      <ListSubheader style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <NavLink to="/dashboard" title="Dashboard" style={linkStyle}>
-          <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
-          <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
-        </NavLink>
-      </ListSubheader>
+    <>
+
       <NavLink
         to="/dashboard"
         style={linkStyle}
@@ -109,18 +104,20 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
           <ListItemText primary="Profile" />
         </ListItem>
       </NavLink>
-    </div>
+    </>
   )
 }
 
 export const secondaryListItems = (
-  <div>
-    <ListSubheader style={{ display: 'flex', justifyContent: 'flex-start' }}>
-      <NavLink to="/" title="Home">
-        <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
-        <span style={{ marginLeft: '1.65rem', color: 'white' }}>IBudget</span>
-      </NavLink>
-    </ListSubheader>
+  <>
+    <NavLink to="/" style={linkStyle} activeStyle={styleActive} title="Home">
+      <ListItem button>
+        <ListItemIcon>
+          <HomeIcon style={navIconStyle} />
+        </ListItemIcon>
+        <ListItemText primary="Home" />
+      </ListItem>
+    </NavLink>
     <NavLink
       to="/register"
       style={linkStyle}
@@ -134,6 +131,7 @@ export const secondaryListItems = (
         <ListItemText primary="Sign up" />
       </ListItem>
     </NavLink>
+
     <NavLink
       to="/login"
       style={linkStyle}
@@ -147,13 +145,7 @@ export const secondaryListItems = (
         <ListItemText primary="Sign in" />
       </ListItem>
     </NavLink>
-    <NavLink to="/" style={linkStyle} activeStyle={styleActive} title="Home">
-      <ListItem button>
-        <ListItemIcon>
-          <HomeIcon style={navIconStyle} />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
-      </ListItem>
-    </NavLink>
-  </div>
+
+  
+  </>
 )

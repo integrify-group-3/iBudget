@@ -115,7 +115,7 @@ export default function ExpensesMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} height={200} width={400}>
+          <Chart data={chartData} height={200} width={444}>
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
