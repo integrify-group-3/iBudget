@@ -25,7 +25,7 @@ import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import TileContentMonthlyIncome from '../../components/TileContentMonthlyIncome'
 import { mobileScreen } from '../../utils/windowSize'
-
+import useIncomeIcons from '../../hooks/useIncomeIcons'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
@@ -91,6 +91,7 @@ export default function IncomePage(props: any) {
   const [calendar, setCalendar] = useState({} as any)
   const [monthlyChart, setMonthlyChart] = useState([])
   const [monthIncome, setMonthIncome] = useState([] as Income[])
+  const [formattedIncome] = useIncomeIcons(monthIncome)
   const [monthlyData, setMonthlyData] = useState(([] as unknown) as ViewMonth)
   const [
     err,
@@ -215,9 +216,6 @@ export default function IncomePage(props: any) {
     [tileContentData, calendar]
   )
 
-  // console.log('tile content data', tileContentData)
-  // console.log('month income', monthIncome)
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -267,7 +265,7 @@ export default function IncomePage(props: any) {
                 <IncomeTable
                   // key={calendar?._id}
                   // monthlyIncome={!isMonthClicking ? incomeData : monthIncome}
-                  monthlyIncome={monthIncome}
+                  monthlyIncome={formattedIncome}
                   year={dateView.year}
                   month={dateView.month}
                 />

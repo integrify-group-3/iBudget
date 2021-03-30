@@ -62,6 +62,7 @@ export default function IncomeTable({
   month,
   monthlyIncome,
 }: IncomeTableProps) {
+  console.log('monthlyIncome', monthlyIncome)
   const [editOpen, setEditOpen] = useState(false)
   const [IncomeId, setIncomeId] = useState('')
   const dispatch = useDispatch()
@@ -138,10 +139,26 @@ export default function IncomeTable({
                 <TableBody>
                   {monthlyIncome &&
                     monthlyIncome.map((income: any) => {
-                      const { _id, category, description, amount } = income
+                      const {
+                        _id,
+                        category,
+                        description,
+                        amount,
+                        icon,
+                      } = income
                       return (
                         <TableRow key={_id}>
-                          <TableCell>{category}</TableCell>
+                          <TableCell>
+                            <i
+                              className={icon}
+                              style={{
+                                color: '#c9c7ce',
+                                fontSize: '1.3rem',
+                                marginRight: '.2rem',
+                              }}
+                            ></i>
+                            <span>{category}</span>
+                          </TableCell>
                           <TableCell>{description}</TableCell>
                           <TableCell>€{amount}</TableCell>
 

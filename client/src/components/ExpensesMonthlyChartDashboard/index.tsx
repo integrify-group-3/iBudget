@@ -56,7 +56,7 @@ const chartRootStyle = {
 }
 
 const chartRoot = (props: any) => (
-  <Chart.Label {...props} style={chartRootStyle}/>
+  <Chart.Label {...props} style={chartRootStyle} />
 )
 
 const legendLabelComponent = (props: any) => ( <Legend.Label {...props} className="label-text"/> )
@@ -78,7 +78,7 @@ export default function ExpensesMonthlyChartDashboard({
 
   const pieChartText = 'Pie Chart'
   const barChartText = 'Bar Chart'
-  
+
   return (
     <>
       {switchChart ? (
@@ -118,8 +118,7 @@ export default function ExpensesMonthlyChartDashboard({
               innerRadius={0.45}
               outerRadius={0.8}
             />
-            <Legend
-            labelComponent={legendLabelComponent}/>
+            <Legend labelComponent={legendLabelComponent} />
             {/* <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
