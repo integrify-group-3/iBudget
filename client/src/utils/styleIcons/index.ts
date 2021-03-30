@@ -1,3 +1,12 @@
+export  const incomeIcons = [
+    { category: 'salary', icon: 'fas fa-hand-holding-usd' },
+    { category: 'investments', icon: 'fas fa-chart-line' },
+    { category: 'real estate', icon: 'fas fa-building' },
+    { category: 'unemployment benefits', icon: 'fas fa-user-md' },
+    { category: 'tax return', icon: 'fas fa-file-invoice-dollar' },
+    { category: 'child allowance', icon: 'fas fa-baby' },
+  ]
+
 export const expensesIcons = [
     {category: 'housing', icon: 'fas fa-home'},
     {category: 'food', icon: 'fas fa-shopping-cart'},
