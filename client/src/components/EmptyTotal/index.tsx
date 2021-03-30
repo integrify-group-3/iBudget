@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'flex-start',
     flexDirection: 'column',
-    padding: '1rem 0'
+    padding: '0 0'
   },
   header: {
     fontSize: '22px'

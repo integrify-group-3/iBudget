@@ -14,14 +14,21 @@ import { ExpensesChartProps } from '../../types/ui'
 import './style.scss'
 
 const chartRootStyle = {
-  flexGrow: 0.55,
+  fontSize: '10px',
+  marginLeft: '1.3rem',
+  height: '200px',
+  width: '437px'
 }
 
 const chartRoot = (props: any) => (
   <Legend.Root {...props} style={chartRootStyle} className="chart-root" />
 )
-const pointComponentRoot = (props: any) => ( <PieSeries.Point {...props} className="pieseries"/> )
-const legendLabelComponent = (props: any) => ( <Legend.Label {...props} className="label-text"/> )
+const pointComponentRoot = (props: any) => (
+  <PieSeries.Point {...props} className="pieseries" />
+)
+const legendLabelComponent = (props: any) => (
+  <Legend.Label {...props} className="label-text" />
+)
 
 export default function ExpensesChart({
   chartData,
@@ -29,10 +36,8 @@ export default function ExpensesChart({
   month,
 }: ExpensesChartProps) {
   return (
-    <Chart data={chartData} height={240} rootComponent={chartRoot}>
-      <Palette
-       scheme={chartData.map((data) => data.color)}
-      />
+    <Chart data={chartData} height={239} width={400} rootComponent={chartRoot}>
+      <Palette scheme={chartData.map((data) => data.color)} />
       <PieSeries
         valueField="amount"
         argumentField="category"

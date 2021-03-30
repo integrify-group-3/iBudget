@@ -20,15 +20,15 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { NavLink } from 'react-router-dom'
-import FaceIcon from '@material-ui/icons/Face';
+import FaceIcon from '@material-ui/icons/Face'
 
 import { AppState } from '../../types'
 import { logout } from '../../redux/actions/user'
 import { MainListItems } from '../NavList'
 import { secondaryListItems } from '../NavList'
+import logo from '../../imgs/logo.svg'
 
-
-const drawerWidth = 240
+const drawerWidth = 190
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -101,6 +101,16 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       width: '100vw',
     },
+    navLogo: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textDecoration: 'none',
+      color: 'white'
+    },
+    appTitle: {
+      marginLeft: '.5rem',
+    },
     headerUser: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -113,10 +123,10 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'auto',
     },
     userContainer: {
-      width: '10rem', 
+      width: '10rem',
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     userLink: {
       textDecoration: 'none',
@@ -124,7 +134,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: '.4rem'
+      marginLeft: '.4rem',
     },
     userImgContainer: {
       display: 'inline-block',
@@ -133,15 +143,15 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '32px',
       objectFit: 'cover',
       marginLeft: '.4rem',
-      borderRadius: '50%'
+      borderRadius: '50%',
     },
     userPictureIcon: {
-      fontSize: '32px'
+      fontSize: '32px',
     },
     userImg: {
       objectFit: 'cover',
       width: '100%',
-      height: '100%'
+      height: '100%',
     },
     btnStyle: {
       borderRadius: 50,
@@ -159,7 +169,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const classes = useStyles()
   const theme = useTheme()
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
@@ -196,16 +206,31 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.header} noWrap>
-            <span>iBudget</span>
+            <NavLink
+              to={`${isAuthenticated ? `/dashboard` : `/`}`}
+              className={classes.navLogo}
+            >
+              <img src={logo} alt="app logo" style={{ marginLeft: '0.2rem' }} />
+              <span className={classes.appTitle}>iBudget</span>
+            </NavLink>
             {isAuthenticated && (
               <Typography className={classes.headerUser}>
                 <span className={classes.userContainer}>
-                  Hello{' '}
+                  Hello
                   <NavLink to={`/user/${user.id}`} className={classes.userLink}>
-                    <span>{user.firstName} {user.lastName}</span>
+                    <span>
+                      {user.firstName} {user.lastName}
+                    </span>
                     <div className={classes.userImgContainer}>
-                      { user.picture ? <img src={user.picture} alt={user.firstName} className={classes.userImg}/>
-:  <FaceIcon className={classes.userPictureIcon} />}
+                      {user.picture ? (
+                        <img
+                          src={user.picture}
+                          alt={user.firstName}
+                          className={classes.userImg}
+                        />
+                      ) : (
+                        <FaceIcon className={classes.userPictureIcon} />
+                      )}
                     </div>
                   </NavLink>
                 </span>
@@ -249,7 +274,9 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <Divider />
-            <List><MainListItems user={user}/></List>
+            <List>
+              <MainListItems user={user} />
+            </List>
           </>
         ) : (
           <>

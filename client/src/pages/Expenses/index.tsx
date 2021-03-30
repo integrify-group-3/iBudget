@@ -25,6 +25,7 @@ import ExpensesMonthlyChart from '../../components/ExpensesMonthlyChart'
 import TotalMonthlyExpenses from '../../components/TotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import ExpensesTable from '../../components/ExpensesTable'
+import useExpensesIcons from '../../hooks/useExpensesIcons'
 import TileContentMonthlyExpenses from '../../components/TileContentMonthlyExpenses'
 import AddExpense from '../../components/AddExpense'
 import { clearUpdate } from '../../redux/actions/expenses'
@@ -111,14 +112,16 @@ export default function ExpensesPage(props: any) {
     defaultDateView,
     defaultMonth,
   ] = useMonthlyExpenses()
+  //
   const [calendarDate, setCalendarDate] = useState(date)
   const [isFormShowing, setIsFormShowing] = useState(false)
-  //moving this to hook
   const [dailyExpense, setDailyExpense] = useState({} as DailyExpense)
   const [isDayClicking, setIsDayClicking] = useState(false)
-  //moving this to hook
+  //after fetched, expenses are passed here and received back from custom hook with the added icon
+  const [formattedExpenses] = useExpensesIcons(dailyExpense)
+  // console.log('icons', icons)
+
   const switchMonth = {} as ViewMonth
-  //moving this to hook
   const [schedule, setSchedule] = useState({
     day: '',
     expenses: [],
@@ -189,8 +192,7 @@ export default function ExpensesPage(props: any) {
     tileContentData,
     defaultMonth,
   ])
-  console.log('tile content data', tileContentData)
-
+  // console.log('tile content data', tileContentData)
   const showFormOnClick = () => {
     setIsFormShowing(true)
   }
@@ -355,7 +357,9 @@ export default function ExpensesPage(props: any) {
               <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
-                  dailyExpense={dailyExpense}
+                  // dailyExpense={dailyExpense}
+                  //testing formatted expenses with icons below
+                  dailyExpense={formattedExpenses}
                   showFormOnClick={showFormOnClick}
                 />
               </Paper>

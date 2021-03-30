@@ -8,6 +8,9 @@ import { mobileScreen } from '../../utils/windowSize'
 const useStyles = makeStyles({
   title: {
     fontSize:  `${mobileScreen ? '1rem' : '1.3rem'}`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 })
 

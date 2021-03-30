@@ -1,4 +1,4 @@
-.home-page-container {
+.home-page {
   background-image: linear-gradient(
       to right,
       rgba(243, 239, 234, 0.2),
@@ -92,5 +92,10 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@media screen and (max-width: 768px) {
+  .home-page {
+    min-height: 103vh;
   }
 }

@@ -16,10 +16,11 @@ import Paper from '@material-ui/core/Paper'
 import Title from '../Title'
 import AddExpenseBtn from '../../components/AddExpenseBtn'
 import EditExpense from '../../components/EditExpense'
-import { AppState } from '../../types'
 import { Expense } from '../../types/expenses'
 import { ExpensesTableProps } from '../../types/ui'
 import { removeExpense } from '../../redux/actions/expenses'
+
+import useExpensesIcons from '../../hooks/useExpensesIcons'
 
 const useStyles = makeStyles((theme) => ({
   addExpense: {
@@ -61,11 +62,10 @@ export default function ExpensesTable({
 }: ExpensesTableProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const updatedExpenses = useSelector(
-    (state: AppState) => state.expenses.dailyExpenses
-  )
   const [editOpen, setEditOpen] = useState(false)
   const [expenseId, setExpenseId] = useState('')
+  // console.log('icons', dailyExpense)
+  const [stylesPosts, stylesIcons] = useExpensesIcons(dailyExpense.expenses)
 
   const openEditOnClick = (id: string) => {
     setExpenseId(id)
@@ -77,7 +77,6 @@ export default function ExpensesTable({
   const deleteOnClick = (id: string, expense: Expense) => {
     dispatch(removeExpense(id, expense))
   }
-
   return (
     <React.Fragment>
       <Title>Expenses for {moment(day).format('LL')}</Title>
@@ -90,6 +89,8 @@ export default function ExpensesTable({
                 <TableCell>Category</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Amount</TableCell>
+                <TableCell><span style={{marginLeft: '1.3rem'}}>Edit</span></TableCell>
+                <TableCell><span style={{marginLeft: '0.5rem'}}>Delete</span></TableCell>
               </TableRow>
             </TableHead>
             {editOpen && (
@@ -113,11 +114,17 @@ export default function ExpensesTable({
             )}
             <TableBody>
               {dailyExpense.expenses.map((expense: any) => {
-                const { _id, category, description, amount } = expense
+                const { _id, category, description, amount, icon } = expense
                 return (
                   <>
                     <TableRow key={_id}>
-                      <TableCell>{category}</TableCell>
+                      <TableCell>
+                        <i
+                          className={icon}
+                          style={{ color: '#c9c7ce', fontSize: '1.3rem', marginRight: '.2rem' }}
+                        ></i>
+                        <span>{category}</span>
+                      </TableCell>
                       <TableCell>{description}</TableCell>
                       <TableCell>€{amount}</TableCell>
                       <TableCell>
@@ -126,7 +133,7 @@ export default function ExpensesTable({
                           className={classes.editExpense}
                           onClick={() => openEditOnClick(_id)}
                         >
-                        <EditIcon />
+                          <EditIcon />
                         </IconButton>
                       </TableCell>
                       <TableCell>

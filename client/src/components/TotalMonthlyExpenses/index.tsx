@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import ForwardIcon from '@material-ui/icons/Forward';
 
 import { TotalMonthlyExpensesProps } from '../../types/expenses'
 import EmptyTotal from '../EmptyTotal'
@@ -24,6 +25,11 @@ const useStyles = makeStyles({
     borderRadius: '15px',
     padding: '.3rem 1rem',
     fontSize: `${mobileScreen ? '13px' : '18px'}`
+  },
+  forwardIcon: {
+    color: '#fd3865',
+    fontSize: '2.3rem',
+    marginRight: '2rem'
   }
 })
 
@@ -40,6 +46,7 @@ export default function TotalMonthlyExpenses({
         My Expenses 
         {/* month and year are for testing purposes */}
         {/* {month} {year} */}
+        <ForwardIcon className={classes.forwardIcon}/>
       </Title>
       {totalMonthlyExpenses > 0 ? (
         <Typography

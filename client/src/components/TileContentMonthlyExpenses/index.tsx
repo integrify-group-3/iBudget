@@ -93,7 +93,6 @@ export default function TileContentMonthlyExpenses({
         if (view === 'month' && day !== undefined && loadTileContent) {
           if (day.expenses !== undefined && day.expenses.length > 0) {
             setTileLoaded(true)
-            console.log('these days have expenses', day)
           }
         }
       }

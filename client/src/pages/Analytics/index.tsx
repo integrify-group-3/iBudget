@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 195,
     borderRadius: '18px',
+    overflow: 'hidden'
   },
   fixedHeightCalendar: {
     height: 260,
