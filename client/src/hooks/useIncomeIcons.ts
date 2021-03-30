@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
-import { incomeIcons } from '../utils/styleIcons'
+import { incomeUiCategories } from '../utils/uiCategories'
 
 export default function useIncomeIcons(monthIncome: any) {
  
@@ -11,7 +11,7 @@ export default function useIncomeIcons(monthIncome: any) {
       if (incomes !== undefined) {
         const iconsArr = [] as any
         await incomes.forEach((income: any) => {
-          incomeIcons.forEach((icon) => {
+          incomeUiCategories.forEach((icon) => {
             if (income.category === icon.category) {
               income.icon = icon.icon
               iconsArr.push(income)
@@ -21,7 +21,7 @@ export default function useIncomeIcons(monthIncome: any) {
         setIcons(incomes)
       }
     },
-    [monthIncome, incomeIcons, icons]
+    [monthIncome, incomeUiCategories, icons]
   )
 
   useEffect(() => {

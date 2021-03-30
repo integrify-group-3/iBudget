@@ -1,4 +1,4 @@
-export  const incomeIcons = [
+export  const incomeUiCategories = [
     { category: 'salary', icon: 'fas fa-hand-holding-usd' },
     { category: 'investments', icon: 'fas fa-chart-line' },
     { category: 'real estate', icon: 'fas fa-building' },
@@ -7,7 +7,7 @@ export  const incomeIcons = [
     { category: 'child allowance', icon: 'fas fa-baby' },
   ]
 
-export const expensesIcons = [
+export const expensesUiCategories = [
     {category: 'housing', icon: 'fas fa-home', iconStyle: 'blue'},
     {category: 'food', icon: 'fas fa-shopping-cart', iconStyle: 'green'},
     {category: 'utilities', icon: 'fas fa-lightbulb', iconStyle: 'yellow'},

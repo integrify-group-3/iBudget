@@ -1,28 +1,29 @@
-import React from "react";
-import { useDispatch } from "react-redux"
-import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import moment from 'moment';
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
+import InputLabel from '@material-ui/core/InputLabel'
+import TextField from '@material-ui/core/TextField'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import moment from 'moment'
 
 import { AddExpenseProps, Expense } from '../../types/expenses'
 import { addExpense } from '../../redux/actions/expenses'
+import { expensesUiCategories } from '../../utils/uiCategories'
 import SaveButton from '../SaveButton'
 import CancelButton from '../CancelButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
+    '& > *': {
       margin: theme.spacing(1),
-      width: "25ch",
+      width: '25ch',
     },
   },
   modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -30,28 +31,32 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     borderRadius: '5px',
-    width: '27rem'
+    width: '27rem',
   },
   header: {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   input: {
-    width: '22rem'
+    width: '22rem',
   },
   select: {
     width: '20.5rem',
   },
+  selectCategory: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   btnSaveWrapper: {
     display: 'flex',
     justifyContent: 'center',
-    width: '100%'
+    width: '100%',
   },
   save: {
     border: 'none',
-    background: 'none'
-  }
-}));
+    background: 'none',
+  },
+}))
 
 export default function AddExpense({
   expense,
@@ -67,15 +72,15 @@ export default function AddExpense({
   const dispatch = useDispatch()
 
   const handleSubmit = (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
     dispatch(addExpense(expense as Expense))
     closeForm()
-  };
+  }
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setExpense({ ...expense, [name]: value });
-  };
+    const { name, value } = e.target
+    setExpense({ ...expense, [name]: value })
+  }
 
   return (
     <div>
@@ -85,8 +90,8 @@ export default function AddExpense({
           <form onSubmit={handleSubmit} className={classes.root}>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
-                  Select category
-                  </InputLabel>
+                Select category
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -97,20 +102,23 @@ export default function AddExpense({
                 onChange={handleChange}
                 required={true}
               >
-                <MenuItem value="housing">Housing</MenuItem>
-                <MenuItem value="food">Food</MenuItem>
-                <MenuItem value="utilities">Utilities</MenuItem>
-                <MenuItem value="transportation">Transportation</MenuItem>
-                <MenuItem value="clothing">Clothing</MenuItem>
-                <MenuItem value="supplies">Household/Supplies</MenuItem>
-                <MenuItem value="sports">Sports</MenuItem>
-                <MenuItem value="entertainment">Entertainment</MenuItem>
-                <MenuItem value="healthcare">Healthcare</MenuItem>
-                <MenuItem value="insurance">Insurance</MenuItem>
-                <MenuItem value="education">Education</MenuItem>
-                <MenuItem value="debt">Debt/Loans</MenuItem>
-                <MenuItem value="savings">Savings</MenuItem>
-                <MenuItem value="holiday">Holiday</MenuItem>
+                {expensesUiCategories.map((expenseCat) => {
+                  const { category, icon, iconStyle } = expenseCat
+                  return (
+                    <MenuItem
+                      value={category}
+                      className={classes.selectCategory}
+                    >
+                      <span>{`${category
+                        .charAt(0)
+                        .toUpperCase()}${category.slice(1)}`}</span>
+                      <i
+                        className={icon}
+                        style={{ color: `${iconStyle}`, fontSize: '1.3rem', opacity: '0.6' }}
+                      ></i>
+                    </MenuItem>
+                  )
+                })}
               </Select>
             </div>
 
@@ -141,8 +149,12 @@ export default function AddExpense({
               />
             </div>
             <div className={classes.btnSaveWrapper}>
-            <button className={classes.save}><SaveButton /></button>
-            <button className={classes.save} onClick={hideFormOnClick}><CancelButton /></button>
+              <button className={classes.save}>
+                <SaveButton />
+              </button>
+              <button className={classes.save} onClick={hideFormOnClick}>
+                <CancelButton />
+              </button>
             </div>
           </form>
         </div>
@@ -150,5 +162,5 @@ export default function AddExpense({
       {/* </Fade> */}
       {/* </Modal>  */}
     </div>
-  );
+  )
 }
