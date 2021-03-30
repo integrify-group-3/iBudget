@@ -8,24 +8,29 @@ import {
   Title,
 } from '@devexpress/dx-react-chart-material-ui'
 import { Animation, EventTracker, Palette } from '@devexpress/dx-react-chart'
+import { makeStyles } from '@material-ui/core/styles'
 
 import { ExpensesChartProps } from '../../types/ui'
 
 import './style.scss'
 
+const useStyles = makeStyles((theme: any) => ({
+  chartContainer: {
+    height: '243px',
+  }
+}))
+
 const chartRootStyle = {
-  fontSize: '10px',
   marginLeft: '1.3rem',
-  height: '200px',
-  width: '437px'
+  flexGrow: 'unset !important'
 }
 
 const chartRoot = (props: any) => (
-  <Legend.Root {...props} style={chartRootStyle} className="chart-root" />
+  <Legend.Root {...props} style={chartRootStyle} 
+  className="chart-root" 
+  />
 )
-const pointComponentRoot = (props: any) => (
-  <PieSeries.Point {...props} className="pieseries" />
-)
+
 const legendLabelComponent = (props: any) => (
   <Legend.Label {...props} className="label-text" />
 )
@@ -35,16 +40,20 @@ export default function ExpensesChart({
   year,
   month,
 }: ExpensesChartProps) {
+  const classes = useStyles()
   return (
-    <Chart data={chartData} height={239} width={400} rootComponent={chartRoot}>
+    <div className={classes.chartContainer}>
+    <Chart data={chartData} 
+    height={200} 
+    // width={444}
+    >
       <Palette scheme={chartData.map((data) => data.color)} />
       <PieSeries
         valueField="amount"
         argumentField="category"
         name="category"
-        innerRadius={0.5}
-        outerRadius={0.9}
-        pointComponent={pointComponentRoot}
+        innerRadius={0.45}
+        outerRadius={0.8}
       />
       <Legend labelComponent={legendLabelComponent} />
       {/* <Title text={`Expenses Chart ${month} ${year}`} /> */}
@@ -52,5 +61,6 @@ export default function ExpensesChart({
       <Tooltip />
       <Animation />
     </Chart>
+    </div>
   )
 }
