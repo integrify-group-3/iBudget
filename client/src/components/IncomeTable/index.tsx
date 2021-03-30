@@ -108,6 +108,12 @@ export default function IncomeTable({
                     <TableCell>Category</TableCell>
                     <TableCell>Description</TableCell>
                     <TableCell>Amount</TableCell>
+                    <TableCell>
+                      <span style={{ marginLeft: '0.7rem' }}>Edit</span>
+                    </TableCell>
+                    <TableCell>
+                      <span style={{ marginLeft: '0.6rem' }}>Delete</span>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 {editOpen && (
