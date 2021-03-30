@@ -90,8 +90,7 @@ export default function ExpensesTable({
                 <TableCell>Description</TableCell>
                 <TableCell>Amount</TableCell>
                 <TableCell><span style={{marginLeft: '1.3rem'}}>Edit</span></TableCell>
-                <TableCell>Delete</TableCell>
-
+                <TableCell><span style={{marginLeft: '0.5rem'}}>Delete</span></TableCell>
               </TableRow>
             </TableHead>
             {editOpen && (
