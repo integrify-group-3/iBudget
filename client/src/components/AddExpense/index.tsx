@@ -41,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
     width: '22rem',
   },
   select: {
-    width: '20.5rem',
+    width: '22rem',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   selectCategory: {
     display: 'flex',
