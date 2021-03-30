@@ -119,7 +119,7 @@ export default function ExpensesPage(props: any) {
   const [isDayClicking, setIsDayClicking] = useState(false)
   //after fetched, expenses are passed here and received back from custom hook with the added icon
   const [formattedExpenses] = useExpensesIcons(dailyExpense)
-  // console.log('icons', icons)
+  console.log('dailyExpense', dailyExpense)
 
   const switchMonth = {} as ViewMonth
   const [schedule, setSchedule] = useState({
@@ -285,7 +285,7 @@ export default function ExpensesPage(props: any) {
           setTileContentData(foundMonth)
           setMonthlyChart(foundMonth.days)
           setMonthlyData(switchMonth)
-        
+
           const selectedDay = await foundMonth.days.find(
             (d: any) =>
               moment(d.day).format('LL') ===
@@ -306,7 +306,7 @@ export default function ExpensesPage(props: any) {
   // console.log('monthly data', monthlyData)
   // console.log('monthly chart', monthlyChart)
   // console.log('chart lenght', expensesChartData.length)
-  
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -410,5 +410,3 @@ export default function ExpensesPage(props: any) {
     </div>
   )
 }
-
-
