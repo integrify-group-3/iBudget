@@ -13,6 +13,7 @@ export default function useExpensesIcons(dailyExpense: any) {
           expensesIcons.forEach((icon) => {
             if(expense.category === icon.category) {
               expense.icon = icon.icon
+              expense.iconStyle = icon.iconStyle
               iconsArr.push(expense)
             }
           })
