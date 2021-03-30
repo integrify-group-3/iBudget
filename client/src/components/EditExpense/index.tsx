@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     borderRadius: '5px',
+    width: '27rem'
   },
   header: {
     marginLeft: '.5rem',
@@ -53,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
   selectCategory: {
     display: 'flex',
     justifyContent: 'space-between',
+  },
+  btnSaveWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
   },
   save: {
     border: 'none',
@@ -161,12 +167,14 @@ export default function EditExpense({
                 value={amount}
               />
             </div>
+            <div className={classes.btnSaveWrapper}>
             <button className={classes.save}>
               <SaveButton />
             </button>
             <button className={classes.save} onClick={hideFormOnClick}>
               <CancelButton />
             </button>
+            </div>
           </form>
         </div>
       </div>
