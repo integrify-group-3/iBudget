@@ -53,21 +53,35 @@ const useStyles = makeStyles((theme: any) => ({
 
 const chartRootStyle = {
   fontSize: '10px',
-  marginLeft: '1.3rem'
+  marginLeft: '1.3rem',
 }
 const pointRootStyle = {
-  height: '12rem'
+  height: '12rem',
 }
 
 const chartRoot = (props: any) => (
-  <Chart.Label {...props} style={chartRootStyle}/>
+  <Chart.Label {...props} style={chartRootStyle} />
 )
 
 const PieRoot = (props: any) => (
-  <PieSeries.Point {...props} style={chartRootStyle}/>
+  <PieSeries.Point {...props} style={chartRootStyle} />
 )
 
-const legendLabelComponent = (props: any) => ( <Legend.Label {...props} className="label-text"/> )
+const chartsRootStyle = {
+  /*   fontSize: '10px',
+  marginLeft: '1.3rem',
+  height: '200px',
+  width: '437px' */
+  flexGrow: 'no !important',
+}
+
+const chartRoots = (props: any) => (
+  <Legend.Root {...props} style={chartsRootStyle} /*className="chart-root" */ />
+)
+
+const legendLabelComponent = (props: any) => (
+  <Legend.Label {...props} className="label-text" />
+)
 
 export default function ExpensesMonthlyChartDashboard({
   chartData,
@@ -86,7 +100,7 @@ export default function ExpensesMonthlyChartDashboard({
 
   const pieChartText = 'Pie Chart'
   const barChartText = 'Bar Chart'
-  
+
   return (
     <>
       {switchChart ? (
@@ -115,18 +129,17 @@ export default function ExpensesMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} height={200} width={444}>
+          <Chart data={chartData} height={200} rootComponent={chartRoots}>
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}
               name={name}
-              innerRadius={0.5}
-              outerRadius={0.9}
+              innerRadius={0.4}
+              outerRadius={0.7}
               pointComponent={PieRoot}
             />
-            <Legend
-            labelComponent={legendLabelComponent}/>
+            <Legend labelComponent={legendLabelComponent} />
             {/* <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
