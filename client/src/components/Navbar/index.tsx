@@ -21,6 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { NavLink } from 'react-router-dom'
 import FaceIcon from '@material-ui/icons/Face'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { AppState } from '../../types'
 import { logout } from '../../redux/actions/user'

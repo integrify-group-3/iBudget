@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `3.6rem` : `6rem`}`,
+    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
     overflow: 'hidden',
   },
   container: {
@@ -156,7 +156,7 @@ export default function Dashboard(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-          <Grid item xs={10} md={5} lg={5}>
+          <Grid item xs={12} md={5} lg={5}>
               <Paper className={fixedHeightPaper}>
                 <ProfileDashboardBudget
                   totalBudget={totalIncome - totalExpenses}
@@ -166,7 +166,7 @@ export default function Dashboard(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={3} lg={3}>
+            <Grid item xs={6} md={3} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <TotalMonthlyExpenses
                   year={year}
@@ -176,7 +176,7 @@ export default function Dashboard(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={3} lg={3}>
+            <Grid item xs={6} md={3} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <TotalIncome
                   year={year}
@@ -185,7 +185,7 @@ export default function Dashboard(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={10} md={11} lg={6}>
+            <Grid item xs={12} md={11} lg={6}>
               <Paper className={classes.chartHeightPaper}>
                 {totalIncome > 0 || totalExpenses > 0 ? (
                   <IncomeExpensesMonthChart
@@ -198,7 +198,7 @@ export default function Dashboard(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={10} md={12} lg={6}>
+            <Grid item xs={12} md={12} lg={6}>
               <Paper className={fixedHeightPaperChart}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChartDashboard
