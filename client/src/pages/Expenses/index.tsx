@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `3.6rem` : `6rem`}`,
+    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
     overflow: 'hidden',
     // background: '#131313;'
   },
@@ -316,7 +316,7 @@ export default function ExpensesPage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={6} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <MonthlyBudget
                   year={dateView.year}
@@ -326,7 +326,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={6} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <TotalMonthlyExpenses
                   year={dateView.year}
@@ -336,7 +336,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={11} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChart
@@ -353,7 +353,7 @@ export default function ExpensesPage(props: any) {
               </Paper>
             </Grid>
 
-            <Grid item xs={11} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}

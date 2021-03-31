@@ -48,8 +48,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  fixedHeight: {
-    height: 195,
+  fixedHeightDashboard: {
+    height: mobileScreen ? 155 : 195,
+    borderRadius: '18px',
+  }, 
+  fixedHeightTotals: {
+    height: mobileScreen ? 115 : 195,
     borderRadius: '18px',
   },
   fixedHeightChart: {
@@ -74,7 +78,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard(props: any) {
   const classes = useStyles()
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const fixedHeightPaperDashboard = clsx(classes.paper, classes.fixedHeightDashboard)
+  const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
   const fixedHeightPaperChart = clsx(classes.paper, classes.fixedHeightChart)
   const fixedHeightPaperChartIncome = clsx(
     classes.paper,
@@ -135,17 +140,6 @@ export default function Dashboard(props: any) {
     totalExpenses,
   ])
 
-  console.log('should update', monthChartData)
-  // console.log('checking condition for empty chart', !monthChartData[1], !monthChartData[2])
-  //if this is true, no chart
-  /*
-  if(monthChartData[1] && monthChartData[2]) {
-    console.log('chart')
-  }
-  if(!monthChartData[1] && !monthChartData[2]) {
-    console.log('no chart')
-  }*/
-
   const { year, month } = defaultDateView
   return (
     <div className={classes.root}>
@@ -157,7 +151,7 @@ export default function Dashboard(props: any) {
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
           <Grid item xs={12} md={5} lg={5}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={fixedHeightPaperDashboard}>
                 <ProfileDashboardBudget
                   totalBudget={totalIncome - totalExpenses}
                   month={month}
@@ -167,7 +161,7 @@ export default function Dashboard(props: any) {
               </Paper>
             </Grid>
             <Grid item xs={6} md={3} lg={3}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={fixedHeightPaperTotals}>
                 <TotalMonthlyExpenses
                   year={year}
                   month={month}
@@ -177,7 +171,7 @@ export default function Dashboard(props: any) {
               </Paper>
             </Grid>
             <Grid item xs={6} md={3} lg={3}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={fixedHeightPaperTotals}>
                 <TotalIncome
                   year={year}
                   month={month}

@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     color: '#42A5F5',
     fontSize: '2.3rem',
     transform: 'rotate(-180deg)',
-    marginRight: '3rem'
+    marginRight: `${mobileScreen ? '0' : '3rem'}`
   }
 })
 
