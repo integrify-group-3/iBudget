@@ -145,7 +145,7 @@ export default function ExpensesTable({
                             color: `${iconStyle}`,
                             fontSize: '1.3rem',
                             marginRight: '.4rem',
-                            opacity: '0.6'
+                            opacity: '0.9'
                           }}
                           title={category}
                         ></i>

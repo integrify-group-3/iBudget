@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden'
   },
   fixedHeightTotals: {
-    height: `${mobileScreen ? 120 : 195}`,
+    height: `${mobileScreen ? '120px' : '195px'}`,
     borderRadius: '18px',
   },
   fixedHeightCalendar: {
