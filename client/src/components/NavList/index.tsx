@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles'
 
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -15,7 +16,6 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import PersonIcon from '@material-ui/icons/Person'
 
 import { NavbarSecondaryListItemsProps } from '../../types/ui'
-import logo from '../../imgs/logo.svg'
 
 import './style.scss'
 
@@ -28,34 +28,27 @@ const navIconStyle = {
   color: 'white',
   opacity: '0.9',
 }
-const styleActive = {
-  color: '#4112c7',
-  background: 'white',
-}
 
 export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
   return (
     <>
-
       <NavLink
         to="/dashboard"
-        style={linkStyle}
-        activeStyle={styleActive}
-        activeClassName="nav-link"
         className="nav-link"
+        activeClassName="nav-link-active"
         title="Dashboard"
       >
         <ListItem button>
           <ListItemIcon>
-            <DashboardIcon style={navIconStyle} className="active" />
+            <DashboardIcon style={navIconStyle} />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItem>
       </NavLink>
       <NavLink
         to="/income"
-        style={linkStyle}
-        activeStyle={styleActive}
+        className="nav-link"
+        activeClassName="nav-link-active"
         title="Income"
       >
         <ListItem button>
@@ -67,8 +60,8 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
       </NavLink>
       <NavLink
         to="/expenses"
-        style={linkStyle}
-        activeStyle={styleActive}
+        className="nav-link"
+        activeClassName="nav-link-active"
         title="Expenses"
       >
         <ListItem button>
@@ -80,8 +73,8 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
       </NavLink>
       <NavLink
         to="/analytics"
-        style={linkStyle}
-        activeStyle={styleActive}
+        className="nav-link"
+        activeClassName="nav-link-active"
         title="Analytics"
       >
         <ListItem button>
@@ -93,8 +86,8 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
       </NavLink>
       <NavLink
         to={`/user/${user.id}`}
-        style={linkStyle}
-        activeStyle={styleActive}
+        className="nav-link"
+        activeClassName="nav-link-active"
         title="User Profile"
       >
         <ListItem button>
@@ -110,7 +103,12 @@ export const MainListItems = ({ user }: NavbarSecondaryListItemsProps) => {
 
 export const secondaryListItems = (
   <>
-    <NavLink to="/" style={linkStyle} activeStyle={styleActive} title="Home">
+    <NavLink
+      exact to="/"
+      className="nav-link"
+      activeClassName="nav-link-active"
+      title="Home"
+    >
       <ListItem button>
         <ListItemIcon>
           <HomeIcon style={navIconStyle} />
@@ -120,8 +118,8 @@ export const secondaryListItems = (
     </NavLink>
     <NavLink
       to="/register"
-      style={linkStyle}
-      activeStyle={styleActive}
+      className="nav-link"
+      activeClassName="nav-link-active"
       title="Sign up"
     >
       <ListItem button>
@@ -134,8 +132,8 @@ export const secondaryListItems = (
 
     <NavLink
       to="/login"
-      style={linkStyle}
-      activeStyle={styleActive}
+      className="nav-link"
+      activeClassName="nav-link-active"
       title="Sign in"
     >
       <ListItem button>
@@ -145,7 +143,5 @@ export const secondaryListItems = (
         <ListItemText primary="Sign in" />
       </ListItem>
     </NavLink>
-
-  
   </>
 )

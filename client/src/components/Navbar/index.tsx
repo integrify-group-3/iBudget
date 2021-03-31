@@ -163,7 +163,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: '2rem',
       padding: '.3rem',
       height: '1.7rem',
-      // backgroundColor: '#4F416B'
     },
     logoutIcon: {
       color: 'white',
