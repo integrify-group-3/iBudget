@@ -16,6 +16,7 @@ import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
 
 import { IncomeExpensesYearChartProps } from '../../types'
 import SwitchChartBtn from '../../components/SwitchChartBtn'
+import { mobileScreen } from '../../utils/windowSize'
 
 const chartLegendStyle = {
   display: 'flex',
@@ -41,7 +42,7 @@ export default function IncomeExpensesYearChart({
   return (
     <Paper className="chart-container">
       {!switchChart ? (
-        <Chart data={data} height={450}>
+        <Chart data={data} height={mobileScreen ? 336 : 450}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />

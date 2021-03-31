@@ -77,7 +77,8 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   chartHeightPaper: {
-    height: 498,
+    height:  `${mobileScreen ? '376px' : '498px'}`,
+
   },
 }))
 
