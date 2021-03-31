@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from 'react'
 import { incomeUiCategories } from '../utils/uiCategories'
 
 export default function useIncomeIcons(monthIncome: any) {
- 
   const [icons, setIcons] = useState<any>([])
 
   const loadIncomesIcons = useCallback(
@@ -14,6 +13,7 @@ export default function useIncomeIcons(monthIncome: any) {
           incomeUiCategories.forEach((icon) => {
             if (income.category === icon.category) {
               income.icon = icon.icon
+              income.iconStyle = icon.iconStyle
               iconsArr.push(income)
             }
           })
