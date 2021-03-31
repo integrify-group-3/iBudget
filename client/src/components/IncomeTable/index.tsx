@@ -62,7 +62,6 @@ export default function IncomeTable({
   month,
   monthlyIncome,
 }: IncomeTableProps) {
-  console.log('monthlyIncome from incometable', monthlyIncome)
   const [editOpen, setEditOpen] = useState(false)
   const [IncomeId, setIncomeId] = useState('')
   const dispatch = useDispatch()
@@ -145,6 +144,7 @@ export default function IncomeTable({
                         description,
                         amount,
                         icon,
+                        iconStyle,
                       } = income
                       return (
                         <TableRow key={_id}>
@@ -152,9 +152,9 @@ export default function IncomeTable({
                             <i
                               className={icon}
                               style={{
-                                color: '#c9c7ce',
                                 fontSize: '1.3rem',
-                                marginRight: '.2rem',
+                                marginRight: '.4rem',
+                                color: `${iconStyle}`,
                               }}
                             ></i>
                             <span>{category}</span>
