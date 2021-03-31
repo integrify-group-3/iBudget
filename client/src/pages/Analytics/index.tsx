@@ -61,11 +61,15 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden'
   },
   fixedHeightTotals: {
-    height: `${mobileScreen ? 120 : 195}`,
+    height: `${mobileScreen ? '120px' : '195px'}`,
     borderRadius: '18px',
   },
   fixedHeightCalendar: {
-    height: 260,
+    height:  `${mobileScreen ? '316px' : '424px'}`,
+    padding: '0',
+    background: 'transparent',
+    border: 'none',
+    borderRadius: '27px'
   },
   content: {
     flexGrow: 1,
@@ -73,7 +77,8 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   chartHeightPaper: {
-    height: 498,
+    height:  `${mobileScreen ? '376px' : '498px'}`,
+
   },
 }))
 
@@ -81,6 +86,7 @@ export default function Analytics(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
+  const fixedHeightCalendarPaper = clsx(classes.paper, classes.fixedHeightCalendar)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
@@ -291,6 +297,7 @@ export default function Analytics(props: any) {
             </Grid>
 
             <Grid item xs={12} md={12} lg={5}>
+            <Paper className={fixedHeightCalendarPaper}>
               {switchView ? (
                 <Calendar
                   onChange={onChangeMonth}
@@ -317,6 +324,7 @@ export default function Analytics(props: any) {
                   // tileContent={({ date, view }) => showExpenseOnCalendar(date, view)}
                 />
               )}
+              </Paper>
             </Grid>
           </Grid>
           <Box pt={4}></Box>

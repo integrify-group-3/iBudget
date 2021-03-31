@@ -19,8 +19,15 @@ import EditExpense from '../../components/EditExpense'
 import { Expense } from '../../types/expenses'
 import { ExpensesTableProps } from '../../types/ui'
 import { removeExpense } from '../../redux/actions/expenses'
+import { mobileScreen } from '../../utils/windowSize'
 
 const useStyles = makeStyles((theme) => ({
+  tableBody: {
+    display: `${mobileScreen ? 'grid' : 'table-row-group' }`,
+  },
+  tableRow: {
+
+  },
   tableCell: {
     padding: '6px 0px 6px 16px',
   },
@@ -88,7 +95,10 @@ export default function ExpensesTable({
         dailyExpense.expenses.length > 0 ? (
           <>
             <TableHead>
-              <TableRow>
+              {
+                !mobileScreen &&
+                <>
+                 <TableRow>
                 <TableCell>Category</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Amount</TableCell>
@@ -99,6 +109,9 @@ export default function ExpensesTable({
                   <span style={{ marginLeft: '0.5rem' }}>Delete</span>
                 </TableCell>
               </TableRow>
+                </>
+              }
+             
             </TableHead>
             {editOpen && (
               <Grid
@@ -119,12 +132,12 @@ export default function ExpensesTable({
                 </Paper>
               </Grid>
             )}
-            <TableBody>
+            <TableBody className={classes.tableBody}>
               {dailyExpense.expenses.map((expense: any) => {
                 const { _id, category, description, amount, icon, iconStyle } = expense
                 return (
                   <>
-                    <TableRow key={_id}>
+                    <TableRow key={_id} className={classes.tableRow}>
                       <TableCell className={classes.tableCell}>
                         <i
                           className={icon}
@@ -132,11 +145,11 @@ export default function ExpensesTable({
                             color: `${iconStyle}`,
                             fontSize: '1.3rem',
                             marginRight: '.4rem',
-                            opacity: '0.6'
+                            opacity: '0.9'
                           }}
                           title={category}
                         ></i>
-                        <span>{category}</span> 
+                       { !mobileScreen && <span>{category}</span> } 
                       </TableCell>
                       <TableCell>{description}</TableCell>
                       <TableCell className={classes.amount}>€{amount}</TableCell>
