@@ -9,19 +9,22 @@ export default function useYearIncome(selectedYear: number) {
   const [total, setTotal] = useState(0)
   const yearData = useSelector((state: AppState) => state.income.selectedYear)
   const calendarData = useSelector((state: AppState) => state.income.calendar)
- 
+
   useEffect(() => {
     dispatch(fetchIncome())
   }, [dispatch])
 
-  const calculateTotal = useCallback((yearData: any) => {
-    let count = 0
-    yearData !== undefined &&
-    yearData.months.map((month: any) =>
-        month.income.map((income: any) => (count += income?.amount))
-      )
-    return count
-  }, [yearData])
+  const calculateTotal = useCallback(
+    (yearData: any) => {
+      let count = 0
+      yearData.months &&
+        yearData.months.map((month: any) =>
+          month.income.map((income: any) => (count += income?.amount))
+        )
+      return count
+    },
+    [yearData]
+  )
 
   useEffect(() => {
     changeYearView(selectedYear)
@@ -49,4 +52,3 @@ export default function useYearIncome(selectedYear: number) {
 
   return [yearData, total]
 }
-
