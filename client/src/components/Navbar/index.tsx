@@ -26,6 +26,7 @@ import { AppState } from '../../types'
 import { logout } from '../../redux/actions/user'
 import { MainListItems } from '../NavList'
 import { secondaryListItems } from '../NavList'
+import { mobileScreen } from '../../utils/windowSize'
 import logo from '../../imgs/logo.svg'
 
 const drawerWidth = 190
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     menuButton: {
-      marginRight: 36,
+      marginRight: mobileScreen ? 0 : 36,
     },
     arrowIcon: {
       color: 'white',
@@ -81,7 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
+      width:  `${mobileScreen ? '0' : theme.spacing(7) + 1}`,
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 1,
       },
@@ -110,6 +111,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     appTitle: {
       marginLeft: '.5rem',
+      display: `${mobileScreen ? 'none' : 'inline-block'}`
     },
     headerUser: {
       display: 'flex',
