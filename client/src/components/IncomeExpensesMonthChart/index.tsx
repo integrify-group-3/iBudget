@@ -32,7 +32,7 @@ export default function IncomeExpensesMonthChart({
   )
   return (
     <Paper className="chart-container">
-      <Chart data={data} height={mobileScreen ? 270 : 500}>
+      <Chart data={data} height={mobileScreen ? 320 : 500}>
         <ArgumentScale factory={scaleBand} />
         <ArgumentAxis />
         <ValueAxis />

@@ -163,11 +163,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: '2rem',
       padding: '.3rem',
       height: '1.7rem',
-      // backgroundColor: '#4F416B'
     },
     logoutIcon: {
       color: 'white',
-      background: 'red'
     },
   })
 )
@@ -291,14 +289,14 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <Divider />
-            <List >
+            <List onClick={handleDrawerClose}>
               <MainListItems user={user} />
             </List>
           </>
         ) : (
           <>
             <Divider />
-            <List >{secondaryListItems}</List>
+            <List onClick={handleDrawerClose}>{secondaryListItems}</List>
           </>
         )}
       </Drawer>

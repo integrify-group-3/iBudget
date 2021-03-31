@@ -20,6 +20,7 @@ import { Palette } from '@devexpress/dx-react-chart'
 import SwitchChartBtn from '../../components/SwitchChartBtn'
 import { IncomeChartData } from '../../types/income'
 import { IncomeChartDashboardProps } from '../../types'
+import { mobileScreen } from '../../utils/windowSize'
 
 import './style.scss'
 
