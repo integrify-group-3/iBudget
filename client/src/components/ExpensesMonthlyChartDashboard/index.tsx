@@ -20,6 +20,7 @@ import { Palette } from '@devexpress/dx-react-chart'
 import SwitchChartBtn from '../../components/SwitchChartBtn'
 import { ExpensesChartData } from '../../types/expenses'
 import { ExpensesChartDashboardProps } from '../../types/ui'
+import { mobileScreen } from '../../utils/windowSize'
 
 import './style.scss'
 
@@ -109,7 +110,8 @@ export default function ExpensesMonthlyChartDashboard({
         <div className={classes.chartContainer}>
           <Chart data={chartData} 
           height={200} 
-          width={444}>
+          width={mobileScreen ? 258 : 444}
+          >
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
