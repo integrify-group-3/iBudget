@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `3.6rem` : `6rem`}`,
+    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
     overflow: 'hidden',
   },
   container: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: '90vw',
+    width: `${mobileScreen ? `99vw` : `90vw`}`,
   },
   paper: {
     padding: theme.spacing(2),
@@ -59,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
     height: 195,
     borderRadius: '18px',
     overflow: 'hidden'
+  },
+  fixedHeightTotals: {
+    height: `${mobileScreen ? 120 : 195}`,
+    borderRadius: '18px',
   },
   fixedHeightCalendar: {
     height: 260,
@@ -76,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Analytics(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
   )
@@ -201,7 +206,7 @@ export default function Analytics(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={10} md={4} lg={5}>
+            <Grid item xs={12} md={4} lg={5}>
               <Paper className={fixedHeightPaper}>
                 {!switchView ? (
                   <YearBudget
@@ -223,8 +228,8 @@ export default function Analytics(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={10} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
+            <Grid item xs={6} md={4} lg={3}>
+              <Paper className={fixedHeightPaperTotals}>
                 {switchView ? (
                   <TotalMonthlyExpenses
                     year={year}
@@ -240,8 +245,8 @@ export default function Analytics(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={10} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
+            <Grid item xs={6} md={4} lg={3}>
+              <Paper className={fixedHeightPaperTotals}>
                 {switchView ? (
                   <TotalMonthlyIncome
                     year={year}
@@ -256,7 +261,7 @@ export default function Analytics(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={10} md={12} lg={7}>
+            <Grid item xs={12} md={12} lg={7}>
               <Paper className={classes.chartHeightPaper}>
                 {switchView ? (
                   <>
@@ -285,7 +290,7 @@ export default function Analytics(props: any) {
               </Paper>
             </Grid>
 
-            <Grid item xs={10} md={12} lg={5}>
+            <Grid item xs={12} md={12} lg={5}>
               {switchView ? (
                 <Calendar
                   onChange={onChangeMonth}

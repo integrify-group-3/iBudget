@@ -6,6 +6,7 @@ import ForwardIcon from '@material-ui/icons/Forward'
 import { TotalYearExpensesProps } from '../../types/expenses'
 import EmptyTotal from '../EmptyTotal'
 import Title from '../Title'
+import { mobileScreen } from '../../utils/windowSize'
 
 const useStyles = makeStyles({
   depositContext: {
@@ -13,6 +14,7 @@ const useStyles = makeStyles({
   },
   totalIncomeText: {
     color: '#FF7043',
+    fontSize: `${mobileScreen ? '1rem' : '2.125rem'}`,
   },
   forwardIcon: {
     color: '#fd3865',

@@ -167,6 +167,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     logoutIcon: {
       color: 'white',
+      background: 'red'
     },
   })
 )
@@ -243,7 +244,9 @@ const Navbar = () => {
                 </span>
                 {mobileScreen ? (
                   <ExitToAppIcon
-                    className={classes.logoutIcon}
+                    // className={classes.logoutIcon}
+                    // component={NavLink}
+                    to={'/'}
                     onClick={logoutOnClick}
                   />
                 ) : (
@@ -288,14 +291,14 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <Divider />
-            <List>
+            <List >
               <MainListItems user={user} />
             </List>
           </>
         ) : (
           <>
             <Divider />
-            <List>{secondaryListItems}</List>
+            <List >{secondaryListItems}</List>
           </>
         )}
       </Drawer>
