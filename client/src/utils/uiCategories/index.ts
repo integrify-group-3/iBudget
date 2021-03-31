@@ -6,7 +6,7 @@ export  const incomeUiCategories = [
     { category: 'tax return', icon: 'fas fa-file-invoice-dollar' },
     { category: 'child allowance', icon: 'fas fa-baby' },
   ]
-
+/*
 export const expensesUiCategories = [
     {category: 'housing', icon: 'fas fa-home', iconStyle: 'blue'},
     {category: 'food', icon: 'fas fa-shopping-cart', iconStyle: '#008051'},
@@ -22,4 +22,20 @@ export const expensesUiCategories = [
     {category: 'debt', icon: 'fas fa-hand-holding-usd', iconStyle: 'darkred'},
     {category: 'savings', icon: 'fas fa-coins', iconStyle: 'green'},
     {category: 'holiday', icon: 'fas fa-plane-departure', iconStyle: 'darkblue'},
+  ]*/
+  export const expensesUiCategories = [
+    {category: 'housing', icon: 'fas fa-home', iconStyle: '#8B0000'},
+    {category: 'food', icon: 'fas fa-shopping-cart', iconStyle: '#330000'},
+    {category: 'utilities', icon: 'fas fa-wifi', iconStyle: '#660000'},
+    {category: 'transportation', icon: 'fas fa-gas-pump', iconStyle: '#CD0000'},
+    {category: 'clothing', icon: 'fas fa-shopping-bag', iconStyle: '#DB9370'},
+    {category: 'sports', icon: 'fas fa-dumbbell', iconStyle: '#FF8000'},
+    {category: 'healthcare', icon: 'fas fa-first-aid', iconStyle: '#FF3030'},
+    {category: 'entertainment', icon: 'fas fa-glass-martini-alt', iconStyle: '#FFA812'},
+    {category: 'education', icon: 'fas fa-graduation-cap', iconStyle: '#FF6666'},
+    {category: 'supplies', icon: 'fas fa-wrench', iconStyle: '#FFC1C1'},
+    {category: 'insurance', icon: 'fas fa-car-crash', iconStyle: '#D66F62'},
+    {category: 'debt', icon: 'fas fa-hand-holding-usd', iconStyle: '#8A3324'},
+    {category: 'savings', icon: 'fas fa-coins', iconStyle: '#EE4000'},
+    {category: 'holiday', icon: 'fas fa-plane-departure', iconStyle: '#FF7F50'},
   ]
