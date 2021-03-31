@@ -91,7 +91,7 @@ export default function AddIncome({
         <form className={classes.root} onSubmit={handleSubmit}>
           <div className="input-topics">
             <InputLabel id="demo-simple-select-outlined-label">
-              Category
+              Select Category
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"

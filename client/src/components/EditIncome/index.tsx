@@ -11,6 +11,7 @@ import SaveButton from '../SaveButton'
 import CancelButton from '../CancelButton'
 import { AppState } from '../../types'
 import { updateIncome } from '../../redux/actions/income'
+import { incomeUiCategories } from '../../utils/uiCategories'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
   save: {
     border: 'none',
     background: 'none',
+  },
+  selectCategory: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 }))
 
@@ -102,14 +107,30 @@ function EditIncome({
                 className={classes.select}
                 required={true}
               >
-                <MenuItem value="salary">Salary</MenuItem>
-                <MenuItem value="investments">Investments</MenuItem>
-                <MenuItem value="real estate">Real Estate</MenuItem>
-                <MenuItem value="unemployment benefits">
-                  Unemployment Benefits
-                </MenuItem>
-                <MenuItem value="tax return">Tax Return</MenuItem>
-                <MenuItem value="child allowance">Child Allowance</MenuItem>
+                {incomeUiCategories &&
+                  incomeUiCategories.map((incomeCategory: any) => {
+                    const { category, icon, iconStyle } = incomeCategory
+                    return (
+                      <MenuItem
+                        value={category}
+                        key={category}
+                        className={classes.selectCategory}
+                      >
+                        <span>
+                          {category[0].toUpperCase().concat(category.slice(1))}
+                        </span>
+                        <i
+                          className={icon}
+                          style={{
+                            color: `${iconStyle}`,
+                            fontSize: '1.3rem',
+                            opacity: '0.6',
+                            paddingLeft: '12rem',
+                          }}
+                        ></i>
+                      </MenuItem>
+                    )
+                  })}
               </Select>
             </div>
             <div className="input-topics">

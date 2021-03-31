@@ -62,7 +62,7 @@ export default function IncomeTable({
   month,
   monthlyIncome,
 }: IncomeTableProps) {
-  console.log('monthlyIncome', monthlyIncome)
+  console.log('monthlyIncome from incometable', monthlyIncome)
   const [editOpen, setEditOpen] = useState(false)
   const [IncomeId, setIncomeId] = useState('')
   const dispatch = useDispatch()
