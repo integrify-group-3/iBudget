@@ -8,9 +8,9 @@ export default function useMonthlyExpensesChart(monthlyData: any) {
   const loadChartData = useCallback(
     (monthlyData) => {
       let housingTotal = 0
-      let transportationTotal = 0
       let foodTotal = 0
       let utilitiesTotal = 0
+      let transportationTotal = 0
       let clothingTotal = 0
       let sportsTotal = 0
       let entertainmentTotal = 0
@@ -35,19 +35,19 @@ export default function useMonthlyExpensesChart(monthlyData: any) {
                 }
               }
             }
-            if (category.includes('transportation')) {
-              transportationTotal += amount
-              for (const data of defaultMonthlyChartExpensesData) {
-                if (data.category === category) {
-                  data.amount = transportationTotal
-                }
-              }
-            }
             if (category.includes('food')) {
               foodTotal += amount
               for (const data of defaultMonthlyChartExpensesData) {
                 if (data.category === expense.category) {
                   data.amount = foodTotal
+                }
+              }
+            }
+            if (category.includes('transportation')) {
+              transportationTotal += amount
+              for (const data of defaultMonthlyChartExpensesData) {
+                if (data.category === category) {
+                  data.amount = transportationTotal
                 }
               }
             }

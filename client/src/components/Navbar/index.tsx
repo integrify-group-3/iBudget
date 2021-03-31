@@ -21,11 +21,13 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { NavLink } from 'react-router-dom'
 import FaceIcon from '@material-ui/icons/Face'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
 import { AppState } from '../../types'
 import { logout } from '../../redux/actions/user'
 import { MainListItems } from '../NavList'
 import { secondaryListItems } from '../NavList'
+import { mobileScreen } from '../../utils/windowSize'
 import logo from '../../imgs/logo.svg'
 
 const drawerWidth = 190
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     menuButton: {
-      marginRight: 36,
+      marginRight: mobileScreen ? 0 : 36,
     },
     arrowIcon: {
       color: 'white',
@@ -81,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
+      width: `${mobileScreen ? '0' : theme.spacing(7) + 1}`,
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 1,
       },
@@ -106,10 +108,11 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
       textDecoration: 'none',
-      color: 'white'
+      color: 'white',
     },
     appTitle: {
       marginLeft: '.5rem',
+      display: `${mobileScreen ? 'none' : 'inline-block'}`,
     },
     headerUser: {
       display: 'flex',
@@ -134,7 +137,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: '.4rem',
+      marginLeft: `${mobileScreen ? '16.4rem' : '.4rem'}`,
     },
     userImgContainer: {
       display: 'inline-block',
@@ -161,6 +164,10 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '.3rem',
       height: '1.7rem',
       // backgroundColor: '#4F416B'
+    },
+    logoutIcon: {
+      color: 'white',
+      background: 'red'
     },
   })
 )
@@ -216,11 +223,12 @@ const Navbar = () => {
             {isAuthenticated && (
               <Typography className={classes.headerUser}>
                 <span className={classes.userContainer}>
-                  Hello
                   <NavLink to={`/user/${user.id}`} className={classes.userLink}>
-                    <span>
-                      {user.firstName} {user.lastName}
-                    </span>
+                    {!mobileScreen && (
+                      <span>
+                        Hello {user.firstName} {user.lastName}
+                      </span>
+                    )}
                     <div className={classes.userImgContainer}>
                       {user.picture ? (
                         <img
@@ -234,16 +242,25 @@ const Navbar = () => {
                     </div>
                   </NavLink>
                 </span>
-                <Button
-                  component={NavLink}
-                  to={'/'}
-                  color="secondary"
-                  variant="contained"
-                  className={classes.btnStyle}
-                  onClick={logoutOnClick}
-                >
-                  Logout
-                </Button>
+                {mobileScreen ? (
+                  <ExitToAppIcon
+                    // className={classes.logoutIcon}
+                    // component={NavLink}
+                    to={'/'}
+                    onClick={logoutOnClick}
+                  />
+                ) : (
+                  <Button
+                    component={NavLink}
+                    to={'/'}
+                    color="secondary"
+                    variant="contained"
+                    className={classes.btnStyle}
+                    onClick={logoutOnClick}
+                  >
+                    Logout
+                  </Button>
+                )}
               </Typography>
             )}
           </Typography>
@@ -274,14 +291,14 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <Divider />
-            <List>
+            <List >
               <MainListItems user={user} />
             </List>
           </>
         ) : (
           <>
             <Divider />
-            <List>{secondaryListItems}</List>
+            <List >{secondaryListItems}</List>
           </>
         )}
       </Drawer>

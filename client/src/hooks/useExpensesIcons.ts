@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
-import { expensesIcons } from '../utils/styleIcons'
+import { expensesUiCategories } from '../utils/uiCategories'
 
 export default function useExpensesIcons(dailyExpense: any) {
   const [formattedExpenses, setFormattedExpenses] = useState({day: '', expenses: [] })
@@ -10,16 +10,17 @@ export default function useExpensesIcons(dailyExpense: any) {
     if(expenses !== undefined) {
         const iconsArr = [] as any
         await expenses.forEach((expense: any) => {
-          expensesIcons.forEach((icon) => {
+          expensesUiCategories.forEach((icon) => {
             if(expense.category === icon.category) {
               expense.icon = icon.icon
+              expense.iconStyle = icon.iconStyle
               iconsArr.push(expense)
             }
           })
         })
         setFormattedExpenses({day: dailyExpense.day, expenses: iconsArr})
     }
-  },[dailyExpense, expensesIcons, formattedExpenses]
+  },[dailyExpense, expensesUiCategories, formattedExpenses]
   )
 
   useEffect(() => {

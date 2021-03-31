@@ -11,7 +11,8 @@ import ClearIcon from '@material-ui/icons/Clear'
 import CancelButton from '../CancelButton'
 
 import { AppState } from '../../types/index'
-import { Expense, EditExpenseProps, DailyExpense } from '../../types/expenses'
+import { Expense, EditExpenseProps } from '../../types/expenses'
+import { expensesUiCategories } from '../../utils/uiCategories'
 import { updateExpense } from '../../redux/actions/expenses'
 import SaveButton from '../SaveButton'
 import { setTimeout } from 'timers'
@@ -34,10 +35,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     borderRadius: '5px',
+    width: '27rem'
   },
   header: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    marginLeft: '.5rem',
   },
   clear: {
     cursor: 'pointer',
@@ -46,7 +47,18 @@ const useStyles = makeStyles((theme) => ({
     width: '22rem',
   },
   select: {
-    width: '20.5rem',
+    width: '22rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  selectCategory: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  btnSaveWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
   },
   save: {
     border: 'none',
@@ -94,10 +106,9 @@ export default function EditExpense({
   }
 
   return (
-    <div>
       <div className={classes.paper}>
         <div className="form-container">
-          <h3>{moment(day).format('LL')}</h3>
+          <h3 className={classes.header}>{moment(day).format('LL')}</h3>
           <form onSubmit={handleSubmit} className={classes.root}>
             <div className="input-topics">
               <InputLabel id="demo-simple-select-outlined-label">
@@ -107,26 +118,28 @@ export default function EditExpense({
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 name="category"
-                // size="small"
                 value={category}
                 onChange={handleChange}
                 className={classes.select}
                 required={true}
               >
-                <MenuItem value="housing">Housing</MenuItem>
-                <MenuItem value="transportation">Transportation</MenuItem>
-                <MenuItem value="food">Food</MenuItem>
-                <MenuItem value="utilities">Utilities</MenuItem>
-                <MenuItem value="clothing">Clothing</MenuItem>
-                <MenuItem value="sports">Sports</MenuItem>
-                <MenuItem value="entertainment">Entertainment</MenuItem>
-                <MenuItem value="healthcare">Healthcare</MenuItem>
-                <MenuItem value="insurance">Insurance</MenuItem>
-                <MenuItem value="supplies">Household/Supplies</MenuItem>
-                <MenuItem value="education">Education</MenuItem>
-                <MenuItem value="debt">Debt/Loans</MenuItem>
-                <MenuItem value="savings">Savings</MenuItem>
-                <MenuItem value="holiday">Holiday</MenuItem>
+                {expensesUiCategories.map((expenseCat) => {
+                  const { category, icon, iconStyle } = expenseCat
+                  return (
+                    <MenuItem
+                      value={category}
+                      className={classes.selectCategory}
+                    >
+                      <span>{`${category
+                        .charAt(0)
+                        .toUpperCase()}${category.slice(1)}`}</span>
+                      <i
+                        className={icon}
+                        style={{ color: `${iconStyle}`, fontSize: '1.3rem', opacity: '0.6', marginLeft: '14rem' }}
+                      ></i>
+                    </MenuItem>
+                  )
+                })}
               </Select>
             </div>
 
@@ -154,15 +167,16 @@ export default function EditExpense({
                 value={amount}
               />
             </div>
+            <div className={classes.btnSaveWrapper}>
             <button className={classes.save}>
               <SaveButton />
             </button>
             <button className={classes.save} onClick={hideFormOnClick}>
               <CancelButton />
             </button>
+            </div>
           </form>
         </div>
       </div>
-    </div>
   )
 }

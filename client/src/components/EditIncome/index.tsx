@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     width: '22rem',
   },
   select: {
-    width: '20.5rem',
+    width: '22rem',
   },
   save: {
     border: 'none',

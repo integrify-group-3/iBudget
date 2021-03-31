@@ -121,7 +121,7 @@ export default function ExpensesTable({
             )}
             <TableBody>
               {dailyExpense.expenses.map((expense: any) => {
-                const { _id, category, description, amount, icon } = expense
+                const { _id, category, description, amount, icon, iconStyle } = expense
                 return (
                   <>
                     <TableRow key={_id}>
@@ -129,9 +129,10 @@ export default function ExpensesTable({
                         <i
                           className={icon}
                           style={{
-                            color: '#865cff8c',
+                            color: `${iconStyle}`,
                             fontSize: '1.3rem',
                             marginRight: '.4rem',
+                            opacity: '0.6'
                           }}
                           title={category}
                         ></i>

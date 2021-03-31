@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `3.6rem` : `6rem`}`,
+    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
     overflow: 'hidden',
     // background: '#131313;'
   },
@@ -61,16 +61,20 @@ const useStyles = makeStyles((theme) => ({
     height: 240,
     borderRadius: '18px',
   },
-  testDarkColors: {
-    color: '#48464f',
+  fixedHeightBudget: {
+    height: `${mobileScreen ? 120 : 240}`,
+    borderRadius: '18px',
+  },
+  fixedHeightExpenses: {
+    height: `${mobileScreen ? 120 : 240}`,
+    borderRadius: '18px',
+  },
+  fixedHeightChart: {
+    height: 550,
   },
   fixedHeightTable: {
     height: 340,
     borderRadius: '18px',
-    // background: '#131313'
-  },
-  fixedHeightChart: {
-    height: 550,
   },
   addExpenseContainer: {
     backgroundColor: 'rgba(25, 20, 20, 0.6)',
@@ -95,6 +99,8 @@ export default function ExpensesPage(props: any) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const fixedHeightPaperBudget = clsx(classes.paper, classes.fixedHeightBudget)
+  const fixedHeightPaperExpenses = clsx(classes.paper, classes.fixedHeightExpenses)
   const fixedHeightPaperTable = clsx(classes.paper, classes.fixedHeightTable)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
@@ -316,8 +322,8 @@ export default function ExpensesPage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={5} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
+            <Grid item xs={7} md={4} lg={3}>
+              <Paper className={fixedHeightPaperBudget}>
                 <MonthlyBudget
                   year={dateView.year}
                   month={dateView.month}
@@ -327,7 +333,7 @@ export default function ExpensesPage(props: any) {
               </Paper>
             </Grid>
             <Grid item xs={5} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={fixedHeightPaperExpenses}>
                 <TotalMonthlyExpenses
                   year={dateView.year}
                   month={dateView.month}
@@ -336,7 +342,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={11} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChart
@@ -353,7 +359,7 @@ export default function ExpensesPage(props: any) {
               </Paper>
             </Grid>
 
-            <Grid item xs={11} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
