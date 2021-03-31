@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   forwardIcon: {
     color: '#fd3865',
     fontSize: '2.3rem',
-    marginRight: '2rem'
+    marginRight: `${mobileScreen ? '-6px' : '2rem'}`,
   },
 })
 
