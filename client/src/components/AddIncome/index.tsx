@@ -11,6 +11,7 @@ import { AppState } from '../../types'
 import { AddIncomeProps } from '../../types/income'
 import { addIncome } from '../../redux/actions/income'
 import SaveButton from '../SaveButton'
+import { incomeUiCategories } from '../../utils/uiCategories'
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -43,6 +44,10 @@ const useStyles = makeStyles((theme) =>
     },
     btn: {
       display: 'inline-block',
+    },
+    selectCategory: {
+      display: 'flex',
+      justifyContent: 'space-between',
     },
   })
 )
@@ -80,66 +85,81 @@ export default function AddIncome({
     })
   }
   return (
-      <div className={classes.paper}>
-        <div className="form-container">
-          <h4>Add Income</h4>
-          <form className={classes.root} onSubmit={handleSubmit}>
+    <div className={classes.paper}>
+      <div className="form-container">
+        <h4>Add Income</h4>
+        <form className={classes.root} onSubmit={handleSubmit}>
+          <div className="input-topics">
+            <InputLabel id="demo-simple-select-outlined-label">
+              Select Category
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={category}
+              name="category"
+              //   size="small"
+              onChange={handleChange}
+              className={classes.select}
+            >
+              {incomeUiCategories &&
+                incomeUiCategories.map((incomeCategory: any) => {
+                  const { category, icon, iconStyle } = incomeCategory
+                  return (
+                    <MenuItem
+                      value={category}
+                      key={category}
+                      className={classes.selectCategory}
+                    >
+                      <span>
+                        {category[0].toUpperCase().concat(category.slice(1))}
+                      </span>
+                      <i
+                        className={icon}
+                        style={{
+                          color: `${iconStyle}`,
+                          fontSize: '1.3rem',
+                          opacity: '0.6',
+                        }}
+                      ></i>
+                    </MenuItem>
+                  )
+                })}
+            </Select>
             <div className="input-topics">
-              <InputLabel id="demo-simple-select-outlined-label">
-                Category
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={category}
-                name="category"
-                //   size="small"
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                value={description}
+                name="description"
+                label="description"
                 onChange={handleChange}
-                className={classes.select}
-              >
-                <MenuItem value="salary">Salary</MenuItem>
-                <MenuItem value="investments">Investments</MenuItem>
-                <MenuItem value="real estate">Real Estate</MenuItem>
-                <MenuItem value="unemployment benefits">
-                  Unemployment Benefits
-                </MenuItem>
-                <MenuItem value="tax return">Tax Return</MenuItem>
-                <MenuItem value="child allowance">Child Allowance</MenuItem>
-              </Select>
-              <div className="input-topics">
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  value={description}
-                  name="description"
-                  label="description"
-                  onChange={handleChange}
-                  className={classes.input}
-                />
-              </div>
-              <div className="input-topics">
-                <TextField
-                  value={amount}
-                  name="amount"
-                  variant="outlined"
-                  id="outlined-basic"
-                  type="number"
-                  label="amount"
-                  onChange={handleChange}
-                  className={classes.input}
-                />
-              </div>
-              <div className={classes.btnSaveWrapper}>
-                <button className={classes.buttons}>
-                  <SaveButton />
-                </button>
-                <button className={classes.buttons} onClick={hideFormOnClick}>
-                  <CancelButton />
-                </button>
-              </div>
+                className={classes.input}
+              />
             </div>
-          </form>
-        </div>
+            <div className="input-topics">
+              <TextField
+                value={amount}
+                name="amount"
+                variant="outlined"
+                id="outlined-basic"
+                type="number"
+                label="amount"
+                onChange={handleChange}
+                className={classes.input}
+              />
+            </div>
+            <div className={classes.btnSaveWrapper}>
+              <button className={classes.buttons}>
+                <SaveButton />
+              </button>
+              <button className={classes.buttons} onClick={hideFormOnClick}>
+                <CancelButton />
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
+    </div>
   )
 }
