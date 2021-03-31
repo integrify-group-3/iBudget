@@ -20,3 +20,10 @@
       transform: scale(1);
     }
   }
+  
+  @media screen and (max-width: 500px) {
+    .tile-content {
+      height: 2.8rem;
+      width: 2.8rem;
+    }
+  }

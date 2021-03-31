@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     width: `${mobileScreen ? `99vw` : `90vw`}`,
   },
+  gridItem: {
+    padding: `${mobileScreen ? `4px` : `12px`}`,
+  },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
@@ -62,11 +65,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '18px',
   },
   fixedHeightBudget: {
-    height: `${mobileScreen ? 120 : 240}`,
+    height: `${mobileScreen ? '120px' : '240px'}`,
     borderRadius: '18px',
   },
   fixedHeightExpenses: {
-    height: `${mobileScreen ? 120 : 240}`,
+    height: `${mobileScreen ? '120px' : '240px'}`,
     borderRadius: '18px',
   },
   fixedHeightChart: {

@@ -39,6 +39,7 @@
     height: 5rem;
     width: 2rem;
   }
+
   .react-calendar__tile:enabled:hover {
     background: #ebe5fa;
     border-radius: 50px;
@@ -62,6 +63,15 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+  }
+
+  @media screen and (max-width: 500px) {
+    .react-calendar {
+      height: 22.2rem;
+    }
+    .react-calendar button {
+      height: 3.1rem;
+    }
   }
   
   
