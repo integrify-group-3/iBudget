@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+     [theme.breakpoints.down('sm')]: {
+      top: '56%',
+      left: '10%',
+    },
   },
   HeaderStyle: {
     color: '#886DFA',
