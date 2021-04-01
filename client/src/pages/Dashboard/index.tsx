@@ -22,17 +22,25 @@ import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import ExpensesMonthlyChartDashboard from '../../components/ExpensesMonthlyChartDashboard'
 import IncomeMonthlyChartDashboard from '../../components/IncomeMonthlyChartDashboard'
 import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
+import backgroundImgMobile from '../../imgs/background-pages-mobile.jpg'
+import backgroundImgMobileTwo from '../../imgs/Background.png'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
     padding: '5rem 1rem',
-    width: '98vw',
+    width: '100vw',
     paddingLeft: '6rem',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
       paddingLeft: '0',
+      // backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.2), rgba(225, 219, 236, 0.2)), url(${backgroundImgMobile})`,
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.2), rgba(225, 219, 236, 0.2)), url(${backgroundImgMobileTwo})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover'
+      // background: '#865CFF'
     },
   },
   container: {
@@ -43,9 +51,13 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     width: '90vw',
     [theme.breakpoints.down('sm')]: {
-      width: '99vw',
+      width: '97.5vw',
     },
-    
+  },
+  gridItem: {
+    [theme.breakpoints.down('sm')]: {
+      padding: '4px !important'    
+    },
   },
   paper: {
     padding: theme.spacing(2),
@@ -166,7 +178,7 @@ export default function Dashboard(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-          <Grid item xs={12} md={5} lg={5}>
+          <Grid item xs={12} md={5} lg={5} className={classes.gridItem}>
               <Paper className={fixedHeightPaperDashboard}>
                 <ProfileDashboardBudget
                   totalBudget={totalIncome - totalExpenses}

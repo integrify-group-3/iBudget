@@ -25,6 +25,15 @@ const useStyles = makeStyles((theme) => ({
     top: '56%',
     left: '35%',
     transform: 'translateY(-50%)',
+    [theme.breakpoints.down('md')]: {
+      top: '28%',
+      left: '6.5%',
+      width: '293px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      top: '50%',
+      left: '8.5%',
+    },
   },
   HeaderStyle: {
     color: '#886DFA',

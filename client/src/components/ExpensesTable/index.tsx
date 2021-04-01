@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import { makeStyles } from '@material-ui/core/styles'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -19,11 +20,12 @@ import EditExpense from '../../components/EditExpense'
 import { Expense } from '../../types/expenses'
 import { ExpensesTableProps } from '../../types/ui'
 import { removeExpense } from '../../redux/actions/expenses'
-import { mobileScreen } from '../../utils/windowSize'
 
 const useStyles = makeStyles((theme) => ({
   tableBody: {
-    display: `${mobileScreen ? 'grid' : 'table-row-group' }`,
+    [theme.breakpoints.down('sm')]: {
+      display: 'grid',
+    },
   },
   tableRow: {
 
@@ -73,6 +75,8 @@ export default function ExpensesTable({
   showFormOnClick,
 }: ExpensesTableProps) {
   const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const dispatch = useDispatch()
   const [editOpen, setEditOpen] = useState(false)
   const [expenseId, setExpenseId] = useState('')
@@ -96,7 +100,7 @@ export default function ExpensesTable({
           <>
             <TableHead>
               {
-                !mobileScreen &&
+                !mobile &&
                 <>
                  <TableRow>
                 <TableCell>Category</TableCell>
@@ -149,7 +153,7 @@ export default function ExpensesTable({
                           }}
                           title={category}
                         ></i>
-                       { !mobileScreen && <span>{category}</span> } 
+                       { !mobile && <span>{category}</span> } 
                       </TableCell>
                       <TableCell>{description}</TableCell>
                       <TableCell className={classes.amount}>€{amount}</TableCell>
