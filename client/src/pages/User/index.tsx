@@ -40,7 +40,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: '313px',
       top: '48%',
-      left: '8.5%'
+      left: '8.5%',
+      backgroundImage:
+      'linear-gradient(to right, rgba(243, 239, 234, 0.7), rgba(225, 219, 236, 0.8))',
     },
   },
   HeaderStyle: {
