@@ -33,6 +33,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+     [theme.breakpoints.down('md')]: {
+      top: '36%',
+      left: '17.5%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '313px',
+      top: '48%',
+      left: '8.5%',
+      backgroundImage:
+      'linear-gradient(to right, rgba(243, 239, 234, 0.7), rgba(225, 219, 236, 0.8))',
+    },
   },
   HeaderStyle: {
     color: '#886DFA',
@@ -105,7 +116,7 @@ export default function User(props: any) {
     console.log('it is undefined')
   }
   return (
-    <div className="home-page-container">
+    <div className="user-page-container">
       <Container className={classes.container}>
         <Typography variant="h4" className={classes.HeaderStyle}>
           User Profile

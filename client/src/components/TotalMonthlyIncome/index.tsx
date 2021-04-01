@@ -6,23 +6,28 @@ import ForwardIcon from '@material-ui/icons/Forward';
 import { TotalMonthlyIncomeProps } from '../../types/income'
 import EmptyTotal from '../EmptyTotal'
 import Title from '../Title'
-import { mobileScreen } from '../../utils/windowSize'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   depositContext: {
     flex: 1,
   },
   totalIncomeText: {
     color: '#42A5F5',
-    fontSize: `${mobileScreen ? '1rem' : '2.125rem'}`
+    fontSize: '2.125rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1rem',
+    },
   },
   forwardIcon: {
     color: '#42A5F5',
     fontSize: '2.3rem',
     transform: 'rotate(-180deg)',
-    marginRight: `${mobileScreen ? '0' : '3rem'}`
+    marginRight: '3rem',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: '0',
+    },
   }
-})
+}))
 
 export default function TotalMonthlyIncome({
   month,

@@ -6,7 +6,7 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import { EmptyYearChartContainerProps } from '../../types/ui'
 import Title from "../Title";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   emptyChartContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -20,12 +20,12 @@ const useStyles = makeStyles({
   emptyChartIcon: {
     fontSize: '68px',
     color: 'lightgrey',
-    marginTop: '1rem'
+    marginTop: '1rem',
   },
   depositContext: {
     flex: 1,
   },
-});
+}))
 
 export default function EmptyYearChartContainer({ 
     year, 

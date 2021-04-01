@@ -85,14 +85,12 @@ export default function TileContentMonthlyIncome({
 
   const loadTIles = useCallback(async () => {
     try {
-      console.log(contentData)
       setTileLoaded(false)
       const foundMonth = await contentData.find(
         (data: any) => data.name === moment(date).format('MMMM')
       )
       setMonth(foundMonth)
       setLoadTileContent(true)
-      // console.log('month here', month)
       if (month.income !== undefined && loadTileContent && view === 'year') {
         if (month.income.length > 0) {
           setTileLoaded(true)

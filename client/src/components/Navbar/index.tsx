@@ -22,7 +22,6 @@ import { AppState } from '../../types'
 import { logout } from '../../redux/actions/user'
 import { MainListItems } from '../NavList'
 import { secondaryListItems } from '../NavList'
-import { mobileScreen } from '../../utils/windowSize'
 import logo from '../../imgs/logo.svg'
 
 const drawerWidth = 190
@@ -49,7 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     menuButton: {
-      //marginRight: mobileScreen ? 0 : 36,
       marginRight: 36,
       [theme.breakpoints.down('sm')]: {
         marginRight: 0,
@@ -82,7 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      //width: `${mobileScreen ? '0' : theme.spacing(7) + 1}`,
       width: theme.spacing(7) + 1,
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 1,
@@ -115,7 +112,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     appTitle: {
       marginLeft: '.5rem',
-      //display: `${mobileScreen ? 'none' : 'inline-block'}`,
       display: 'inline-block',
       [theme.breakpoints.down('sm')]: {
         display: 'none',
@@ -144,7 +140,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      //marginLeft: `${mobileScreen ? '16.4rem' : '.4rem'}`,
       marginLeft: '.4rem',
       [theme.breakpoints.down('sm')]: {
         marginLeft: '16.4rem',

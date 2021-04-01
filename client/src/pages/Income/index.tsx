@@ -24,8 +24,9 @@ import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import TileContentMonthlyIncome from '../../components/TileContentMonthlyIncome'
-import { mobileScreen } from '../../utils/windowSize'
 import useIncomeIcons from '../../hooks/useIncomeIcons'
+import backgroundImgMobile from '../../imgs/background-pages-mobile.jpg'
+
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
@@ -35,8 +36,15 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 3rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
+    paddingLeft: '6rem',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+      paddingLeft: '0',
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.3)), url(${backgroundImgMobile})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+    },
   },
   container: {
     paddingTop: theme.spacing(3),
@@ -44,10 +52,16 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: `${mobileScreen ? `99vw` : `90vw`}`,
+    width: '90vw',
+    [theme.breakpoints.down('sm')]: {
+      width: '99vw',
+    },  
   },
   gridItem: {
-    padding: `${mobileScreen ? `4px` : `12px`}`,
+    padding: '12px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '5px !important',
+    },  
   },
   paper: {
     padding: theme.spacing(2),
@@ -60,12 +74,18 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '18px',
   },
   fixedHeightBudget: {
-    height: `${mobileScreen ? '120px' : '240px'}`,
+    height: '240px',
     borderRadius: '18px',
+     [theme.breakpoints.down('sm')]: {
+      height: '120px',
+    },
   },
   fixedHeightIncome: {
-    height: `${mobileScreen ? '120px' : '240px'}`,
+    height: '240px',
     borderRadius: '18px',
+     [theme.breakpoints.down('sm')]: {
+      height: '120px',
+    },
   },
   fixedHeightTable: {
     height: 340,
@@ -228,7 +248,7 @@ export default function IncomePage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={7} md={6} lg={3}>
+            <Grid item xs={7} md={6} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperBudget}>
                 <MonthlyBudget
                   year={dateView.year}
@@ -238,7 +258,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={5} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperIncome}>
                 <TotalMonthlyIncome
                   year={dateView.year}
@@ -247,7 +267,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaper}>
                 {incomeChartData.length > 0 ? (
                   <IncomeMonthlyChart
@@ -263,7 +283,7 @@ export default function IncomePage(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={6} style={{ padding: 5 }}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTable}>
                 <IncomeTable
                   // key={calendar?._id}
@@ -274,7 +294,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Calendar
                 value={calendarDate}
                 showNeighboringMonth={true}

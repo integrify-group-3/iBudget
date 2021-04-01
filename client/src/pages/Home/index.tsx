@@ -25,10 +25,25 @@ const useStyles = makeStyles((theme) => ({
     top: '56%',
     left: '35%',
     transform: 'translateY(-50%)',
+    [theme.breakpoints.down('md')]: {
+      top: '28%',
+      left: '6.5%',
+      width: '293px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      backgroundImage:
+      'linear-gradient(to right, rgba(243, 239, 234, 0.9), rgba(225, 219, 236, 0.9))',
+      top: '50%',
+      left: '10.5%',
+      minHeight: '315px',
+
+    },
   },
   HeaderStyle: {
     color: '#886DFA',
     marginTop: '2rem',
+    fontWeight: 700,
+    fontFamily: "sans-serif"
   },
   descStyle: {
     marginBottom: '40px',

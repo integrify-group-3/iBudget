@@ -1,4 +1,4 @@
-.login-page-container {
+.update-user-container {
     background-image: linear-gradient(
       to right,
       rgba(243, 239, 234, 0.2),
@@ -12,4 +12,16 @@
   align-items: center;
   flex-direction: column;
   height: 100vh;
+}
+@media screen and (max-width: 500px) {
+  .update-user-container {
+    background-image: linear-gradient(
+        to right,
+        rgba(243, 239, 234, 0.6),
+        rgba(225, 219, 236, 0.3)
+      ),
+      url('../../imgs/background-pages-mobile.jpg');
+      background-position: center;
+      background-size: cover;
+  }
 }

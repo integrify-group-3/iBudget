@@ -6,22 +6,27 @@ import ForwardIcon from '@material-ui/icons/Forward'
 import { TotalYearExpensesProps } from '../../types/expenses'
 import EmptyTotal from '../EmptyTotal'
 import Title from '../Title'
-import { mobileScreen } from '../../utils/windowSize'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   depositContext: {
     flex: 1,
   },
   totalIncomeText: {
     color: '#FF7043',
-    fontSize: `${mobileScreen ? '1rem' : '2.125rem'}`,
+    fontSize: '2.125rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1rem',
+    },  
   },
   forwardIcon: {
     color: '#fd3865',
     fontSize: '2.3rem',
-    marginRight: `${mobileScreen ? '-6px' : '2rem'}`,
+    marginRight: '2rem',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: '-6px',
+    },  
   },
-})
+}))
 
 export default function TotalYearExpenses({
   year,

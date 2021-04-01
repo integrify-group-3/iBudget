@@ -14,7 +14,6 @@ import { AppState, CalendarScheduler, DateView, ViewMonth } from '../../types'
 import { DailyExpense } from '../../types/expenses'
 
 import { Expense } from '../../types/expenses'
-
 import useMonthlyExpenses from '../../hooks/useMonthlyExpenses'
 import useMonthlyExpensesChart from '../../hooks/useMonthlyExpensesChart'
 import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
@@ -29,7 +28,7 @@ import useExpensesIcons from '../../hooks/useExpensesIcons'
 import TileContentMonthlyExpenses from '../../components/TileContentMonthlyExpenses'
 import AddExpense from '../../components/AddExpense'
 import { clearUpdate } from '../../redux/actions/expenses'
-import { mobileScreen } from '../../utils/windowSize'
+import backgroundImgMobile from '../../imgs/background-pages-mobile.jpg'
 
 import 'react-calendar/dist/Calendar.css'
 
@@ -39,9 +38,15 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
+    paddingLeft: '6rem',
     overflow: 'hidden',
-    // background: '#131313;'
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+      paddingLeft: '0',
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.3)), url(${backgroundImgMobile})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+    },
   },
   container: {
     paddingTop: theme.spacing(3),
@@ -49,10 +54,16 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: `${mobileScreen ? `99vw` : `90vw`}`,
+    width: '90vw',
+    [theme.breakpoints.down('sm')]: {
+      width: '99vw',
+    },
   },
   gridItem: {
-    padding: `${mobileScreen ? `4px` : `12px`}`,
+    padding: '12px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '5px !important',
+    },
   },
   paper: {
     padding: theme.spacing(2),
@@ -65,12 +76,20 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '18px',
   },
   fixedHeightBudget: {
-    height: `${mobileScreen ? '120px' : '240px'}`,
+    height: '240px',
     borderRadius: '18px',
+     [theme.breakpoints.down('sm')]: {
+      height: '120px',
+    },
+    
   },
   fixedHeightExpenses: {
-    height: `${mobileScreen ? '120px' : '240px'}`,
+    height: '240px',
     borderRadius: '18px',
+     [theme.breakpoints.down('sm')]: {
+      height: '120px',
+    },
+    
   },
   fixedHeightChart: {
     height: 550,
@@ -128,7 +147,6 @@ export default function ExpensesPage(props: any) {
   const [isDayClicking, setIsDayClicking] = useState(false)
   //after fetched, expenses are passed here and received back from custom hook with the added icon
   const [formattedExpenses] = useExpensesIcons(dailyExpense)
-  console.log('dailyExpense', dailyExpense)
 
   const switchMonth = {} as ViewMonth
   const [schedule, setSchedule] = useState({
@@ -214,7 +232,6 @@ export default function ExpensesPage(props: any) {
     setIsFormShowing(false)
   }
 
-  //this function is moving to usexpenses hook but keeps throwing an infinite loop
   const showDayOnClick = async (e: any) => {
     setIsFormShowing(false)
     setIsDayClicking(true)
@@ -265,7 +282,6 @@ export default function ExpensesPage(props: any) {
     }
   }
 
-  //this function is not working properly, fixing it
   const switchMonthOnClick = useCallback(
     async (e: any) => {
       setIsFormShowing(false)
@@ -312,10 +328,7 @@ export default function ExpensesPage(props: any) {
     },
     [dateView, monthlyData, monthlyChart]
   )
-  // console.log('monthly data', monthlyData)
-  // console.log('monthly chart', monthlyChart)
-  // console.log('chart lenght', expensesChartData.length)
-
+ 
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -325,7 +338,7 @@ export default function ExpensesPage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={7} md={4} lg={3}>
+            <Grid item xs={7} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperBudget}>
                 <MonthlyBudget
                   year={dateView.year}
@@ -335,7 +348,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={5} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperExpenses}>
                 <TotalMonthlyExpenses
                   year={dateView.year}
@@ -345,7 +358,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={5} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaper}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChart
@@ -362,7 +375,7 @@ export default function ExpensesPage(props: any) {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
@@ -396,7 +409,7 @@ export default function ExpensesPage(props: any) {
               </Grid>
             )}
 
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Calendar
                 value={calendarDate}
                 onChange={showDayOnClick}

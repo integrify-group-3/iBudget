@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import { useTheme } from '@material-ui/core'
 
 import { AppState, CalendarScheduler, ViewMonth, DateView } from '../../types'
 import { date, months } from '../../utils/dateValues'
@@ -29,7 +30,7 @@ import TotalYearIncome from '../../components/TotalYearIncome'
 import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import EmptyYearChartContainer from '../../components/EmptyYearChartContainer'
 import TileContentMonthIncomeExpenses from '../../components/TileContentMonthIncomeExpenses'
-import { bigTabletScreen, mobileScreen } from '../../utils/windowSize'
+import backgroundImgMobile from '../../imgs/background-pages-mobile.jpg'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,8 +38,15 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
+    paddingLeft: '6rem',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+      paddingLeft: '0',
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.3)), url(${backgroundImgMobile})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+    },
   },
   container: {
     paddingTop: theme.spacing(3),
@@ -46,7 +54,15 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: `${mobileScreen ? `99vw` : `90vw`}`,
+    width: '90vw',
+    [theme.breakpoints.down('sm')]: {
+      width: '98vw',
+    },
+  },
+  gridItem: {
+    [theme.breakpoints.down('sm')]: {
+      padding: '5px !important',
+    },
   },
   paper: {
     padding: theme.spacing(2),
@@ -61,23 +77,34 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden'
   },
   fixedHeightTotals: {
-    height: `${mobileScreen ? '120px' : '195px'}`,
+    height: '195px',
     borderRadius: '18px',
+    [theme.breakpoints.down('sm')]: {
+      height: '120px',
+    },
   },
   fixedHeightCalendar: {
-    height:  `${mobileScreen ? '316px' : '424px'}`,
+    height:  '424px',
     padding: '0',
     background: 'transparent',
     border: 'none',
-    borderRadius: '27px'
+    borderRadius: '27px',
+    [theme.breakpoints.down('sm')]: {
+      height: '316px',
+      marginTop: '7px'
+    },
   },
   content: {
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto',
   },
-  chartHeightPaper: {
-    height:  `${mobileScreen ? '376px' : '498px'}`,
+  fixedHeightChart: {
+    height:  '498px',
+    borderRadius: '18px',
+    [theme.breakpoints.down('sm')]: {
+      height: '376px',
+    },
 
   },
 }))
@@ -86,6 +113,7 @@ export default function Analytics(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
+  const fixedHeightPaperChart = clsx(classes.paper, classes.fixedHeightChart)
   const fixedHeightCalendarPaper = clsx(classes.paper, classes.fixedHeightCalendar)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
@@ -212,7 +240,7 @@ export default function Analytics(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={12} md={4} lg={5}>
+            <Grid item xs={12} md={4} lg={5} className={classes.gridItem}>
               <Paper className={fixedHeightPaper}>
                 {!switchView ? (
                   <YearBudget
@@ -234,7 +262,7 @@ export default function Analytics(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={6} md={4} lg={3}>
+            <Grid item xs={6} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTotals}>
                 {switchView ? (
                   <TotalMonthlyExpenses
@@ -251,7 +279,7 @@ export default function Analytics(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={6} md={4} lg={3}>
+            <Grid item xs={6} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTotals}>
                 {switchView ? (
                   <TotalMonthlyIncome
@@ -267,8 +295,8 @@ export default function Analytics(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={12} md={12} lg={7}>
-              <Paper className={classes.chartHeightPaper}>
+            <Grid item xs={12} md={12} lg={7} className={classes.gridItem}>
+              <Paper className={fixedHeightPaperChart}>
                 {switchView ? (
                   <>
                     {totalMonthlyIncome > 0 || totalMonthlyExpenses > 0 ? (
@@ -296,7 +324,7 @@ export default function Analytics(props: any) {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={12} lg={5}>
+            <Grid item xs={12} md={12} lg={5} className={classes.gridItem}>
             <Paper className={fixedHeightCalendarPaper}>
               {switchView ? (
                 <Calendar

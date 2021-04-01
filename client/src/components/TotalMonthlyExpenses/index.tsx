@@ -6,9 +6,8 @@ import ForwardIcon from '@material-ui/icons/Forward'
 import { TotalMonthlyExpensesProps } from '../../types/expenses'
 import EmptyTotal from '../EmptyTotal'
 import Title from '../Title'
-import { mobileScreen } from '../../utils/windowSize'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   depositContext: {
     flex: 1,
   },
@@ -17,21 +16,30 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    fontSize: `${mobileScreen ? '1rem' : '2.125rem'}`,
+    fontSize: '2.125rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1rem',
+    },
   },
   percentageToIncome: {
     color: 'red',
     backgroundColor: 'lightgrey',
     borderRadius: '15px',
     padding: '.3rem 1rem',
-    fontSize: `${mobileScreen ? '13px' : '18px'}`,
+    fontSize: '18px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '13px',
+    },
   },
   forwardIcon: {
     color: '#fd3865',
     fontSize: '2.3rem',
-    marginRight: `${mobileScreen ? '-6px' : '2rem'}`,
+    marginRight: '2rem',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: '-6px',
+    },
   },
-})
+}))
 
 export default function TotalMonthlyExpenses({
   month,
