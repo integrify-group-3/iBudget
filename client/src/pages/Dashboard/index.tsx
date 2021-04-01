@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
       width: '100vw',
       paddingLeft: '0',
       // backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.2), rgba(225, 219, 236, 0.2)), url(${backgroundImgMobile})`,
-      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.2), rgba(225, 219, 236, 0.2)), url(${backgroundImgMobileTwo})`,
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.3)), url(${backgroundImgMobile})`,
       backgroundPosition: 'center',
       backgroundSize: 'cover'
       // background: '#865CFF'

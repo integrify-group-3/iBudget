@@ -1,5 +1,5 @@
 .register-page-container {
-    background-image: linear-gradient(
+  background-image: linear-gradient(
       to right,
       rgba(243, 239, 234, 0.2),
       rgba(225, 219, 236, 0.2)
@@ -20,7 +20,7 @@
     cursor: pointer;
     font-weight: 700;
     color: white;
-    padding: .7rem;
+    padding: 0.7rem;
     border: none;
     display: flex;
     justify-content: center;
@@ -44,23 +44,44 @@
     margin-top: 1.6rem;
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
     hr {
       width: 20px;
       height: 3px;
       width: 23.5rem;
       border: none;
-      border-top: 1.6px solid #c7c5c5;      
+      border-top: 1.6px solid #c7c5c5;
       color: #6e6d7a;
       position: relative;
     }
     p {
       font-weight: 700;
-      position:absolute;
+      position: absolute;
       margin-top: 11px;
-      background: linear-gradient(to right, rgba(243, 239, 234, 0.9), rgb(236, 236, 247));
-      padding: .1rem .7rem;
+      background: linear-gradient(
+        to right,
+        rgba(243, 239, 234, 0.9),
+        rgb(236, 236, 247)
+      );
+      padding: 0.1rem 0.7rem;
       color: rgb(75, 74, 74);
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .register-page-container {
+    background-image: linear-gradient(
+        to right,
+        rgba(243, 239, 234, 0.6),
+        rgba(225, 219, 236, 0.3)
+      ),
+      url('../../imgs/background-pages-mobile.jpg');
+    background-position: center;
+    background-size: cover;
+    &__divider {
+      hr {
+        width: 18rem;
+      }
     }
   }
 }

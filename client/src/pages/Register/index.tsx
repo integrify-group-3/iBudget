@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '25px',
     marginTop: '4rem',
     padding: '0 2rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '22rem'
+    },
   },
   title: {
     color: '#865CFF',
@@ -217,7 +220,7 @@ export default function Register() {
                 <Grid container className={classes.signIn}>
                   <Grid item>
                     <NavLink to="/login" className={classes.signUpLink}>
-                      {'Already have an account? Sign Up'}
+                      {'Already have an account? Sign In'}
                     </NavLink>
                   </Grid>
                 </Grid>

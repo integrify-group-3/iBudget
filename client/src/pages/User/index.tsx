@@ -116,7 +116,7 @@ export default function User(props: any) {
     console.log('it is undefined')
   }
   return (
-    <div className="home-page-container">
+    <div className="user-page-container">
       <Container className={classes.container}>
         <Typography variant="h4" className={classes.HeaderStyle}>
           User Profile

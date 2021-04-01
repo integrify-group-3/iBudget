@@ -108,7 +108,7 @@ export default function UpdateUser(props: any) {
     return <h2>User not found</h2>
   }
   return (
-    <div className="login-page-container">
+    <div className="update-user-container">
       <Container component="main" maxWidth="xs" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>

@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -17,6 +15,7 @@ import { AppState } from '../../types'
 import { loginUser } from '../../redux/actions/user'
 import { clearErrors } from '../../redux/actions/error'
 import GoogleLogIn from '../../components/GoogleLogIn'
+
 import './style.scss'
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
       'linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 255, 255, 0.8))',
     borderRadius: '25px',
     marginTop: '4rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '22rem'
+    },
   },
   paper: {
     marginTop: theme.spacing(3),

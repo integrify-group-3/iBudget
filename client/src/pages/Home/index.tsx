@@ -31,13 +31,19 @@ const useStyles = makeStyles((theme) => ({
       width: '293px',
     },
     [theme.breakpoints.down('sm')]: {
+      backgroundImage:
+      'linear-gradient(to right, rgba(243, 239, 234, 0.9), rgba(225, 219, 236, 0.9))',
       top: '50%',
-      left: '8.5%',
+      left: '10.5%',
+      minHeight: '315px',
+
     },
   },
   HeaderStyle: {
     color: '#886DFA',
     marginTop: '2rem',
+    fontWeight: 700,
+    fontFamily: "sans-serif"
   },
   descStyle: {
     marginBottom: '40px',

@@ -25,6 +25,8 @@ import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import TileContentMonthlyIncome from '../../components/TileContentMonthlyIncome'
 import useIncomeIcons from '../../hooks/useIncomeIcons'
+import backgroundImgMobile from '../../imgs/Background.png'
+
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 
@@ -37,7 +39,11 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '6rem',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
+      width: '100vw',
       paddingLeft: '0',
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.3)), url(${backgroundImgMobile})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
     },
   },
   container: {
