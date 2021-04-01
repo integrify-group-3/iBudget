@@ -3,16 +3,17 @@ import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { mobileScreen } from '../../utils/windowSize'
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   title: {
-    fontSize:  `${mobileScreen ? '1rem' : '1.3rem'}`,
+    fontSize:  '1.3rem',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1rem',
+    },
   }
-})
+}))
 
 export default function Title(props: any) {
   const classes = useStyles()
