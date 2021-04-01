@@ -2,18 +2,13 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import clsx from 'clsx'
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles,
-} from '@material-ui/core/styles'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
-import { Button, Typography } from '@material-ui/core'
+import { Button, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -54,7 +49,11 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     menuButton: {
-      marginRight: mobileScreen ? 0 : 36,
+      //marginRight: mobileScreen ? 0 : 36,
+      marginRight: 36,
+      [theme.breakpoints.down('sm')]: {
+        marginRight: 0,
+      },
     },
     arrowIcon: {
       color: 'white',
@@ -83,9 +82,13 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: `${mobileScreen ? '0' : theme.spacing(7) + 1}`,
+      //width: `${mobileScreen ? '0' : theme.spacing(7) + 1}`,
+      width: theme.spacing(7) + 1,
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 1,
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: 0,
       },
     },
     toolbar: {
@@ -112,7 +115,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     appTitle: {
       marginLeft: '.5rem',
-      display: `${mobileScreen ? 'none' : 'inline-block'}`,
+      //display: `${mobileScreen ? 'none' : 'inline-block'}`,
+      display: 'inline-block',
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
     },
     headerUser: {
       display: 'flex',
@@ -137,7 +144,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: `${mobileScreen ? '16.4rem' : '.4rem'}`,
+      //marginLeft: `${mobileScreen ? '16.4rem' : '.4rem'}`,
+      marginLeft: '.4rem',
+      [theme.breakpoints.down('sm')]: {
+        marginLeft: '16.4rem',
+      },
     },
     userImgContainer: {
       display: 'inline-block',
@@ -171,9 +182,10 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 const Navbar = () => {
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const dispatch = useDispatch()
   const classes = useStyles()
-  const theme = useTheme()
   const [open, setOpen] = useState(false)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
@@ -222,7 +234,7 @@ const Navbar = () => {
               <Typography className={classes.headerUser}>
                 <span className={classes.userContainer}>
                   <NavLink to={`/user/${user.id}`} className={classes.userLink}>
-                    {!mobileScreen && (
+                    {!mobile && (
                       <span>
                         Hello {user.firstName} {user.lastName}
                       </span>
@@ -240,7 +252,7 @@ const Navbar = () => {
                     </div>
                   </NavLink>
                 </span>
-                {mobileScreen ? (
+                {mobile ? (
                   <ExitToAppIcon
                     // className={classes.logoutIcon}
                     // component={NavLink}
