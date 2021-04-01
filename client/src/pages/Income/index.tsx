@@ -24,7 +24,6 @@ import useTotalMonthlyIncome from '../../hooks/useTotalMonthlyIncome'
 import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import TileContentMonthlyIncome from '../../components/TileContentMonthlyIncome'
-import { mobileScreen } from '../../utils/windowSize'
 import useIncomeIcons from '../../hooks/useIncomeIcons'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
@@ -35,8 +34,11 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 3rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
+    paddingLeft: '6rem',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: '0',
+    },
   },
   container: {
     paddingTop: theme.spacing(3),
@@ -44,10 +46,16 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: `${mobileScreen ? `99vw` : `90vw`}`,
+    width: '90vw',
+    [theme.breakpoints.down('sm')]: {
+      width: '99vw',
+    },  
   },
   gridItem: {
-    padding: `${mobileScreen ? `4px` : `12px`}`,
+    padding: '12px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '4px',
+    },  
   },
   paper: {
     padding: theme.spacing(2),
@@ -60,12 +68,18 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '18px',
   },
   fixedHeightBudget: {
-    height: `${mobileScreen ? '120px' : '240px'}`,
+    height: '240px',
     borderRadius: '18px',
+     [theme.breakpoints.down('sm')]: {
+      height: '120px',
+    },
   },
   fixedHeightIncome: {
-    height: `${mobileScreen ? '120px' : '240px'}`,
+    height: '240px',
     borderRadius: '18px',
+     [theme.breakpoints.down('sm')]: {
+      height: '120px',
+    },
   },
   fixedHeightTable: {
     height: 340,
