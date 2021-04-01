@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 
 import { AppState, CalendarScheduler, ViewMonth, DateView } from '../../types'
 import { date, months } from '../../utils/dateValues'
@@ -29,7 +30,6 @@ import TotalYearIncome from '../../components/TotalYearIncome'
 import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import EmptyYearChartContainer from '../../components/EmptyYearChartContainer'
 import TileContentMonthIncomeExpenses from '../../components/TileContentMonthIncomeExpenses'
-import { bigTabletScreen, mobileScreen } from '../../utils/windowSize'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,8 +37,11 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
+    paddingLeft: '6rem',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: '0',
+    },
   },
   container: {
     paddingTop: theme.spacing(3),
@@ -46,7 +49,10 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: `${mobileScreen ? `99vw` : `90vw`}`,
+    width: '90vw',
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+    },
   },
   paper: {
     padding: theme.spacing(2),
@@ -61,15 +67,21 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden'
   },
   fixedHeightTotals: {
-    height: `${mobileScreen ? '120px' : '195px'}`,
+    height: '195px',
     borderRadius: '18px',
+    [theme.breakpoints.down('sm')]: {
+      height: '120px',
+    },
   },
   fixedHeightCalendar: {
-    height:  `${mobileScreen ? '316px' : '424px'}`,
+    height:  '424px',
     padding: '0',
     background: 'transparent',
     border: 'none',
-    borderRadius: '27px'
+    borderRadius: '27px',
+    [theme.breakpoints.down('sm')]: {
+      height: '316px',
+    },
   },
   content: {
     flexGrow: 1,
@@ -77,13 +89,18 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   chartHeightPaper: {
-    height:  `${mobileScreen ? '376px' : '498px'}`,
+    height:  '498px',
+    [theme.breakpoints.down('sm')]: {
+      height: '376px',
+    },
 
   },
 }))
 
 export default function Analytics(props: any) {
   const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
   const fixedHeightCalendarPaper = clsx(classes.paper, classes.fixedHeightCalendar)
