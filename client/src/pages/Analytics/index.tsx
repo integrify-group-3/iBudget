@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '27px',
     [theme.breakpoints.down('sm')]: {
       height: '316px',
+      marginTop: '7px'
     },
   },
   content: {
@@ -98,8 +99,9 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     overflow: 'auto',
   },
-  chartHeightPaper: {
+  fixedHeightChart: {
     height:  '498px',
+    borderRadius: '18px',
     [theme.breakpoints.down('sm')]: {
       height: '376px',
     },
@@ -111,6 +113,7 @@ export default function Analytics(props: any) {
   const classes = useStyles()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
+  const fixedHeightPaperChart = clsx(classes.paper, classes.fixedHeightChart)
   const fixedHeightCalendarPaper = clsx(classes.paper, classes.fixedHeightCalendar)
   const isAuthenticated = useSelector(
     (state: AppState) => state.user.isAuthenticated
@@ -293,7 +296,7 @@ export default function Analytics(props: any) {
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={7} className={classes.gridItem}>
-              <Paper className={classes.chartHeightPaper}>
+              <Paper className={fixedHeightPaperChart}>
                 {switchView ? (
                   <>
                     {totalMonthlyIncome > 0 || totalMonthlyExpenses > 0 ? (
