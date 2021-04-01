@@ -22,7 +22,6 @@ import useMonthlyIncomeChart from '../../hooks/useMonthlyIncomeChart'
 import ExpensesMonthlyChartDashboard from '../../components/ExpensesMonthlyChartDashboard'
 import IncomeMonthlyChartDashboard from '../../components/IncomeMonthlyChartDashboard'
 import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
-import { bigTabletScreen, mobileScreen } from '../../utils/windowSize'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,8 +29,11 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: '5rem 1rem',
     width: '98vw',
-    paddingLeft: `${mobileScreen ? `0` : `6rem`}`,
+    paddingLeft: '6rem',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: '0',
+    },
   },
   container: {
     paddingTop: theme.spacing(3),
@@ -39,7 +41,11 @@ const useStyles = makeStyles((theme) => ({
     width: '70vw',
   },
   grid: {
-    width: `${mobileScreen ? `99vw` : `90vw`}`,
+    width: '90vw',
+    [theme.breakpoints.down('sm')]: {
+      width: '99vw',
+    },
+    
   },
   paper: {
     padding: theme.spacing(2),
@@ -49,12 +55,18 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   fixedHeightDashboard: {
-    height: mobileScreen ? 155 : 195,
+    height: 195,
     borderRadius: '18px',
+    [theme.breakpoints.down('sm')]: {
+      height: 155,
+    },
   }, 
   fixedHeightTotals: {
-    height: mobileScreen ? 115 : 195,
+    height: 195,
     borderRadius: '18px',
+    [theme.breakpoints.down('sm')]: {
+      height: 155,
+    },
   },
   fixedHeightChart: {
     height: 243,
@@ -69,7 +81,11 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   chartHeightPaper: {
-    height: `${mobileScreen ? 270 : 370}`,
+    height: 370,
+    [theme.breakpoints.down('sm')]: {
+      height: 311,
+    },
+    
   },
   fixedHeightChartIncome: {
     marginTop: '1rem',

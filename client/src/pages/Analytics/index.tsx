@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import { useMediaQuery, useTheme } from '@material-ui/core'
+import { useTheme } from '@material-ui/core'
 
 import { AppState, CalendarScheduler, ViewMonth, DateView } from '../../types'
 import { date, months } from '../../utils/dateValues'
@@ -100,7 +100,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Analytics(props: any) {
   const classes = useStyles()
   const theme = useTheme()
-  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
   const fixedHeightCalendarPaper = clsx(classes.paper, classes.fixedHeightCalendar)
