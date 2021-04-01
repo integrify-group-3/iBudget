@@ -30,6 +30,7 @@ import TotalYearIncome from '../../components/TotalYearIncome'
 import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import EmptyYearChartContainer from '../../components/EmptyYearChartContainer'
 import TileContentMonthIncomeExpenses from '../../components/TileContentMonthIncomeExpenses'
+import backgroundImgMobile from '../../imgs/background-pages-mobile.jpg'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +41,11 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '6rem',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
+      width: '100vw',
       paddingLeft: '0',
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.2), rgba(225, 219, 236, 0.2)), url(${backgroundImgMobile})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
     },
   },
   container: {
@@ -51,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     width: '90vw',
     [theme.breakpoints.down('sm')]: {
-      width: '100vw',
+      width: '98vw',
     },
   },
   paper: {

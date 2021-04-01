@@ -28,6 +28,7 @@ import useExpensesIcons from '../../hooks/useExpensesIcons'
 import TileContentMonthlyExpenses from '../../components/TileContentMonthlyExpenses'
 import AddExpense from '../../components/AddExpense'
 import { clearUpdate } from '../../redux/actions/expenses'
+import backgroundImgMobile from '../../imgs/background-pages-mobile.jpg'
 
 import 'react-calendar/dist/Calendar.css'
 
@@ -40,7 +41,11 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '6rem',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
+      width: '100vw',
       paddingLeft: '0',
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.3)), url(${backgroundImgMobile})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
     },
   },
   container: {

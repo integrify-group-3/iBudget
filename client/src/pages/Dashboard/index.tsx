@@ -31,10 +31,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     padding: '5rem 1rem',
-    width: '100vw',
+    width: '98vw',
     paddingLeft: '6rem',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
+      width: '100vw',
       paddingLeft: '0',
       // backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.2), rgba(225, 219, 236, 0.2)), url(${backgroundImgMobile})`,
       backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.2), rgba(225, 219, 236, 0.2)), url(${backgroundImgMobileTwo})`,

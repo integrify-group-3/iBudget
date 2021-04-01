@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
   tableCell: {
     padding: '6px 0px 6px 16px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '6px 0px 6px 6px',
+    },
   },
   amount: {
     color: '#865CFF',
