@@ -99,7 +99,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Analytics(props: any) {
   const classes = useStyles()
-  const theme = useTheme()
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
   const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
   const fixedHeightCalendarPaper = clsx(classes.paper, classes.fixedHeightCalendar)
