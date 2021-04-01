@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   gridItem: {
     padding: '12px',
     [theme.breakpoints.down('sm')]: {
-      padding: '4px',
+      padding: '5px !important',
     },
   },
   paper: {
@@ -338,7 +338,7 @@ export default function ExpensesPage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={7} md={4} lg={3}>
+            <Grid item xs={7} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperBudget}>
                 <MonthlyBudget
                   year={dateView.year}
@@ -348,7 +348,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={5} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperExpenses}>
                 <TotalMonthlyExpenses
                   year={dateView.year}
@@ -358,7 +358,7 @@ export default function ExpensesPage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={5} lg={6}>
+            <Grid item xs={12} md={5} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaper}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChart
@@ -375,7 +375,7 @@ export default function ExpensesPage(props: any) {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
@@ -409,7 +409,7 @@ export default function ExpensesPage(props: any) {
               </Grid>
             )}
 
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Calendar
                 value={calendarDate}
                 onChange={showDayOnClick}

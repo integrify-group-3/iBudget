@@ -23,8 +23,6 @@ import ExpensesMonthlyChartDashboard from '../../components/ExpensesMonthlyChart
 import IncomeMonthlyChartDashboard from '../../components/IncomeMonthlyChartDashboard'
 import EmptyMonthlyChartContainer from '../../components/EmptyMonthlyChartContainer'
 import backgroundImgMobile from '../../imgs/background-pages-mobile.jpg'
-import backgroundImgMobileTwo from '../../imgs/Background.png'
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,11 +35,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: '100vw',
       paddingLeft: '0',
-      // backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.2), rgba(225, 219, 236, 0.2)), url(${backgroundImgMobile})`,
-      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.8), rgba(225, 219, 236, 0.3)), url(${backgroundImgMobile})`,
+      backgroundImage: `linear-gradient(to right, rgba(243, 239, 234, 0.6), rgba(225, 219, 236, 0.3)), url(${backgroundImgMobile})`,
       backgroundPosition: 'center',
-      backgroundSize: 'cover'
-      // background: '#865CFF'
+      backgroundSize: 'cover',
     },
   },
   container: {
@@ -57,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridItem: {
     [theme.breakpoints.down('sm')]: {
-      padding: '4px !important'    
+      padding: '5px !important',
     },
   },
   paper: {
@@ -73,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       height: 155,
     },
-  }, 
+  },
   fixedHeightTotals: {
     height: 195,
     borderRadius: '18px',
@@ -84,6 +80,9 @@ const useStyles = makeStyles((theme) => ({
   fixedHeightChart: {
     height: 243,
     borderRadius: '18px',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '8px',
+    },
   },
   fixedHeightCalendar: {
     height: 260,
@@ -98,16 +97,21 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       height: 311,
     },
-    
   },
   fixedHeightChartIncome: {
     marginTop: '1rem',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '8px',
+    },
   },
 }))
 
 export default function Dashboard(props: any) {
   const classes = useStyles()
-  const fixedHeightPaperDashboard = clsx(classes.paper, classes.fixedHeightDashboard)
+  const fixedHeightPaperDashboard = clsx(
+    classes.paper,
+    classes.fixedHeightDashboard
+  )
   const fixedHeightPaperTotals = clsx(classes.paper, classes.fixedHeightTotals)
   const fixedHeightPaperChart = clsx(classes.paper, classes.fixedHeightChart)
   const fixedHeightPaperChartIncome = clsx(
@@ -179,7 +183,7 @@ export default function Dashboard(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-          <Grid item xs={12} md={5} lg={5} className={classes.gridItem}>
+            <Grid item xs={12} md={5} lg={5} className={classes.gridItem}>
               <Paper className={fixedHeightPaperDashboard}>
                 <ProfileDashboardBudget
                   totalBudget={totalIncome - totalExpenses}
@@ -189,7 +193,7 @@ export default function Dashboard(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={6} md={3} lg={3}>
+            <Grid item xs={6} md={3} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTotals}>
                 <TotalMonthlyExpenses
                   year={year}
@@ -199,7 +203,7 @@ export default function Dashboard(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={6} md={3} lg={3}>
+            <Grid item xs={6} md={3} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTotals}>
                 <TotalIncome
                   year={year}
@@ -208,7 +212,7 @@ export default function Dashboard(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={11} lg={6}>
+            <Grid item xs={12} md={11} lg={6} className={classes.gridItem}>
               <Paper className={classes.chartHeightPaper}>
                 {totalIncome > 0 || totalExpenses > 0 ? (
                   <IncomeExpensesMonthChart
@@ -221,7 +225,7 @@ export default function Dashboard(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={12} md={12} lg={6}>
+            <Grid item xs={12} md={12} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaperChart}>
                 {expensesChartData.length > 0 ? (
                   <ExpensesMonthlyChartDashboard

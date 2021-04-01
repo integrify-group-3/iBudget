@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Title from '../Title'
 import IconButton from '@material-ui/core/IconButton'
@@ -24,6 +25,17 @@ import EditIncome from '../EditIncome'
 const useStyles = makeStyles((theme) => ({
   depositContext: {
     flex: 0,
+  },
+  tableBody: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'grid',
+    },
+  },
+   tableCell: {
+    padding: '6px 0px 6px 16px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '6px 0px 6px 6px',
+    },
   },
   deleteBtn: {
     margin: theme.spacing(1),
@@ -62,10 +74,12 @@ export default function IncomeTable({
   month,
   monthlyIncome,
 }: IncomeTableProps) {
+  const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [editOpen, setEditOpen] = useState(false)
   const [IncomeId, setIncomeId] = useState('')
   const dispatch = useDispatch()
-  const classes = useStyles()
   const [openForm, setOpenForm] = React.useState(false)
   const showFormOnClick = () => {
     setOpenForm(true)
@@ -104,6 +118,9 @@ export default function IncomeTable({
             ) : (
               <>
                 <TableHead>
+                {
+                !mobile &&
+                <>
                   <TableRow>
                     <TableCell>Category</TableCell>
                     <TableCell>Description</TableCell>
@@ -115,6 +132,8 @@ export default function IncomeTable({
                       <span style={{ marginLeft: '0.6rem' }}>Delete</span>
                     </TableCell>
                   </TableRow>
+                  </>
+                }
                 </TableHead>
                 {editOpen && (
                   <Grid
@@ -135,7 +154,7 @@ export default function IncomeTable({
                     </Paper>
                   </Grid>
                 )}
-                <TableBody>
+                <TableBody className={classes.tableBody}>
                   {monthlyIncome &&
                     monthlyIncome.map((income: any) => {
                       const {
@@ -148,7 +167,7 @@ export default function IncomeTable({
                       } = income
                       return (
                         <TableRow key={_id}>
-                          <TableCell>
+                          <TableCell className={classes.tableCell}>
                             <i
                               className={icon}
                               style={{
@@ -157,12 +176,12 @@ export default function IncomeTable({
                                 color: `${iconStyle}`,
                               }}
                             ></i>
-                            <span>{category}</span>
+                            { !mobile && <span>{category}</span> }
                           </TableCell>
                           <TableCell>{description}</TableCell>
                           <TableCell>€{amount}</TableCell>
 
-                          <TableCell>
+                          <TableCell className={classes.tableCell}>
                             <IconButton
                               className={classes.editIncome}
                               onClick={() => openEditOnClick(income._id)}
@@ -170,7 +189,7 @@ export default function IncomeTable({
                               <EditIcon />
                             </IconButton>
                           </TableCell>
-                          <TableCell>
+                          <TableCell className={classes.tableCell}>
                             <IconButton
                               aria-label="delete"
                               className={classes.deleteBtn}

@@ -59,6 +59,11 @@ const useStyles = makeStyles((theme) => ({
       width: '98vw',
     },
   },
+  gridItem: {
+    [theme.breakpoints.down('sm')]: {
+      padding: '5px !important',
+    },
+  },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
@@ -232,7 +237,7 @@ export default function Analytics(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={12} md={4} lg={5}>
+            <Grid item xs={12} md={4} lg={5} className={classes.gridItem}>
               <Paper className={fixedHeightPaper}>
                 {!switchView ? (
                   <YearBudget
@@ -254,7 +259,7 @@ export default function Analytics(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={6} md={4} lg={3}>
+            <Grid item xs={6} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTotals}>
                 {switchView ? (
                   <TotalMonthlyExpenses
@@ -271,7 +276,7 @@ export default function Analytics(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={6} md={4} lg={3}>
+            <Grid item xs={6} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTotals}>
                 {switchView ? (
                   <TotalMonthlyIncome
@@ -287,7 +292,7 @@ export default function Analytics(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={12} md={12} lg={7}>
+            <Grid item xs={12} md={12} lg={7} className={classes.gridItem}>
               <Paper className={classes.chartHeightPaper}>
                 {switchView ? (
                   <>
@@ -316,7 +321,7 @@ export default function Analytics(props: any) {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={12} lg={5}>
+            <Grid item xs={12} md={12} lg={5} className={classes.gridItem}>
             <Paper className={fixedHeightCalendarPaper}>
               {switchView ? (
                 <Calendar

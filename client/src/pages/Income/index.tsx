@@ -25,7 +25,7 @@ import useTotalMonthlyExpenses from '../../hooks/useTotalMonthlyExpenses'
 import MonthlyBudget from '../../components/MonthlyBudget'
 import TileContentMonthlyIncome from '../../components/TileContentMonthlyIncome'
 import useIncomeIcons from '../../hooks/useIncomeIcons'
-import backgroundImgMobile from '../../imgs/Background.png'
+import backgroundImgMobile from '../../imgs/background-pages-mobile.jpg'
 
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   gridItem: {
     padding: '12px',
     [theme.breakpoints.down('sm')]: {
-      padding: '4px',
+      padding: '5px !important',
     },  
   },
   paper: {
@@ -248,7 +248,7 @@ export default function IncomePage(props: any) {
         <div />
         <Container maxWidth="md" className={classes.container}>
           <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={7} md={6} lg={3}>
+            <Grid item xs={7} md={6} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperBudget}>
                 <MonthlyBudget
                   year={dateView.year}
@@ -258,7 +258,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={5} md={4} lg={3}>
+            <Grid item xs={5} md={4} lg={3} className={classes.gridItem}>
               <Paper className={fixedHeightPaperIncome}>
                 <TotalMonthlyIncome
                   year={dateView.year}
@@ -267,7 +267,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaper}>
                 {incomeChartData.length > 0 ? (
                   <IncomeMonthlyChart
@@ -283,7 +283,7 @@ export default function IncomePage(props: any) {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={6} style={{ padding: 5 }}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTable}>
                 <IncomeTable
                   // key={calendar?._id}
@@ -294,7 +294,7 @@ export default function IncomePage(props: any) {
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
+            <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Calendar
                 value={calendarDate}
                 showNeighboringMonth={true}
