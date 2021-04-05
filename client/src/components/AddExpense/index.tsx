@@ -99,7 +99,7 @@ export default function AddExpense({
                 className={classes.select}
                 value={category}
                 onChange={handleChange}
-                required={true}
+                required
               >
                 {expensesUiCategories.map((expenseCat) => {
                   const { category, icon, iconStyle } = expenseCat
@@ -130,7 +130,7 @@ export default function AddExpense({
                 className={classes.input}
                 name="description"
                 value={description}
-                required={true}
+                required
               />
             </div>
 
@@ -144,7 +144,7 @@ export default function AddExpense({
                 className={classes.input}
                 name="amount"
                 value={amount}
-                required={true}
+                required
               />
             </div>
             <div className={classes.btnSaveWrapper}>
