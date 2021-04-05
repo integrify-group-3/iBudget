@@ -13,10 +13,10 @@ import {
 import { EventTracker, Animation } from '@devexpress/dx-react-chart'
 import { scaleBand } from '@devexpress/dx-chart-core'
 import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 
 import { IncomeExpensesYearChartProps } from '../../types'
 import SwitchChartBtn from '../../components/SwitchChartBtn'
-import { mobileScreen } from '../../utils/windowSize'
 
 const chartLegendStyle = {
   display: 'flex',
@@ -32,6 +32,8 @@ export default function IncomeExpensesYearChart({
   data,
   year,
 }: IncomeExpensesYearChartProps) {
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [switchChart, setSwitchChart] = useState(false)
   const switchChartView = () => {
     setSwitchChart(!switchChart)
@@ -42,7 +44,7 @@ export default function IncomeExpensesYearChart({
   return (
     <Paper className="chart-container">
       {!switchChart ? (
-        <Chart data={data} height={mobileScreen ? 336 : 450}>
+        <Chart data={data} height={mobile ? 336 : 450}>
           <ArgumentScale factory={scaleBand} />
           <ArgumentAxis />
           <ValueAxis />
@@ -96,7 +98,6 @@ export default function IncomeExpensesYearChart({
             switchChartView={switchChartView}
             btnText={barChartText}
           />
-
           {/* <Animation />  */}
         </Chart>
       )}
