@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 import moment from 'moment'
 import EventNoteIcon from '@material-ui/icons/EventNote'
 
@@ -78,6 +79,8 @@ export default function TileContentMonthlyIncome({
   view,
 }: any) {
   const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [loadTileContent, setLoadTileContent] = useState(false)
   const [month, setMonth] = useState({} as ViewMonth)
   const [tileLoaded, setTileLoaded] = useState(false)
@@ -108,7 +111,7 @@ export default function TileContentMonthlyIncome({
   }, [loadTIles])
 
   const showIncomesPreview = () => {
-    setIsShowing(true)
+    !mobile ? setIsShowing(true) : setIsShowing(false)
   }
   const hideIncomesPreview = () => {
     setIsShowing(false)

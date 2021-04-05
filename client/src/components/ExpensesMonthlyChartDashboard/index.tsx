@@ -16,11 +16,11 @@ import { scaleBand } from '@devexpress/dx-chart-core'
 import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
 import { EventTracker } from '@devexpress/dx-react-chart'
 import { Palette } from '@devexpress/dx-react-chart'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
 import { ExpensesChartData } from '../../types/expenses'
 import { ExpensesChartDashboardProps } from '../../types/ui'
-import { mobileScreen } from '../../utils/windowSize'
 
 import './style.scss'
 
@@ -71,6 +71,8 @@ export default function ExpensesMonthlyChartDashboard({
   name,
 }: ExpensesChartDashboardProps) {
   const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [switchChart, setSwitchChart] = useState(false)
 
   const switchChartView = () => {
@@ -110,7 +112,7 @@ export default function ExpensesMonthlyChartDashboard({
         <div className={classes.chartContainer}>
           <Chart data={chartData} 
           height={200} 
-          width={mobileScreen ? 258 : 444}
+          width={mobile ? 300 : 444}
           >
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 import EventNoteIcon from '@material-ui/icons/EventNote';
 
 import { TileContentIncomeExpenses } from '../../types'
@@ -73,6 +74,8 @@ export default function TileContentMonthIncomeExpenses({
   activeStartDate,
 }: any) {
   const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [loadTileContent, setLoadTileContent] = useState(false)
   const [tileIncomeExpenses, setTileIncomeExpenses] = useState({
     month: '',
