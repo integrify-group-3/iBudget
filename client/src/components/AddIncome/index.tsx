@@ -98,9 +98,9 @@ export default function AddIncome({
               id="demo-simple-select"
               value={category}
               name="category"
-              //   size="small"
               onChange={handleChange}
               className={classes.select}
+              required
             >
               {incomeUiCategories &&
                 incomeUiCategories.map((incomeCategory: any) => {
@@ -135,6 +135,7 @@ export default function AddIncome({
                 label="description"
                 onChange={handleChange}
                 className={classes.input}
+                required
               />
             </div>
             <div className="input-topics">
@@ -147,6 +148,7 @@ export default function AddIncome({
                 label="amount"
                 onChange={handleChange}
                 className={classes.input}
+                required
               />
             </div>
             <div className={classes.btnSaveWrapper}>
