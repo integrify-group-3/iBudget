@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   btnSaveWrapper: {
     display: 'flex',
     justifyContent: 'center',
-    width: '100%',
+    width: '96%',
   },
   save: {
     border: 'none',
@@ -107,7 +107,6 @@ export default function AddExpense({
                 name="category"
                 className={classes.select}
                 value={category}
-                variant="outlined"
                 onChange={handleChange}
                 required
               >

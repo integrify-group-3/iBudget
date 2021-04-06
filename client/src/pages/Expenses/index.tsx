@@ -222,7 +222,7 @@ export default function ExpensesPage(props: any) {
     tileContentData,
     defaultMonth,
   ])
-  // console.log('tile content data', tileContentData)
+
   const showFormOnClick = () => {
     setIsFormShowing(true)
   }
@@ -382,8 +382,6 @@ export default function ExpensesPage(props: any) {
               <Paper className={fixedHeightPaperTable}>
                 <ExpensesTable
                   day={isDayClicking ? schedule.day : date}
-                  // dailyExpense={dailyExpense}
-                  //testing formatted expenses with icons below
                   dailyExpense={formattedExpenses}
                   showFormOnClick={showFormOnClick}
                 />
