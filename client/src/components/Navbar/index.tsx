@@ -153,6 +153,10 @@ const useStyles = makeStyles((theme: Theme) =>
       objectFit: 'cover',
       marginLeft: '.4rem',
       borderRadius: '50%',
+      [theme.breakpoints.down('sm')]: {
+        height: '25px',
+        width: '25px',
+      },
     },
     userPictureIcon: {
       fontSize: '32px',
