@@ -40,11 +40,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#865CFF',
     fontWeight: 700
   },
-  addExpense: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   editExpense: {
     margin: theme.spacing(1),
     color: 'lightblue',
@@ -185,9 +180,7 @@ export default function ExpensesTable({
                   </>
                 )
               })}
-              <div className={classes.addExpense}>
                 <AddExpenseBtn showFormOnClick={showFormOnClick} />
-              </div>
             </TableBody>
           </>
         ) : (
