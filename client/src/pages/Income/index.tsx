@@ -17,6 +17,7 @@ import { Income } from '../../types/income'
 import useIncome from '../../hooks/useMonthlyIncome'
 import useYearIncome from '../../hooks/useYearIncome'
 import IncomeTable from '../../components/IncomeTable'
+import AddIncome from '../../components/AddIncome'
 import TotalMonthlyIncome from '../../components/TotalMonthlyIncome'
 import { date, months } from '../../utils/dateValues'
 import IncomeMonthlyChart from '../../components/IncomeMonthlyChart'
@@ -95,6 +96,26 @@ const useStyles = makeStyles((theme) => ({
   chartHeightPaper: {
     height: 640,
   },
+  addIncomeContainer: {
+    backgroundColor: 'rgba(25, 20, 20, 0.6)',
+    position: 'absolute',
+    height: '200vh',
+    width: '100vw',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    top: '0',
+    left: '17px',
+    zIndex: 2,
+    [theme.breakpoints.down('md')]: {
+      left: '0',
+    },
+  },
+  addIncomeFormContainer: {
+    position: 'fixed',
+    top: '27%',
+  },
 }))
 
 export default function IncomePage(props: any) {
@@ -128,6 +149,7 @@ export default function IncomePage(props: any) {
   const [totalMonthlyIncome] = useTotalMonthlyIncome(monthlyData)
   const [totalMonthlyExpenses] = useTotalMonthlyExpenses(monthlyData)
   const [loaded, setIsLoaded] = useState(false)
+  const [isFormShowing, setIsFormShowing] = useState(false)
   const [dateView, setDateView] = useState({
     year: 0,
     month: '',
@@ -183,6 +205,18 @@ export default function IncomePage(props: any) {
     defaultDateView,
     defaultMonth,
   ])
+
+  const showFormOnClick = () => {
+    setIsFormShowing(true)
+  }
+
+  const hideFormOnClick = () => {
+    setIsFormShowing(false)
+  }
+
+  const closeForm = () => {
+    setIsFormShowing(false)
+  }
 
   const changeMonthView = async (
     currentYear: number,
@@ -286,14 +320,24 @@ export default function IncomePage(props: any) {
             <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Paper className={fixedHeightPaperTable}>
                 <IncomeTable
-                  // key={calendar?._id}
-                  // monthlyIncome={!isMonthClicking ? incomeData : monthIncome}
                   monthlyIncome={formattedIncome}
                   year={dateView.year}
                   month={dateView.month}
+                  showFormOnClick={showFormOnClick}
                 />
               </Paper>
             </Grid>
+            {isFormShowing && 
+              <Grid item xs={12} md={12} lg={12} className={classes.addIncomeContainer}>
+              <Paper className={classes.addIncomeFormContainer}>
+                <AddIncome
+                  year={dateView.year}
+                  month={dateView.month}
+                  closeForm={closeForm}
+                  hideFormOnClick={hideFormOnClick}
+                />
+              </Paper>
+            </Grid>}
             <Grid item xs={12} md={6} lg={6} className={classes.gridItem}>
               <Calendar
                 value={calendarDate}

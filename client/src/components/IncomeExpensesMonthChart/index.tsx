@@ -12,14 +12,18 @@ import {
 import { EventTracker, Animation } from '@devexpress/dx-react-chart'
 import { scaleBand } from '@devexpress/dx-chart-core'
 import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
+import { useMediaQuery, useTheme } from '@material-ui/core'
+
 import { IncomeExpensesMonthChartProps } from '../../types'
-import { mobileScreen } from '../../utils/windowSize'
 
 export default function IncomeExpensesMonthChart({
   data,
   year,
   month,
 }: IncomeExpensesMonthChartProps) {
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   const titleStyle = {
     fontSize: '18px',
   }
@@ -32,7 +36,7 @@ export default function IncomeExpensesMonthChart({
   )
   return (
     <Paper className="chart-container">
-      <Chart data={data} height={mobileScreen ? 320 : 500}>
+      <Chart data={data} height={mobile ? 322 : 500}>
         <ArgumentScale factory={scaleBand} />
         <ArgumentAxis />
         <ValueAxis />

@@ -65,7 +65,7 @@ export type DeleteIncomeAction = {
 export type AddIncomeProps = {
   year: number
   month: string
-  handleClose: Function
+  closeForm: Function
   hideFormOnClick: React.MouseEventHandler<HTMLButtonElement>
 }
 

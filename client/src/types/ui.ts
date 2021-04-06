@@ -14,6 +14,7 @@ export type IncomeTableProps = {
   year: number
   month: string
   monthlyIncome: any
+  showFormOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export type AddIncomeBtnProps = {

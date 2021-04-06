@@ -19,7 +19,6 @@ import { removeIncome } from '../../redux/actions/income'
 import { Income } from '../../types/income'
 import { IncomeTableProps } from '../../types/ui'
 import AddIncomeBtn from '../AddIncomeBtn'
-import AddIncome from '../AddIncome'
 import EditIncome from '../EditIncome'
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'lightblue',
     cursor: 'pointer',
   },
-  incomeContainer: {
+  editIncomeContainer: {
     backgroundColor: 'rgba(25, 20, 20, 0.6)',
     position: 'absolute',
     height: '200vh',
@@ -62,8 +61,11 @@ const useStyles = makeStyles((theme) => ({
     top: '0',
     left: '17px',
     zIndex: 2,
+    [theme.breakpoints.down('md')]: {
+      left: '0',
+    },
   },
-  incomeFormContainer: {
+  editIncomeFormContainer: {
     position: 'fixed',
     top: '27%',
   },
@@ -73,6 +75,7 @@ export default function IncomeTable({
   year,
   month,
   monthlyIncome,
+  showFormOnClick
 }: IncomeTableProps) {
   const classes = useStyles()
   const theme = useTheme()
@@ -81,12 +84,12 @@ export default function IncomeTable({
   const [IncomeId, setIncomeId] = useState('')
   const dispatch = useDispatch()
   const [openForm, setOpenForm] = React.useState(false)
-  const showFormOnClick = () => {
-    setOpenForm(true)
-  }
+  
   const openEditOnClick = (id: string) => {
     setIncomeId(id)
     setEditOpen(true)
+    setOpenForm(false)
+
   }
 
   const hideFormOnClick = () => {
@@ -141,9 +144,9 @@ export default function IncomeTable({
                     xs={12}
                     md={12}
                     lg={12}
-                    className={classes.incomeContainer}
+                    className={classes.editIncomeContainer}
                   >
-                    <Paper className={classes.incomeFormContainer}>
+                    <Paper className={classes.editIncomeFormContainer}>
                       <EditIncome
                         incomeId={IncomeId}
                         hideFormOnClick={hideFormOnClick}
@@ -208,16 +211,10 @@ export default function IncomeTable({
           </Table>
         </>
       ) : (
-        <Grid item xs={12} md={12} lg={12} className={classes.incomeContainer}>
-          <Paper className={classes.incomeFormContainer}>
-            <AddIncome
-              year={year}
-              month={month}
-              handleClose={handleClose}
-              hideFormOnClick={hideFormOnClick}
-            />
-          </Paper>
-        </Grid>
+        <>
+        <p>No expenses recorded</p>
+        <AddIncomeBtn showFormOnClick={showFormOnClick} />
+      </>
       )}
     </React.Fragment>
   )

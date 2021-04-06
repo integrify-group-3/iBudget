@@ -32,17 +32,26 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     borderRadius: '5px',
     width: '27rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '22rem',
+    },
   },
   header: {
     marginLeft: '.5rem',
   },
   input: {
     width: '22rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '17rem',
+    },
   },
   select: {
     width: '22rem',
     display: 'flex',
     justifyContent: 'space-between',
+    [theme.breakpoints.down('sm')]: {
+      width: '17rem',
+    },
   },
   selectCategory: {
     display: 'flex',
@@ -51,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   btnSaveWrapper: {
     display: 'flex',
     justifyContent: 'center',
-    width: '100%',
+    width: '96%',
   },
   save: {
     border: 'none',
@@ -99,7 +108,7 @@ export default function AddExpense({
                 className={classes.select}
                 value={category}
                 onChange={handleChange}
-                required={true}
+                required
               >
                 {expensesUiCategories.map((expenseCat) => {
                   const { category, icon, iconStyle } = expenseCat
@@ -130,7 +139,7 @@ export default function AddExpense({
                 className={classes.input}
                 name="description"
                 value={description}
-                required={true}
+                required
               />
             </div>
 
@@ -144,7 +153,7 @@ export default function AddExpense({
                 className={classes.input}
                 name="amount"
                 value={amount}
-                required={true}
+                required
               />
             </div>
             <div className={classes.btnSaveWrapper}>

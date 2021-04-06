@@ -16,11 +16,11 @@ import { scaleBand } from '@devexpress/dx-chart-core'
 import { ArgumentScale, Stack } from '@devexpress/dx-react-chart'
 import { EventTracker } from '@devexpress/dx-react-chart'
 import { Palette } from '@devexpress/dx-react-chart'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 
 import SwitchChartBtn from '../../components/SwitchChartBtn'
 import { IncomeChartData } from '../../types/income'
 import { IncomeChartDashboardProps } from '../../types'
-import { mobileScreen } from '../../utils/windowSize'
 
 import './style.scss'
 
@@ -81,6 +81,8 @@ export default function IncomeMonthlyChartDashboard({
   name,
 }: IncomeChartDashboardProps) {
   const classes = useStyles()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [switchChart, setSwitchChart] = useState(false)
   const pieChartText = 'Pie Chart'
   const barChartText = 'Bar Chart'
@@ -122,12 +124,17 @@ export default function IncomeMonthlyChartDashboard({
         </div>
       ) : (
         <div className={classes.chartContainer}>
-          <Chart data={chartData} height={200}>
+          <Chart data={chartData} 
+            height={200} 
+            // width={mobile ? 302 : 500}
+            >
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}
               name={name}
+              // innerRadius={0.4}
+              // outerRadius={0.75}
               innerRadius={0.5}
               outerRadius={0.9}
             />
@@ -135,7 +142,7 @@ export default function IncomeMonthlyChartDashboard({
             {/* <SwitchChartBtn
               switchChartView={switchChartView}
               btnText={barChartText}
-            /> */}
+            />  */}
             <EventTracker />
             <Tooltip />
             <Animation />

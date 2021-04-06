@@ -12,7 +12,8 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    padding: '3rem 0'
+    padding: '3rem 0',
+    overflow: 'hidden'
   },
   header: {
     fontSize: '22px'

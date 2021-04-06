@@ -7,7 +7,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import CancelButton from '../CancelButton'
 
-import { AppState } from '../../types'
 import { AddIncomeProps } from '../../types/income'
 import { addIncome } from '../../redux/actions/income'
 import SaveButton from '../SaveButton'
@@ -27,27 +26,40 @@ const useStyles = makeStyles((theme) =>
       boxShadow: theme.shadows[5],
       padding: theme.spacing(1, 22, 1, 2),
       borderRadius: '5px',
+      [theme.breakpoints.down('sm')]: {
+        width: '22rem',
+      },
     },
-    btnSaveWrapper: {
-      display: 'flex',
-      paddingLeft: '65px',
-    },
-    buttons: {
-      border: 'none',
-      background: 'none',
+    header: {
+      marginLeft: '.5rem',
     },
     select: {
       width: '22rem',
+      marginTop: '8px',
+       [theme.breakpoints.down('sm')]: {
+      width: '17rem',
+    },
     },
     input: {
       width: '22rem',
+      marginTop: '8px',
+       [theme.breakpoints.down('sm')]: {
+      width: '17rem',
     },
-    btn: {
-      display: 'inline-block',
     },
     selectCategory: {
       display: 'flex',
       justifyContent: 'space-between',
+    },
+    btnSaveWrapper: {
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+      paddingLeft: '164px'
+    },
+    save: {
+      border: 'none',
+      background: 'none',
     },
   })
 )
@@ -55,11 +67,10 @@ const useStyles = makeStyles((theme) =>
 export default function AddIncome({
   year,
   month,
-  handleClose,
+  closeForm,
   hideFormOnClick,
 }: AddIncomeProps) {
   const dispatch = useDispatch()
-  const updatedIncome = useSelector((state: AppState) => state.income.income)
 
   const classes = useStyles()
   const [income, setIncome] = useState({
@@ -74,7 +85,7 @@ export default function AddIncome({
   const handleSubmit = (e: any) => {
     e.preventDefault()
     dispatch(addIncome(income))
-    handleClose()
+    closeForm()
   }
 
   const handleChange = (e: any) => {
@@ -87,7 +98,7 @@ export default function AddIncome({
   return (
     <div className={classes.paper}>
       <div className="form-container">
-        <h4>Add Income</h4>
+        <h3 className={classes.header}>{month} {year}</h3>
         <form className={classes.root} onSubmit={handleSubmit}>
           <div className="input-topics">
             <InputLabel id="demo-simple-select-outlined-label">
@@ -98,9 +109,9 @@ export default function AddIncome({
               id="demo-simple-select"
               value={category}
               name="category"
-              //   size="small"
               onChange={handleChange}
               className={classes.select}
+              required
             >
               {incomeUiCategories &&
                 incomeUiCategories.map((incomeCategory: any) => {
@@ -135,6 +146,7 @@ export default function AddIncome({
                 label="description"
                 onChange={handleChange}
                 className={classes.input}
+                required
               />
             </div>
             <div className="input-topics">
@@ -147,13 +159,14 @@ export default function AddIncome({
                 label="amount"
                 onChange={handleChange}
                 className={classes.input}
+                required
               />
             </div>
             <div className={classes.btnSaveWrapper}>
-              <button className={classes.buttons}>
+              <button className={classes.save}>
                 <SaveButton />
               </button>
-              <button className={classes.buttons} onClick={hideFormOnClick}>
+              <button className={classes.save} onClick={hideFormOnClick}>
                 <CancelButton />
               </button>
             </div>
