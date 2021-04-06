@@ -126,17 +126,17 @@ export default function IncomeMonthlyChartDashboard({
         <div className={classes.chartContainer}>
           <Chart data={chartData} 
             height={200} 
-            width={mobile ? 302 : 500}
+            // width={mobile ? 302 : 500}
             >
             <Palette scheme={chartData.map((data) => data.color)} />
             <PieSeries
               valueField={valueField}
               argumentField={argumentField}
               name={name}
-              innerRadius={0.4}
-              outerRadius={0.75}
-              // innerRadius={0.5}
-              // outerRadius={0.9}
+              // innerRadius={0.4}
+              // outerRadius={0.75}
+              innerRadius={0.5}
+              outerRadius={0.9}
             />
             <Legend labelComponent={legendLabelComponent} />
             {/* <SwitchChartBtn
