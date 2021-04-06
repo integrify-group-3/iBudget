@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     borderRadius: '5px',
+    [theme.breakpoints.down('sm')]: {
+      width: '22rem',
+    },
   },
   header: {
     display: 'flex',
@@ -36,17 +39,28 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: '22rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '17rem',
+    },
   },
   select: {
     width: '22rem',
-  },
-  save: {
-    border: 'none',
-    background: 'none',
+    [theme.breakpoints.down('sm')]: {
+      width: '17rem',
+    },
   },
   selectCategory: {
     display: 'flex',
     justifyContent: 'space-between',
+  },
+  btnSaveWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  save: {
+    border: 'none',
+    background: 'none',
   },
 }))
 
@@ -156,12 +170,14 @@ function EditIncome({
                 value={amount}
               />
             </div>
+            <div className={classes.btnSaveWrapper}>
             <button className={classes.save}>
               <SaveButton />
             </button>
             <button className={classes.save} onClick={hideFormOnClick}>
               <CancelButton />
             </button>
+            </div>
           </form>
         </div>
       </div>

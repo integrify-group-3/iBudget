@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
     top: '0',
     left: '17px',
     zIndex: 2,
+    [theme.breakpoints.down('md')]: {
+      left: '0',
+    },
   },
   editExpenseFormContainer: {
     position: 'fixed',
