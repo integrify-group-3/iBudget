@@ -32,17 +32,26 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     borderRadius: '5px',
     width: '27rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '22rem',
+    },
   },
   header: {
     marginLeft: '.5rem',
   },
   input: {
     width: '22rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '17rem',
+    },
   },
   select: {
     width: '22rem',
     display: 'flex',
     justifyContent: 'space-between',
+    [theme.breakpoints.down('sm')]: {
+      width: '17rem',
+    },
   },
   selectCategory: {
     display: 'flex',
@@ -98,6 +107,7 @@ export default function AddExpense({
                 name="category"
                 className={classes.select}
                 value={category}
+                variant="outlined"
                 onChange={handleChange}
                 required
               >
