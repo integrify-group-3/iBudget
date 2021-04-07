@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '45ch',
     },
   },
   paper: {
@@ -171,12 +171,12 @@ function EditIncome({
               />
             </div>
             <div className={classes.btnSaveWrapper}>
-            <button className={classes.save}>
-              <SaveButton />
-            </button>
-            <button className={classes.save} onClick={hideFormOnClick}>
-              <CancelButton />
-            </button>
+              <button className={classes.save}>
+                <SaveButton />
+              </button>
+              <button className={classes.save} onClick={hideFormOnClick}>
+                <CancelButton />
+              </button>
             </div>
           </form>
         </div>

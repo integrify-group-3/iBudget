@@ -27,18 +27,16 @@ const useStyles = makeStyles((theme) => ({
       display: 'grid',
     },
   },
-  tableRow: {
-
-  },
+  tableRow: {},
   tableCell: {
     padding: '6px 0px 6px 16px',
     [theme.breakpoints.down('sm')]: {
-      padding: '6px 0px 6px 6px',
+      padding: '0 !important',
     },
   },
   amount: {
     color: '#865CFF',
-    fontWeight: 700
+    fontWeight: 700,
   },
   editExpense: {
     margin: theme.spacing(1),
@@ -100,23 +98,21 @@ export default function ExpensesTable({
         dailyExpense.expenses.length > 0 ? (
           <>
             <TableHead>
-              {
-                !mobile &&
+              {!mobile && (
                 <>
-                 <TableRow>
-                <TableCell>Category</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Amount</TableCell>
-                <TableCell>
-                  <span style={{ marginLeft: '1.3rem' }}>Edit</span>
-                </TableCell>
-                <TableCell>
-                  <span style={{ marginLeft: '0.5rem' }}>Delete</span>
-                </TableCell>
-              </TableRow>
+                  <TableRow>
+                    <TableCell>Category</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Amount</TableCell>
+                    <TableCell>
+                      <span style={{ marginLeft: '1.3rem' }}>Edit</span>
+                    </TableCell>
+                    <TableCell>
+                      <span style={{ marginLeft: '0.5rem' }}>Delete</span>
+                    </TableCell>
+                  </TableRow>
                 </>
-              }
-             
+              )}
             </TableHead>
             {editOpen && (
               <Grid
@@ -139,7 +135,14 @@ export default function ExpensesTable({
             )}
             <TableBody className={classes.tableBody}>
               {dailyExpense.expenses.map((expense: any) => {
-                const { _id, category, description, amount, icon, iconStyle } = expense
+                const {
+                  _id,
+                  category,
+                  description,
+                  amount,
+                  icon,
+                  iconStyle,
+                } = expense
                 return (
                   <>
                     <TableRow key={_id} className={classes.tableRow}>
@@ -150,14 +153,16 @@ export default function ExpensesTable({
                             color: `${iconStyle}`,
                             fontSize: '1.3rem',
                             marginRight: '.4rem',
-                            opacity: '0.9'
+                            opacity: '0.9',
                           }}
                           title={category}
                         ></i>
-                       { !mobile && <span>{category}</span> } 
+                        {!mobile && <span>{category}</span>}
                       </TableCell>
                       <TableCell>{description}</TableCell>
-                      <TableCell className={classes.amount}>€{amount}</TableCell>
+                      <TableCell className={classes.amount}>
+                        €{amount}
+                      </TableCell>
                       <TableCell className={classes.tableCell}>
                         <IconButton
                           aria-label="edit"
@@ -180,7 +185,7 @@ export default function ExpensesTable({
                   </>
                 )
               })}
-                <AddExpenseBtn showFormOnClick={showFormOnClick} />
+              <AddExpenseBtn showFormOnClick={showFormOnClick} />
             </TableBody>
           </>
         ) : (

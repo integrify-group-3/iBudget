@@ -71,7 +71,7 @@ READY:
 - Tile Content in Calendar
 - Dashboard view
 - Analytics view
-- bar charts
+- Bar charts
 - Responsiveness
 - Deployed in Heroku
 

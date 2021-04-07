@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme) => ({
       display: 'grid',
     },
   },
-   tableCell: {
+  tableCell: {
     padding: '6px 0px 6px 16px',
     [theme.breakpoints.down('sm')]: {
-      padding: '6px 0px 6px 6px',
+      padding: '0 !important',
     },
   },
   deleteBtn: {
@@ -75,7 +75,7 @@ export default function IncomeTable({
   year,
   month,
   monthlyIncome,
-  showFormOnClick
+  showFormOnClick,
 }: IncomeTableProps) {
   const classes = useStyles()
   const theme = useTheme()
@@ -84,12 +84,11 @@ export default function IncomeTable({
   const [IncomeId, setIncomeId] = useState('')
   const dispatch = useDispatch()
   const [openForm, setOpenForm] = React.useState(false)
-  
+
   const openEditOnClick = (id: string) => {
     setIncomeId(id)
     setEditOpen(true)
     setOpenForm(false)
-
   }
 
   const hideFormOnClick = () => {
@@ -121,22 +120,21 @@ export default function IncomeTable({
             ) : (
               <>
                 <TableHead>
-                {
-                !mobile &&
-                <>
-                  <TableRow>
-                    <TableCell>Category</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>
-                      <span style={{ marginLeft: '0.7rem' }}>Edit</span>
-                    </TableCell>
-                    <TableCell>
-                      <span style={{ marginLeft: '0.6rem' }}>Delete</span>
-                    </TableCell>
-                  </TableRow>
-                  </>
-                }
+                  {!mobile && (
+                    <>
+                      <TableRow>
+                        <TableCell>Category</TableCell>
+                        <TableCell>Description</TableCell>
+                        <TableCell>Amount</TableCell>
+                        <TableCell>
+                          <span style={{ marginLeft: '0.7rem' }}>Edit</span>
+                        </TableCell>
+                        <TableCell>
+                          <span style={{ marginLeft: '0.6rem' }}>Delete</span>
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  )}
                 </TableHead>
                 {editOpen && (
                   <Grid
@@ -179,7 +177,7 @@ export default function IncomeTable({
                                 color: `${iconStyle}`,
                               }}
                             ></i>
-                            { !mobile && <span>{category}</span> }
+                            {!mobile && <span>{category}</span>}
                           </TableCell>
                           <TableCell>{description}</TableCell>
                           <TableCell>€{amount}</TableCell>
@@ -212,9 +210,9 @@ export default function IncomeTable({
         </>
       ) : (
         <>
-        <p>No expenses recorded</p>
-        <AddIncomeBtn showFormOnClick={showFormOnClick} />
-      </>
+          <p>No expenses recorded</p>
+          <AddIncomeBtn showFormOnClick={showFormOnClick} />
+        </>
       )}
     </React.Fragment>
   )
