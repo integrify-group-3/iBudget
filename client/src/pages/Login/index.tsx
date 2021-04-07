@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '25px',
     marginTop: '4rem',
     [theme.breakpoints.down('sm')]: {
-      width: '22rem'
+      width: '22rem',
     },
   },
   paper: {

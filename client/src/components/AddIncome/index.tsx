@@ -36,16 +36,16 @@ const useStyles = makeStyles((theme) =>
     select: {
       width: '22rem',
       marginTop: '8px',
-       [theme.breakpoints.down('sm')]: {
-      width: '17rem',
-    },
+      [theme.breakpoints.down('sm')]: {
+        width: '17rem',
+      },
     },
     input: {
       width: '22rem',
       marginTop: '8px',
-       [theme.breakpoints.down('sm')]: {
-      width: '17rem',
-    },
+      [theme.breakpoints.down('sm')]: {
+        width: '17rem',
+      },
     },
     selectCategory: {
       display: 'flex',
@@ -54,12 +54,17 @@ const useStyles = makeStyles((theme) =>
     btnSaveWrapper: {
       display: 'flex',
       justifyContent: 'center',
+      alignContent: 'center',
       width: '100%',
-      paddingLeft: '164px'
+      paddingLeft: '164px',
+      [theme.breakpoints.down('sm')]: {
+        paddingLeft: '80px',
+      },
     },
     save: {
       border: 'none',
       background: 'none',
+      justifyContent: 'center',
     },
   })
 )
@@ -98,7 +103,9 @@ export default function AddIncome({
   return (
     <div className={classes.paper}>
       <div className="form-container">
-        <h3 className={classes.header}>{month} {year}</h3>
+        <h3 className={classes.header}>
+          {month} {year}
+        </h3>
         <form className={classes.root} onSubmit={handleSubmit}>
           <div className="input-topics">
             <InputLabel id="demo-simple-select-outlined-label">
