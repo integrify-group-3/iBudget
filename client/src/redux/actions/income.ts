@@ -176,13 +176,11 @@ export function removeIncome(id: string, income: Income) {
 export function getTotalMonthlyIncome(monthlyData: any) {
   return (dispatch: Dispatch) => {
     try {
-      let count: any = 0
       if (monthlyData !== undefined) {
-        // console.log('from getTotalMonthlyIncome action', monthlyData)
-        for (const income of monthlyData.income) {
-          const { amount } = income
-          count += amount
-        }
+        const count = monthlyData?.income.reduce(
+          (acc: any, current: any) => acc + current.amount,
+          0
+        )
         dispatch(totalMonthlyIncome(count))
       }
     } catch (error) {
