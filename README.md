@@ -25,14 +25,18 @@ An IBudget full-stack app that helps its users with monthly budgeting planning i
 
 ![screenshot](./client/public/images/home.png)
 ![screenshot](./client/public/images/register.png)
+![screenshot](./client/public/images/signin.png)
 ![screenshot](./client/public/images/dashboard.png)
 ![screenshot](./client/public/images/addIncome.png)
 ![screenshot](./client/public/images/income.png)
 ![screenshot](./client/public/images/expense.png)
 ![screenshot](./client/public/images/editExpense.png)
+![screenshot](./client/public/images/tileContent.png)
 ![screenshot](./client/public/images/analytics.png)
 ![screenshot](./client/public/images/profile.png)
 ![screenshot](./client/public/images/editUser.png)
+![screenshot](./client/public/images/mobile.png)
+![screenshot](./client/public/images/mobileExpenses.png)
 
 ## Technologies
 
@@ -92,5 +96,5 @@ The goal was to create a digital solution for monthly budgeting planning in one 
 
 ## Contact
 
-Project is created by 2 developers [Michele Zucca](https://www.linkedin.com/in/michele-zucca/) and [Grigor Fanyan](https://www.linkedin.com/in/gregfanyan/) : 
- feel free to contact !
+Project is created by 2 developers [Michele Zucca](https://www.linkedin.com/in/michele-zucca/) and [Grigor Fanyan](https://www.linkedin.com/in/gregfanyan/) :
+feel free to contact !
