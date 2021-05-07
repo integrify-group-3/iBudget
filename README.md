@@ -22,7 +22,7 @@
 
 ## General Info
 
-An IBudget full-stack app that helps its users with monthly budgeting planning in a well-organized manner. A team project created by 2 developers enhanced with a variety of charts and a calendar scheduler.
+iBudget is a full-stack app that helps your monthly budgeting planning in a well-organized manner. This team project was created by two developers and features a variety of charts and a calendar scheduler.
 
 ## Goal
 
