@@ -59,7 +59,7 @@ The goal was to create a digital solution for monthly budgeting planning in one 
 
 Users can either register and login in their account with their email and password or register with Google authentication. 
 ![screenshot](./client/public/images/register.png)
-![screenshot](./client/public/images/register.png)
+![screenshot](./client/public/images/login.png)
 
 ## Dashboard
 
