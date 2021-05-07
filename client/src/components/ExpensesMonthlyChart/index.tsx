@@ -17,18 +17,16 @@ import './style.scss'
 const useStyles = makeStyles((theme: any) => ({
   chartContainer: {
     height: '243px',
-  }
+  },
 }))
 
 const chartRootStyle = {
   marginLeft: '1.3rem',
-  flexGrow: 'unset !important'
+  flexGrow: '0 !important',
 }
 
 const chartRoot = (props: any) => (
-  <Legend.Root {...props} style={chartRootStyle} 
-  className="chart-root" 
-  />
+  <Legend.Root {...props} style={chartRootStyle} className="chart-root" />
 )
 
 const legendLabelComponent = (props: any) => (
@@ -43,24 +41,25 @@ export default function ExpensesChart({
   const classes = useStyles()
   return (
     <div className={classes.chartContainer}>
-    <Chart data={chartData} 
-    height={200} 
-    // width={444}
-    >
-      <Palette scheme={chartData.map((data) => data.color)} />
-      <PieSeries
-        valueField="amount"
-        argumentField="category"
-        name="category"
-        innerRadius={0.45}
-        outerRadius={0.8}
-      />
-      <Legend labelComponent={legendLabelComponent} />
-      {/* <Title text={`Expenses Chart ${month} ${year}`} /> */}
-      <EventTracker />
-      <Tooltip />
-      <Animation />
-    </Chart>
+      <Chart
+        data={chartData}
+        height={200}
+        // width={444}
+      >
+        <Palette scheme={chartData.map((data) => data.color)} />
+        <PieSeries
+          valueField="amount"
+          argumentField="category"
+          name="category"
+          innerRadius={0.35}
+          outerRadius={0.7}
+        />
+        <Legend labelComponent={legendLabelComponent} />
+        {/* <Title text={`Expenses Chart ${month} ${year}`} /> */}
+        <EventTracker />
+        <Tooltip />
+        <Animation />
+      </Chart>
     </div>
   )
 }

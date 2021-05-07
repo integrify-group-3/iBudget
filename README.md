@@ -4,25 +4,21 @@
 
 ## Table of contents
 
-- [Title](#Title)
 - [General Info](#General-Info)
 - [Goal](#goal)
 - [Tech Stack](#tech-stack)
-- [Screenshots](#screenshots)
+- [Deployment](#deployment)
 - [Home](#home)
 - [Authentication](#authentication)
 - [Dashboard](#dashboard)
 - [Income](#income)
 - [Expenses](#expenses)
 - [Analytics](#analytics)
-- [Profile](#profile)
+- [User Profile](#user-profile)
+- [Mobile Version](#mobile-version)
 - [Features](#features)
 - [Status](#status)
-- [Contact](#contact)
-
-## Title
-
-IBUDGET.
+- [Contact Us](#contact-us)
 
 ## General Info
 
@@ -50,40 +46,65 @@ The goal was to create a digital solution for monthly budgeting planning in one 
 - MongoDB
 - Mongoose
 
-## Screenshots
+## Deployment 
+
+The app is deployed on Heroku. You can try out our demo on https://ibudget-app.herokuapp.com/
 
 ## Home
-![screenshot](./client/public/images/home.png)
+
+![Home](./client/public/images/home.png)
 
 ## Authentication
 
 Users can either register and login in their account with their email and password or register with Google authentication. 
-![screenshot](./client/public/images/register.png)
-![screenshot](./client/public/images/login.png)
+
+![Authentication](./client/public/images/register.png)
+![Authentication](./client/public/images/signin.png)
 
 ## Dashboard
 
 From their dashboard, users can have an overview of all data from the current month. Data for income, expenses, monthly budget and different charts for income and expenses are displayed.
-![screenshot](./client/public/images/dashboard.png)
+
+![Dashboard](./client/public/images/dashboard.png)
 
 ## Income
-![screenshot](./client/public/images/income.png)
-![screenshot](./client/public/images/addIncome.png)
 
 The income page displays all income data. Users have a year calendar where they can add all monthly incomes divided by categories for each month. Users have 5 different types of income categories and can add, edit or delete income categories per month, displayed in a income table. The calendar switches between years and updates in real time with an overview of monthly income displayed in a highlighted tile content. Users have also access to a category chart that updates in real time when adding, editing or deleting income data. Monthly budget and income is updated on real time.
 
+![Income](./client/public/images/income.png)
+![Income](./client/public/images/addIncome.png)
+
 ## Expenses
-![screenshot](./client/public/images/expense.png)
-![screenshot](./client/public/images/editExpense.png)
 
 Users can track all monthly expenses on the expenses page. The calendar shown in the expenses pages is a monthly calendar, which displays all daily data regarding expenses, including total expenses for the month and monthly budget. Users can select between 12 type of expenses categories and add, edit and delete expenses which are displayed on the expenses table. Just like the income page, tile contents can highlight daily expenses on the calendar which can be viewed by hovering on the calendar days. An expenses chart by categories updates on real time when data is added, edit or deleted.
 
-## Analytics
-![screenshot](./client/public/images/analytics.png)
+![Expenses](./client/public/images/expenses.png)
+![Expenses](./client/public/images/editExpense.png)
+![Expenses](./client/public/images/tileContent.png)
 
-## Profile
-![screenshot](./client/public/images/profile.png)
-![screenshot](./client/public/images/editUser.png)
+## Analytics
+
+The analytics page gives an overview of all year and monthly expenses and income, with year and monthly budget. User can switch between year and monthly view. While on year view, the user can see the total amount of expenses, income and total budget, together with a decade calendar and a chart displaying all expenses and income for the selected year. By switching to month view and clicking to different months, the user can view an aggregate of all expenses and income per month in a year calendar, and a monthly chart displaying total expenses and income.
+
+![Analytics](./client/public/images/analytics.png)
+
+## User Profile
+
+Users can view their details, like registered name and email address on the user’s profile. If the user has registered a new account directly with the iBudget app, the details can be edited.
+
+![User Profile](./client/public/images/profile.png)
+![User Profile](./client/public/images/editUser.png)
+
+## Mobile
+
+The app is mobile responsive. 
+
+![Mobile Version](./client/public/images/mobile.png)
+![Mobile Version](./client/public/images/mobileExpenses.png)
+
+## Status
+
+Project is: _in progress_. MVP has been finalized, with some bug fixes still in place.
 
 ## Features
 
@@ -118,11 +139,7 @@ To-do list:
 - Dockerize
 - Create the Mobile version(Android and IOS)
 
-## Status
+## Contact Us
 
-Project is: _in progress_
-
-## Contact
-
-Project is created by 2 developers [Michele Zucca](https://www.linkedin.com/in/michele-zucca/) and [Grigor Fanyan](https://www.linkedin.com/in/gregfanyan/) : 
- feel free to contact !
+The project is created by 2 developers [Michele Zucca](https://www.linkedin.com/in/michele-zucca/) and [Grigor Fanyan](https://www.linkedin.com/in/gregfanyan/) :
+feel free to contact us if you have any questions!
